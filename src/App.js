@@ -18,7 +18,7 @@ function App() {
   const [activeOrder, setActiveOrder] = React.useState({})
 
   const raw = JSON.stringify({
-    "page": 4,
+    "page": 1,
     "status": "all",
     "warehouse": "bx1"
   });
@@ -83,13 +83,13 @@ function App() {
             <div className="actions">
               <input type="text" placeholder="N° OS / Destinatario"></input>
               <select id="pages" name="pages" placeholder="Filtro por estado">
-                <option value="1">Filtro por estado</option>
+                <option value="1">Filtrar por estado</option>
                 <option value="1">Correcta</option>
                 <option value="2">Incompleta</option>
                 <option value="3">Error</option>
               </select>
               <select id="pages" name="pages" placeholder="Filtro por tracking">
-                <option value="1">Filtro por tracking</option>
+                <option value="1">Filtrar por tracking</option>
                 <option value="1">En tránsito</option>
                 <option value="2">En bodega</option>
                 <option value="3">Entregado</option>
@@ -103,8 +103,8 @@ function App() {
                 <tr>
                   <th><p>N° Orden</p></th>
                   <th><p>Destinatario</p></th>
-                  <th><p>Estado</p></th>
-                  <th><p>Tracking</p></th>
+                  <th><p>Estado OS</p></th>
+                  <th><p>Estado Tracking</p></th>
                   <th><p>Fecha de orden</p></th>
                   <th></th>
                 </tr>
