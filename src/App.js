@@ -32,11 +32,6 @@ function App() {
     redirect: 'follow'
   };
 
-  const getData = async () => {
-    const resp = await fetch("http://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-    const data = await resp.json()
-    return data
-  }
 
   React.useEffect(() => {
     fetch("http://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
@@ -57,6 +52,7 @@ function App() {
         fecha={activeOrder.fecha}
         description={activeOrder.description}
         tracking={activeOrder.tracking}
+        order_id={activeOrder.order_id}
       />
       {showModal ? <div className="offModal"><button className="close" onClick={() => { setModal(false) }}>X</button></div> : <></>}
       <header>
@@ -64,7 +60,7 @@ function App() {
         <img src={bento} alt="" />
         <img src={avatar} alt="" />
         <p>Nicolás Cruz<br />
-          <small>Fulfillment</small>
+          <small>Mimama.cl</small>
         </p>
         <img src={arrowDown} alt="" />
 
