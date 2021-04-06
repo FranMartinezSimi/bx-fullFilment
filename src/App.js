@@ -43,7 +43,7 @@ function App() {
     return () => {
       console.log('use Effect')
     }
-  }, [])
+  }, [setOrders])
   return (
     <div className="container">
       <Detalle
@@ -60,7 +60,7 @@ function App() {
         <img src={bento} alt="" />
         <img src={avatar} alt="" />
         <p>Nicolás Cruz<br />
-          <small>Mimama.cl</small>
+          <small>Fulfillment By</small>
         </p>
         <img src={arrowDown} alt="" />
 
