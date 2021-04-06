@@ -1,0 +1,41 @@
+name: Blue Express Fulfillment Web Develop Flow
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build_upload_to_s3:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: run yarn install and build
+      run: |
+        yarn install
+        yarn build
+      env:
+        CI: true
+    # - name: SonarQube Scan
+    #   uses: Blue-Express/sonar-scan-action@master
+    #   id: check
+    #   with:
+    #     sonarqube_url: ${{ secrets.SONARQUBE_DEV_URL }}
+    #     sonarqube_token: ${{ secrets.SONARQUBE_DEV_TOKEN }}
+    #     projectKey: bx-fulfillment-web
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_DEV_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_DEV_SECRET_ACCESS_KEY }}
+        aws_bucket: dev-front-fulfillment
+        source_dir: 'build'
+        destination_dir: ''
