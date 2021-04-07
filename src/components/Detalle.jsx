@@ -32,7 +32,7 @@ const Detalle = (props) => {
             })
             .catch(console.log)
         return () => {
-        }
+        }// eslint-disable-next-line
       }, [props.order_id])
 
     return (

@@ -42,8 +42,8 @@ function App() {
         .catch(console.log)
     return () => {
       console.log('use Effect')
-    }
-  }, [setOrders])
+    }// eslint-disable-next-line
+  }, [])
   return (
     <div className="container">
       <Detalle
