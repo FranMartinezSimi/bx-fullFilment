@@ -25,7 +25,7 @@ const Detalle = (props) => {
       };
       
       React.useEffect(() => {
-        fetch("http://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderDetail", requestOptions)
+        fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderDetail", requestOptions)
             .then(res => res.json())
             .then((data) => {
                 setOrderDetails([...data["detail_order"]])

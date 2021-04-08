@@ -34,7 +34,7 @@ function App() {
 
 
   React.useEffect(() => {
-    fetch("http://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
+    fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
         .then(res => res.json())
         .then((data) => {
           setOrders([...data["order"]])
