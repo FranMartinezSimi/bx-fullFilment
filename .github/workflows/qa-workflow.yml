@@ -1,0 +1,38 @@
+
+name: Blue Express Fulfillment QA Flow
+
+on:
+  push:
+    branches:
+      - qa
+      #- feature/*
+  pull_request:
+    branches: [ qa ]
+
+jobs:
+  build_upload_to_s3:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: run yarn install and test
+      run: |
+        yarn install
+        yarn build:qa
+      env:
+        CI: true
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_QA_FRONT_ACCESS_KEY_ID  }}
+        aws_secret_access_key: ${{ secrets.AWS_QA_FRONT_SECRET_ACCESS_KEY }}
+        aws_bucket: bx-qa-front-fulfillment
+        source_dir: 'build'
+        destination_dir: ''
