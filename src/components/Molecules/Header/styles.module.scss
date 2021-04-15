@@ -1,0 +1,26 @@
+  
+header{
+  width: 100%;
+  background-color: #111;
+  display: flex;
+  justify-content: flex-end;
+}
+
+header img {
+  padding: .3em;
+  margin: 0 .4em;
+}
+
+header section {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+header p{
+  color: #FFF;
+  font-family: 'Lato', sans-serif;
+}
+header small{
+  color: #FCBE69;
+}

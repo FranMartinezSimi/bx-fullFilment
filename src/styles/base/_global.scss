@@ -1,0 +1,62 @@
+* {
+  box-sizing: border-box;
+}
+html,body{
+  min-height: 100vh;
+}
+html{
+  scroll-behavior: smooth;
+  font-size: .9rem;
+}
+body {
+  font-family: $primary-font;
+  line-height: 1.5;
+  color: $dark-grey;
+}
+
+a {
+  color: $primary-color;
+  transition: .2s ease-in-out all;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: $secondary-color;
+  }
+  &:focus {
+    text-decoration: none;
+    outline: none;
+  }
+}
+ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+strong, .font-bold {
+  font-weight: $font-bold;
+}
+
+label{
+  color: $primary-color;
+  font-size: 10px;
+}
+.content-wrapper {
+  min-height: calc(100vh - 106px);
+}
+
+@each $name, $color in $palette {
+  .bg-#{$name} {
+    background-color: $color; 
+  }
+  .text-#{$name} {
+    color: $color !important;
+  }
+}
+.table {
+  th {
+    padding: 20px !important;
+    text-align: center;
+  }
+  tr {
+    text-align: center;
+  }
+}
