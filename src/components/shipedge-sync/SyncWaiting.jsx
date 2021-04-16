@@ -10,7 +10,7 @@ const SyncWaiting = () => {
     const credentialValidation = useStoreCredential();
 
     useEffect(() => {
-        if(!credentialValidation.fetching) {
+        if (!credentialValidation.fetching) {
             if (credentialValidation.success) {
                 setSyncState(SYNC_STATES.SUCCESS);
             } else {
@@ -18,18 +18,18 @@ const SyncWaiting = () => {
                 setSyncState(SYNC_STATES.FAILED);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [credentialValidation])
 
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title centered"/>
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-                <p className="card-text">
-                    Espera mientras sincronizamos tu cuenta Shipedge
-                </p>
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <p className="card-text">
+                        Espera mientras sincronizamos tu cuenta Shipedge
+                    </p>
             </div>
         </div>
     );
