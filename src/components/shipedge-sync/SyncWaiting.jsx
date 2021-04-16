@@ -17,7 +17,7 @@ const SyncWaiting = () => {
                 setSyncStateError(credentialValidation.messageError);
                 setSyncState(SYNC_STATES.FAILED);
             }
-        }
+        } // eslint-disable-next-line
     }, [credentialValidation])
 
     return (

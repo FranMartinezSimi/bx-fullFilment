@@ -52,7 +52,7 @@ const useStoreCredential = () => {
                 });
             });
 
-    }, []);
+    }, []); // eslint-disable-next-line
 
     return storeState;
 };
