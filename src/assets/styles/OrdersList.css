@@ -22,31 +22,6 @@ html,body {
   background-color: white;
   border: none;
 }
-header{
-  width: 100%;
-  background-color: #111;
-  display: flex;
-  justify-content: flex-end;
-}
-
-header img {
-  padding: .3em;
-  margin: 0 .4em;
-}
-
-header section {
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-}
-
-header p{
-  color: #FFF;
-  font-family: 'Lato', sans-serif;
-}
-header small{
-  color: #FCBE69;
-}
 
 
 main{
@@ -134,10 +109,4 @@ main section div {
   margin: 0 .5em .9em;
   border-radius: .8em;
   text-align: center;
-}
-footer{
-  background-color: #FFF;
-  color: #000;
-  text-align: center;
-  width: 100%;
 }
