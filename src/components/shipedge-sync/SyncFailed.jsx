@@ -28,7 +28,7 @@ const SyncFailed = () => {
                     Recuerda seguir los pasos que te mostramos en la siguiente imagen:
                 </p>
 
-                { syncStateError.trim().length > 0 &&
+                { syncStateError && syncStateError.trim().length > 0 &&
                     <div className="alert alert-danger" role="alert">
                         Error: {syncStateError}
                     </div>
