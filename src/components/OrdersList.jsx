@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAtom} from 'jotai';
 import {SYNC_STATES, syncStateAtom} from '../atoms/atoms';
 
@@ -15,7 +15,7 @@ const OrdersList = (props) => {
 
     const [showModal, setModal] = useState(false)
 
-    const [syncState] = useAtom(syncStateAtom);
+    const [syncState, setSyncState] = useAtom(syncStateAtom);
 
     const [activeOrder, setActiveOrder] = useState({
         order_id: '',
@@ -40,23 +40,25 @@ const OrdersList = (props) => {
         redirect: 'follow'
     };
 
-    React.useEffect(() => {
-
-        if(syncState === SYNC_STATES.SUCCESS) {
-            fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-                .then(res => res.json())
-                .then((data) => {
-                    setOrders([...data["order"]])
-                })
-                .catch(console.log)
-        } else {
+    useEffect(() => {
+        if (syncState !== SYNC_STATES.SUCCESS) {
+            setSyncState(SYNC_STATES.FAILED);
             props.history.push('/');
         }
+    }, [])
+
+    useEffect(() => {
+        fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
+            .then(res => res.json())
+            .then((data) => {
+                setOrders([...data["order"]])
+            })
+            .catch(console.log)
 
         return () => {
             console.log('use Effect')
         }// eslint-disable-next-line
-    }, [])
+    }, [requestOptions])
 
     return (
         <div className="container">
@@ -107,7 +109,8 @@ const OrdersList = (props) => {
                             <tbody>
                             {
                                 orders.map(order =>
-                                    <OrderItem {...order} showDetailHandle={setModal} setOrderDetails={setActiveOrder} />)
+                                    <OrderItem {...order} showDetailHandle={setModal}
+                                               setOrderDetails={setActiveOrder}/>)
                             }
                             </tbody>
                         </table>
