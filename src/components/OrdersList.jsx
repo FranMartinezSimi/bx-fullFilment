@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {useAtom} from 'jotai';
+import {SYNC_STATES, syncStateAtom} from '../atoms/atoms';
 
 import OrderDetail from './OrderDetail'
 import OrderItem from './OrderItem';
@@ -7,11 +9,13 @@ import arrowLeft from '../assets/brand/arrow-left.svg';
 import loadArrow from '../assets/brand/loadarrow.svg';
 import '../assets/styles/OrdersList.css';
 
-const OrdersList = () => {
+const OrdersList = (props) => {
 
     const [orders, setOrders] = useState([])
 
     const [showModal, setModal] = useState(false)
+
+    const [syncState] = useAtom(syncStateAtom);
 
     const [activeOrder, setActiveOrder] = useState({
         order_id: '',
@@ -37,12 +41,18 @@ const OrdersList = () => {
     };
 
     React.useEffect(() => {
-        fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-            .then(res => res.json())
-            .then((data) => {
-                setOrders([...data["order"]])
-            })
-            .catch(console.log)
+
+        if(syncState === SYNC_STATES.SUCCESS) {
+            fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
+                .then(res => res.json())
+                .then((data) => {
+                    setOrders([...data["order"]])
+                })
+                .catch(console.log)
+        } else {
+            props.history.push('/');
+        }
+
         return () => {
             console.log('use Effect')
         }// eslint-disable-next-line

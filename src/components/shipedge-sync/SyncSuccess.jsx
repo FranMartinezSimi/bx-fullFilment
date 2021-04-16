@@ -15,7 +15,7 @@ const SyncSuccess = () => {
             <div className="card-body">
                 <h5 className="card-title">¡Felicidades!</h5>
                 <p className="card-text">
-                    Tu cuenta Shipedge ha sido sincronizada con éxtio.
+                    Tu cuenta Shipedge ha sido sincronizada con éxito.
                 </p>
                 <Link to={'/orders'}>
                     <button className="btn btn-primary btn-block mb-4">Continuar</button>
