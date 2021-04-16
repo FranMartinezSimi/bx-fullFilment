@@ -44,7 +44,7 @@ const OrdersList = (props) => {
         if (syncState !== SYNC_STATES.SUCCESS) {
             setSyncState(SYNC_STATES.FAILED);
             props.history.push('/');
-        }// eslint-disable-next-line react-hooks/exhaustive-deps
+        }
     }, [])
 
     useEffect(() => {
