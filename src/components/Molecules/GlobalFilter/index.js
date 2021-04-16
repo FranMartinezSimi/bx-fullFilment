@@ -24,7 +24,7 @@ function GlobalFilter({
               setValue(e.target.value);
               onChange(e.target.value);
             }}
-            placeholder={`${count} items...`}
+            placeholder={`Buscar en ${count} items`}
           />
         </div>
         <div className="col-md-2">

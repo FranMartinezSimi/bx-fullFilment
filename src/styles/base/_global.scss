@@ -40,7 +40,7 @@ label{
   font-size: 10px;
 }
 .content-wrapper {
-  min-height: calc(100vh - 106px);
+  min-height: calc(100vh - 123px);
 }
 
 @each $name, $color in $palette {

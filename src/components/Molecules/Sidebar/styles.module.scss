@@ -1,3 +1,13 @@
 .navigation {
-  min-height: 80vh;
+  position: relative;
+  transition: all .5s cubic-bezier(0.2,0,0,1) 0s;
+  &Open {
+    min-width: 180px;
+  }
+  &Close {
+    min-width: auto;
+  }
+  &Content {
+    min-height: 80vh;
+  }
 }
