@@ -1,12 +1,12 @@
 import React from 'react';
-import {SYNC_STATES, syncStateAtom} from '../../atoms/atoms';
+import {SYNC_STATES, syncStateAtom} from '../atoms/atoms';
 
-import SyncInformation from './SyncInformation';
-import SyncForm from './SyncForm';
-import SyncWaiting from './SyncWaiting';
+import SyncInformation from '../components/shipedge-sync/SyncInformation';
+import SyncForm from '../components/shipedge-sync/SyncForm';
+import SyncWaiting from '../components/shipedge-sync/SyncWaiting';
 import {useAtom} from 'jotai';
-import SyncSuccess from './SyncSuccess';
-import SyncFailed from './SyncFailed';
+import SyncSuccess from '../components/shipedge-sync/SyncSuccess';
+import SyncFailed from '../components/shipedge-sync/SyncFailed';
 
 const SyncLayout = props => {
 
