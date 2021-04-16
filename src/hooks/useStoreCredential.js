@@ -13,7 +13,7 @@ const useStoreCredential = () => {
         messageError: undefined
     });
 
-    useEffect( () => {
+    useEffect(() => {
 
         let headers = new Headers();
         headers.append("key", userCredentials.key);
@@ -52,6 +52,7 @@ const useStoreCredential = () => {
                 });
             });
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return storeState;
