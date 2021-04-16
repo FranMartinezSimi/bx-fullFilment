@@ -48,7 +48,7 @@ const useStoreCredential = () => {
                 setStoreState({
                     fetching: false,
                     success: false,
-                    messageError: error
+                    messageError: String(error)
                 });
             });
 
