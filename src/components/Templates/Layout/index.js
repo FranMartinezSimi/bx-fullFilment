@@ -11,7 +11,7 @@ const Layout = ({children}) => {
             <Sidebar activeNavbar={activeNavbar}/>
             <div className="App flex-fill">
                 <Header activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar}/>
-                <div className="container  content-wrapper">
+                <div className="container content-wrapper">
                     <Breadcrumb />
                     <div className="row">
                         <div className="col-12">

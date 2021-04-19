@@ -6,7 +6,7 @@ html,body{
 }
 html{
   scroll-behavior: smooth;
-  font-size: .9rem;
+  font-size: .8rem;
 }
 body {
   font-family: $primary-font;
@@ -39,8 +39,11 @@ label{
   color: $primary-color;
   font-size: 10px;
 }
+.h-100 {
+  min-height: 100vh;
+}
 .content-wrapper {
-  min-height: calc(100vh - 123px);
+  min-height: calc(100vh - 112px);
 }
 
 @each $name, $color in $palette {

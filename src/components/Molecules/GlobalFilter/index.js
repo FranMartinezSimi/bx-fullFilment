@@ -15,7 +15,7 @@ function GlobalFilter({
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-center">
-        <div className="col-md-4 col-lg-3 px-0">
+        <div className="col-sm-6 col-md-4 col-lg-3 px-0">
           <input
             value={value || ''}
             className="form-control"
@@ -27,7 +27,7 @@ function GlobalFilter({
             placeholder={`Buscar en ${count} items`}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-sm-6 col-md-2">
           <div className="text-end">
             <a href="#!" className="btn btn-complementary">
               Subir Orden

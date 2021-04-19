@@ -7,15 +7,21 @@ import GlobalFilter from '../../Molecules/GlobalFilter';
 import Pagination from '../../Molecules/Pagination'
 import styles from './styles.module.scss'
 
-function MainTable({ columns, data }) {
+function MainTable({ 
+  columns,
+  data,
+  fetchData,
+  loading,
+  pageCount: controlledPageCount,
+}) {
   const {
     getTableProps,
     getTableBodyProps,
-    headerGroups,
     prepareRow,
+    headerGroups,
     state,
     page,
-    rows,
+    // rows,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -26,20 +32,38 @@ function MainTable({ columns, data }) {
     preGlobalFilteredRows,
     setGlobalFilter,
     state: { pageIndex },
-  } = useTable({
-    columns,
-    data,
-    initialState: { pageIndex: 0 },
-  },
-  useFilters,
-  useGlobalFilter,
-  useSortBy,
-  usePagination);
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 20 },
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
-  const firstPageRows = page.slice(0, 20);
+  // const firstPageRows = page
 
   return ( 
     <>
+      <pre className="d-none">
+        <code>
+          {JSON.stringify(
+            {
+              pageIndex,
+              // pageSize,
+              pageCount,
+              canNextPage,
+              canPreviousPage,
+            },
+            null,
+            2,
+          )}
+        </code>
+      </pre>
+
       <GlobalFilter
         preGlobalFilteredRows={preGlobalFilteredRows}
         globalFilter={state.globalFilter}
@@ -52,7 +76,6 @@ function MainTable({ columns, data }) {
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th
-                  width={column.width}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render('Header')}
@@ -65,42 +88,42 @@ function MainTable({ columns, data }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {firstPageRows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()}>
-                      <span className="d-block py-1 my-1">
                         {cell.render('Cell')}
-                      </span>
                     </td>
                   ))}
                 </tr>
               );
             })}
-            {rows.length === 0 && (
+            {/* {rows.length === 0 && (
               <tr>
                 <td>
                   <p>No se encontraron resultados...</p>
                 </td>
               </tr>
-            )}
+            )} */}
           </tbody>
         </table>
       </div>
 
-
-      <Pagination
-        pageIndex={pageIndex}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        canNextPage={canNextPage}
-        gotoPage={gotoPage}
-        pageCount={pageCount}
-        pageOptions={pageOptions}
-      />
+      {(canNextPage || canPreviousPage)
+      && (
+        <Pagination
+          pageIndex={pageIndex}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          gotoPage={gotoPage}
+          pageCount={pageCount}
+          pageOptions={pageOptions}
+        />
+      )}
 
     </>
   );

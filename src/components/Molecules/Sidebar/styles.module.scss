@@ -2,12 +2,26 @@
   position: relative;
   transition: all .5s cubic-bezier(0.2,0,0,1) 0s;
   &Open {
-    min-width: 180px;
+    width: 150px;
   }
   &Close {
-    min-width: auto;
+    width: 90px;
   }
   &Content {
-    min-height: 80vh;
+    min-height: calc(100vh - 110px);
+  }
+  &Item{
+    &Img {
+      width: 20px;
+    }
+    &Text {
+      opacity: 0;
+      width: 0;
+      &Open {
+        opacity: 1;
+        width: auto;
+        transition: all .5s ease-in-out;
+      }
+    }
   }
 }
