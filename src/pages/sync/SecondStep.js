@@ -11,20 +11,20 @@ const SecondStep = ({ setSelectedItem, setUser }) => {
   return (
     <>
       <div className="card-img mb-4">
-        <img className="w-100" src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" alt="imagen"/>
+      <img className="w-100" src="./nonImg.jpg" alt="imagen"/>
       </div>
       <ol className="p-0 ps-3">
         <li>
-          <a href="https://www.shipedge.com/" target="_blank" rel="noreferrer">Ingresa a este link a Shipedge</a>
+          <a href="https://www.shipedge.com/" target="_blank" rel="noreferrer" className="display-font" style={{fontSize: '16px'}}>Ingresa a este link a Shipedge</a>
         </li>
         <li>
-          <p>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
+          <p className="display-font" style={{fontSize: '16px'}}>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
         </li>
       </ol>
       <div className="pt-2">
         <form className="form">
           <div className="form-group">
-            <label htmlFor="accountId" className="form-label text-uppercase w-100">
+            <label htmlFor="accountId" className="form-label w-100">
               <span>
                 Account ID
               </span>
@@ -37,7 +37,7 @@ const SecondStep = ({ setSelectedItem, setUser }) => {
             </label>
           </div>
           <div className="form-group pt-2">
-            <label htmlFor="key" className="form-label text-uppercase w-100">
+            <label htmlFor="key" className="form-label w-100">
               <span>
                 Key
               </span>

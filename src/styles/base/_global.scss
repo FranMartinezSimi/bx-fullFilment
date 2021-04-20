@@ -39,11 +39,20 @@ label{
   color: $primary-color;
   font-size: 10px;
 }
+
+h1, h2, h3, h4, h5 {
+  font-weight: 800;
+}
+
 .h-100 {
   min-height: 100vh;
 }
 .content-wrapper {
   min-height: calc(100vh - 112px);
+}
+
+.display-font {
+  font-family: 'Mont';
 }
 
 @each $name, $color in $palette {

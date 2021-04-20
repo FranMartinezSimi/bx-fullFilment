@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link, useRouteMatch} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 const Sidebar = ({ activeNavbar }) => {
-  let match = useRouteMatch();
   const primaryLinks = [
     {
       name: 'Dashboard',

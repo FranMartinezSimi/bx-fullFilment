@@ -100,13 +100,13 @@ function MainTable({
                 </tr>
               );
             })}
-            {/* {rows.length === 0 && (
+            {page.length === 0 && (
               <tr>
                 <td>
                   <p>No se encontraron resultados...</p>
                 </td>
               </tr>
-            )} */}
+            )}
           </tbody>
         </table>
       </div>

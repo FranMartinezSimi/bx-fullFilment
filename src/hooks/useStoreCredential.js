@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useAtom} from 'jotai';
 import {userCredentialsAtom} from '../lib/atoms';
 
-const SAVE_CREDENTIAL_API = 'http://localhost:8080/api/v1/shipedge/credential';
+const SAVE_CREDENTIAL_API = 'https://desa-api.bluex.cl/api/v1/fulfillment/credential';
 
 const useStoreCredential = () => {
 

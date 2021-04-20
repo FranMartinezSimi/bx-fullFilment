@@ -2,10 +2,10 @@ import React from 'react'
 
 const Card = ({ title, subtitle, children }) => {
   return (
-    <div className="card py-4" style={{borderRadius: '15px'}}>
+    <div className="card py-4 px-3" style={{borderRadius: '15px', border: 'none'}}>
       {title 
         ? (
-          <ul className="d-flex w-100 justify-content-between px-5">
+          <ul className="d-flex w-100 justify-content-between">
             <li>
               <h4>{title}</h4>
               {subtitle && (
@@ -16,11 +16,11 @@ const Card = ({ title, subtitle, children }) => {
           </ul>
         )
       : (
-        <div className="d-flex justify-content-end px-5">
-          <div>X</div>
+        <div className="d-flex justify-content-end">
+          <span aria-hidden="true" className="p-0 pe-3" style={{fontSize: '22px'}}>&times;</span>
         </div>
       )}
-      <div className="card-body px-5">
+      <div className="card-body">
         {children}
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
+import Alert from '../../components/Atoms/Alert';
 import Spinner from '../../components/Atoms/Spinner';
 import Modal from '../../components/Templates/Modal';
 import MainTable from '../../components/Templates/MainTable';
@@ -25,6 +26,7 @@ const Orders = () => {
     const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
     const [orderId, setOrderId] = useState('');
+    const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
 
@@ -77,22 +79,32 @@ const Orders = () => {
         setModal(true);
     }
 
+    function handleErrors(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response.json();
+    }
+
     useEffect(() => {
         fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-            .then(res => res.json())
+            .then(handleErrors)
             .then((data) => {
                 setList(data.order);
                 setLoading(false)
             })
             .catch((error) => {
                 console.log('error', error)
-                setLoading(false);
+                setError(true);
             })
     }, [])
     return (
         <>
+            <h1 className="display-font" style={{fontWeight: 900}}>Tus órdenes</h1>
             {loading
-                ? <Spinner />
+                ? (error
+                    ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
+                    : <Spinner />)
                 : <MainTable 
                     columns={columns}
                     data={data}

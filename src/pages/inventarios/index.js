@@ -25,6 +25,7 @@ const Inventory = () => {
     const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
     const [orderId, setOrderId] = useState('');
+    const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
 
@@ -77,28 +78,36 @@ const Inventory = () => {
         setModal(true);
     }
 
+    function handleErrors(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response.json();
+    }
+
     useEffect(() => {
         fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-            .then(res => res.json())
+            .then(handleErrors)
             .then((data) => {
                 setList(data.order);
                 setLoading(false)
             })
             .catch((error) => {
                 console.log('error', error)
-                setLoading(false);
+                setError(true);
             })
     }, [])
     return (
         <>
+            <h1 className="display-font" style={{fontWeight: 900}}>Tu inventario</h1>
             {loading
-                ? <Spinner />
+                ? (error ? <p className="alert alert-warning" role="alert">Error</p> : <Spinner />)
                 : <MainTable 
                     columns={columns}
                     data={data}
                 />
             }
-            <Modal showModal={modal} onClick={() => setModal(false)} pageSize="20">
+            <Modal title={`Detalle de orden ${orderId}`} showModal={modal} onClick={() => setModal(false)}>
                 <OrderDetail id={orderId} />
             </Modal>
         </>
