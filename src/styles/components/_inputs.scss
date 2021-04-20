@@ -1,0 +1,39 @@
+.form{
+  label span{
+    font-size: 10px;
+    font-weight: 400;
+    color: grey;
+  }
+  &-control {
+    border-radius: 16px;
+    &:focus {
+      border:  1px solid $grey !important;
+      box-shadow: none;
+    }
+  }
+}
+.input-error {
+  color: $danger-color !important;
+  text-transform: initial !important;
+  font-size: 10px !important;
+  margin: 0 5px;
+  padding-top: 6px;
+  display: block;
+  border-top: 1px solid $danger-color;
+}
+
+.custom-control-input ~ .custom-control-label::before{
+  border-color: #cec2ce;
+  background-color: #cec2ce;
+}
+.custom-switch .custom-control-input ~ .custom-control-label::after {
+  background-color: $white;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before{
+  border-color: #8E768E;
+  background-color: #8E768E;
+}
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  background-color: #462546;
+}
