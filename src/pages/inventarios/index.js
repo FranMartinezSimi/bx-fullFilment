@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
+import Alert from '../../components/Atoms/Alert';
 import Spinner from '../../components/Atoms/Spinner';
 import Modal from '../../components/Templates/Modal';
 import MainTable from '../../components/Templates/MainTable';
-import OrderDetail from '../../components/Molecules/OrderDetail';
+import InventoryDetail from '../../components/Molecules/InventoryDetail';
 
 const raw = JSON.stringify({
     "page": 1,
-    "status": "all",
+    // "status": "all",
     "warehouse": "bx1"
 });
 
@@ -24,35 +25,36 @@ const Inventory = () => {
     const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
-    const [orderId, setOrderId] = useState('');
+    const [InventoryId, setInventoryId] = useState('');
     const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
 
     const columns = useMemo(() => [
         {
-          Header: 'Nº orden',
-          accessor: 'order_number',
+          Header: 'SKU/upc',
+          accessor: 'product_id',
+        //   modificar pruduct_id por SKU al subir los cambio
         },
         {
-            Header: 'Fecha de creación',
-            accessor: 'fecha',
-        },
-        {
-            Header: 'Destinatarios',
-            accessor: 'first_name',
-        },
-        {
-            Header: 'Estado OS',
-            accessor: 'tracking',
-        },
-        {
-            Header: 'Estado Tracking',
+            Header: 'Descripción',
             accessor: 'description',
         },
         {
-            Header: 'Nº Tracking',
-            accessor: 'numero_tracking',
+            Header: 'En Bodega',
+            accessor: 'quantity_available',
+        },
+        {
+            Header: 'Disponible',
+            accessor: 'quantity_in_warehouse',
+        },
+        {
+            Header: 'Dañado',
+            accessor: 'quantity_hurt',
+        },
+        {
+            Header: 'Reservado',
+            accessor: '',
         },
         {
             accessor: 'ver',
@@ -60,7 +62,7 @@ const Inventory = () => {
             Cell: (table) => {
                 return(
                     <div
-                        onClick={(e) => handleClickOrderDeatil(e, table)}
+                        onClick={(e) => handleClickInventoryDetail(e, table)}
                         role="button"
                         className="font-weight-bold font-weight-bold"
                     >
@@ -72,9 +74,10 @@ const Inventory = () => {
           },
     ], []);
 
-    const handleClickOrderDeatil = (e, tableData) => {
+    const handleClickInventoryDetail = (e, tableData) => {
         e.preventDefault();
-        setOrderId(tableData.row.original.order_id);
+        setInventoryId(tableData.row.original.product_id);
+        
         setModal(true);
     }
 
@@ -86,10 +89,11 @@ const Inventory = () => {
     }
 
     useEffect(() => {
-        fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
+        fetch("https://desa-api.bluex.cl//api/v1/fulfillment/inventory/getInventoryList", requestOptions)
             .then(handleErrors)
             .then((data) => {
-                setList(data.order);
+                console.log(data.products);
+                setList(data.products);
                 setLoading(false)
             })
             .catch((error) => {
@@ -101,14 +105,16 @@ const Inventory = () => {
         <>
             <h1 className="display-font" style={{fontWeight: 900}}>Tu inventario</h1>
             {loading
-                ? (error ? <p className="alert alert-warning" role="alert">Error</p> : <Spinner />)
+                ? (error
+                    ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
+                    : <Spinner />)
                 : <MainTable 
                     columns={columns}
                     data={data}
                 />
             }
-            <Modal title={`Detalle de orden ${orderId}`} showModal={modal} onClick={() => setModal(false)}>
-                <OrderDetail id={orderId} />
+            <Modal title={`Detalle SKU ${InventoryId}`} showModal={modal} onClick={() => setModal(false)}>
+                <InventoryDetail id={InventoryId} />
             </Modal>
         </>
     );
