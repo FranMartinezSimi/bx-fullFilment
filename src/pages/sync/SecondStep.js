@@ -6,7 +6,7 @@ const SecondStep = ({ setSelectedItem }) => {
   const { setUser } = useAuth();
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     account_id: '',
     key: '',
