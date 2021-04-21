@@ -66,7 +66,7 @@ const Orders = () => {
                         className="font-weight-bold font-weight-bold"
                     >
                         <small>
-                            Ver &gt;
+                            Ver Detalle &gt;
                         </small>
                     </div>
             )},

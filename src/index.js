@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-
+import { AuthProvider } from './context/userContex';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <AuthProvider >
+    <App />
+  </AuthProvider>,
+  document.getElementById('root')
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

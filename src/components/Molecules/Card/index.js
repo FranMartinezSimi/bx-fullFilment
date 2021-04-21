@@ -20,7 +20,7 @@ const Card = ({ title, subtitle, children }) => {
           <span aria-hidden="true" className="p-0 pe-3" style={{fontSize: '22px'}}>&times;</span>
         </div>
       )}
-      <div className="card-body">
+      <div className="card-body pt-0">
         {children}
       </div>
     </div>

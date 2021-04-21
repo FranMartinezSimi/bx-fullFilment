@@ -13,15 +13,15 @@
       &:hover {
           background: $black;
       }
-      &:focus {
-          outline: none;
-          box-shadow: 0px 0px 0px 6px lighten($secondary-color, 15%);
-          background-color: $secondary-color;
-      }
-      &:disabled {
-          background: #FAFAFC !important;
-          color: $primary-color;
-      }
+    //   &:focus {
+    //       outline: none;
+    //       box-shadow: 0px 0px 0px 6px lighten($secondary-color, 15%);
+    //       background-color: $secondary-color;
+    //   }
+    //   &:disabled {
+    //       background: #FAFAFC !important;
+    //       color: $primary-color;
+    //   }
   }
   &-secondary{
       background: $medium-grey;
