@@ -45,11 +45,11 @@ const Orders = () => {
         },
         {
             Header: 'Estado OS',
-            accessor: 'tracking',
+            accessor: 'description',
         },
         {
             Header: 'Estado Tracking',
-            accessor: 'description',
+            accessor: 'tracking',
         },
         {
             Header: 'Nº Tracking',

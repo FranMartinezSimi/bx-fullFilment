@@ -50,17 +50,24 @@ const OrderDetail = ({ id }) => {
             </li>
             <li>
               <hr/>
-              <p><b>Detalle de orden:</b></p>
+              <p><strong>Detalle Pedido A</strong></p>
+              <td><p>SKU</p></td>
+              <td><p>Descripción</p></td>
+              <td><p>Cantidad</p></td>
               <ol>
                 {orderData.detail_order.map((item) => (
                   <li key={item.sku}>
                     {item.sku}
+                    -
                     {item.description}
+                    -
                     {item.quantity}
                   </li>
                 ))}
               </ol>
             </li>
+            <p><strong>Detalle Pedido B</strong></p>
+            <p><strong>Detalle Pedido C</strong></p>
           </ul>
         )
       }
