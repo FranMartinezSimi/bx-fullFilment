@@ -15,12 +15,12 @@ body {
 }
 
 a {
-  color: #2F80ED;
+  color: $primary-color;
   transition: .2s ease-in-out all;
   text-decoration: none;
   &:hover {
     text-decoration: none;
-    color: $secondary-color;
+    color: #2F80ED;
   }
   &:focus {
     text-decoration: none;
