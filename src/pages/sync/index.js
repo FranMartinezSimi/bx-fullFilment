@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Card from '../../components/Molecules/Card'
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
+import FailStep from './FailStep';
+import SuccessStep from './SuccessStep';
 
 const Sync = ({setUser}) => {
   const [selectedItem, setSelectedItem] = useState('firstStep');
@@ -11,12 +13,16 @@ const Sync = ({setUser}) => {
       component = <FirstStep setSelectedItem={setSelectedItem}/>
       break;
     case 'secondStep':
-      component = <SecondStep setUser={setUser}/>
+      component = <SecondStep setUser={setUser} setSelectedItem={setSelectedItem}/>
+      break;
+    case 'failStep':
+      component = <FailStep setUser={setUser} setSelectedItem={setSelectedItem}/>
+      break;
+    case 'successStep':
+      component = <SecondStep setUser={setUser} setSelectedItem={setSelectedItem}/>
       break;
     default:
-      component = (
-        <p>Default</p>
-      );
+      component = <SuccessStep setSelectedItem={setSelectedItem}/>
   }
   return (
     <Card>

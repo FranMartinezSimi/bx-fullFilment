@@ -90,7 +90,6 @@ const Orders = () => {
         fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
             .then(handleErrors)
             .then((data) => {
-                console.log(data.order);
                 setList(data.order);
                 setLoading(false)
             })
