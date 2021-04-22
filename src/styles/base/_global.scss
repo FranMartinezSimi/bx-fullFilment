@@ -63,15 +63,3 @@ h1, h2, h3, h4, h5 {
     color: $color !important;
   }
 }
-.table {
-  th {
-    @include MQ(M) {
-      padding: 20px !important;
-    }
-    text-align: center;
-    white-space: nowrap;
-  }
-  tr {
-    text-align: center;
-  }
-}

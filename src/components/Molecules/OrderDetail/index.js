@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/userContex';
 
-import Spinner from '../../Atoms/Spinner'
+import Spinner from '../../Atoms/Spinner';
+import DropDown from '../../Molecules/DropDown';
+import Todo from '../../../assets/brand/todo.svg';
+import Calendar from '../../../assets/brand/calendar.svg';
+import Flag from '../../../assets/brand/flag.svg';
+import Checkmap from '../../../assets/brand/checkmap.svg';
 
 const OrderDetail = ({ id }) => {
   const { user } = useAuth();
@@ -44,40 +49,65 @@ const OrderDetail = ({ id }) => {
       {loading
         ? <Spinner />
         : (
-          <ul>
-            <li className="d-flex justify-content-between">
-              <p><b>Fecha:</b></p>
-              <p>{orderData.date}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Estado:</b></p>
-              <p>{orderData.estado}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Orden:</b></p>
-              <p>{orderData.order_number}</p>
-            </li>
-            <li>
-              <hr/>
-              <p><strong>Detalle Pedido A</strong></p>
-              <td><p>SKU</p></td>
-              <td><p>Descripción</p></td>
-              <td><p>Cantidad</p></td>
-              <ol>
-                {/* {orderData.detail_order.map((item) => (
-                  <li key={item.sku}>
-                    {item.sku}
-                    -
-                    {item.description}
-                    -
-                    {item.quantity}
-                  </li>
-                ))} */}
-              </ol>
-            </li>
-            <p><strong>Detalle Pedido B</strong></p>
-            <p><strong>Detalle Pedido C</strong></p>
-          </ul>
+          <>
+            <ul className="px-4">
+              <li className="d-flex my-3">
+                <div className="me-4">
+                  <img src={Todo} alt="Lista" width="15"/>
+                </div>
+                <p className="me-4" style={{width: "80px"}}><b>Nº de orden</b></p>
+                <p>{orderData.order_number}</p>
+              </li>
+              <li className="d-flex my-3">
+                <div className="me-4">
+                  <img src={Calendar} alt="Lista" width="15"/>
+                </div>
+                <p className="me-4" style={{width: "80px"}}><b>Fecha orden</b></p>
+                <p>{orderData.date}</p>
+              </li>
+              <li className="d-flex my-3">
+                <div className="me-4">
+                  <img src={Flag} alt="Lista" width="15"/>
+                </div>
+                <p className="me-4" style={{width: "80px"}}><b>Estado</b></p>
+                <p>{orderData.estado}</p>
+              </li>
+            </ul>
+            <div className="px-4 mb-3">
+              <DropDown>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col" className="border-0" style={{fontWeight: 400}}>SKU</th>
+                    <th scope="col" className="border-0" style={{fontWeight: 400}}>Descripción</th>
+                    <th scope="col" className="border-0" style={{fontWeight: 400}}>Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderData.detail_order.map((item) => (
+                    <tr key={item.sku}>
+                      <td>
+                        <small>
+                          {item.sku}
+                        </small>
+                      </td>
+                      <td>
+                        <small>
+                          {item.description}
+                        </small>
+                      </td>
+                      <td>
+                        <small>
+                          {item.quantity}
+                        </small>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              </DropDown>
+            </div>
+          </>
         )
       }
     </>

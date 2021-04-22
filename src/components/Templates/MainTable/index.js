@@ -39,7 +39,7 @@ function MainTable({
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 20 },
+      initialState: { pageIndex: 0 },
     },
     useFilters,
     useGlobalFilter,
@@ -47,7 +47,7 @@ function MainTable({
     usePagination
   );
 
-  // const firstPageRows = page
+  const firstPageRows = page.slice(0, 20);
 
   return ( 
     <>
@@ -73,12 +73,13 @@ function MainTable({
         setGlobalFilter={setGlobalFilter}
       />
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{overflowY: 'hidden'}}>
-        <table {...getTableProps()} className="table table-borderless mb-0">
+        <table {...getTableProps()} className={`table table-borderless mb-0 ${styles.table}`}>
           <thead className="bg-grey">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
                 {headerGroup.headers.map((column) => (
                   <th
+                  className={styles.tableTh}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render('Header')}
@@ -106,7 +107,7 @@ function MainTable({
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {firstPageRows.map((row) => {
               prepareRow(row);
               return (
                 <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>

@@ -110,6 +110,7 @@ const Orders = () => {
     return (
         <>
             <h1 className="display-font" style={{fontWeight: 900}}>Tus órdenes</h1>
+            <h4 className="display-font mb-5" style={{fontWeight: 900, fontSize: "18px"}}>Te mostramos tus órdenes de los últimos días</h4>
             {loading
                 ? (error
                     ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
@@ -120,7 +121,7 @@ const Orders = () => {
                             columns={columns}
                             data={data}
                         />
-                        <p className="mb-5">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
+                        <p className="mb-5 d-none">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
                     </>
                 )
             }
