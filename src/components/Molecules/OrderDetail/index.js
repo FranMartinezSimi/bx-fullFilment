@@ -6,7 +6,7 @@ import DropDown from '../../Molecules/DropDown';
 import Todo from '../../../assets/brand/todo.svg';
 import Calendar from '../../../assets/brand/calendar.svg';
 import Flag from '../../../assets/brand/flag.svg';
-import Checkmap from '../../../assets/brand/checkmap.svg';
+// import Checkmap from '../../../assets/brand/checkmap.svg';
 
 const OrderDetail = ({ id }) => {
   const { user } = useAuth();

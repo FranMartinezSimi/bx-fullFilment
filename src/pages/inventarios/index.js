@@ -3,33 +3,18 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../context/userContex';
 import Alert from '../../components/Atoms/Alert';
 import Spinner from '../../components/Atoms/Spinner';
-import Modal from '../../components/Templates/Modal';
+// import Modal from '../../components/Templates/Modal';
 import MainTable from '../../components/Templates/MainTable';
-import InventoryDetail from '../../components/Molecules/InventoryDetail';
-
-// const raw = JSON.stringify({
-//     "page": 1,
-//     // "status": "all",
-//     "warehouse": "bx1"
-// });
-
-// const requestOptions = {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: raw,
-//     redirect: 'follow'
-// };
+// import InventoryDetail from '../../components/Molecules/InventoryDetail';
 
 const Inventory = () => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
-    const [modal, setModal] = useState(false);
+    // const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
-    const [totalPages, setTotalPages] = useState('');
-    const [InventoryId, setInventoryId] = useState('');
-    const [skuId, setSkuId] = useState('');
+    // const [totalPages, setTotalPages] = useState('');
+    // const [InventoryId, setInventoryId] = useState('');
+    // const [skuId, setSkuId] = useState('');
     const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
@@ -77,20 +62,20 @@ const Inventory = () => {
         //   },
     ], []);
 
-    const handleClickInventoryDetail = (e, tableData) => {
-        e.preventDefault();
-        setInventoryId(tableData.row.original.product_id);
-        setSkuId(tableData.row.original.sku_id);
+    // const handleClickInventoryDetail = (e, tableData) => {
+    //     e.preventDefault();
+    //     setInventoryId(tableData.row.original.product_id);
+    //     setSkuId(tableData.row.original.sku_id);
         
-        setModal(true);
-    }
+    //     setModal(true);
+    // }
 
-    function handleErrors(response) {
-        if (!response.ok) {
-            throw Error(response);
-        }
-        return response.json();
-    }
+    // function handleErrors(response) {
+    //     if (!response.ok) {
+    //         throw Error(response);
+    //     }
+    //     return response.json();
+    // }
 
     useEffect(() => {
     const userData = JSON.parse(user);
@@ -118,10 +103,13 @@ const Inventory = () => {
         .then(data => {
             console.log(data.products);
             setList(data.products);
-            setTotalPages(data.total_pages);
+            // setTotalPages(data.total_pages);
             setLoading(false);
         })
-        .catch(error => console.log('error', error));
+        .catch(error => {
+            console.log('error', error);
+            setError(true);
+        });
 }, [user])
     return (
         <>
@@ -140,9 +128,9 @@ const Inventory = () => {
                         </>
                     )
             }
-            <Modal title={`Detalle SKU ${skuId}`} showModal={modal} onClick={() => setModal(false)}>
+            {/* <Modal title={`Detalle SKU ${skuId}`} showModal={modal} onClick={() => setModal(false)}>
                 <InventoryDetail id={InventoryId} />
-            </Modal>
+            </Modal> */}
         </>
     );
 }
