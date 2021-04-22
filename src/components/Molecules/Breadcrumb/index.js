@@ -1,8 +1,10 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 import arrowLeft from '../../../assets/brand/arrow-left.svg';
 
 const Breadcrumb = () => {
+  let location = useLocation();
   return ( 
     <aside className="row">
       <div className="col-6">
@@ -18,7 +20,7 @@ const Breadcrumb = () => {
           <li>
             <p className="text-grey">
               <small>
-                Ordenes
+                {location.pathname.substring(1)}
               </small>
             </p>
           </li>

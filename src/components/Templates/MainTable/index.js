@@ -4,7 +4,10 @@ import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
 import GlobalFilter from '../../Molecules/GlobalFilter';
-import Pagination from '../../Molecules/Pagination'
+import Pagination from '../../Molecules/Pagination';
+import Sort from '../../../assets/brand/sort.svg';
+import SortUp from '../../../assets/brand/sortUp.svg';
+import SortDown from '../../../assets/brand/sortDown.svg';
 import styles from './styles.module.scss'
 
 function MainTable({ 
@@ -36,7 +39,7 @@ function MainTable({
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 20 },
+      initialState: { pageIndex: 0 },
     },
     useFilters,
     useGlobalFilter,
@@ -44,7 +47,7 @@ function MainTable({
     usePagination
   );
 
-  // const firstPageRows = page
+  const firstPageRows = page.slice(0, 20);
 
   return ( 
     <>
@@ -70,17 +73,33 @@ function MainTable({
         setGlobalFilter={setGlobalFilter}
       />
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{overflowY: 'hidden'}}>
-        <table {...getTableProps()} className="table table-borderless mb-0">
+        <table {...getTableProps()} className={`table table-borderless mb-0 ${styles.table}`}>
           <thead className="bg-grey">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
                 {headerGroup.headers.map((column) => (
                   <th
+                  className={styles.tableTh}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render('Header')}
+                  {!column.isSorted
+                    ? (
+                      <span className={styles.symbol}>
+                        <img src={Sort} alt="sort" className="ms-2" width="8"/>
+                      </span>
+                    )
+                    : (
+                      null
+                    )
+                  }
                   <span>
-                    {column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10"/>) 
+                        : (<img src={SortUp} alt="sortUp" className="ms-2" width="10"/>)
+                      : ''
+                    }
                   </span>
                 </th>
                 ))}
@@ -88,7 +107,7 @@ function MainTable({
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {firstPageRows.map((row) => {
               prepareRow(row);
               return (
                 <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>

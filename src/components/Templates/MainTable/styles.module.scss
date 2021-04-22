@@ -1,3 +1,23 @@
+@import "../../../styles/utils/media";
+
 .tableWrapper {
   border-radius: 12px;
+}
+.tableRowHeader th:last-child {
+  .symbol {
+    display: none;
+  }
+}
+
+.table {
+  th {
+    @include MQ(M) {
+      padding: 20px !important;
+    }
+    text-align: center;
+    white-space: nowrap;
+  }
+  tr {
+    text-align: center;
+  }
 }

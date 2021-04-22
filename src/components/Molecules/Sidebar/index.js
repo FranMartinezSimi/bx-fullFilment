@@ -1,24 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Home from '../../../assets/brand/home.svg';
+import Box from '../../../assets/brand/box.svg';
+import Todo from '../../../assets/brand/todo.svg';
 import styles from './styles.module.scss';
 
 const Sidebar = ({ activeNavbar }) => {
   const primaryLinks = [
     {
       name: 'Dashboard',
-      img: './png/home.png',
-      active: false,
+      img: Home,
+      active: true,
       route: '/',
     },
     {
       name: 'Órdenes',
-      img: './png/list.png',
+      img: Todo,
       active: true,
-      route: '/ordenes',
+      route: '/',
     },
     {
       name: 'Inventario',
-      img: './png/te.png',
+      img: Box,
       active: true,
       route: '/inventarios',
     },

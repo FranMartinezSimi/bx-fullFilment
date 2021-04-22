@@ -1,0 +1,14 @@
+.dropdown {
+  transition: all .5s ease-in-out;
+  overflow: hidden;
+}
+.title {
+  font-size: 18px;
+  font-weight: 800;
+}
+.open {
+  height: auto;
+}
+.close {
+  height: 0;
+}
