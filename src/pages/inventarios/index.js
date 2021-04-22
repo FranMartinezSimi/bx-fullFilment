@@ -59,22 +59,22 @@ const Inventory = () => {
             Header: 'Reservado',
             accessor: '0',
         },
-        {
-            accessor: 'ver',
-            isVisible: true,
-            Cell: (table) => {
-                return(
-                    <div
-                        onClick={(e) => handleClickInventoryDetail(e, table)}
-                        role="button"
-                        className="font-weight-bold font-weight-bold"
-                    >
-                        <small>
-                            Ver &gt;
-                        </small>
-                    </div>
-            )},
-          },
+        // {
+        //     accessor: 'ver',
+        //     isVisible: true,
+        //     Cell: (table) => {
+        //         return(
+        //             <div
+        //                 onClick={(e) => handleClickInventoryDetail(e, table)}
+        //                 role="button"
+        //                 className="font-weight-bold font-weight-bold"
+        //             >
+        //                 <small>
+        //                     Ver &gt;
+        //                 </small>
+        //             </div>
+        //     )},
+        //   },
     ], []);
 
     const handleClickInventoryDetail = (e, tableData) => {
@@ -136,7 +136,7 @@ const Inventory = () => {
                                 columns={columns}
                                 data={data}
                             />
-                            <p className="mb-5">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
+                            {/* <p className="mb-5">{`Mostrando 20 de ${(totalPages * 20)}`}</p> */}
                         </>
                     )
             }
