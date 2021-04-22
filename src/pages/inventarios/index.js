@@ -1,31 +1,35 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
+import { useAuth } from '../../context/userContex';
 import Alert from '../../components/Atoms/Alert';
 import Spinner from '../../components/Atoms/Spinner';
 import Modal from '../../components/Templates/Modal';
 import MainTable from '../../components/Templates/MainTable';
 import InventoryDetail from '../../components/Molecules/InventoryDetail';
 
-const raw = JSON.stringify({
-    "page": 1,
-    // "status": "all",
-    "warehouse": "bx1"
-});
+// const raw = JSON.stringify({
+//     "page": 1,
+//     // "status": "all",
+//     "warehouse": "bx1"
+// });
 
-const requestOptions = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: raw,
-    redirect: 'follow'
-};
+// const requestOptions = {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json'
+//     },
+//     body: raw,
+//     redirect: 'follow'
+// };
 
 const Inventory = () => {
+    const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
+    const [totalPages, setTotalPages] = useState('');
     const [InventoryId, setInventoryId] = useState('');
+    const [skuId, setSkuId] = useState('');
     const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
@@ -33,8 +37,7 @@ const Inventory = () => {
     const columns = useMemo(() => [
         {
           Header: 'SKU/upc',
-          accessor: 'product_id',
-        //   modificar pruduct_id por SKU al subir los cambio
+          accessor: 'sku',
         },
         {
             Header: 'Descripción',
@@ -54,7 +57,7 @@ const Inventory = () => {
         },
         {
             Header: 'Reservado',
-            accessor: '',
+            accessor: '0',
         },
         {
             accessor: 'ver',
@@ -77,6 +80,7 @@ const Inventory = () => {
     const handleClickInventoryDetail = (e, tableData) => {
         e.preventDefault();
         setInventoryId(tableData.row.original.product_id);
+        setSkuId(tableData.row.original.sku_id);
         
         setModal(true);
     }
@@ -89,18 +93,36 @@ const Inventory = () => {
     }
 
     useEffect(() => {
-        fetch("https://desa-api.bluex.cl//api/v1/fulfillment/inventory/getInventoryList", requestOptions)
-            .then(handleErrors)
-            .then((data) => {
-                console.log(data.products);
-                setList(data.products);
-                setLoading(false)
-            })
-            .catch((error) => {
-                console.log('error', error)
-                setError(true);
-            })
-    }, [])
+    const userData = JSON.parse(user);
+    let headers = new Headers();
+    headers.append("account_id", userData.account_id);
+    headers.append("key", userData.key);
+    headers.append("Content-Type", "application/json");
+
+    let raw = JSON.stringify({
+        "warehouse": "bx1",
+        "page": 1
+
+    });
+
+    const requestOptions = {
+    method: 'POST',
+    headers: headers,
+    body: raw,
+    redirect: 'follow'
+    };
+
+    fetch("https://desa-api.bluex.cl//api/v1/fulfillment/inventory/getInventoryList", requestOptions)
+        // .then(handleErrors)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.products);
+            setList(data.products);
+            setTotalPages(data.total_pages);
+            setLoading(false);
+        })
+        .catch(error => console.log('error', error));
+}, [user])
     return (
         <>
             <h1 className="display-font" style={{fontWeight: 900}}>Tu inventario</h1>
@@ -108,12 +130,17 @@ const Inventory = () => {
                 ? (error
                     ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
                     : <Spinner />)
-                : <MainTable 
-                    columns={columns}
-                    data={data}
-                />
+                    : (
+                        <>
+                            <MainTable 
+                                columns={columns}
+                                data={data}
+                            />
+                            <p className="mb-5">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
+                        </>
+                    )
             }
-            <Modal title={`Detalle SKU ${InventoryId}`} showModal={modal} onClick={() => setModal(false)}>
+            <Modal title={`Detalle SKU ${skuId}`} showModal={modal} onClick={() => setModal(false)}>
                 <InventoryDetail id={InventoryId} />
             </Modal>
         </>
