@@ -97,7 +97,7 @@ const Orders = () => {
         };
 
         fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-            // .then(handleErrors)
+            .then(handleErrors)
             .then(response => response.json())
             .then(data => {
                 console.log('data:', data);
@@ -105,7 +105,10 @@ const Orders = () => {
                 setTotalPages(data.total_pages);
                 setLoading(false);
             })
-            .catch(error => console.log('error', error));
+            .catch(error => {
+                console.log('error', error);
+                setError(true);
+            });
     }, [user])
     return (
         <>
