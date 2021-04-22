@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../../context/userContex';
+
 import Spinner from '../../Atoms/Spinner'
 
 const InventoryDetail = ({ id }) => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [InventoryData, setInventoryData] = useState({});
 
   useEffect(() => {
-    const raw = JSON.stringify({
-      "product_id": `${id}`,
+    const userData = JSON.parse(user);
+    let headers = new Headers();
+    headers.append("account_id", userData.account_id);
+    headers.append("key", userData.key);
+    headers.append("Content-Type", "application/json");
+    
+    let raw = JSON.stringify({
       "warehouse": "bx1",
+      "product_id": `${id}`
     });
+    
     const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: raw,
-        redirect: 'follow'
+      method: 'POST',
+      headers: headers,
+      body: raw,
+      redirect: 'follow'
     };
     fetch("https://desa-api.bluex.cl/api/v1/fulfillment/inventory/getInventoryDetail", requestOptions)
       .then(res => res.json())
@@ -29,7 +37,7 @@ const InventoryDetail = ({ id }) => {
         console.log(error);
         setLoading(false);
       })
-  }, [id]);
+  }, [id, user]);
 
   return (
     <>
@@ -39,16 +47,8 @@ const InventoryDetail = ({ id }) => {
           <ul>
             <li>
               <p><b>Descripcion:</b></p>
-              <input style={{borderRadius: '15px'}}>{InventoryData.description}</input>
-
-                {/* {InventoryData.detail_order.map((item) => (
-                  <li key={item.sku}>
-                    {item.sku}
-                    {item.description}
-                    {item.quantity}
-                  </li>
-                ))} */}
-              {/* </ol> */}
+              {/* <input style={{borderRadius: '15px'}}>{InventoryData.description}</input> */}
+              <p>{InventoryData.description}</p>
             </li>
             <hr/>
             <li className="d-flex justify-content-between">
