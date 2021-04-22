@@ -17,7 +17,7 @@ const OrderDetail = ({ id }) => {
     
     let raw = JSON.stringify({
       "warehouse": "bx1",
-      "id": "1131"
+      "id": `${id}`
     });
     
     const requestOptions = {
