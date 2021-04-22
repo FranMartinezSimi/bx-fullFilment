@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../../context/userContex';
+
 import Spinner from '../../Atoms/Spinner'
 
 const OrderDetail = ({ id }) => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [orderData, setOrderData] = useState({});
 
   useEffect(() => {
-    const raw = JSON.stringify({
+    const userData = JSON.parse(user);
+    let headers = new Headers();
+    headers.append("account_id", userData.account_id);
+    headers.append("key", userData.key);
+    headers.append("Content-Type", "application/json");
+    
+    let raw = JSON.stringify({
       "warehouse": "bx1",
-      "id": `${id}`
+      "id": "1131"
     });
+    
     const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: raw,
-        redirect: 'follow'
+      method: 'POST',
+      headers: headers,
+      body: raw,
+      redirect: 'follow'
     };
     fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderDetail", requestOptions)
       .then(res => res.json())
       .then((data) => {
+          console.log(data);
           setOrderData(data);
           setLoading(false);
       })
@@ -28,7 +37,7 @@ const OrderDetail = ({ id }) => {
         console.log(error);
         setLoading(false);
       })
-  }, [id]);
+  }, [id, user]);
 
   return (
     <>
@@ -55,7 +64,7 @@ const OrderDetail = ({ id }) => {
               <td><p>Descripción</p></td>
               <td><p>Cantidad</p></td>
               <ol>
-                {orderData.detail_order.map((item) => (
+                {/* {orderData.detail_order.map((item) => (
                   <li key={item.sku}>
                     {item.sku}
                     -
@@ -63,7 +72,7 @@ const OrderDetail = ({ id }) => {
                     -
                     {item.quantity}
                   </li>
-                ))}
+                ))} */}
               </ol>
             </li>
             <p><strong>Detalle Pedido B</strong></p>

@@ -4,7 +4,10 @@ import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
 import GlobalFilter from '../../Molecules/GlobalFilter';
-import Pagination from '../../Molecules/Pagination'
+import Pagination from '../../Molecules/Pagination';
+import Sort from '../../../assets/brand/sort.svg';
+import SortUp from '../../../assets/brand/sortUp.svg';
+import SortDown from '../../../assets/brand/sortDown.svg';
 import styles from './styles.module.scss'
 
 function MainTable({ 
@@ -73,14 +76,29 @@ function MainTable({
         <table {...getTableProps()} className="table table-borderless mb-0">
           <thead className="bg-grey">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
                 {headerGroup.headers.map((column) => (
                   <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render('Header')}
+                  {!column.isSorted
+                    ? (
+                      <span className={styles.symbol}>
+                        <img src={Sort} alt="sort" className="ms-2" width="8"/>
+                      </span>
+                    )
+                    : (
+                      null
+                    )
+                  }
                   <span>
-                    {column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10"/>) 
+                        : (<img src={SortUp} alt="sortUp" className="ms-2" width="10"/>)
+                      : ''
+                    }
                   </span>
                 </th>
                 ))}

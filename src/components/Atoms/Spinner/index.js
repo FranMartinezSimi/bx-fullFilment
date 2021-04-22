@@ -1,12 +1,10 @@
 import React from 'react'
 
-import styles from './styles.module.scss';
-
 const Spinner = () => (
-  <div className={styles.spinner}>
-    <div className={styles.bounce1} />
-    <div className={styles.bounce2} />
-    <div className={styles.bounce3} />
+  <div className="text-center py-5">
+    <div className="spinner-border" style={{width: "4rem", height: "4rem"}} role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
   </div>
 );
 

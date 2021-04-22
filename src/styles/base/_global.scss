@@ -15,7 +15,7 @@ body {
 }
 
 a {
-  color: $primary-color;
+  color: $dark-grey;
   transition: .2s ease-in-out all;
   text-decoration: none;
   &:hover {
@@ -65,8 +65,11 @@ h1, h2, h3, h4, h5 {
 }
 .table {
   th {
-    padding: 20px !important;
+    @include MQ(M) {
+      padding: 20px !important;
+    }
     text-align: center;
+    white-space: nowrap;
   }
   tr {
     text-align: center;

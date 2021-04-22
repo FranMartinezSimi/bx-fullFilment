@@ -3,7 +3,7 @@ import React from 'react'
 import alarm from '../../../assets/brand/alarm.svg';
 import bento from '../../../assets/brand/bento.svg';
 import avatar from '../../../assets/brand/avatar.svg';
-// import hamburguesa from './png/hamburguesa.png';
+import menu from '../../../assets/brand/menu.svg';
 import arrowDown from '../../../assets/brand/arrow-down.svg';
 import styles from './styles.module.scss';
 
@@ -17,7 +17,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
       <ul className="d-flex w-100 justify-content-between align-items-center my-2">
         <li className="px-4">
           <a href="!#" onClick={handleClick}>
-            <img src={bento} alt="Suite" />
+            <img src={menu} alt="Menu" width="35"/>
           </a>
         </li>
         <li className="d-flex">
