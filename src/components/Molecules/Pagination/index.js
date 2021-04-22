@@ -23,7 +23,7 @@ const Pagination = ({
                     type="button"
                     onClick={() => gotoPage(0)}
                   >
-                    &rbrace;
+                    {`<`}
                   </button>
                 )}
               </div>
