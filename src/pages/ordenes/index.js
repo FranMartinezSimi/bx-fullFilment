@@ -69,12 +69,12 @@ const Orders = () => {
         setModal(true);
     }
 
-    function handleErrors(response) {
-        if (!response.ok) {
-            throw Error(JSON.stringify(response));
-        }
-        return response.json();
-    }
+    // function handleErrors(response) {
+    //     if (!response.ok) {
+    //         throw Error(JSON.stringify(response));
+    //     }
+    //     return response.json();
+    // }
 
     useEffect(() => {
         const userData = JSON.parse(user);
@@ -97,7 +97,7 @@ const Orders = () => {
         };
 
         fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-            .then(handleErrors)
+            // .then(handleErrors)
             .then(response => response.json())
             .then(data => {
                 // console.log('orderData:', data);
