@@ -30,11 +30,11 @@ const Inventory = () => {
         },
         {
             Header: 'En Bodega',
-            accessor: 'quantity_available',
+            accessor: 'quantity_in_warehouse',
         },
         {
             Header: 'Disponible',
-            accessor: 'quantity_in_warehouse',
+            accessor: 'quantity_available',
         },
         {
             Header: 'Dañado',
