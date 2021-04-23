@@ -1,7 +1,7 @@
 import { CSSTransition } from 'react-transition-group';
 import styles from './styles.module.scss';
 
-const Modal = ({ title, children, onClick, showModal}) => (
+const Modal = ({ title, children, onClick, showModal, size}) => (
   <CSSTransition
     in={showModal}
     timeout={300}
@@ -9,7 +9,7 @@ const Modal = ({ title, children, onClick, showModal}) => (
     unmountOnExit
   >
     <div className={styles.modal}>
-      <div className="bg-white shadows w-50 m-auto p-3 border-0" style={{borderRadius: '16px'}}>
+      <div className={`${size === 'sm' ? styles.sm : styles.md} bg-white shadows m-auto p-3 border-0`} style={{borderRadius: '16px'}}>
         <div className="modal-header py-2 border-0 d-flex justify-content-between align-items-end">
           <h5 className={`${styles.modalTitle} display-font`}>{title}</h5>
           <button type="button" className={`p-0 ${styles.close}`} onClick={onClick}>

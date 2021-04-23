@@ -17,13 +17,13 @@ const Sidebar = ({ activeNavbar }) => {
       name: 'Órdenes',
       img: Todo,
       active: true,
-      route: '/ordenes',
+      route: '/',
     },
     {
       name: 'Inventario',
       img: Box,
       active: true,
-      route: '/',
+      route: '/inventario',
     },
   ];
   const secondaryLinks = [
@@ -52,9 +52,9 @@ const Sidebar = ({ activeNavbar }) => {
         <li>
           <ul>
             {primaryLinks.map((item) => (
-              <li className={`${item.active ? '' : 'd-none'} py-2 my-2`} key={item.name}>
+              <li className={`${item.active ? '' : 'd-none'} py-2 my-3`} key={item.name}>
                 <Link to={`${item.route}`}>
-                  <div className={`d-flex ${activeNavbar ? '' : 'justify-content-center'}`}>
+                  <div className={`d-flex ${activeNavbar ? '' : 'justify-content-center align-items-center'}`}>
                     <div className={`${styles.navigationItemImg} me-2`}>
                       <img src={item.img} alt={item.name} width="20"/>
                     </div>
