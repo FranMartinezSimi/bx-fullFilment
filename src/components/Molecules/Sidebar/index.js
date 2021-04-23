@@ -23,7 +23,7 @@ const Sidebar = ({ activeNavbar }) => {
       name: 'Inventario',
       img: Box,
       active: true,
-      route: '/inventarios',
+      route: '/inventario',
     },
   ];
   const secondaryLinks = [
