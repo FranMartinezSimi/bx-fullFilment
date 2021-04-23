@@ -9,10 +9,16 @@ const Pagination = ({
   gotoPage,
   pageCount,
   pageOptions,
+  totalPagesFetch
 }) => {
   return (
     <div className="container px-0">
-      <div className="row justify-content-end">
+      <div className="row justify-content-between">
+        <div className="col-md-6">
+          {totalPagesFetch && (
+            <p className="mb-0 text-grey">{`Mostrando 10 de ${(totalPagesFetch * 20)}`}</p>
+          )}
+        </div>
         <div className="col-md-6 col-xl-4">
           {pageCount > 1 && (
             <div className="bg-white d-flex align-items-center justify-content-center mb-4" style={{ borderRadius: '12px' }}>

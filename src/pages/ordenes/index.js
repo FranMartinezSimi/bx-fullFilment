@@ -15,6 +15,7 @@ const Orders = () => {
     const [totalPages, setTotalPages] = useState('');
     const [orderId, setOrderId] = useState('');
     const [orderNumber, setOrderNumber] = useState('');
+    const [orderTracking, setOrderTracking] = useState('');
     const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
@@ -29,8 +30,8 @@ const Orders = () => {
             accessor: 'fecha',
         },
         {
-            Header: 'Destinatarios',
-            accessor: 'first_name',
+            Header: 'Destinatario',
+            accessor: d => `${d.first_name} ${d.last_name}`
         },
         {
             Header: 'Estado OS',
@@ -66,6 +67,7 @@ const Orders = () => {
         e.preventDefault();
         setOrderId(tableData.row.original.order_id);
         setOrderNumber(tableData.row.original.order_number);
+        setOrderTracking(tableData.row.original.tracking_description);
         setModal(true);
     }
 
@@ -100,7 +102,7 @@ const Orders = () => {
             // .then(handleErrors)
             .then(response => response.json())
             .then(data => {
-                // console.log('orderData:', data);
+                console.log('orderData:', data);
                 setList(data.order);
                 setTotalPages(data.total_pages);
                 setLoading(false);
@@ -123,13 +125,14 @@ const Orders = () => {
                         <MainTable 
                             columns={columns}
                             data={data}
+                            totalPagesFetch={totalPages}
                         />
                         <p className="mb-5 d-none">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
                     </>
                 )
             }
             <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
-                <OrderDetail id={orderId} />
+                <OrderDetail id={orderId} tracking={orderTracking}/>
             </Modal>
         </>
     );
