@@ -31,7 +31,7 @@ const Orders = () => {
         },
         {
             Header: 'Destinatario',
-            accessor: 'first_name',
+            accessor: d => `${d.first_name} ${d.last_name}`
         },
         {
             Header: 'Estado OS',
@@ -102,7 +102,7 @@ const Orders = () => {
             // .then(handleErrors)
             .then(response => response.json())
             .then(data => {
-                // console.log('orderData:', data);
+                console.log('orderData:', data);
                 setList(data.order);
                 setTotalPages(data.total_pages);
                 setLoading(false);
@@ -125,6 +125,7 @@ const Orders = () => {
                         <MainTable 
                             columns={columns}
                             data={data}
+                            totalPagesFetch={totalPages}
                         />
                         <p className="mb-5 d-none">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
                     </>

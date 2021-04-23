@@ -15,7 +15,8 @@ function MainTable({
   data,
   fetchData,
   loading,
-  pageCount: controlledPageCount,
+  // pageCount: totalPageFetch,
+  totalPagesFetch,
 }) {
   const {
     getTableProps,
@@ -141,6 +142,7 @@ function MainTable({
           gotoPage={gotoPage}
           pageCount={pageCount}
           pageOptions={pageOptions}
+          totalPagesFetch={totalPagesFetch}
         />
       )}
 
