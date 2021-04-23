@@ -17,13 +17,13 @@ const Sidebar = ({ activeNavbar }) => {
       name: 'Órdenes',
       img: Todo,
       active: true,
-      route: '/',
+      route: '/ordenes',
     },
     {
       name: 'Inventario',
       img: Box,
       active: true,
-      route: '/inventario',
+      route: '/',
     },
   ];
   const secondaryLinks = [

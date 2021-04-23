@@ -14,7 +14,7 @@ const SecondStep = ({ setSelectedItem }) => {
 
   function handleErrors(response) {
     if (!response.ok) {
-        console.log(response);
+        console.log('responseError:', response);
     }
     return response.json();
   }
