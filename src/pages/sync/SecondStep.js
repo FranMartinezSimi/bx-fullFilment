@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/userContex'
 import Button from '../../components/Atoms/Button';
+import Current from '../../assets/brand/secondStep.svg';
+import ArrowBack from '../../assets/brand/back.svg';
 
 const SecondStep = ({ setSelectedItem }) => {
   const { setUser } = useAuth();
@@ -24,6 +26,10 @@ const SecondStep = ({ setSelectedItem }) => {
       ...form,
       [e.target.name] : e.target.value,
     })
+  }
+
+  const handleClickGoBack = () => {
+    setSelectedItem('firstStep');
   }
 
   const handleClick = () => {
@@ -77,6 +83,18 @@ const SecondStep = ({ setSelectedItem }) => {
         : (
           <>
             <div className="card-img mb-4">
+              <ul className="d-flex justify-content-between align-items-center">
+                <li>
+                  <a href="#!" onClick={() => setSelectedItem('firstStep')}>
+                    <img src={ArrowBack} alt="back" width="20"/>
+                  </a>
+                </li>
+                <li>
+                  <a href="#!" onClick={() => setSelectedItem('failStep')}>
+                    <span aria-hidden="true" className="p-0 pe-3" style={{fontSize: '22px'}}>&times;</span>
+                  </a>
+                </li>
+              </ul>
             <img className="w-100" src="./nonImg.jpg" alt="imagen"/>
             </div>
             <ol className="p-0 ps-3">
@@ -129,6 +147,9 @@ const SecondStep = ({ setSelectedItem }) => {
                   onClick={handleClick}
                   loading={loading}
                 />
+                <div className="mt-4" onClick={handleClickGoBack}>
+                  <img src={Current} alt="current"/>
+                </div>
               </div>
             </div>
           </>
