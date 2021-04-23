@@ -29,7 +29,7 @@ const InventoryDetail = ({ id }) => {
     fetch("https://desa-api.bluex.cl/api/v1/fulfillment/inventory/getInventoryDetail", requestOptions)
       .then(res => res.json())
       .then((data) => {
-        console.log(data);
+          // console.log(data);
           setInventoryData(data);
           setLoading(false);
       })

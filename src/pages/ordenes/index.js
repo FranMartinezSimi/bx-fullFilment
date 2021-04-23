@@ -100,7 +100,7 @@ const Orders = () => {
             .then(handleErrors)
             .then(response => response.json())
             .then(data => {
-                console.log('data:', data);
+                // console.log('orderData:', data);
                 setList(data.order);
                 setTotalPages(data.total_pages);
                 setLoading(false);

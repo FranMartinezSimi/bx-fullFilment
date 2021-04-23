@@ -21,7 +21,7 @@ const Inventory = () => {
 
     const columns = useMemo(() => [
         {
-          Header: 'SKU/upc',
+          Header: 'SKU/UPC',
           accessor: 'sku',
         },
         {
@@ -101,7 +101,7 @@ const Inventory = () => {
         // .then(handleErrors)
         .then(response => response.json())
         .then(data => {
-            console.log(data.products);
+            // console.log('inventoryData: ', data.products);
             setList(data.products);
             // setTotalPages(data.total_pages);
             setLoading(false);
