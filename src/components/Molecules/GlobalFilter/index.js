@@ -12,6 +12,8 @@ function GlobalFilter({
     setGlobalFilter(value.trim() || undefined);
   }, 200);
 
+  const checkUrl = (window.location.pathname === '/inventario');
+
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-center">
@@ -27,13 +29,15 @@ function GlobalFilter({
             placeholder={`Buscar en ${count} items`}
           />
         </div>
-        <div className="col-sm-6 col-md-2">
-          <div className="text-end">
-            <a href="#!" className="btn btn-complementary">
-              Subir Orden
-            </a>
+        {!checkUrl && (
+          <div className="col-sm-6 col-md-2">
+            <div className="text-end">
+              <a href="#!" className="btn btn-complementary">
+                Subir Orden
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
