@@ -35,7 +35,7 @@ const OrderDetail = ({ id, tracking }) => {
     fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderDetail", requestOptions)
       .then(res => res.json())
       .then((data) => {
-          console.log('orderDetail:', data);
+          // console.log('orderDetail:', data);
           setOrderData(data);
           setLoading(false);
       })
