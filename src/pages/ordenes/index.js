@@ -73,6 +73,7 @@ const Orders = () => {
 
     // function handleErrors(response) {
     //     if (!response.ok) {
+    //         setError(true);
     //         throw Error(JSON.stringify(response));
     //     }
     //     return response.json();
@@ -86,7 +87,7 @@ const Orders = () => {
         headers.append("Content-Type", "application/json");
 
         let raw = JSON.stringify({
-        "page": 1,
+        "page": 2,
         "warehouse": "bx1",
         "status": "all"
         });
@@ -102,14 +103,19 @@ const Orders = () => {
             // .then(handleErrors)
             .then(response => response.json())
             .then(data => {
-                // console.log('orderData:', data);
-                setList(data.order);
-                setTotalPages(data.total_pages);
-                setLoading(false);
+                console.log('orderData:', data);
+                if (data.statusCode === 500) {
+                    setError(true);
+                } else {
+                    setLoading(false);
+                    setList(data.order);
+                    setTotalPages(data.total_pages);
+                }
             })
             .catch(error => {
                 console.log('error', error);
                 setError(true);
+                setLoading(false);
             });
     }, [user])
     return (
