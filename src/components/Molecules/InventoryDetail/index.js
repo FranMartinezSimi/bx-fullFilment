@@ -29,23 +29,19 @@ const InventoryDetail = ({ id }) => {
       body: raw,
       redirect: 'follow'
     };
-    fetch("https://desa-api.bluex.cl/api/v1/fulfillment/inventory/getInventoryDetail", requestOptions)
+    const getInventoryDetail = async () => {
+      const data = await fetch("https://desa-api.bluex.cl/api/v1/fulfillment/inventory/getInventoryDetail", requestOptions)
       .then(res => res.json())
-      .then((data) => {
-        console.log('orderData:', data);
-        if (data.statusCode === 500) {
-          setLoading(false);
-          setError(true);
-        } else {
-          console.log(data);
-          setInventoryData(data);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+      if (data.statusCode === 500) {
         setLoading(false);
-      })
+        setError(true);
+      } else {
+        console.log(data);
+        setInventoryData(data);
+        setLoading(false);
+      }
+    }
+    getInventoryDetail();
   }, [id, user]);
 
   return (

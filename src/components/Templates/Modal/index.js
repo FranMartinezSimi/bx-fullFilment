@@ -17,7 +17,7 @@ const Modal = ({ title, subtitle, children, onClick, showModal, size}) => (
               <p className={`${styles.modalSubtitle}`}>{subtitle}</p>
             )}
           </div>
-          <button type="button" className={`p-0 ${styles.close}`} onClick={onClick}>
+          <button type="button" data-testid="printed-username" className={`p-0 ${styles.close}`} onClick={onClick}>
             <span aria-hidden="true" className="p-0">&times;</span>
           </button>
         </div>
