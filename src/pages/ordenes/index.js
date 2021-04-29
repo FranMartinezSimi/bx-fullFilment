@@ -126,16 +126,11 @@ const Orders = () => {
                 ? (error
                     ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
                     : <Spinner />)
-                : (
-                    <>
-                        <MainTable 
-                            columns={columns}
-                            data={data}
-                            totalPagesFetch={totalPages}
-                        />
-                        <p className="mb-5 d-none">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
-                    </>
-                )
+                : <MainTable 
+                    columns={columns}
+                    data={data}
+                    totalPagesFetch={totalPages}
+                    /> 
             }
             <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
                 <OrderDetail id={orderId} tracking={orderTracking}/>

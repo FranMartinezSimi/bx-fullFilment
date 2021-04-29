@@ -3,18 +3,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../context/userContex';
 import Alert from '../../components/Atoms/Alert';
 import Spinner from '../../components/Atoms/Spinner';
-// import Modal from '../../components/Templates/Modal';
+import Modal from '../../components/Templates/Modal';
 import MainTable from '../../components/Templates/MainTable';
-// import InventoryDetail from '../../components/Molecules/InventoryDetail';
+import InventoryDetail from '../../components/Molecules/InventoryDetail';
 
 const Inventory = () => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
-    // const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
-    // const [totalPages, setTotalPages] = useState('');
-    // const [InventoryId, setInventoryId] = useState('');
-    // const [skuId, setSkuId] = useState('');
+    const [inventoryId, setInventoryId] = useState('');
+    const [skuId, setSkuId] = useState('');
     const [error, setError] = useState(false);
 
     const data = useMemo(() => list, [list]);
@@ -44,31 +43,31 @@ const Inventory = () => {
             Header: 'Reservado',
             accessor: '0',
         },
-        // {
-        //     accessor: 'ver',
-        //     isVisible: true,
-        //     Cell: (table) => {
-        //         return(
-        //             <div
-        //                 onClick={(e) => handleClickInventoryDetail(e, table)}
-        //                 role="button"
-        //                 className="font-weight-bold font-weight-bold"
-        //             >
-        //                 <small>
-        //                     Ver &gt;
-        //                 </small>
-        //             </div>
-        //     )},
-        //   },
+        {
+            accessor: 'ver',
+            isVisible: true,
+            Cell: (table) => {
+                return(
+                    <div
+                        onClick={(e) => handleClickInventoryDetail(e, table)}
+                        role="button"
+                        className="font-weight-bold font-weight-bold"
+                    >
+                        <small>
+                            Ver &gt;
+                        </small>
+                    </div>
+            )},
+          },
     ], []);
 
-    // const handleClickInventoryDetail = (e, tableData) => {
-    //     e.preventDefault();
-    //     setInventoryId(tableData.row.original.product_id);
-    //     setSkuId(tableData.row.original.sku_id);
+    const handleClickInventoryDetail = (e, tableData) => {
+        e.preventDefault();
+        setInventoryId(tableData.row.original.product_id);
+        setSkuId(tableData.row.original.sku);
         
-    //     setModal(true);
-    // }
+        setModal(true);
+    }
 
     // function handleErrors(response) {
     //     if (!response.ok) {
@@ -102,8 +101,12 @@ const Inventory = () => {
         .then(response => response.json())
         .then(data => {
             // console.log('inventoryData: ', data.products);
+            if (data.statusCode === 500) {
+                setLoading(false);
+                setError(true);
+                return
+            }
             setList(data.products);
-            // setTotalPages(data.total_pages);
             setLoading(false);
         })
         .catch(error => {
@@ -118,19 +121,14 @@ const Inventory = () => {
                 ? (error
                     ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
                     : <Spinner />)
-                    : (
-                        <>
-                            <MainTable 
-                                columns={columns}
-                                data={data}
-                            />
-                            {/* <p className="mb-5">{`Mostrando 20 de ${(totalPages * 20)}`}</p> */}
-                        </>
-                    )
+                : <MainTable 
+                    columns={columns}
+                    data={data}
+                    />
             }
-            {/* <Modal title={`Detalle SKU ${skuId}`} showModal={modal} onClick={() => setModal(false)}>
-                <InventoryDetail id={InventoryId} />
-            </Modal> */}
+            <Modal title={`Detalle SKU ${skuId}`} subtitle={`Id de producto ${inventoryId}`} showModal={modal} onClick={() => setModal(false)}>
+                <InventoryDetail id={inventoryId} />
+            </Modal>
         </>
     );
 }
