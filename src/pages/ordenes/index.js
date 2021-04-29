@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-import { useAuth } from '../../context/userContex';
-import Alert from '../../components/Atoms/Alert';
-import Spinner from '../../components/Atoms/Spinner';
-import Modal from '../../components/Templates/Modal';
-import MainTable from '../../components/Templates/MainTable';
-import OrderDetail from '../../components/Molecules/OrderDetail';
+import Alert from 'components/Atoms/Alert';
+import Spinner from 'components/Atoms/Spinner';
+import Modal from 'components/Templates/Modal';
+import MainTable from 'components/Templates/MainTable';
+import OrderDetail from 'components/Molecules/OrderDetail';
+import {clientFetch} from 'lib/client-fetch'
 
 const Orders = () => {
-    const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
@@ -80,44 +79,25 @@ const Orders = () => {
     // }
 
     useEffect(() => {
-        const userData = JSON.parse(user);
-        let headers = new Headers();
-        headers.append("account_id", userData.account_id);
-        headers.append("key", userData.key);
-        headers.append("Content-Type", "application/json");
-
-        let raw = JSON.stringify({
-        "page": 2,
-        "warehouse": "bx1",
-        "status": "all"
-        });
-
-        const requestOptions = {
-        method: 'POST',
-        headers: headers,
-        body: raw,
-        redirect: 'follow'
-        };
-
-        fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderList", requestOptions)
-            // .then(handleErrors)
-            .then(response => response.json())
+        clientFetch('order/getOrderList', {
+            body: {
+                "page": 2,
+                "warehouse": "bx1",
+                "status": "all"
+            }
+        })
             .then(data => {
                 console.log('orderData:', data);
-                if (data.statusCode === 500) {
-                    setError(true);
-                } else {
-                    setLoading(false);
-                    setList(data.order);
-                    setTotalPages(data.total_pages);
-                }
+                setLoading(false);
+                setList(data.order);
+                setTotalPages(data.total_pages);
             })
             .catch(error => {
                 console.log('error', error);
                 setError(true);
                 setLoading(false);
             });
-    }, [user])
+    }, [])
     return (
         <>
             <h1 className="display-font" style={{fontWeight: 900}}>Tus órdenes</h1>
