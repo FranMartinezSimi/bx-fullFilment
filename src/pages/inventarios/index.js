@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { clientFetch } from 'lib/client-fetch'
 
-import { useAuth } from '../../context/userContex';
-import Alert from '../../components/Atoms/Alert';
-import Spinner from '../../components/Atoms/Spinner';
-import Modal from '../../components/Templates/Modal';
-import MainTable from '../../components/Templates/MainTable';
-import InventoryDetail from '../../components/Molecules/InventoryDetail';
+import Alert from 'components/Atoms/Alert';
+import Spinner from 'components/Atoms/Spinner';
+import Modal from 'components/Templates/Modal';
+import MainTable from 'components/Templates/MainTable';
+import InventoryDetail from 'components/Molecules/InventoryDetail';
+import PageTitle from 'components/Atoms/PageTitle';
 
 const Inventory = () => {
-    const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState(false);
     const [list, setList] = useState([]);
@@ -69,62 +69,42 @@ const Inventory = () => {
         setModal(true);
     }
 
-    // function handleErrors(response) {
-    //     if (!response.ok) {
-    //         throw Error(response);
-    //     }
-    //     return response.json();
-    // }
+    let component;
+
+    if (error) {
+      component = <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>;
+    } else {
+      component = <Spinner />;
+    }
 
     useEffect(() => {
-    const userData = JSON.parse(user);
-    let headers = new Headers();
-    headers.append("account_id", userData.account_id);
-    headers.append("key", userData.key);
-    headers.append("Content-Type", "application/json");
-
-    let raw = JSON.stringify({
-        "warehouse": "bx1",
-        "page": 1
-
-    });
-
-    const requestOptions = {
-    method: 'POST',
-    headers: headers,
-    body: raw,
-    redirect: 'follow'
-    };
-
-    fetch("https://desa-api.bluex.cl//api/v1/fulfillment/inventory/getInventoryList", requestOptions)
-        // .then(handleErrors)
-        .then(response => response.json())
-        .then(data => {
-            // console.log('inventoryData: ', data.products);
-            if (data.statusCode === 500) {
-                setLoading(false);
-                setError(true);
-                return
+        clientFetch('inventory/getInventoryList', {
+            body: {
+                "page": 1,
+                "warehouse": "bx1",
+                "status": "all"
             }
-            setList(data.products);
-            setLoading(false);
         })
-        .catch(error => {
-            console.log('error', error);
-            setError(true);
-        });
-}, [user])
+            .then(data => {
+                // console.log('orderData:', data);
+                setLoading(false);
+                setList(data.products);
+            })
+            .catch(error => {
+                console.log('error', error);
+                setError(true);
+                setLoading(false);
+            });
+    }, [])
     return (
         <>
-            <h1 className="display-font" style={{fontWeight: 900}}>Tu inventario</h1>
-            {loading
-                ? (error
-                    ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
-                    : <Spinner />)
-                : <MainTable 
+            <PageTitle title="Tu inventario" />
+            {list.length && !loading
+                ? <MainTable 
                     columns={columns}
                     data={data}
                     />
+                : component
             }
             <Modal title={`Detalle SKU ${skuId}`} subtitle={`Id de producto ${inventoryId}`} showModal={modal} onClick={() => setModal(false)}>
                 <InventoryDetail id={inventoryId} />

@@ -1,9 +1,9 @@
 import React from 'react'
 import Back from '../../../assets/brand/back.svg'
 
-const Card = ({ title, subtitle, children, close, handleClose, back, handleBack }) => {
+const Card = ({ className, title, subtitle, children, close, handleClose, back, handleBack }) => {
   return (
-    <div className="card py-4 px-3" style={{borderRadius: '15px', border: 'none'}}>
+    <div className={`card py-4 px-3 ${className}`} style={{borderRadius: '15px', border: 'none'}}>
       {title 
         ? (
           <ul className="d-flex w-100 justify-content-between">
