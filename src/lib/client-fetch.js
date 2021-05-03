@@ -1,8 +1,9 @@
-import {apiKey, apiUrl, APIConstans} from '../config'
+import {apiUrl, APIConstans} from '../config'
 
 export function clientFetch(endpoint, {body, ...customConfig} = {}) {
   const headers = {'content-type': 'application/json'}
-  const apiKeys = JSON.parse(apiKey)
+  const apiKeys = JSON.parse(window.localStorage.getItem('bxBusinessActiveFulfillment'))
+  
   if (apiKeys) {
     headers.key = apiKeys.key
     headers.account_id = apiKeys.account_id
@@ -24,6 +25,7 @@ export function clientFetch(endpoint, {body, ...customConfig} = {}) {
     .then(async response => {
       if (response.status >= 500) {
         const errorMessage = await response.text()
+        console.log('errorMessage', errorMessage)
         return Promise.reject(new Error(errorMessage))
       }
       if (response.status === 401) {

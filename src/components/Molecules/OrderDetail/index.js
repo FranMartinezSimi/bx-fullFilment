@@ -56,28 +56,28 @@ const OrderDetail = ({ id, tracking }) => {
                 <div className="me-4">
                   <img src={Todo} alt="Lista" width="15"/>
                 </div>
-                <p className="me-4 display-font" style={{width: "90px", fontSize: 14, fontWeight: 800}}>Nº de orden</p>
-                <p>{orderData.order_number}</p>
+                <p className="me-4 display-font" style={{width: "140px", fontSize: 14, fontWeight: 800}}>Nº de Shipping</p>
+                <p>{id}</p>
               </li>
               <li className="d-flex my-3">
                 <div className="me-4">
                   <img src={Calendar} alt="Lista" width="15"/>
                 </div>
-                <p className="me-4 display-font" style={{width: "90px", fontSize: 14, fontWeight: 800}}>Fecha orden</p>
+                <p className="me-4 display-font" style={{width: "140px", fontSize: 14, fontWeight: 800}}>Fecha orden</p>
                 <p>{orderData.date}</p>
               </li>
               <li className="d-flex my-3">
                 <div className="me-4">
                   <img src={Flag} alt="Lista" width="15"/>
                 </div>
-                <p className="me-4 display-font" style={{width: "90px", fontSize: 14, fontWeight: 800}}>Estado</p>
+                <p className="me-4 display-font" style={{width: "140px", fontSize: 14, fontWeight: 800}}>Estado Unificado</p>
                 <p>{orderData.estado}</p>
               </li>
               <li className="d-flex my-3">
                 <div className="me-4">
                   <img src={Checkmap} alt="Lista" width="15"/>
                 </div>
-                <p className="me-4 display-font" style={{width: "90px", fontSize: 14, fontWeight: 800}}>Tracking</p>
+                <p className="me-4 display-font" style={{width: "140px", fontSize: 14, fontWeight: 800}}>Nº de Tracking</p>
                 <p>{tracking}</p>
               </li>
             </ul>

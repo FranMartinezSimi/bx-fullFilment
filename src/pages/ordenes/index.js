@@ -1,28 +1,53 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useHistory } from "react-router-dom";
+import {clientFetch} from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
-import {clientFetch} from 'lib/client-fetch'
+import PageTitle from 'components/Atoms/PageTitle';
 
 const Orders = () => {
     const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState(false);
+    const [error, setError] = useState(false);
     const [list, setList] = useState([]);
     const [totalPages, setTotalPages] = useState('');
     const [orderId, setOrderId] = useState('');
     const [orderNumber, setOrderNumber] = useState('');
     const [orderTracking, setOrderTracking] = useState('');
-    const [error, setError] = useState(false);
+
+    let history = useHistory();
+
+    const getData = () => {
+        clientFetch('order/getOrderList', {
+            body: {
+                "page": 1,
+                "warehouse": "bx1",
+                "status": "all"
+            }
+        })
+            .then(data => {
+                // console.log('orderData:', data);
+                setLoading(false);
+                setList(data.order);
+                setTotalPages(data.total_pages);
+            })
+            .catch(error => {
+                console.log('error', error);
+                setError(true);
+                setLoading(false);
+            });
+    }
 
     const data = useMemo(() => list, [list]);
 
     const columns = useMemo(() => [
         {
           Header: 'Nº orden',
-          accessor: 'order_number',
+          accessor: 'order_id',
         },
         {
             Header: 'Fecha de creación',
@@ -33,8 +58,8 @@ const Orders = () => {
             accessor: d => `${d.first_name} ${d.last_name}`
         },
         {
-            Header: 'Estado OS',
-            accessor: 'description',
+            Header: 'Nº de referencia',
+            accessor: 'order_number',
         },
         {
             Header: 'Estado Tracking',
@@ -62,6 +87,17 @@ const Orders = () => {
           },
     ], []);
 
+    const handleClickUpdateOrder = (e) => {
+        e.preventDefault();
+        history.push("/subir-ordenes");
+    }
+
+    const handleClickUpdateList = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        getData();
+    }
+
     const handleClickOrderDeatil = (e, tableData) => {
         e.preventDefault();
         setOrderId(tableData.row.original.order_id);
@@ -69,53 +105,30 @@ const Orders = () => {
         setOrderTracking(tableData.row.original.tracking_description);
         setModal(true);
     }
+    
+    let component;
 
-    // function handleErrors(response) {
-    //     if (!response.ok) {
-    //         setError(true);
-    //         throw Error(JSON.stringify(response));
-    //     }
-    //     return response.json();
-    // }
+    if (error) {
+      component = <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>;
+    } else {
+      component = <Spinner />;
+    }
 
     useEffect(() => {
-        clientFetch('order/getOrderList', {
-            body: {
-                "page": 2,
-                "warehouse": "bx1",
-                "status": "all"
-            }
-        })
-            .then(data => {
-                console.log('orderData:', data);
-                setLoading(false);
-                setList(data.order);
-                setTotalPages(data.total_pages);
-            })
-            .catch(error => {
-                console.log('error', error);
-                setError(true);
-                setLoading(false);
-            });
+        getData();
     }, [])
     return (
         <>
-            <h1 className="display-font" style={{fontWeight: 900}}>Tus órdenes</h1>
-            <h4 className="display-font mb-5" style={{fontWeight: 900, fontSize: "18px"}}>Te mostramos tus órdenes de los últimos días</h4>
-            {loading
-                ? (error
-                    ? <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
-                    : <Spinner />)
-                : (
-                    <>
-                        <MainTable 
-                            columns={columns}
-                            data={data}
-                            totalPagesFetch={totalPages}
-                        />
-                        <p className="mb-5 d-none">{`Mostrando 20 de ${(totalPages * 20)}`}</p>
-                    </>
-                )
+            <PageTitle title="Tus órdenes" subtitle="Te mostramos tus órdenes de los últimos días"/>
+            {list.length && !loading
+                ? <MainTable 
+                    columns={columns}
+                    data={data}
+                    totalPagesFetch={totalPages}
+                    handleClick={handleClickUpdateOrder}
+                    handleClickUpdate={handleClickUpdateList}
+                    /> 
+                : component
             }
             <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
                 <OrderDetail id={orderId} tracking={orderTracking}/>

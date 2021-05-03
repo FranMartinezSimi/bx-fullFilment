@@ -11,6 +11,7 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-query": "^3.15.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-table": "^7.6.3",
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^5.1.2",
     "env-cmd": "^10.1.0"
   }
 }

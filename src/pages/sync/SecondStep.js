@@ -60,6 +60,7 @@ const SecondStep = ({ setSelectedItem }) => {
             const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(form));
             setLoading(false);
             setUser(bxBusinessActiveFulfillment);
+            return;
           }
           setSelectedItem('failStep');
       })

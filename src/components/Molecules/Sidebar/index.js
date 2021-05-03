@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Home from '../../../assets/brand/home.svg';
-import Box from '../../../assets/brand/box.svg';
-import Todo from '../../../assets/brand/todo.svg';
+import Home from 'assets/brand/home.svg';
+import Box from 'assets/brand/box.svg';
+import Todo from 'assets/brand/todo.svg';
 import styles from './styles.module.scss';
 
 const Sidebar = ({ activeNavbar }) => {

@@ -16,6 +16,8 @@ function MainTable({
   fetchData,
   loading,
   // pageCount: totalPageFetch,
+  handleClick,
+  handleClickUpdate,
   totalPagesFetch,
 }) {
   const {
@@ -72,6 +74,8 @@ function MainTable({
         preGlobalFilteredRows={preGlobalFilteredRows}
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
+        handleClick={handleClick}
+        handleClickUpdate={handleClickUpdate}
       />
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{overflowY: 'hidden'}}>
         <table {...getTableProps()} className={`table table-borderless mb-0 ${styles.table}`}>

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/userContex';
 
-import Spinner from '../../Atoms/Spinner'
+import Spinner from '../../Atoms/Spinner';
+import Alert from '../../Atoms/Alert';
+import styles from './styles.module.scss';
 
 const InventoryDetail = ({ id }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [InventoryData, setInventoryData] = useState({});
 
   useEffect(() => {
@@ -26,17 +29,19 @@ const InventoryDetail = ({ id }) => {
       body: raw,
       redirect: 'follow'
     };
-    fetch("https://desa-api.bluex.cl/api/v1/fulfillment/inventory/getInventoryDetail", requestOptions)
+    const getInventoryDetail = async () => {
+      const data = await fetch("https://desa-api.bluex.cl/api/v1/fulfillment/inventory/getInventoryDetail", requestOptions)
       .then(res => res.json())
-      .then((data) => {
-          // console.log(data);
-          setInventoryData(data);
-          setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
+      if (data.statusCode === 500) {
         setLoading(false);
-      })
+        setError(true);
+      } else {
+        console.log(data);
+        setInventoryData(data);
+        setLoading(false);
+      }
+    }
+    getInventoryDetail();
   }, [id, user]);
 
   return (
@@ -44,39 +49,42 @@ const InventoryDetail = ({ id }) => {
       {loading
         ? <Spinner />
         : (
-          <ul>
-            <li>
-              <p><b>Descripcion:</b></p>
-              {/* <input style={{borderRadius: '15px'}}>{InventoryData.description}</input> */}
-              <p>{InventoryData.description}</p>
-            </li>
-            <hr/>
-            <li className="d-flex justify-content-between">
-              <p><b>Fecha:</b></p>
-              <p>{InventoryData.created_date}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Costo:</b></p>
-              <p>{InventoryData.cost}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Peso:</b></p>
-              <p>{InventoryData.weight}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Ancho:</b></p>
-              <p>{InventoryData.width}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Alto:</b></p>
-              <p>{InventoryData.height}</p>
-            </li>
-            <li className="d-flex justify-content-between">
-              <p><b>Largo:</b></p>
-              <p>{InventoryData.length}</p>
-            </li>
+          <>
+          {error
+            ? <Alert className="" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..."/>
+            : (
+              <>
+                <div>
+                  <p>Descripcion:</p>
+                  <p className={`${styles.bxBadge} bg-white py-5`}>{InventoryData.description}</p>
+                </div>
+                <ul className="d-flex">
+                  <li className="w-50 pe-2">
+                    <p className="mb-1 mt-2">Peso:</p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.weight}</p>
+                    <p className="mb-1 mt-2">Ancho:</p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.width}</p>
+                    <p className="mb-1">Largo:</p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.length}</p>
+                    
+                  </li>
+                  <li className="w-50 ps-2">
+                    <p className="mb-1 mt-2">Costo:</p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.cost}</p>
+                    <p className="mb-1 mt-2">Alto:</p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.height}</p>
+                    <p className="mb-1 mt-2">Fecha </p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.created_date}</p>
+                    
+                    
+                    
+                  </li>
 
-          </ul>
+                </ul>
+              </>
+            )
+          }
+          </>
         )
       }
     </>
