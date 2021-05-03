@@ -35,13 +35,13 @@ function GlobalFilter({
         {!checkUrl && (
           <div className="col-sm-6">
             <ul className="d-flex justify-content-end">
-              <li className="me-5">
+              <li className="mee-5">
                 <a href="#!" className="btn btn-complementary" onClick={handleClick}>
                   Subir Orden
                 </a>
               </li>
               <li>
-                <a href="#!" className="btn btn-complementary" onClick={handleClickUpdate}>
+                <a href="#!" className="btn btn-complementary d-none" onClick={handleClickUpdate}>
                   <img src={reload} className="me-2" alt="Actualizar" width="25"/>
                   <span>
                     Actualizar
