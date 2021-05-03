@@ -24,7 +24,7 @@ jobs:
     - name: run yarn install and test
       run: |
         yarn install
-        yarn build
+        yarn build:qa
       env:
         CI: true
     - uses: shallwefootball/s3-upload-action@master
