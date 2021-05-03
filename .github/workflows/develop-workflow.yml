@@ -20,7 +20,7 @@ jobs:
     - name: run yarn install and build
       run: |
         yarn install
-        yarn build
+        yarn build:dev
       env:
         CI: true
     # - name: SonarQube Scan
