@@ -8,6 +8,7 @@ import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
+import reload from 'assets/brand/reload.svg';
 
 const Orders = () => {
     const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ const Orders = () => {
     const [orderId, setOrderId] = useState('');
     const [orderNumber, setOrderNumber] = useState('');
     const [orderTracking, setOrderTracking] = useState('');
+    const [date, setDate] = useState(null);
 
     let history = useHistory();
 
@@ -34,6 +36,27 @@ const Orders = () => {
                 setLoading(false);
                 setList(data.order);
                 setTotalPages(data.total_pages);
+                const DATE = new Date();
+                const monthNames = [
+                    "Ene",
+                    "Feb",
+                    "Mar",
+                    "Abr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Ago",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dic",
+                ];
+                console.log(DATE);
+                setDate({
+                    day: DATE.getDay(),
+                    month: monthNames[DATE.getMonth()],
+                    time: `${DATE.getHours()} : ${DATE.getMinutes()}`,
+                })
             })
             .catch(error => {
                 console.log('error', error);
@@ -120,6 +143,15 @@ const Orders = () => {
     return (
         <>
             <PageTitle title="Tus órdenes" subtitle="Te mostramos tus órdenes de los últimos días"/>
+            {date && (
+                <a href="#!" onClick={handleClickUpdateList}>
+                    <div className="pt-2 mb-5 d-flex align-items-center">
+                        <span className="me-2">Última actualización</span>
+                        <span className="me-2">{`${date.day} ${date.month} ${date.time}`}</span>
+                        <img src={reload} alt="Actualizar Ordenes" width="19"/>
+                    </div>
+                </a>
+            )}
             {list.length && !loading
                 ? <MainTable 
                     columns={columns}
