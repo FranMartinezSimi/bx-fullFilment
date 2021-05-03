@@ -50,7 +50,7 @@ const Orders = () => {
           accessor: 'order_id',
         },
         {
-            Header: 'Fecha de creación',
+            Header: 'Fecha',
             accessor: 'fecha',
         },
         {
@@ -58,16 +58,16 @@ const Orders = () => {
             accessor: d => `${d.first_name} ${d.last_name}`
         },
         {
-            Header: 'Nº de referencia',
-            accessor: 'order_number',
-        },
-        {
-            Header: 'Estado Tracking',
-            accessor: 'tracking_description',
+            Header: 'Estado',
+            accessor: 'description',
         },
         {
             Header: 'Nº Tracking',
             accessor: 'numero_tracking',
+        },
+        {
+            Header: 'Nº de referencia',
+            accessor: 'order_number',
         },
         {
             accessor: 'ver',
