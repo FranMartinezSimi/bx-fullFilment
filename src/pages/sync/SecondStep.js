@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/userContex'
-import Button from '../../components/Atoms/Button';
-import Current from '../../assets/brand/secondStep.svg';
-import ArrowBack from '../../assets/brand/back.svg';
+import { useAuth } from 'context/userContex'
+import { clientFetch } from 'lib/client-fetch';
+
+import Button from 'components/Atoms/Button';
+import Current from 'assets/brand/secondStep.svg';
+import ArrowBack from 'assets/brand/back.svg';
 
 const SecondStep = ({ setSelectedItem }) => {
   const { setUser } = useAuth();
@@ -13,13 +15,6 @@ const SecondStep = ({ setSelectedItem }) => {
     account_id: '',
     key: '',
   });
-
-  function handleErrors(response) {
-    if (!response.ok) {
-        console.log('responseError:', response);
-    }
-    return response.json();
-  }
 
   const handleChange = (e) => {
     setForm({
@@ -42,31 +37,29 @@ const SecondStep = ({ setSelectedItem }) => {
 
     setLoading(true);
 
-    const headers = new Headers();
-    headers.append("key", form.key);
-    headers.append("account_id", form.account_id);
-    headers.append("warehouse", "bx1");
-    
-    var requestOptions = {
-      method: 'POST',
-      headers: headers,
-      redirect: 'follow',
-    };
-
-    fetch("https://desa-api.bluex.cl/api/v1/fulfillment/credential", requestOptions)
-      .then(handleErrors)
+    clientFetch('credential', {
+      headers: {
+        "key": form.key,
+        "account_id": form.account_id,
+        "warehouse": "bx1"
+      }
+    }, )
       .then((data) => {
-          if (data.status === 'successful') {
-            const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(form));
-            setLoading(false);
-            setUser(bxBusinessActiveFulfillment);
-            return;
-          }
-          setSelectedItem('failStep');
+        if (data.status === 'successful') {
+          const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(form));
+          setLoading(false);
+          setUser(bxBusinessActiveFulfillment);
+          return;
+        }
+        setSelectedItem('failStep');
       })
       .catch((error) => {
-          console.log('error', error);
-      })
+        console.log('error', error);
+        setSelectedItem('failStep');
+
+      });
+
+
   }
   return (
     <>

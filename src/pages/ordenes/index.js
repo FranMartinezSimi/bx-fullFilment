@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from "react-router-dom";
-import {clientFetch} from 'lib/client-fetch';
+import { clientFetch } from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
