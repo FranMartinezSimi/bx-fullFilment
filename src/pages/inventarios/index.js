@@ -98,7 +98,7 @@ const Inventory = () => {
     }, [])
     return (
         <>
-            <PageTitle title="Tu inventario" />
+            <PageTitle title="Tu inventario" className="mb-5"/>
             {list.length && !loading
                 ? <MainTable 
                     columns={columns}
