@@ -39,7 +39,7 @@ const Orders = () => {
             }
         })
             .then((data) => {
-                console.log('orderData:', data);
+                // console.log('orderData:', data);
                 setLoading(false);
                 setList(data.order);
                 setTotalPages(data.total_pages);
@@ -58,7 +58,7 @@ const Orders = () => {
                     "Nov",
                     "Dic",
                 ];
-                console.log(DATE);
+                // console.log(DATE);
                 setDate({
                     day: DATE.getDay(),
                     month: monthNames[DATE.getMonth()],
