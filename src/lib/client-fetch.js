@@ -4,10 +4,10 @@ export function clientFetch(endpoint, {body, ...customConfig} = {}) {
   const headers = {'content-type': 'application/json'}
   const apiKeys = JSON.parse(window.localStorage.getItem('bxBusinessActiveFulfillment'))
 
-  console.log('endpoint', endpoint);
-  console.log('customConfig', customConfig);
-  console.log('customConfig', customConfig);
-  console.log('apiKeys', apiKeys);
+  // console.log('endpoint', endpoint);
+  // console.log('customConfig', customConfig);
+  // console.log('customConfig', customConfig);
+  // console.log('apiKeys', apiKeys);
   
   if (apiKeys) {
     headers.key = apiKeys.key

@@ -45,6 +45,7 @@ const SecondStep = ({ setSelectedItem }) => {
       }
     }, )
       .then((data) => {
+        console.log(data);
         if (data.status === 'successful') {
           const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(form));
           setLoading(false);
