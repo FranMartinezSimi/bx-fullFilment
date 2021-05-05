@@ -39,7 +39,7 @@ const Orders = () => {
             }
         })
             .then((data) => {
-                // console.log('orderData:', data);
+                console.log('orderData:', data);
                 setLoading(false);
                 setList(data.order);
                 setTotalPages(data.total_pages);
@@ -92,7 +92,7 @@ const Orders = () => {
         },
         {
             Header: 'Estado',
-            accessor: 'description',
+            accessor: 'estado',
         },
         {
             Header: 'Nº Tracking',
