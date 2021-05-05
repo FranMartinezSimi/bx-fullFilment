@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../../context/userContex';
+import { clientFetch } from 'lib/client-fetch';
 
 import Spinner from '../../Atoms/Spinner';
 import DropDown from '../../Molecules/DropDown';
@@ -10,30 +10,16 @@ import Flag from '../../../assets/brand/flag.svg';
 import Checkmap from '../../../assets/brand/checkmap.svg';
 
 const OrderDetail = ({ id, tracking }) => {
-  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [orderData, setOrderData] = useState({});
 
-  useEffect(() => {
-    const userData = JSON.parse(user);
-    let headers = new Headers();
-    headers.append("account_id", userData.account_id);
-    headers.append("key", userData.key);
-    headers.append("Content-Type", "application/json");
-    
-    let raw = JSON.stringify({
-      "warehouse": "bx1",
-      "id": `${id}`
-    });
-    
-    const requestOptions = {
-      method: 'POST',
-      headers: headers,
-      body: raw,
-      redirect: 'follow'
-    };
-    fetch("https://desa-api.bluex.cl/api/v1/fulfillment/order/getOrderDetail", requestOptions)
-      .then(res => res.json())
+  const getData = (id) => {
+    clientFetch('order/getOrderDetail', {
+      body: {
+        "warehouse": "bx1",
+        "id": `${id}`
+      }
+    })
       .then((data) => {
           // console.log('orderDetail:', data);
           setOrderData(data);
@@ -43,8 +29,11 @@ const OrderDetail = ({ id, tracking }) => {
         console.log(error);
         setLoading(false);
       })
-  }, [id, user]);
-
+  }
+  
+  useEffect(() => {
+    getData(id)
+  }, [id]);
   return (
     <>
       {loading
