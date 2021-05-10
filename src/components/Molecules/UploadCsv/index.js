@@ -6,7 +6,7 @@ import loadArrow from 'assets/brand/loadarrow.svg';
 
 // const buttonRef = React.createRef();
 
-const UploadCsv = ({setDataToValidate}) => {
+const UploadCsv = ({setDataToValidate, setDataToUpload}) => {
 
   const handleOnDrop = (data) => {
     console.log('dataToValidate', data);
@@ -23,7 +23,8 @@ const UploadCsv = ({setDataToValidate}) => {
 
   const handleOnRemoveFile = (data) => {
     console.log('dataRemove', data);
-    setDataToValidate([])
+    setDataToValidate([]);
+    setDataToUpload(null);
   };
   
   return (

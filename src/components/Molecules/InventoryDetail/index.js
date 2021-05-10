@@ -44,8 +44,8 @@ const InventoryDetail = ({ id }) => {
             : (
               <>
                 <div>
-                  <p>Descripcion:</p>
-                  <p className={`${styles.bxBadge} bg-white py-5`}>{InventoryData.description}</p>
+                  <p>Descripción:</p>
+                  <p className={`${styles.bxBadge} bg-white pt-2 pb-5`}>{InventoryData.description}</p>
                 </div>
                 <ul className="d-flex">
                   <li className="w-50 pe-2">
@@ -62,7 +62,7 @@ const InventoryDetail = ({ id }) => {
                     <p className={`${styles.bxBadge}`}>{InventoryData.cost}</p>
                     <p className="mb-1 mt-2">Alto:</p>
                     <p className={`${styles.bxBadge}`}>{InventoryData.height}</p>
-                    <p className="mb-1 mt-2">Fecha </p>
+                    <p className="mb-1 mt-2">Fecha de Actualización:</p>
                     <p className={`${styles.bxBadge}`}>{InventoryData.created_date}</p>
                     
                     

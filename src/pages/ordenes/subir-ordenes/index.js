@@ -41,7 +41,7 @@ const UploadOrders = () => {
   return ( 
     <PageLayout title="Subir órdenes">
       <PageTitle title="Subir órdenes" />
-      <p>(Puedes importar un archivo .csv separado por cómas)</p>
+      <p>(Puedes importar un archivo .csv separado por comas)</p>
       <Card>
         <div className="container">
           <div className="row justify-content-between">
@@ -50,7 +50,7 @@ const UploadOrders = () => {
                 <div className="mb-2">
                   <img src={orderList} alt="Ordenes" width="50"/>
                 </div>
-                <UploadCsv setDataToValidate={setDataToValidate}/>
+                <UploadCsv setDataToValidate={setDataToValidate} setDataToUpload={setDataToUpload}/>
                 {dataToUpload != null
                   ? (
                     <div className="my-2">
@@ -64,7 +64,7 @@ const UploadOrders = () => {
                   : null
                 }
               </Card>
-              <div className="py-3">
+              <div className="py-3 d-none">
                 <a 
                   href="./FBB-MARKETPLACE1088.csv"
                   className="btn btn-complementary"
@@ -78,13 +78,13 @@ const UploadOrders = () => {
               </div>
               <div className="py-3">
                 <a 
-                  href="./FBB-MITIENDA1090.csv"
+                  href="./PLANTILLA-FULFILLMENT.csv"
                   className="btn btn-complementary"
                   download
                 >
                   <img src={downloadArrow} alt="Download" width="16"/>
                   <span className="ps-2">
-                    Descargar Plantilla  Tu Tienda
+                    Descargar Plantilla
                   </span>
                 </a>
               </div>
