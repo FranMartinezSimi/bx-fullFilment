@@ -63,7 +63,7 @@ const InventoryDetail = ({ id }) => {
                     <p className="mb-1 mt-2">Alto:</p>
                     <p className={`${styles.bxBadge}`}>{InventoryData.height}</p>
                     <p className="mb-1 mt-2">Fecha de Actualización:</p>
-                    <p className={`${styles.bxBadge}`}>{InventoryData.created_date}</p>
+                    <p className={`${styles.bxBadge}`}>{InventoryData.updated_date}</p>
                     
                     
                     
