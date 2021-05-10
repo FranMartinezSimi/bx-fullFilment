@@ -9,7 +9,7 @@ import Calendar from '../../../assets/brand/calendar.svg';
 import Flag from '../../../assets/brand/flag.svg';
 import Checkmap from '../../../assets/brand/checkmap.svg';
 
-const OrderDetail = ({ id, tracking }) => {
+const OrderDetail = ({ id, tracking, unifyState }) => {
   const [loading, setLoading] = useState(true);
   const [orderData, setOrderData] = useState({});
 
@@ -60,7 +60,7 @@ const OrderDetail = ({ id, tracking }) => {
                   <img src={Flag} alt="Lista" width="15"/>
                 </div>
                 <p className="me-4 display-font" style={{width: "140px", fontSize: 14, fontWeight: 800}}>Estado Unificado</p>
-                <p>{orderData.estado}</p>
+                <p>{unifyState}</p>
               </li>
               <li className="d-flex my-3">
                 <div className="me-4">
