@@ -25,6 +25,7 @@ const Orders = () => {
     const [orderId, setOrderId] = useState('');
     const [orderNumber, setOrderNumber] = useState('');
     const [orderTracking, setOrderTracking] = useState('');
+    const [unifyState, setUnifyState] = useState('');
 
 
     let history = useHistory();
@@ -141,6 +142,7 @@ const Orders = () => {
         setOrderId(tableData.row.original.order_id);
         setOrderNumber(tableData.row.original.order_number);
         setOrderTracking(tableData.row.original.numero_tracking);
+        setUnifyState(tableData.row.original.estado);
         setModal(true);
     }
     
@@ -195,7 +197,7 @@ const Orders = () => {
                 : component
             }
             <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
-                <OrderDetail id={orderId} tracking={orderTracking}/>
+                <OrderDetail id={orderId} tracking={orderTracking} unifyState={unifyState}/>
             </Modal>
         </PageLayout>
     );
