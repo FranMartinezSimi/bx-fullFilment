@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Layout from './components/Templates/Layout';
 import Inventory from './pages/inventarios';
 import Orders from './pages/ordenes';
-import UpdateOrders from './pages/subir-ordenes';
+import UpdateOrders from './pages/ordenes/subir-ordenes';
 
 import './styles/main.scss';
 
@@ -19,7 +19,7 @@ const App = () => {
                         <Route exact path="/inventario">
                             <Inventory />
                         </Route>
-                        <Route exact path="/subir-ordenes">
+                        <Route exact path="/ordenes/subir-ordenes">
                             <UpdateOrders />
                         </Route>
                     </Layout>

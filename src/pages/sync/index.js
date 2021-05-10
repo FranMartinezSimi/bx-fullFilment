@@ -4,6 +4,7 @@ import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import FailStep from './FailStep';
 import SuccessStep from './SuccessStep';
+import LayoutUnAuth from 'components/Templates/LayoutUnAuth';
 
 const Sync = () => {
   const [selectedItem, setSelectedItem] = useState('firstStep');
@@ -25,9 +26,11 @@ const Sync = () => {
       component = <SuccessStep setSelectedItem={setSelectedItem}/>
   }
   return (
-    <Card>
-      {component}
-    </Card>
+    <LayoutUnAuth title="Sincroniza tu cuenta">
+      <Card>
+        {component}
+      </Card>
+    </LayoutUnAuth>
   );
 }
  

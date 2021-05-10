@@ -7,6 +7,7 @@ import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
+import PageLayout from 'components/Templates/PageLayout';
 
 const Inventory = () => {
     const [loading, setLoading] = useState(true);
@@ -78,7 +79,7 @@ const Inventory = () => {
     }
 
     useEffect(() => {
-        clientFetch('inventory/getInventoryList', {
+        clientFetch('inventory/getProductsList', {
             body: {
                 "page": 1,
                 "warehouse": "bx1",
@@ -97,7 +98,7 @@ const Inventory = () => {
             });
     }, [])
     return (
-        <>
+        <PageLayout title="Tu inventario">
             <PageTitle title="Tu inventario" className="mb-5"/>
             {list.length && !loading
                 ? <MainTable 
@@ -109,7 +110,7 @@ const Inventory = () => {
             <Modal title={`Detalle SKU ${skuId}`} subtitle={`Id de producto ${inventoryId}`} showModal={modal} onClick={() => setModal(false)}>
                 <InventoryDetail id={inventoryId} />
             </Modal>
-        </>
+        </PageLayout>
     );
 }
     

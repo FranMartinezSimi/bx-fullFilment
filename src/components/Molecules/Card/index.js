@@ -32,7 +32,7 @@ const Card = ({ className, title, subtitle, children, close, handleClose, back, 
           </ul>
         )
       : null}
-      <div className="card-body pt-0">
+      <div className="card-body">
         {children}
       </div>
     </div>
