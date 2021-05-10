@@ -60,9 +60,9 @@ const Orders = () => {
                     "Nov",
                     "Dic",
                 ];
-                // console.log(DATE);
+                // console.log(DATE.getDate());
                 setDate({
-                    day: DATE.getDay(),
+                    day: DATE.getDate(),
                     month: monthNames[DATE.getMonth()],
                     time: `${DATE.getHours()} : ${DATE.getMinutes() < 10 ? '0' : ''}${DATE.getMinutes()}`,
                 });
@@ -115,7 +115,7 @@ const Orders = () => {
                         className="font-weight-bold font-weight-bold"
                     >
                         <small>
-                            Ver Detalle &gt;
+                            Ver Más &gt;
                         </small>
                     </div>
             )},

@@ -55,7 +55,7 @@ const Inventory = () => {
                         className="font-weight-bold font-weight-bold"
                     >
                         <small>
-                            Ver &gt;
+                            Ver Más &gt;
                         </small>
                     </div>
             )},
@@ -107,7 +107,7 @@ const Inventory = () => {
                     />
                 : component
             }
-            <Modal title={`Detalle SKU ${skuId}`} subtitle={`Id de producto ${inventoryId}`} showModal={modal} onClick={() => setModal(false)}>
+            <Modal title={`Detalle SKU ${skuId}`} subtitle={`ID de producto ${inventoryId}`} showModal={modal} onClick={() => setModal(false)}>
                 <InventoryDetail id={inventoryId} />
             </Modal>
         </PageLayout>
