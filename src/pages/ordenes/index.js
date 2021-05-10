@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from "react-router-dom";
 import { clientFetch } from 'lib/client-fetch';
 
+import PageLayout from 'components/Templates/PageLayout';
 import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
@@ -31,7 +32,7 @@ const Orders = () => {
     const getData = () => {
         setError(false);
         setMessage('');
-        clientFetch('order/getOrderList', {
+        clientFetch('orders/getOrdersList', {
             body: {
                 "page": 1,
                 "warehouse": "bx1",
@@ -122,7 +123,7 @@ const Orders = () => {
 
     const handleClickUpdateOrder = (e) => {
         e.preventDefault();
-        history.push("/subir-ordenes");
+        history.push("/ordenes/subir-ordenes");
     }
 
     const handleClickUpdateList = (e) => {
@@ -169,7 +170,7 @@ const Orders = () => {
         getData();
     }, [])
     return (
-        <>
+        <PageLayout title="Tus órdenes" description="Te mostramos tus órdenes de los últimos días">
             <PageTitle title="Tus órdenes" subtitle="Te mostramos tus órdenes de los últimos días"/>
             {isUpdate && (
                 componentMessage
@@ -196,7 +197,7 @@ const Orders = () => {
             <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
                 <OrderDetail id={orderId} tracking={orderTracking}/>
             </Modal>
-        </>
+        </PageLayout>
     );
 }
     

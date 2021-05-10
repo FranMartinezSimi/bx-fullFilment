@@ -14,7 +14,7 @@ const OrderDetail = ({ id, tracking }) => {
   const [orderData, setOrderData] = useState({});
 
   const getData = (id) => {
-    clientFetch('order/getOrderDetail', {
+    clientFetch('orders/getOrderDetail', {
       body: {
         "warehouse": "bx1",
         "id": `${id}`

@@ -14,16 +14,20 @@ const Breadcrumb = () => {
               <small>Home</small>
             </p>
           </li>
-          <li className="px-2">
-            <img src={arrowLeft} alt="" />
-          </li>
-          <li>
-            <p className="text-grey">
-              <small>
-                {location.pathname.substring(1)}
-              </small>
-            </p>
-          </li>
+          {(location.pathname.length > 1) && (
+            <>
+              <li className="px-2">
+                <img src={arrowLeft} alt="" />
+              </li>
+              <li>
+                <p className="text-grey">
+                  <small className="text-capitalize">
+                    {location.pathname.substring(1).replace('/', ' > ').replace('-', ' ')}
+                  </small>
+                </p>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </aside>

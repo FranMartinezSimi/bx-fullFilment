@@ -11,7 +11,7 @@ const InventoryDetail = ({ id }) => {
   const [InventoryData, setInventoryData] = useState({});
 
   const getData = (id) => {
-    clientFetch('inventory/getInventoryDetail', {
+    clientFetch('inventory/getProductDetail', {
       body: {
         "warehouse": "bx1",
         "product_id": `${id}`

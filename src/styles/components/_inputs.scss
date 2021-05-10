@@ -38,3 +38,32 @@
 .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
   background-color: #462546;
 }
+
+.dropzoneCsv {
+  border: 1px dotted $grey;
+  padding: 10px 20px !important;
+}
+.csv-input {
+  display: none;
+}
+input[type=”file”]{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+label[for="react-csv-reader-input"] {
+  font-size: 14px;
+  background-color: $ligth-grey;
+  display: inline-block;
+  transition: all .5s;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  width: fit-content;
+  text-align: center;
+  margin: 0;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LogoBlue from 'assets/brand/logoBlue.svg';
 import Home from 'assets/brand/home.svg';
 import Box from 'assets/brand/box.svg';
 import Todo from 'assets/brand/todo.svg';
@@ -46,7 +47,7 @@ const Sidebar = ({ activeNavbar }) => {
   return ( 
     <nav className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose} shadow bg-white py-4 px-3 px-lg-4`}>
       <div className="">
-        <img src="./png/logo.png" alt="Blue express"/>
+        <img src={LogoBlue} alt="Blue express" width="50"/>
       </div>
       <ul className={`${styles.navigationContent} d-flex flex-column justify-content-between my-4`}>
         <li>
