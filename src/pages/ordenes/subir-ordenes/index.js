@@ -83,8 +83,9 @@ const UploadOrders = () => {
         { !isLoadingData && !isProccesing && (updatedData.length === 0) && (
           <SetUpArchive
             dataToValidate={dataToValidate}
-            setDataToValidate={setDataToValidate}
             dataToUpload={dataToUpload}
+            dataWhitErrors={dataWhitErrors}
+            setDataToValidate={setDataToValidate}
             setDataToUpload={setDataToUpload}
             setDataWhitErrors={setDataWhitErrors}
             sendData={sendData}
@@ -92,7 +93,7 @@ const UploadOrders = () => {
         )}
 
 
-        { dataWhitErrors && (
+        {/* { dataWhitErrors && (
           <ul>
             <li>
               { isProccesing && <p>Procesando...</p> }
@@ -105,7 +106,7 @@ const UploadOrders = () => {
               </li>
             ))}
           </ul>
-        )}
+        )} */}
 
         { isLoadingData && <UpdatingOrders /> }
 

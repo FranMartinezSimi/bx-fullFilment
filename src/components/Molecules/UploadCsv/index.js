@@ -24,7 +24,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
     console.log('dataRemove', data);
     setDataToValidate([]);
     setDataWhitErrors([]);
-    setDataToUpload(null);
+    setDataToUpload([]);
   };
   
   return (

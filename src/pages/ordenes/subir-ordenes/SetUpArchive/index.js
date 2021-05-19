@@ -2,12 +2,13 @@ import React from "react";
 
 import Card from 'components/Molecules/Card';
 import UploadCsv from 'components/Molecules/UploadCsv';
+import AlerMessage from 'components/Atoms/AlertMessage';
 import orderList from 'assets/brand/orderList.svg';
 import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
 import infoTriangle from 'assets/brand/infoTriangle.svg';
 import listPencil from 'assets/brand/listPencil.svg';
 
-const SetUpArchive = ({ setDataToValidate, dataToUpload, setDataToUpload, setDataWhitErrors}) => {
+const SetUpArchive = ({ setDataToValidate, dataToUpload, dataWhitErrors, setDataToUpload, setDataWhitErrors}) => {
 
   let component;
   if (dataToUpload.length > 0) {
@@ -65,6 +66,9 @@ const SetUpArchive = ({ setDataToValidate, dataToUpload, setDataToUpload, setDat
           </div>
         </div>
         <div className="col-md-6">
+          {dataWhitErrors.length > 0 && (
+            <AlerMessage type="danger" message="Algo salió mal, verifica el formato de tu archivo y los campos obligatorios" />
+          )}
           <Card className="shadow text-center my-5">
             { component }
             <div className="mx-5">
