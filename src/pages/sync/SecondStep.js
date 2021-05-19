@@ -90,7 +90,9 @@ const SecondStep = ({ setSelectedItem }) => {
                   </a>
                 </li>
               </ul>
-            <img className="w-100" src="./nonImg.jpg" alt="imagen"/>
+              <div className="text-center">
+                <img src="./fulfill2.jpg" alt="imagen" width="300"/>
+              </div>
             </div>
             <ol className="p-0 ps-3">
               <li>

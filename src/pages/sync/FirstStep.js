@@ -9,7 +9,9 @@ const FirstStep = ({setSelectedItem}) => (
       <div className="d-flex justify-content-end" style={{cursor: 'pointer'}} onClick={() => setSelectedItem('failStep')}>
         <span aria-hidden="true" className="p-0 pe-3" style={{fontSize: '22px'}}>&times;</span>
       </div>
-      <img className="w-100" src="./nonImg.jpg" alt="imagen"/>
+      <div className="text-center mb-5">
+        <img src="./fulfill1.png" alt="imagen" width="220"/>
+      </div>
     </div>
     <h4 className="display-font">Gestiona tu bodega</h4>
     <p className="display-font" style={{fontSize: '16px'}}>Sincroniza tu cuenta Shipedge para acceder a tus órdenes de servicio e inventario.</p>

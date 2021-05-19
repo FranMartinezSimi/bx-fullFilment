@@ -114,7 +114,7 @@ const Orders = () => {
                         role="button"
                         className="font-weight-bold font-weight-bold"
                     >
-                        <small>
+                        <small className="text-complementary-color">
                             Ver Más &gt;
                         </small>
                     </div>

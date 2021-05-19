@@ -63,3 +63,11 @@ h1, h2, h3, h4, h5 {
     color: $color !important;
   }
 }
+
+.bg-background-login {
+  background-size: cover;
+}
+
+.table-hover>tbody>tr:hover {
+  background: #FDD296;
+}
