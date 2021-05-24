@@ -11,7 +11,6 @@ import styles from './styles.module.scss'
 const Home = () => {
   let history = useHistory();
   const chartData = {
-          
     series: [{
       name: 'En camino',
       data: [44, 55, 41, 67, 22, 43]
@@ -42,8 +41,6 @@ const Home = () => {
         opacity: 1
       },
     },
-  
-  
   };
 
   const listData = [
@@ -97,9 +94,9 @@ const Home = () => {
 
       <div className="container">
         <div className="row align-items-stretch mt-5">
-          <div className="col-6">
+          <div className="col-lg-6">
             <Card
-              className={`${styles.card} shadow my-5"`}
+              className={`${styles.card} shadow my-5`}
               footer={componentOrders}
             >
               <h4 className="display-font">Estado de tus órdenes</h4>
@@ -107,9 +104,9 @@ const Home = () => {
               <ColumnChart data={chartData}/>
             </Card>
           </div>
-          <div className="col-6">
+          <div className="col-lg-6">
             <Card
-              className={`${styles.card} shadow my-5"`}
+              className={`${styles.card} shadow my-5`}
               footer={componentInventory}
             >
               <h4 className="display-font">Productos más vendidos</h4>
