@@ -6,8 +6,8 @@ const OrderedList = ({listData}) => {
     <ol className={`${styles.orderedList} pt-5 mb-0`}>
       {listData.length
         ? (
-          listData.map(item => (
-            <li>
+          listData.map((item) => (
+            <li key={item.sku}>
               <ul className="d-flex w-100">
                 <li className={`${styles.unOrderedList} `}>
                   <p className="mb-0"><small>{item.name}</small></p>
