@@ -8,7 +8,7 @@ const OrderedList = ({listData}) => {
         ? (
           listData.map((item) => (
             <li key={item.sku}>
-              <ul className="d-flex w-100">
+              <ul className="d-flex">
                 <li className={`${styles.unOrderedList} `}>
                   <p className="mb-0"><small>{item.name}</small></p>
                   <p className="mb-0"><small>SKU {item.sku}</small></p>

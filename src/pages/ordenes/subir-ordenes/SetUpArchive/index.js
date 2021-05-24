@@ -11,7 +11,7 @@ import listPencil from 'assets/brand/listPencil.svg';
 const SetUpArchive = ({ setDataToValidate, dataToUpload, dataWhitErrors, setDataToUpload, setDataWhitErrors}) => {
 
   let component;
-  if (dataToUpload.length > 0) {
+  if (dataToUpload) {
       component = (
         <div className="mb-2">
           <h2>Carga completa</h2>

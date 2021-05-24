@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+// import { clientFetch } from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
@@ -13,17 +14,29 @@ const UploadOrders = () => {
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
-  const [dataToUpload, setDataToUpload] = useState([]);
+  const [dataToUpload, setDataToUpload] = useState(null);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isProccesing, setIsProccesing] = useState(false);
 
-  const sendData = async (e) => {
+  const sendData = async () => {
+    console.log(dataToUpload);
     setIsLoadingData(true);
 
     setTimeout(() => {
       setIsLoadingData(false);
       setUpdatedData(["asdasdsa"])
     }, 2000);
+
+    // clientFetch('orders/putOrders', {
+    //   body: dataToUpload
+    // })
+    //   .then((data) => {
+    //       // console.log('orderDetail:', data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+
     // try {
     //   // Enviar al backend
 
@@ -68,8 +81,35 @@ const UploadOrders = () => {
           return item;
         }
       )
-      if ( !itemsWhitErrors.length ) {
-        setDataToUpload(DATA_TO_VALIDATE);
+      if ( !itemsWhitErrors.length && dataToValidate.length) {
+        const dataToSendFormat = DATA_TO_VALIDATE.map((item) => (
+          {
+            order_number: item.NUMERO_ORDEN,
+            shipping: {
+              method: item.METODO_ENVIO
+            },
+            customer: {
+              first_name: item.NOMBRE_CLIENTE,
+              last_name: item.APELLIDO_CLIENTE,
+              address1: item.DIRECCION,
+              city: item.COMUNA,
+              state: item.REGION,
+              zip: item.CODIGO_IATA,
+              country: "CHILE"
+            },
+            items: [
+              {
+                sku: item.SKU,
+                quantity: item.CANTIDAD
+              }
+            ]
+          }
+          ))
+        const dataToSend = {
+          warehouse: "bx1",
+          orders: dataToSendFormat,
+        };
+        setDataToUpload(dataToSend);
       }
       setIsProccesing(false);
     }
@@ -117,7 +157,7 @@ const UploadOrders = () => {
         <div className="row">
           <div className="col-12">
             <div className="d-flex w-100 my-5">
-              {(dataToValidate.length > 0) && (dataWhitErrors.length === 0) && !isLoadingData && (updatedData.length === 0) && (dataToUpload.length > 0) && (
+              {!isLoadingData && dataToUpload && (
                 <Button
                   text="Enviar órdenes"
                   className="btn btn-secondary ms-auto"

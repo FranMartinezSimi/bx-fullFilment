@@ -1,3 +1,4 @@
+@import "../../../styles/utils/media";
 .orderedList {
   list-style: none;
   counter-reset: my-awesome-counter;
@@ -18,7 +19,11 @@
     border-radius: 50rem;
     margin-right: 15px;
     position: absolute;
-    left: 28px;
+    margin-top: 10px;
+    left: 30px;
+    @include MQ(L){
+      left: 40px;
+    }
   }
   & a {
     color: #FF7E44;
