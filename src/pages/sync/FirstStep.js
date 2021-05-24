@@ -19,7 +19,7 @@ const FirstStep = ({setSelectedItem}) => (
     <p className="display-font" style={{fontSize: '16px'}}>Sigue las instrucciones que te presentaremos a continuación.</p>
     <div className="text-center pt-4">
       <Button
-        className="btn btn-primary"
+        className="btn btn-secondary px-5"
         text="Siguiente"
         onClick={() => setSelectedItem('secondStep')}
       />

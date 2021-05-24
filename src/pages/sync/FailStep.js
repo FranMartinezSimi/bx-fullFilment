@@ -7,22 +7,24 @@ const FailStep = ({ setSelectedItem }) => {
   }
   return (
     <>
-      <h4 className="display-font text-center">Oh no :(</h4>
-      <p className="display-font text-center mb-4" style={{fontSize: '16px'}}>No hemos podido sincronizar tu cuenta Shipedge.</p>
+      <div className="text-center mb-4">
+        <img src="/errorgloboalert.png" alt="ERROR"  width="70"/>
+      </div>
+      <h4 className="display-font text-center mb-4">No hemos podido sincronizar tu cuenta Shipedge.</h4>
       <ol className="p-0 ps-3">
         <li>
-          <p className="display-font" style={{fontSize: '16px'}}>Verifica que la información ingresada sea correcta.</p>
+          <p className="display-font d-inline" style={{fontSize: '16px'}}>Verifica que la información ingresada sea correcta.</p>
         </li>
         <li>
-          <p className="display-font" style={{fontSize: '16px'}}>Recuerda seguir los pasos que te mostramos en la siguiente imagen:</p>
+          <p className="display-font d-inline" style={{fontSize: '16px'}}>Recuerda seguir los pasos que te mostramos en la siguiente imagen:</p>
         </li>
       </ol>
       <div className="card-img my-4">
-        <img className="w-100" src="./nonGif.jpg" alt="imagen"/>
+        <img className="w-100" src="./fulfill2.jpg" alt="imagen"/>
       </div>
       <div className="text-center pt-5">
         <Button
-          className="btn btn-primary"
+          className="btn btn-secondary px-5"
           text="Reintentar"
           onClick={handleClick}
         />
