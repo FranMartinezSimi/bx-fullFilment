@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { clientFetch } from 'lib/client-fetch';
 
-import Spinner from '../../Atoms/Spinner';
-import Alert from '../../Atoms/Alert';
+import Spinner from 'components/Atoms/Spinner';
+import Alert from 'components/Atoms/Alert';
 import styles from './styles.module.scss';
 
 const InventoryDetail = ({ id }) => {
@@ -55,7 +55,6 @@ const InventoryDetail = ({ id }) => {
                     <p className={`${styles.bxBadge}`}>{InventoryData.width}</p>
                     <p className="mb-1">Largo:</p>
                     <p className={`${styles.bxBadge}`}>{InventoryData.length}</p>
-                    
                   </li>
                   <li className="w-50 ps-2">
                     <p className="mb-1 mt-2">Costo:</p>
@@ -65,7 +64,6 @@ const InventoryDetail = ({ id }) => {
                     <p className="mb-1 mt-2">Última actualización de inventario:</p>
                     <p className={`${styles.bxBadge}`}>{InventoryData.updated_date}</p>
                   </li>
-
                 </ul>
               </>
             )

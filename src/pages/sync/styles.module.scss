@@ -1,0 +1,24 @@
+ol, .orderedList {
+  list-style: none;
+  counter-reset: my-awesome-counter;
+}
+ol li {
+  counter-increment: my-awesome-counter;
+  margin-bottom: 25px;
+}
+ol li::before {
+  content: counter(my-awesome-counter) "";
+  color: white;
+  font-weight: bold;
+  width: 25px;
+  height: 25px;
+  background: #2BB9FF;
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 50rem;
+  margin-right: 15px;
+}
+a {
+  color: #FF7E44;
+  text-decoration: underline;
+}

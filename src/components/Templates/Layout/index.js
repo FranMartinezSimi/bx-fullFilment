@@ -7,18 +7,18 @@ import Breadcrumb from '../../Molecules/Breadcrumb';
 const Layout = ({children}) => {
     const [activeNavbar, setActiveNavbar] = useState(false);
     return (
-        <div className="d-flex bg-ligth-grey">
+        <div className="d-flex bg-ligth-blue">
             <Sidebar activeNavbar={activeNavbar}/>
             <div className="App flex-fill">
                 <Header activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar}/>
-                <div className="container content-wrapper">
+                <main className="container content-wrapper">
                     <Breadcrumb />
                     <div className="row">
                         <div className="col-12">
                             {children}
                         </div>
                     </div>
-                </div>
+                </main>
                 <Footer/>
             </div>
         </div>

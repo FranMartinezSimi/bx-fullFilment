@@ -1,7 +1,7 @@
-  
+@import "../../../styles/utils/variables";
 header{
   width: 100%;
-  background-color: #111;
+  background-color: $emphasis-color;
   display: flex;
   justify-content: flex-end;
 }

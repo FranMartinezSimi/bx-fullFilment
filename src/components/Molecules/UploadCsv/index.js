@@ -1,12 +1,11 @@
 import React from 'react'
 
 import { CSVReader } from 'react-papaparse';
-import Button from 'components/Atoms/Button';
-import loadArrow from 'assets/brand/loadarrow.svg';
+import plus from 'assets/brand/plus.svg';
 
 // const buttonRef = React.createRef();
 
-const UploadCsv = ({setDataToValidate, setDataToUpload}) => {
+const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) => {
 
   const handleOnDrop = (data) => {
     console.log('dataToValidate', data);
@@ -24,7 +23,8 @@ const UploadCsv = ({setDataToValidate, setDataToUpload}) => {
   const handleOnRemoveFile = (data) => {
     console.log('dataRemove', data);
     setDataToValidate([]);
-    setDataToUpload(null);
+    setDataWhitErrors([]);
+    setDataToUpload([]);
   };
   
   return (
@@ -38,49 +38,43 @@ const UploadCsv = ({setDataToValidate, setDataToUpload}) => {
       }}
       style={{
         dropArea: {
-          borderColor: '#eaeaea',
-          borderRadius: 16,
+          borderColor: '#3363FF',
+          borderRadius: 0,
+          background: '#FBFBFB',
         },
         dropAreaActive: {
           borderColor: '#0d6efd',
         },
         dropFile: {
           width: '100%',
-          background: '#eaeaea',
+          background: '#FBFBFB',
+          height: '100px',
+          padding: '10px 0',
+          alignItems: 'center',
         },
         fileSizeInfo: {
-          // color: '#fff',
-          backgroundColor: '#eaeaea',
-          borderRadius: 3,
-          lineHeight: 1,
-          marginBottom: '0.5em',
-          padding: '0 0.4em',
+          color: '#3363FF',
+          background: '#FBFBFB',
         },
         fileNameInfo: {
-          // color: '#fff',
-          backgroundColor: '#eaeaea',
-          borderRadius: 3,
-          fontSize: 14,
-          lineHeight: 1,
-          padding: '0 0.4em',
+          background: '#FBFBFB',
+          fontSize: 12,
         },
         removeButton: {
           color: 'blue',
         },
         progressBar: {
-          backgroundColor: '#333333',
+          backgroundColor: '#2BB9FF',
         },
       }}
     >
       <span>
+        <div className="my-3">
+          <img src={plus} alt="Ordenes" width="50" />
+        </div>
         <p>
-          Carga o arrastra el archivo .cvs
-        </p> 
-      <Button
-          text="Cargar archivo"
-          className="btn btn-primary"
-          imgPrev={(<img src={loadArrow} alt="upload" width="14"/>)}
-        />
+        Arrastra tu archivo o selecciona desde tu computadora
+        </p>
       </span>
     </CSVReader>
   );

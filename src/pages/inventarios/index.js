@@ -5,7 +5,7 @@ import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
-import InventoryDetail from 'components/Molecules/InventoryDetail';
+import InventoryDetail from 'pages/inventarios/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 
@@ -54,7 +54,7 @@ const Inventory = () => {
                         role="button"
                         className="font-weight-bold font-weight-bold"
                     >
-                        <small>
+                        <small  className="text-complementary-color">
                             Ver Más &gt;
                         </small>
                     </div>

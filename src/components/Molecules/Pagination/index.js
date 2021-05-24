@@ -59,7 +59,7 @@ const Pagination = ({
                   </div>
                 )}
 
-              <button className="btn btn-primary btn-pagination" type="button">
+              <button className="btn btn-secondary btn-pagination" type="button">
                 {pageIndex + 1}
               </button>
 

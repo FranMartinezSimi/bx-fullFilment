@@ -6,17 +6,18 @@ $font-bold: 700;
 // Colores
 $palette: (
     ligth-grey: #F6F6F6,
+    ligth-blue: #EAF8FF,
 
     medium-grey: #333333,
     grey: #C4C4C4,
     dark-grey: #232323,
 
     primary-color: #07193B,
-    secondary-color: #FF8D73,
-    complementary-color: #FFC153,
+    secondary-color: #FF7E44,
+    complementary-color: #2BB9FF,
+    emphasis-color: #3363FF, 
 
     danger-color: #B05F6D,
-
     success-color: #9CC7BD,
     info-color: #FFF3DC,
     warning-color: #D8AFB6,
@@ -29,6 +30,7 @@ $dark-grey: map-get($palette,dark-grey);
 $primary-color: map-get($palette,primary-color);
 $secondary-color: map-get($palette,secondary-color);
 $complementary-color: map-get($palette,complementary-color);
+$emphasis-color: map-get($palette,emphasis-color);
 $danger-color: map-get($palette,danger-color);
 $success-color: map-get($palette,success-color);
 $info-color: map-get($palette,info-color);

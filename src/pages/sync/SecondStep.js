@@ -5,6 +5,7 @@ import { clientFetch } from 'lib/client-fetch';
 import Button from 'components/Atoms/Button';
 import Current from 'assets/brand/secondStep.svg';
 import ArrowBack from 'assets/brand/back.svg';
+import styles from './styles.module.scss';
 
 const SecondStep = ({ setSelectedItem }) => {
   const { setUser } = useAuth();
@@ -90,14 +91,16 @@ const SecondStep = ({ setSelectedItem }) => {
                   </a>
                 </li>
               </ul>
-            <img className="w-100" src="./nonImg.jpg" alt="imagen"/>
+              <div className="text-center">
+                <img src="./fulfill2.jpg" alt="imagen" width="300"/>
+              </div>
             </div>
-            <ol className="p-0 ps-3">
+            <ol className={`${styles.orderedList} p-0 ps-3`}>
               <li>
                 <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{fontSize: '16px'}}>Ingresa a este link a Shipedge</a>
               </li>
               <li>
-                <p className="display-font" style={{fontSize: '16px'}}>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
+                <p className="display-font d-inline" style={{fontSize: '16px'}}>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
               </li>
             </ol>
             <div className="pt-2">
@@ -137,7 +140,7 @@ const SecondStep = ({ setSelectedItem }) => {
               }
               <div className="text-center">
                 <Button
-                  className="btn btn-primary mt-4"
+                  className="btn btn-secondary mt-4 px-5"
                   text="Siguiente"
                   onClick={handleClick}
                   loading={loading}

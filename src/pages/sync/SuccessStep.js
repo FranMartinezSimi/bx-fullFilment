@@ -16,7 +16,7 @@ const SuccessStep = () => {
       <p className="display-font text-center" style={{fontSize: '16px'}}>Tu cuenta Shipedge ha sido sincronizada con éxtio.</p>
       <div className="text-center pt-5">
         <Button
-          className="btn btn-primary"
+          className="btn btn-secondary px-5"
           text="Continuar"
           onClick={handleClick}
         />

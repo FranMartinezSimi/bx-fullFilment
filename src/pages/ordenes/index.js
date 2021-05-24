@@ -7,7 +7,7 @@ import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
-import OrderDetail from 'components/Molecules/OrderDetail';
+import OrderDetail from 'pages/ordenes/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reload.svg';
 import warningIcon from 'assets/brand/warningIcon.svg';
@@ -114,7 +114,7 @@ const Orders = () => {
                         role="button"
                         className="font-weight-bold font-weight-bold"
                     >
-                        <small>
+                        <small className="text-complementary-color">
                             Ver Más &gt;
                         </small>
                     </div>
