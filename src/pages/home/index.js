@@ -12,14 +12,14 @@ const Home = () => {
   const listData = [
     {
       name: 'Nombre Producto1',
-      sku: '987765567',
+      sku: '9874754754745',
       stock: '140',
       qty: '11569',
       update: '6 hrs'
     },
     {
       name: 'Nombre Producto 2',
-      sku: '987765567',
+      sku: '9877798978',
       stock: '13',
       qty: '128',
       update: '6 hrs'
