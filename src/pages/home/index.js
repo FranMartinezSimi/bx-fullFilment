@@ -5,10 +5,47 @@ import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import OrderedList from 'components/Molecules/OrderedList';
+import ColumnChart from 'components/Atoms/ColumnChart'
 import styles from './styles.module.scss'
 
 const Home = () => {
   let history = useHistory();
+  const chartData = {
+          
+    series: [{
+      name: 'En camino',
+      data: [44, 55, 41, 67, 22, 43]
+    }, {
+      name: 'Procesados',
+      data: [21, 7, 25, 13, 22, 8]
+    }],
+    options: {
+      colors:['#3363FF', '#FDA460',],
+      chart: {
+        id: "basic-bar",
+        height: 350,
+        stacked: true
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          borderRadius: 8,
+        },
+      },
+      xaxis: {
+        categories: ["lun", "mar", "mie", "jue", "vie", "sab", "dom"]
+      },
+      legend: {
+        position: 'top',
+      },
+      fill: {
+        opacity: 1
+      },
+    },
+  
+  
+  };
+
   const listData = [
     {
       name: 'Nombre Producto1',
@@ -67,6 +104,7 @@ const Home = () => {
             >
               <h4 className="display-font">Estado de tus órdenes</h4>
               <p>Ingresa mensualmente</p>
+              <ColumnChart data={chartData}/>
             </Card>
           </div>
           <div className="col-6">
