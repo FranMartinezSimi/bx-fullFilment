@@ -1,7 +1,7 @@
 import React from 'react'
 import Back from '../../../assets/brand/back.svg'
 
-const Card = ({ className, title, subtitle, children, close, handleClose, back, handleBack }) => {
+const Card = ({ className, title, subtitle, children, close, handleClose, back, handleBack, footer }) => {
   return (
     <div className={`card py-4 px-3 ${className}`} style={{borderRadius: '15px', border: 'none'}}>
       {title 
@@ -35,6 +35,7 @@ const Card = ({ className, title, subtitle, children, close, handleClose, back, 
       <div className="card-body">
         {children}
       </div>
+      {footer && footer}
     </div>
   );
 }

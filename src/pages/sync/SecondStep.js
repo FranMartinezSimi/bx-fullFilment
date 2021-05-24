@@ -69,7 +69,7 @@ const SecondStep = ({ setSelectedItem }) => {
         ? (
           <div className="w-100 d-flex flex-column justify-content-center align-items-center" style={{minHeight: '400px'}}>
             <div className="text-center py-5">
-              <div className="spinner-border fs-1" style={{width: "6rem", height: "6rem"}} role="status">
+              <div className="spinner-border fs-1" style={{width: "6rem", height: "6rem", color: "#FDA460"}} role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
             </div>

@@ -1,16 +1,24 @@
 
 import React from 'react'
-import alarm from '../../../assets/brand/alarm.svg';
-import bento from '../../../assets/brand/bento.svg';
-import avatar from '../../../assets/brand/avatar.svg';
-import menu from '../../../assets/brand/menu.svg';
-import arrowDown from '../../../assets/brand/arrow-down.svg';
+
+import { useAuth } from "context/userContex";
+import alarm from 'assets/brand/alarm.svg';
+import bento from 'assets/brand/bento.svg';
+import avatar from 'assets/brand/avatar.svg';
+import menu from 'assets/brand/menu.svg';
+import arrowDown from 'assets/brand/arrow-down.svg';
 import styles from './styles.module.scss';
 
 const Header = ({ activeNavbar, setActiveNavbar }) => {
+  const {setUser} = useAuth();
   const handleClick = (e) => {
     e.preventDefault();
     setActiveNavbar(!activeNavbar);
+  }
+  const signOut = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('bxBusinessActiveFulfillment');
+    setUser(null);
   }
   return ( 
     <header className={styles.header}>
@@ -24,10 +32,12 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           <img src={alarm} alt="Notificaciones" />
           <img src={bento} alt="Suite" />
           <img src={avatar} alt="Cuenta" />
-          <p>Nicolás Cruz<br />
-            <small>Fulfillment By</small>
-          </p>
-          <img src={arrowDown} alt="Down" />
+          <a href="!#" onClick={signOut} className="d-flex">
+            <p>Nicolás Cruz<br />
+              <small>Fulfillment By</small>
+            </p>
+            <img src={arrowDown} alt="Down" width="20"/>
+          </a>
         </li>
       </ul>
     </header>

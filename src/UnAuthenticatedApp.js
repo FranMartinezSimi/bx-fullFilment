@@ -1,18 +1,48 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Sync from './pages/sync';
-import './styles/main.scss';
+import React from "react";
 
-const UnauthenticatedApp = ({setUser}) => {
-    return (
-        <Router>
-            <Switch>
-                <Route exact path="/">
-                    <Sync setUser={setUser}/>
-                </Route>
-            </Switch>
-        </Router>
-    );
-}
+import { useAuth } from "./context/userContex";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import Sync from "./pages/sync";
+import "./styles/main.scss";
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const { user } = useAuth();
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        (user) ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+const UnauthenticatedApp = ({ setUser }) => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Sync setUser={setUser} />
+        </Route>
+        <PrivateRoute path="*">
+          <p>No Match</p>
+        </PrivateRoute>
+      </Switch>
+    </Router>
+  );
+};
 
 export default UnauthenticatedApp;
