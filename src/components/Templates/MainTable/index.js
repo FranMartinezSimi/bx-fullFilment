@@ -13,8 +13,8 @@ import styles from './styles.module.scss'
 function MainTable({ 
   columns,
   data,
-  fetchData,
-  loading,
+  // fetchData,
+  // loading,
   // pageCount: totalPageFetch,
   handleClick,
   handleClickUpdate,
@@ -37,7 +37,8 @@ function MainTable({
     previousPage,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { pageIndex },
+    setPageSize,
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -50,7 +51,7 @@ function MainTable({
     usePagination
   );
 
-  const firstPageRows = page.slice(0, 20);
+  // const firstPageRows = page.slice(0, 20);
 
   return ( 
     <>
@@ -59,7 +60,7 @@ function MainTable({
           {JSON.stringify(
             {
               pageIndex,
-              // pageSize,
+              pageSize,
               pageCount,
               canNextPage,
               canPreviousPage,
@@ -112,7 +113,7 @@ function MainTable({
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {firstPageRows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
@@ -134,7 +135,6 @@ function MainTable({
           </tbody>
         </table>
       </div>
-
       {(canNextPage || canPreviousPage)
       && (
         <Pagination
@@ -147,6 +147,8 @@ function MainTable({
           pageCount={pageCount}
           pageOptions={pageOptions}
           totalPagesFetch={totalPagesFetch}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
         />
       )}
 

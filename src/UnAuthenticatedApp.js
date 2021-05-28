@@ -1,35 +1,35 @@
 import React from "react";
 
-import { useAuth } from "./context/userContex";
+// import { useAuth } from "./context/userContex";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  // Redirect,
 } from "react-router-dom";
 import Sync from "./pages/sync";
 import "./styles/main.scss";
 
-const PrivateRoute = ({ children, ...rest }) => {
-  const { user } = useAuth();
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        (user) ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
-};
+// const PrivateRoute = ({ children, ...rest }) => {
+//   const { user } = useAuth();
+//   return (
+//     <Route
+//       {...rest}
+//       render={({ location }) =>
+//         (user) ? (
+//           children
+//         ) : (
+//           <Redirect
+//             to={{
+//               pathname: "/",
+//               state: { from: location },
+//             }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// };
 const UnauthenticatedApp = ({ setUser }) => {
   return (
     <Router>
@@ -37,9 +37,9 @@ const UnauthenticatedApp = ({ setUser }) => {
         <Route exact path="/">
           <Sync setUser={setUser} />
         </Route>
-        <PrivateRoute path="*">
+        {/* <PrivateRoute path="*">
           <p>No Match</p>
-        </PrivateRoute>
+        </PrivateRoute> */}
       </Switch>
     </Router>
   );

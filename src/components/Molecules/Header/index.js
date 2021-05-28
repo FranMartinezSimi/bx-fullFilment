@@ -1,7 +1,9 @@
 
 import React from 'react'
 
+import { useHistory } from "react-router-dom";
 import { useAuth } from "context/userContex";
+
 import alarm from 'assets/brand/alarm.svg';
 import bento from 'assets/brand/bento.svg';
 import avatar from 'assets/brand/avatar.svg';
@@ -10,6 +12,7 @@ import arrowDown from 'assets/brand/arrow-down.svg';
 import styles from './styles.module.scss';
 
 const Header = ({ activeNavbar, setActiveNavbar }) => {
+  let history = useHistory();
   const {setUser} = useAuth();
   const handleClick = (e) => {
     e.preventDefault();
@@ -17,6 +20,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   }
   const signOut = (e) => {
     e.preventDefault();
+    history.push('/');
     localStorage.removeItem('bxBusinessActiveFulfillment');
     setUser(null);
   }
