@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// import { clientFetch } from 'lib/client-fetch';
+import { clientFetch } from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
@@ -18,24 +18,28 @@ const UploadOrders = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isProccesing, setIsProccesing] = useState(false);
 
-  const sendData = async () => {
+  const sendData = () => {
     console.log(dataToUpload);
     setIsLoadingData(true);
 
-    setTimeout(() => {
-      setIsLoadingData(false);
-      setUpdatedData(["asdasdsa"])
-    }, 2000);
+    // setTimeout(() => {
+    //   setIsLoadingData(false);
+    //   setUpdatedData(["asdasdsa"])
+    // }, 2000);
 
-    // clientFetch('orders/putOrders', {
-    //   body: dataToUpload
-    // })
-    //   .then((data) => {
-    //       // console.log('orderDetail:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
+    clientFetch('orders/addOrders', {
+      body: dataToUpload
+    })
+      .then((data) => {
+          console.log('responseDetail:', data);
+          setUpdatedData([data]);
+          setIsLoadingData(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setUpdatedData(error);
+        setIsLoadingData(false);
+      })
 
     // try {
     //   // Enviar al backend
@@ -157,7 +161,7 @@ const UploadOrders = () => {
         <div className="row">
           <div className="col-12">
             <div className="d-flex w-100 my-5">
-              {!isLoadingData && dataToUpload && (
+              {!isLoadingData && dataToUpload && (updatedData.length === 0) &&(
                 <Button
                   text="Enviar órdenes"
                   className="btn btn-secondary ms-auto"

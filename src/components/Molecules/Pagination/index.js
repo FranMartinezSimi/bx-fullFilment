@@ -9,15 +9,37 @@ const Pagination = ({
   gotoPage,
   pageCount,
   pageOptions,
-  totalPagesFetch
+  totalPagesFetch,
+  pageSize,
+  setPageSize
 }) => {
   return (
     <div className="container px-0">
       <div className="row justify-content-between">
         <div className="col-md-6">
-          {totalPagesFetch && (
-            <p className="mb-0 text-grey">{`Mostrando 10 de ${(totalPagesFetch * 20)}`}</p>
-          )}
+          <ul className="d-flex">
+            <li className="me-4">
+              {pageSize && (
+                <select
+                  value={pageSize}
+                  onChange={e => {
+                    setPageSize(Number(e.target.value))
+                  }}
+                >
+                  {[10, 20, 30, 40, 50].map(pageSize => (
+                    <option key={pageSize} value={pageSize}>
+                      Mostrar {pageSize}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </li>
+            <li>
+              {totalPagesFetch && (
+                <p className="mb-0 text-grey">{`Mostrando ${pageSize} de ${(totalPagesFetch * 20)}`}</p>
+              )}
+            </li>
+          </ul>
         </div>
         <div className="col-md-6 col-xl-4">
           {pageCount > 1 && (

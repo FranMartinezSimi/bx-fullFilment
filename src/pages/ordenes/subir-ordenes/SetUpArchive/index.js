@@ -7,6 +7,8 @@ import orderList from 'assets/brand/orderList.svg';
 import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
 import infoTriangle from 'assets/brand/infoTriangle.svg';
 import listPencil from 'assets/brand/listPencil.svg';
+import plantilla from 'assets/PLANTILLA-FULFILLMENT.csv';
+import iata from 'assets/IATAComunas.xlsx';
 
 const SetUpArchive = ({ setDataToValidate, dataToUpload, dataWhitErrors, setDataToUpload, setDataWhitErrors}) => {
 
@@ -46,19 +48,17 @@ const SetUpArchive = ({ setDataToValidate, dataToUpload, dataWhitErrors, setData
           </ul>
           <div className="py-3">
             <a
-              href="https://stefaninilatam-my.sharepoint.com/:x:/g/personal/gavalera_latam_stefanini_com/ETtt7xqPMdZLjc4iwIOO-NIBaISk932Y9BEb-llJl3FJUQ"
+              href={plantilla}
               className="btn btn-complementary me-3"
-              rel="noreferrer"
-              target="_blank"
+              download
             >
               <img src={loadArrowOrange} alt="Download" width="16" />
               <span className="ps-2">Descarga plantilla de órdenes</span>
             </a>
             <a
-              href="https://stefaninilatam-my.sharepoint.com/:b:/g/personal/gavalera_latam_stefanini_com/EaCyNm4v2BdPne79O9UtzDMBwCs7_IE2uFEPGD00a9IiyA?e=ZPL75s"
+              href={iata}
               className="btn btn-complementary"
-              rel="noreferrer"
-              target="_blank"
+              download
             >
               <img src={loadArrowOrange} alt="Download" width="16" />
               <span className="ps-2">Descarga cógidos IATA</span>

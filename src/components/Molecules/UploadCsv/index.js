@@ -8,15 +8,25 @@ import plus from 'assets/brand/plus.svg';
 const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) => {
 
   const handleOnDrop = (data) => {
-    console.log('dataToValidate', data);
-
+    
+    const dataWhitErrors = data.some((item) => item.errors.length > 0);
+    
+    console.log(dataWhitErrors);
+    
+    if (dataWhitErrors) {
+      setDataWhitErrors(['El formato de archivo debe ser ,csv delimitado por cómas']);
+      return;
+    }
+    
     const formatData = data.map((item) => item.data)
     setDataToValidate(formatData)
+    console.log('dataToValidate', formatData);
   };
 
 
   const handleOnError = (err, file, inputElem, reason) => {
     console.log('error', err);
+    setDataWhitErrors(err);
     setDataToValidate([])
   };
 
@@ -33,6 +43,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
       onError={handleOnError}
       addRemoveButton
       onRemoveFile={handleOnRemoveFile}
+      accept="text/csv, .csv"
       config={{
         header: true,
       }}
