@@ -117,7 +117,7 @@ const UploadOrders = () => {
         )}
 
 
-        {/* { dataWhitErrors && (
+        { dataWhitErrors && (
           <ul>
             <li>
               { isProccesing && <p>Procesando...</p> }
@@ -130,7 +130,7 @@ const UploadOrders = () => {
               </li>
             ))}
           </ul>
-        )} */}
+        )}
 
         { isLoadingData && <UpdatingOrders /> }
 

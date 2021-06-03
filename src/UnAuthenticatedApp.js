@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // import { useAuth } from "./context/userContex";
 import {
@@ -6,9 +6,9 @@ import {
   Switch,
   Route,
   // Redirect,
-} from "react-router-dom";
-import Sync from "./pages/sync";
-import "./styles/main.scss";
+} from 'react-router-dom';
+import Sync from './pages/sync';
+import './styles/main.scss';
 
 // const PrivateRoute = ({ children, ...rest }) => {
 //   const { user } = useAuth();
@@ -30,19 +30,17 @@ import "./styles/main.scss";
 //     />
 //   );
 // };
-const UnauthenticatedApp = ({ setUser }) => {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Sync setUser={setUser} />
-        </Route>
-        {/* <PrivateRoute path="*">
+const UnauthenticatedApp = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/">
+        <Sync/>
+      </Route>
+      {/* <PrivateRoute path="*">
           <p>No Match</p>
         </PrivateRoute> */}
-      </Switch>
-    </Router>
-  );
-};
+    </Switch>
+  </Router>
+);
 
 export default UnauthenticatedApp;

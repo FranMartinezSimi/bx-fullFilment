@@ -5,7 +5,7 @@ const AlertMessage = ({ type, message }) => {
   let component;
   switch (type) {
     case 'danger':
-      component = <img src="/emoti-sad.png" alt="sad" width="30"/>;
+      component = <img src="/emoti-sad.png" alt="sad" width="30" />;
       break;
     default:
       component = null;
@@ -17,18 +17,18 @@ const AlertMessage = ({ type, message }) => {
           { component }
         </li>
         <li>
-          <p className={`font-weight-bold mb-0`} role="alert">
+          <p className="font-weight-bold mb-0" role="alert">
             {message}
           </p>
         </li>
       </ul>
     </div>
   );
-}
+};
 
 AlertMessage.propTypes = {
   type: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired
-}
+  message: PropTypes.string.isRequired,
+};
 
 export default AlertMessage;

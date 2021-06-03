@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Card from "components/Molecules/Card";
-import UploadCsv from "components/Molecules/UploadCsv";
-import AlerMessage from "components/Atoms/AlertMessage";
-import orderList from "assets/brand/orderList.svg";
-import loadArrowOrange from "assets/brand/loadarrowOrange.svg";
-import infoTriangle from "assets/brand/infoTriangle.svg";
-import listPencil from "assets/brand/listPencil.svg";
-import plantilla from "assets/PLANTILLA-FULFILLMENT.csv";
-import iata from "assets/IATAComunas.xlsx";
+import Card from 'components/Molecules/Card';
+import UploadCsv from 'components/Molecules/UploadCsv';
+import AlerMessage from 'components/Atoms/AlertMessage';
+import orderList from 'assets/brand/orderList.svg';
+import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
+import infoTriangle from 'assets/brand/infoTriangle.svg';
+import listPencil from 'assets/brand/listPencil.svg';
+import plantilla from 'assets/PLANTILLA-FULFILLMENT.csv';
+import iata from 'assets/IATAComunas.xlsx';
 
 const SetUpArchive = ({
   setDataToValidate,
@@ -59,7 +59,11 @@ const SetUpArchive = ({
             <li>
               <p>
                 Los SKUs que no estén registrados previamente no serán
-                procesados, comunícate con nosotros <a href="#!">aquí</a> para
+                procesados, comunícate con nosotros
+                {' '}
+                <a href="#!">aquí</a>
+                {' '}
+                para
                 ingresarlos.
               </p>
             </li>

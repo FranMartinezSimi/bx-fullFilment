@@ -5,10 +5,10 @@ import { AuthProvider } from './context/userContex';
 import App from './App';
 
 ReactDOM.render(
-  <AuthProvider >
+  <AuthProvider>
     <App />
   </AuthProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function
