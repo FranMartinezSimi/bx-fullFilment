@@ -22,10 +22,15 @@ const InventoryDetail = ({ id }) => {
         setLoading(false);
         setError(true);
       } else {
-        console.log(data);
+        console.log('error', data);
         setInventoryData(data);
         setLoading(false);
       }
+    })
+    .catch((err) =>  {
+      console.log('error', err);
+      setLoading(false);
+      setError(true);
     })
   }
 

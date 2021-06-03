@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from '../../components/Atoms/Button';
 import Current from '../../assets/brand/firstStep.svg';
+import PropTypes from 'prop-types';
 
 const FirstStep = ({setSelectedItem}) => (
   <>
@@ -29,5 +30,9 @@ const FirstStep = ({setSelectedItem}) => (
     </div>
   </>
 )
- 
+
+FirstStep.prototypes = {
+  setSelectedItem: PropTypes.func.isRequired
+}
+
 export default FirstStep;

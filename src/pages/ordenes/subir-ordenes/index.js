@@ -22,11 +22,6 @@ const UploadOrders = () => {
     console.log(dataToUpload);
     setIsLoadingData(true);
 
-    // setTimeout(() => {
-    //   setIsLoadingData(false);
-    //   setUpdatedData(["asdasdsa"])
-    // }, 2000);
-
     clientFetch('orders/addOrders', {
       body: dataToUpload
     })
@@ -36,25 +31,10 @@ const UploadOrders = () => {
           setIsLoadingData(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error', error);
         // setUpdatedData(error);
         setIsLoadingData(false);
       })
-
-    // try {
-    //   // Enviar al backend
-
-    //   // Loading false
-    //   setIsLoadingData(false);
-
-    //   // Mostrar respuesta, enviar a componente de proceso de carga
-    // } catch (error) {
-    //   console.log(error);
-    //   // Loading false
-    //   setIsLoadingData(false);
-
-    //   // Mostrar respuesta, enviar a componente de proceso de carga
-    // }
   }
   useEffect(() => {
     const validateData = () => {

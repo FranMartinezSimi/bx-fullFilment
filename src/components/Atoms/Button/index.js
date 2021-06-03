@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const ButtonSubmit = ({
   loading, text, className, submit, onClick, imgPrev, imgNext
@@ -26,4 +27,14 @@ const ButtonSubmit = ({
   </button>
 );
 
+ButtonSubmit.propTypes = {
+  loading: PropTypes.bool,
+  text: PropTypes.string,
+  className: PropTypes.string,
+  submit: PropTypes.string,
+  onClick: PropTypes.func,
+  imgPrev: PropTypes.node,
+  imgNext: PropTypes.node
+}
+ 
 export default ButtonSubmit;

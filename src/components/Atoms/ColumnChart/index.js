@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 import Chart from "react-apexcharts";
+import PropTypes from 'prop-types';
 
 const ColumnChart = ({data}) => {
   return (
@@ -9,5 +10,9 @@ const ColumnChart = ({data}) => {
     </div>
   );
 }
- 
+
+ColumnChart.propTypes = {
+  data: PropTypes.object
+}
+
 export default ColumnChart;

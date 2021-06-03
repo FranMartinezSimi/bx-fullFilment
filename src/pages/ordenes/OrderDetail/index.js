@@ -26,7 +26,7 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
           setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error', error);
         setLoading(false);
       })
   }

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const PageTitle = ({title, subtitle, className}) => {
   return (
@@ -10,5 +11,11 @@ const PageTitle = ({title, subtitle, className}) => {
     </div>
   );
 }
- 
+
+PageTitle.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  className: PropTypes.string
+}
+
 export default PageTitle;

@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../../components/Atoms/Button';
+import PropTypes from "prop-types";
 
 const FailStep = ({ setSelectedItem }) => {
   const handleClick = () => {
@@ -32,5 +33,9 @@ const FailStep = ({ setSelectedItem }) => {
     </>
   );
 }
- 
+
+ FailStep.prototypes = {
+   setSelectedItem: PropTypes.func.isRequired
+ }
+
 export default FailStep;

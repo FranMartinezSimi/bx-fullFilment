@@ -115,7 +115,7 @@ const Home = () => {
       },
     })
       .then((data) => {
-        console.log("orders_deliver", data.orders_deliver);
+        // console.log("orders_deliver", data.orders_deliver);
         setIsLoading(false)
         const dates = data.orders_deliver.map((item) => (item.date));
         const send = data.orders_deliver.map((item) => (item.enviado));

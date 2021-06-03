@@ -5,6 +5,7 @@ import Home from 'assets/brand/home.svg';
 import Box from 'assets/brand/box.svg';
 import Todo from 'assets/brand/todo.svg';
 import styles from './styles.module.scss';
+import PropTypes from 'prop-types';
 
 const Sidebar = ({ activeNavbar }) => {
   const primaryLinks = [
@@ -84,6 +85,10 @@ const Sidebar = ({ activeNavbar }) => {
       </ul>
     </nav>
    );
+}
+
+Sidebar.propTypes = {
+  activeNavbar: PropTypes.bool.isRequired
 }
  
 export default Sidebar;

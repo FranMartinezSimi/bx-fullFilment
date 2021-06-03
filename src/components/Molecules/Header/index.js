@@ -10,6 +10,7 @@ import avatar from 'assets/brand/avatar.svg';
 import menu from 'assets/brand/menu.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import styles from './styles.module.scss';
+import PropTypes from 'prop-types';
 
 const Header = ({ activeNavbar, setActiveNavbar }) => {
   let history = useHistory();
@@ -47,5 +48,10 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
     </header>
   );
 }
- 
+
+Header.propTypes = {
+  activeNavbar: PropTypes.bool.isRequired,
+  setActiveNavbar: PropTypes.func
+}
+
 export default Header;

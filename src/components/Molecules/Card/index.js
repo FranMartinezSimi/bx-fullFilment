@@ -1,5 +1,7 @@
-import React from 'react'
-import Back from '../../../assets/brand/back.svg'
+import React from 'react';
+import Back from '../../../assets/brand/back.svg';
+import PropTypes from 'prop-types';
+
 
 const Card = ({ className, title, subtitle, children, close, handleClose, back, handleBack, footer }) => {
   return (
@@ -39,5 +41,17 @@ const Card = ({ className, title, subtitle, children, close, handleClose, back, 
     </div>
   );
 }
- 
+
+Card.propTypes = {
+  className: PropTypes.string,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  children: PropTypes.node,
+  close: PropTypes.bool,
+  handleClose: PropTypes.func,
+  back: PropTypes.bool,
+  handleBack: PropTypes.func,
+  footer: PropTypes.node
+}
+
 export default Card;

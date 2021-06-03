@@ -1,4 +1,6 @@
 import { CSSTransition } from 'react-transition-group';
+
+import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const Modal = ({ title, subtitle, children, onClick, showModal, size}) => (
@@ -28,5 +30,14 @@ const Modal = ({ title, subtitle, children, onClick, showModal, size}) => (
     </div>
   </CSSTransition>
 );
+
+Modal.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  children: PropTypes.node,
+  onClick: PropTypes.func.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  size: PropTypes.string
+}
 
 export default Modal;

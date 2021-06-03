@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import PropTypes from 'prop-types';
 
 const Layout = ({title, description, children}) => {
     return (
@@ -21,5 +22,9 @@ const Layout = ({title, description, children}) => {
       </>
     )
 }
-
+Layout.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  children: PropTypes.node.isRequired
+}
 export default Layout;

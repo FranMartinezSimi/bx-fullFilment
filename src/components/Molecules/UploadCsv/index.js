@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 import { CSVReader } from 'react-papaparse';
 import plus from 'assets/brand/plus.svg';
-
-// const buttonRef = React.createRef();
+import PropTypes from "prop-types";
 
 const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) => {
 
@@ -11,7 +10,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
     
     const dataWhitErrors = data.some((item) => item.errors.length > 0);
     
-    console.log(dataWhitErrors);
+    // console.log(dataWhitErrors);
     
     if (dataWhitErrors) {
       setDataWhitErrors(['El formato de archivo debe ser ,csv delimitado por cómas']);
@@ -31,7 +30,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
   };
 
   const handleOnRemoveFile = (data) => {
-    console.log('dataRemove', data);
+    // console.log('dataRemove', data);
     setDataToValidate([]);
     setDataWhitErrors([]);
     setDataToUpload(null);
@@ -91,4 +90,9 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
   );
 }
  
+UploadCsv.propTypes = {
+  setDataToValidate: PropTypes.func.isRequired,
+  setDataToUpload: PropTypes.func.isRequired,
+  setDataWhitErrors: PropTypes.func.isRequired
+}
 export default UploadCsv;

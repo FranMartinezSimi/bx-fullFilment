@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from 'context/userContex'
 import { clientFetch } from 'lib/client-fetch';
+import PropTypes from 'prop-types'
 
 import Button from 'components/Atoms/Button';
 import Current from 'assets/brand/secondStep.svg';
@@ -29,7 +30,6 @@ const SecondStep = ({ setSelectedItem }) => {
   }
 
   const handleClick = () => {
-    
     if(form.account_id.trim() === '' || form.key.trim() === '' ) {
       setErrorMessage('Todos los datos son obligatorios');
       setError(true);
@@ -44,7 +44,7 @@ const SecondStep = ({ setSelectedItem }) => {
         "account_id": form.account_id,
         "warehouse": "bx1"
       }
-    }, )
+    })
       .then((data) => {
         // console.log(data);
         if (data.status === 'successful') {
@@ -58,10 +58,7 @@ const SecondStep = ({ setSelectedItem }) => {
       .catch((error) => {
         console.log('error', error);
         setSelectedItem('failStep');
-
       });
-
-
   }
   return (
     <>
@@ -155,6 +152,10 @@ const SecondStep = ({ setSelectedItem }) => {
       }
     </>
   );
+}
+
+SecondStep.prototypes = {
+  setSelectedItem: PropTypes.func.isRequired
 }
 
 export default SecondStep;

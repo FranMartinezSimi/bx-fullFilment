@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import PropTypes from 'prop-types';
 
 const PageLayout = ({title, description, children}) => (
   <>
@@ -13,5 +14,9 @@ const PageLayout = ({title, description, children}) => (
     {children}
   </>
 )
- 
+PageLayout.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  children: PropTypes.node.isRequired
+}
 export default PageLayout;

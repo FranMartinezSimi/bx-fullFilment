@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss'
+
 const OrderedList = ({listData}) => {
   return (
     <ol className={`${styles.orderedList} pt-5 mb-0`}>
@@ -31,5 +33,9 @@ const OrderedList = ({listData}) => {
     </ol>
   );
 }
- 
+
+OrderedList.propTypes = {
+  listData: PropTypes.array
+}
+
 export default OrderedList;

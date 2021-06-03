@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ArrowDown from '../../../assets/brand/arrow-black-down.svg';
 import ArrowUp from '../../../assets/brand/arrow-black-up.svg';
 import styles from './styles.module.scss';
+import PropTypes from 'prop-types';
 
 const DropDown = ({children}) => {
   const [open, setOpen] = useState(false);
@@ -28,4 +29,8 @@ const DropDown = ({children}) => {
   );
 }
  
+DropDown.propTypes = {
+  children: PropTypes.node.isRequired
+}
+
 export default DropDown;

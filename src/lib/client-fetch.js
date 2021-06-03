@@ -30,7 +30,7 @@ export function clientFetch(endpoint, {body, ...customConfig} = {}) {
     .then(async response => {
       if (response.status >= 500) {
         const errorMessage = await response.text()
-        console.log('errorMessage', errorMessage)
+        console.log('error', errorMessage)
         return Promise.reject(new Error(errorMessage))
       }
       if (response.status === 401) {
