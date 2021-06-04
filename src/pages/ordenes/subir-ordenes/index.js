@@ -119,7 +119,7 @@ const UploadOrders = () => {
             )}
           </code>
         </pre>
-        {dataWhitErrors.length > 1 && (
+        {dataWhitErrors.length > 0 && (
           <ul>
             <li>{isProccesing && <p>Procesando...</p>}</li>
             {dataWhitErrors.length

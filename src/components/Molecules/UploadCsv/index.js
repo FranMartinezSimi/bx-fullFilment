@@ -11,7 +11,10 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
     // console.log(dataWhitErrors);
 
     if (dataWhitErrors) {
-      setDataWhitErrors(['El formato de archivo debe ser ,csv delimitado por cómas']);
+      setDataWhitErrors([{
+        key: 'error en archivo:',
+        errors: ['El formato de archivo debe ser ,csv delimitado por cómas'],
+      }]);
       return;
     }
 
