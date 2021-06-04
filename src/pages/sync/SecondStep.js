@@ -38,7 +38,7 @@ const SecondStep = ({ setSelectedItem }) => {
 
     setLoading(true);
 
-    clientFetch('credential', {
+    clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
         key: form.key,
         account_id: form.account_id,
