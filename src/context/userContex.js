@@ -1,4 +1,6 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, {
+  createContext, useState, useEffect, useContext,
+} from 'react';
 
 const AuthContext = createContext({});
 
@@ -11,11 +13,10 @@ const AuthProvider = (props) => {
     if (bxBusinessActiveFulfillment) {
       setUser(bxBusinessActiveFulfillment);
     }
-  }, [bxBusinessActiveFulfillment])
+  }, [bxBusinessActiveFulfillment]);
 
-
-  return <AuthContext.Provider value={{user, setUser}} {...props} />;
-}
+  return <AuthContext.Provider value={{ user, setUser }} {...props} />;
+};
 
 const useAuth = () => {
   const context = useContext(AuthContext);

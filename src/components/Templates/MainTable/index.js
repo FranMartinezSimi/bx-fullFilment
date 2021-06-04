@@ -1,21 +1,18 @@
-
 import React from 'react';
 import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
+import PropTypes, { arrayOf } from 'prop-types';
 import GlobalFilter from '../../Molecules/GlobalFilter';
 import Pagination from '../../Molecules/Pagination';
 import Sort from '../../../assets/brand/sort.svg';
 import SortUp from '../../../assets/brand/sortUp.svg';
 import SortDown from '../../../assets/brand/sortDown.svg';
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
 
-function MainTable({ 
+function MainTable({
   columns,
   data,
-  // fetchData,
-  // loading,
-  // pageCount: totalPageFetch,
   handleClick,
   handleClickUpdate,
   totalPagesFetch,
@@ -27,7 +24,6 @@ function MainTable({
     headerGroups,
     state,
     page,
-    // rows,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -48,12 +44,10 @@ function MainTable({
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
 
-  // const firstPageRows = page.slice(0, 20);
-
-  return ( 
+  return (
     <>
       <pre className="d-none">
         <code>
@@ -78,36 +72,34 @@ function MainTable({
         handleClick={handleClick}
         handleClickUpdate={handleClickUpdate}
       />
-      <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{overflowY: 'hidden'}}>
+      <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
         <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
-          <thead  style={{background: '#99B1FF'}}>
+          <thead style={{ background: '#99B1FF' }}>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
                 {headerGroup.headers.map((column) => (
                   <th
-                  className={styles.tableTh}
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  {column.render('Header')}
-                  {!column.isSorted
-                    ? (
-                      <span className={styles.symbol}>
-                        <img src={Sort} alt="sort" className="ms-2" width="8"/>
-                      </span>
-                    )
-                    : (
-                      null
-                    )
-                  }
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10"/>) 
-                        : (<img src={SortUp} alt="sortUp" className="ms-2" width="10"/>)
-                      : ''
-                    }
-                  </span>
-                </th>
+                    className={styles.tableTh}
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                  >
+                    {column.render('Header')}
+                    {!column.isSorted
+                      ? (
+                        <span className={styles.symbol}>
+                          <img src={Sort} alt="sort" className="ms-2" width="8" />
+                        </span>
+                      )
+                      : (
+                        null
+                      )}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10" />)
+                          : (<img src={SortUp} alt="sortUp" className="ms-2" width="10" />)
+                        : ''}
+                    </span>
+                  </th>
                 ))}
               </tr>
             ))}
@@ -119,7 +111,7 @@ function MainTable({
                 <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
                   {row.cells.map((cell) => (
                     <td {...cell.getCellProps()}>
-                        {cell.render('Cell')}
+                      {cell.render('Cell')}
                     </td>
                   ))}
                 </tr>
@@ -155,5 +147,21 @@ function MainTable({
     </>
   );
 }
- 
+
+MainTable.defaultProps = {
+  columns: () => {},
+  data: [],
+  handleClick: () => {},
+  handleClickUpdate: () => {},
+  totalPagesFetch: () => {},
+};
+
+MainTable.propTypes = {
+  columns: PropTypes.func,
+  data: PropTypes.shape(arrayOf(PropTypes.object)),
+  handleClick: PropTypes.func,
+  handleClickUpdate: PropTypes.func,
+  totalPagesFetch: PropTypes.func,
+};
+
 export default MainTable;

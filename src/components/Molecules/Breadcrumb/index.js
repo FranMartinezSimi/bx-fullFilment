@@ -1,11 +1,11 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import arrowLeft from '../../../assets/brand/arrow-left.svg';
 
 const Breadcrumb = () => {
-  let location = useLocation();
-  return ( 
+  const location = useLocation();
+  return (
     <aside className="row">
       <div className="col-6">
         <ul className="d-flex mt-4">
@@ -31,7 +31,7 @@ const Breadcrumb = () => {
         </ul>
       </div>
     </aside>
-   );
-}
- 
+  );
+};
+
 export default Breadcrumb;

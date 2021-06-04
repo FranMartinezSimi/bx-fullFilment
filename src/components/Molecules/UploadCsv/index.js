@@ -1,33 +1,35 @@
-import React from 'react'
+import React from 'react';
 
 import { CSVReader } from 'react-papaparse';
 import plus from 'assets/brand/plus.svg';
-
-// const buttonRef = React.createRef();
+import PropTypes from 'prop-types';
 
 const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) => {
-
   const handleOnDrop = (data) => {
-    
     const dataWhitErrors = data.some((item) => item.errors.length > 0);
-    
-    console.log(dataWhitErrors);
-    
+
+    // console.log(dataWhitErrors);
+
     if (dataWhitErrors) {
-      setDataWhitErrors(['El formato de archivo debe ser ,csv delimitado por cómas']);
+      setDataWhitErrors([{
+        key: 'error en archivo:',
+        errors: ['El formato de archivo debe ser ,csv delimitado por cómas'],
+      }]);
       return;
     }
-    
-    const formatData = data.map((item) => item.data)
-    setDataToValidate(formatData)
-    console.log('dataToValidate', formatData);
-  };
 
+    const formatData = data.map((item) => item.data);
+    setDataToValidate(formatData);
+    // console.log('dataToValidate', formatData);
+  };
 
   const handleOnError = (err, file, inputElem, reason) => {
     console.log('error', err);
+    console.log('error', file);
+    console.log('error', inputElem);
+    console.log('error', reason);
     setDataWhitErrors(err);
-    setDataToValidate([])
+    setDataToValidate([]);
   };
 
   const handleOnRemoveFile = (data) => {
@@ -36,7 +38,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
     setDataWhitErrors([]);
     setDataToUpload(null);
   };
-  
+
   return (
     <CSVReader
       onDrop={handleOnDrop}
@@ -84,11 +86,16 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
           <img src={plus} alt="Ordenes" width="50" />
         </div>
         <p>
-        Arrastra tu archivo o selecciona desde tu computadora
+          Arrastra tu archivo o selecciona desde tu computadora
         </p>
       </span>
     </CSVReader>
   );
-}
- 
+};
+
+UploadCsv.propTypes = {
+  setDataToValidate: PropTypes.func.isRequired,
+  setDataToUpload: PropTypes.func.isRequired,
+  setDataWhitErrors: PropTypes.func.isRequired,
+};
 export default UploadCsv;
