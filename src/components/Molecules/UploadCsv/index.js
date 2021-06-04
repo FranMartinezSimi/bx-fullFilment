@@ -20,7 +20,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
 
     const formatData = data.map((item) => item.data);
     setDataToValidate(formatData);
-    console.log('dataToValidate', formatData);
+    // console.log('dataToValidate', formatData);
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -33,7 +33,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
   };
 
   const handleOnRemoveFile = (data) => {
-    console.log('dataRemove', data);
+    // console.log('dataRemove', data);
     setDataToValidate([]);
     setDataWhitErrors([]);
     setDataToUpload(null);
