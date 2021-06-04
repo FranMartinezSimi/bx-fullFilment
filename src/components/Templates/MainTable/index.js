@@ -2,7 +2,7 @@ import React from 'react';
 import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
-import PropTypes, { arrayOf } from 'prop-types';
+import PropTypes from 'prop-types';
 import GlobalFilter from '../../Molecules/GlobalFilter';
 import Pagination from '../../Molecules/Pagination';
 import Sort from '../../../assets/brand/sort.svg';
@@ -49,16 +49,10 @@ function MainTable({
 
   return (
     <>
-      <pre className="d-none">
+      <pre className="">
         <code>
           {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage,
-            },
+            typeof (totalPagesFetch),
             null,
             2,
           )}
@@ -149,19 +143,19 @@ function MainTable({
 }
 
 MainTable.defaultProps = {
-  columns: () => {},
-  data: [],
+  columns: {},
+  data: {},
   handleClick: () => {},
   handleClickUpdate: () => {},
-  totalPagesFetch: () => {},
+  totalPagesFetch: 0,
 };
 
 MainTable.propTypes = {
-  columns: PropTypes.func,
-  data: PropTypes.shape(arrayOf(PropTypes.object)),
+  columns: PropTypes.shape(PropTypes.object),
+  data: PropTypes.shape(PropTypes.object),
   handleClick: PropTypes.func,
   handleClickUpdate: PropTypes.func,
-  totalPagesFetch: PropTypes.func,
+  totalPagesFetch: PropTypes.number,
 };
 
 export default MainTable;

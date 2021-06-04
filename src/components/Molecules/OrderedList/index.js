@@ -41,12 +41,8 @@ const OrderedList = ({ listData }) => (
   </ol>
 );
 
-OrderedList.defaultProps = {
-  listData: [],
-};
-
 OrderedList.propTypes = {
-  listData: PropTypes.shape([]),
+  listData: PropTypes.shape(PropTypes.array).isRequired,
 };
 
 export default OrderedList;
