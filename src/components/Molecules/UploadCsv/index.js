@@ -33,7 +33,7 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
   };
 
   const handleOnRemoveFile = (data) => {
-    // console.log('dataRemove', data);
+    console.log('dataRemove', data);
     setDataToValidate([]);
     setDataWhitErrors([]);
     setDataToUpload(null);

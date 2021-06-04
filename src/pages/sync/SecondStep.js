@@ -141,7 +141,7 @@ const SecondStep = ({ setSelectedItem }) => {
                   onClick={handleClick}
                   loading={loading}
                 />
-                <a href="#!" className="mt-4" onClick={handleClickGoBack}>
+                <a href="#!" className="mt-4 d-block" onClick={handleClickGoBack}>
                   <img src={Current} alt="current" />
                 </a>
               </div>

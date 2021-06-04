@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Atoms/Button';
+import styles from './styles.module.scss';
 
 const FailStep = ({ setSelectedItem }) => {
   const handleClick = () => {
@@ -12,7 +13,7 @@ const FailStep = ({ setSelectedItem }) => {
         <img src="/errorgloboalert.png" alt="ERROR" width="70" />
       </div>
       <h4 className="display-font text-center mb-4">No hemos podido sincronizar tu cuenta Shipedge.</h4>
-      <ol className="p-0 ps-3">
+      <ol className={`${styles.orderedList} p-0 ps-3`}>
         <li>
           <p className="display-font d-inline" style={{ fontSize: '16px' }}>Verifica que la información ingresada sea correcta.</p>
         </li>
