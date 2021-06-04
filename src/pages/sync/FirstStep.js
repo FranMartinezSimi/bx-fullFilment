@@ -31,7 +31,7 @@ const FirstStep = ({ setSelectedItem }) => (
   </>
 );
 
-FirstStep.prototypes = {
+FirstStep.propTypes = {
   setSelectedItem: PropTypes.func.isRequired,
 };
 

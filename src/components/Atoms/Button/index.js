@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const ButtonSubmit = ({
   loading,
@@ -12,7 +12,7 @@ const ButtonSubmit = ({
 }) => (
   <button
     className={className}
-    type={submit ? "submit" : "button"}
+    type={submit ? 'submit' : 'button'}
     disabled={loading}
     onClick={onClick}
   >
@@ -28,6 +28,15 @@ const ButtonSubmit = ({
     )}
   </button>
 );
+
+ButtonSubmit.defaultProps = {
+  loading: false,
+  className: '',
+  submit: '',
+  onClick: () => {},
+  imgPrev: null,
+  imgNext: null,
+};
 
 ButtonSubmit.propTypes = {
   text: PropTypes.string.isRequired,

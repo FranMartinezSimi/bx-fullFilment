@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
-import reload from 'assets/brand/reload.svg'
+import reload from 'assets/brand/reload.svg';
+import PropTypes from 'prop-types';
 
-function GlobalFilter({
+const GlobalFilter = ({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
   handleClick,
-  handleClickUpdate
-}) {
+  handleClickUpdate,
+}) => {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value.trim() || undefined);
+
+  const onChange = useAsyncDebounce((targetValue) => {
+    setGlobalFilter(targetValue.trim() || undefined);
   }, 200);
 
   const checkUrl = (window.location.pathname === '/inventario');
@@ -24,7 +26,7 @@ function GlobalFilter({
           <input
             value={value || ''}
             className="form-control"
-            style={{borderRadius: '50rem'}}
+            style={{ borderRadius: '50rem' }}
             onChange={(e) => {
               setValue(e.target.value);
               onChange(e.target.value);
@@ -42,7 +44,7 @@ function GlobalFilter({
               </li>
               <li>
                 <a href="#!" className="btn btn-complementary d-none" onClick={handleClickUpdate}>
-                  <img src={reload} className="me-2" alt="Actualizar" width="25"/>
+                  <img src={reload} className="me-2" alt="Actualizar" width="25" />
                   <span>
                     Actualizar
                   </span>
@@ -54,6 +56,22 @@ function GlobalFilter({
       </div>
     </div>
   );
-}
+};
+
+GlobalFilter.defaultProps = {
+  preGlobalFilteredRows: () => {},
+  globalFilter: () => {},
+  setGlobalFilter: () => {},
+  handleClick: () => {},
+  handleClickUpdate: () => {},
+};
+
+GlobalFilter.propTypes = {
+  preGlobalFilteredRows: PropTypes.func,
+  globalFilter: PropTypes.func,
+  setGlobalFilter: PropTypes.func,
+  handleClick: PropTypes.func,
+  handleClickUpdate: PropTypes.func,
+};
 
 export default GlobalFilter;

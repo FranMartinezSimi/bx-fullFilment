@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from 'context/userContex';
-import { clientFetch } from 'lib/client-fetch';
-import PropTypes from 'prop-types';
+import clientFetch from 'lib/client-fetch';
 
 import Button from 'components/Atoms/Button';
 import Current from 'assets/brand/secondStep.svg';
 import ArrowBack from 'assets/brand/back.svg';
+import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const SecondStep = ({ setSelectedItem }) => {
@@ -152,7 +152,7 @@ const SecondStep = ({ setSelectedItem }) => {
   );
 };
 
-SecondStep.prototypes = {
+SecondStep.propTypes = {
   setSelectedItem: PropTypes.func.isRequired,
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Card from 'components/Molecules/Card';
 import UploadCsv from 'components/Molecules/UploadCsv';
@@ -10,6 +9,7 @@ import infoTriangle from 'assets/brand/infoTriangle.svg';
 import listPencil from 'assets/brand/listPencil.svg';
 import plantilla from 'assets/PLANTILLA-FULFILLMENT.csv';
 import iata from 'assets/IATAComunas.xlsx';
+import PropTypes from 'prop-types';
 
 const SetUpArchive = ({
   setDataToValidate,
@@ -114,9 +114,14 @@ const SetUpArchive = ({
   );
 };
 
-SetUpArchive.prototypes = {
-  dataToUpload: PropTypes.array.isRequired,
-  dataWhitErrors: PropTypes.array,
+SetUpArchive.defaultProps = {
+  dataToUpload: [],
+  dataWhitErrors: [],
+};
+
+SetUpArchive.propTypes = {
+  dataToUpload: PropTypes.shape(PropTypes.array),
+  dataWhitErrors: PropTypes.shape(PropTypes.array),
   setDataToValidate: PropTypes.func.isRequired,
   setDataToUpload: PropTypes.func.isRequired,
   setDataWhitErrors: PropTypes.func.isRequired,

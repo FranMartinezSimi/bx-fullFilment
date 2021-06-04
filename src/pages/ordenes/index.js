@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { clientFetch } from 'lib/client-fetch';
+import clientFetch from 'lib/client-fetch';
 
 import PageLayout from 'components/Templates/PageLayout';
 import Alert from 'components/Atoms/Alert';
@@ -67,8 +67,8 @@ const Orders = () => {
         });
         setMessage('success');
       })
-      .catch((error) => {
-        console.log('error', error);
+      .catch((err) => {
+        console.log('error', err);
         setError(true);
         setLoading(false);
         setMessage('error');
@@ -77,6 +77,29 @@ const Orders = () => {
   };
 
   const data = useMemo(() => list, [list]);
+  const handleClickUpdateOrder = (e) => {
+    e.preventDefault();
+    history.push('/ordenes/subir-ordenes');
+  };
+
+  const handleClickUpdateList = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setIsUpdate(true);
+    getData();
+    setTimeout(() => {
+      setIsUpdate(false);
+    }, 3000);
+  };
+
+  const handleClickOrderDeatil = (e, tableData) => {
+    e.preventDefault();
+    setOrderId(tableData.row.original.order_id);
+    setOrderNumber(tableData.row.original.order_number);
+    setOrderTracking(tableData.row.original.numero_tracking);
+    setUnifyState(tableData.row.original.estado);
+    setModal(true);
+  };
 
   const columns = useMemo(() => [
     {
@@ -107,42 +130,19 @@ const Orders = () => {
       accessor: 'ver',
       isVisible: true,
       Cell: (table) => (
-        <div
+        <a
+          href="#!"
           onClick={(e) => handleClickOrderDeatil(e, table)}
           role="button"
-          className="font-weight-bold font-weight-bold"
+          className="d-block font-weight-bold font-weight-bold"
         >
           <small className="text-complementary-color">
             Ver Más &gt;
           </small>
-        </div>
+        </a>
       ),
     },
   ], []);
-
-  const handleClickUpdateOrder = (e) => {
-    e.preventDefault();
-    history.push('/ordenes/subir-ordenes');
-  };
-
-  const handleClickUpdateList = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setIsUpdate(true);
-    getData();
-    setTimeout(() => {
-      setIsUpdate(false);
-    }, 3000);
-  };
-
-  const handleClickOrderDeatil = (e, tableData) => {
-    e.preventDefault();
-    setOrderId(tableData.row.original.order_id);
-    setOrderNumber(tableData.row.original.order_number);
-    setOrderTracking(tableData.row.original.numero_tracking);
-    setUnifyState(tableData.row.original.estado);
-    setModal(true);
-  };
 
   let component;
   if (error) {

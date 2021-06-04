@@ -1,14 +1,14 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import Button from 'components/Atoms/Button';
 import styles from './styles.module.scss';
 
 const UpdateResult = () => {
-  let history = useHistory();
+  const history = useHistory();
   const handleClick = (e) => {
     e.preventDefault();
-    history.push("/ordenes");
-}
+    history.push('/ordenes');
+  };
   return (
     <div className="container py-5">
       <div className="row justify-content-center">
@@ -18,14 +18,15 @@ const UpdateResult = () => {
           </div>
           <h1 className="display-font text-center pb-4">Proceso completado</h1>
           <p>
-            A continuación te mostramos los resultados de tu carga masiva. Puedes revisar y editar la lista si crees que es necesario. Para realizar esta acción sólo debes hacer clic en el botón continuar para visualizar la tabla.
+            A continuación te mostramos los resultados de tu carga masiva.
+            Puedes revisar y editar la lista si crees que es necesario. Para
+            realizar esta acción sólo debes hacer clic en el botón continuar
+            para visualizar la tabla.
           </p>
           <ul className="py-3 w-100 d-flex justify-content-between align-items-center">
             <li>
               <p>
-                <b>
-                  Procesados
-                </b>
+                <b>Procesados</b>
               </p>
               <p>
                 <span className={styles.bigNumber}>500</span>
@@ -33,9 +34,7 @@ const UpdateResult = () => {
             </li>
             <li className={`${styles.xySeparator} ${styles.listItem}`}>
               <p>
-                <b>
-                  Error
-                </b>
+                <b>Error</b>
               </p>
               <p>
                 <span className={styles.bigNumber}>0</span>
@@ -43,9 +42,7 @@ const UpdateResult = () => {
             </li>
             <li>
               <p>
-                <b>
-                  Éxito
-                </b>
+                <b>Éxito</b>
               </p>
               <p>
                 <span className={styles.bigNumber}>500</span>
@@ -63,6 +60,6 @@ const UpdateResult = () => {
       </div>
     </div>
   );
-}
- 
+};
+
 export default UpdateResult;

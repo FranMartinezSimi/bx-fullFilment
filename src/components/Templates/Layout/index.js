@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Header from "../../Molecules/Header";
-import Sidebar from "../../Molecules/Sidebar";
-import Footer from "../../Molecules/Footer";
-import Breadcrumb from "../../Molecules/Breadcrumb";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import Header from '../../Molecules/Header';
+import Sidebar from '../../Molecules/Sidebar';
+import Footer from '../../Molecules/Footer';
+import Breadcrumb from '../../Molecules/Breadcrumb';
 
 const Layout = ({ children }) => {
   const [activeNavbar, setActiveNavbar] = useState(false);

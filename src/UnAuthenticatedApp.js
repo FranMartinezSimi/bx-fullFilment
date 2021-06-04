@@ -34,7 +34,7 @@ const UnauthenticatedApp = () => (
   <Router>
     <Switch>
       <Route exact path="/">
-        <Sync/>
+        <Sync />
       </Route>
       {/* <PrivateRoute path="*">
           <p>No Match</p>
