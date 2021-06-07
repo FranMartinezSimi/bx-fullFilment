@@ -20,7 +20,11 @@ test('Click button close should be calls once', () => {
     showModal: true,
   };
   const mockHandler = jest.fn();
-  const component = render(<Modal title={config.title} showModal={config.showModal} onClick={mockHandler} />);
+  const component = render(<Modal
+    title={config.title}
+    showModal={config.showModal}
+    onClick={mockHandler}
+  />);
   const button = component.getByTestId('printed-username');
   userEvent.click(button);
 

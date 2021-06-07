@@ -175,8 +175,8 @@ const Home = () => {
     chart();
   }, []);
   return (
-    <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360">
-      <div className="container">
+    <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
+      <div className="container mt-5">
         <div className="row justify-content-between align-items-center">
           <PageTitle
             className="col"

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ErrorPage from 'pages/404';
 import Layout from './components/Templates/Layout';
 import Home from './pages/home';
 import Orders from './pages/ordenes';
@@ -24,6 +25,9 @@ const App = () => (
         </Route>
         <Route exact path="/ordenes/subir-ordenes">
           <UpdateOrders />
+        </Route>
+        <Route exact path="*">
+          <ErrorPage />
         </Route>
       </Layout>
     </Switch>
