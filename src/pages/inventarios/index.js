@@ -77,7 +77,10 @@ const Inventory = () => {
   }
 
   useEffect(() => {
-    clientFetch('inventory/getProductsList', {
+    clientFetch('bff/v1/inventory/getProductsList', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: {
         page: 1,
         warehouse: 'bx1',
