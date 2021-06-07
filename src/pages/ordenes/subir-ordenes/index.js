@@ -5,6 +5,7 @@ import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import Button from 'components/Atoms/Button';
+import OrderCorrection from 'components/Molecules/OrderCorrection';
 import SetUpArchive from './SetUpArchive';
 import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
@@ -134,6 +135,10 @@ const UploadOrders = () => {
                 </li>
               ))}
           </ul>
+        )}
+
+        {dataWhitErrors.length > 0 && (
+          <OrderCorrection />
         )}
 
         {isLoadingData && <UpdatingOrders />}

@@ -49,7 +49,7 @@ function MainTable({
 
   return (
     <>
-      <pre className="">
+      <pre className="d-none">
         <code>
           {JSON.stringify(
             typeof (totalPagesFetch),

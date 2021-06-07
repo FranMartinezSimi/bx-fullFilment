@@ -14,7 +14,7 @@ ColumnChart.defaultProps = {
 ColumnChart.propTypes = {
   data: PropTypes.shape({
     options: {},
-    series: {},
+    series: PropTypes.arrayOf(PropTypes.object),
   }),
 };
 

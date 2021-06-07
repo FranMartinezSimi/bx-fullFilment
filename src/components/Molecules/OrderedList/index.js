@@ -42,7 +42,7 @@ const OrderedList = ({ listData }) => (
 );
 
 OrderedList.propTypes = {
-  listData: PropTypes.shape(PropTypes.array).isRequired,
+  listData: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default OrderedList;

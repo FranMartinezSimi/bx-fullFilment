@@ -18,7 +18,6 @@ const GlobalFilter = ({
   }, 200);
 
   const checkUrl = (window.location.pathname === '/inventario');
-  console.log(typeof preGlobalFilteredRows);
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-start">
