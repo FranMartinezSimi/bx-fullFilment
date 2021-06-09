@@ -37,7 +37,7 @@ const Pagination = ({
             )}
           </li>
           <li>
-            {totalPagesFetch && (
+            {totalPagesFetch > 0 && (
               <p className="mb-0 text-grey">
                 {`Mostrando ${pageSize} de ${
                   totalPagesFetch * 20

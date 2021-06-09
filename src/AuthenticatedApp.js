@@ -12,8 +12,8 @@ import './styles/main.scss';
 
 const App = () => (
   <Router>
-    <Switch>
-      <Layout>
+    <Layout>
+      <Switch>
         <Route exact path="/">
           <Home />
         </Route>
@@ -26,11 +26,11 @@ const App = () => (
         <Route exact path="/ordenes/subir-ordenes">
           <UpdateOrders />
         </Route>
-        <Route exact path="*">
+        <Route path="*">
           <ErrorPage />
         </Route>
-      </Layout>
-    </Switch>
+      </Switch>
+    </Layout>
   </Router>
 );
 

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clientFetch from 'lib/client-fetch';
 
-import Spinner from '../../../components/Atoms/Spinner';
-import DropDown from '../../../components/Molecules/DropDown';
-import Alert from '../../../components/Atoms/Alert';
+import Spinner from '../../Atoms/Spinner';
+import DropDown from '../DropDown';
+import Alert from '../../Atoms/Alert';
 import Todo from '../../../assets/brand/todo.svg';
 import Calendar from '../../../assets/brand/calendar.svg';
 import Flag from '../../../assets/brand/flag.svg';

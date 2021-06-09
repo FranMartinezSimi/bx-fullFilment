@@ -5,7 +5,7 @@ import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
-import InventoryDetail from 'pages/inventarios/InventoryDetail';
+import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 

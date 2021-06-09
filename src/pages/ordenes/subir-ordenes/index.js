@@ -54,13 +54,16 @@ const UploadOrders = () => {
             ...itemsWhitErrors,
             {
               key,
+              item,
               errors,
             },
           ];
         }
-        setDataWhitErrors(itemsWhitErrors);
         return item;
       });
+
+      setDataWhitErrors(itemsWhitErrors);
+
       if (!itemsWhitErrors.length && dataToValidate.length) {
         const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
           order_number: item.NUMERO_ORDEN,
@@ -109,36 +112,12 @@ const UploadOrders = () => {
             sendData={sendData}
           />
         )}
-        <pre className="d-none">
-          <code>
-            {JSON.stringify(
-              {
-                dataWhitErrors,
-              },
-              null,
-              2,
-            )}
-          </code>
-        </pre>
-        {dataWhitErrors.length > 0 && (
-          <ul>
-            <li>{isProccesing && <p>Procesando...</p>}</li>
-            {dataWhitErrors.length
-              && dataWhitErrors.map((item) => (
-                <li key={item.key}>
-                  Fila:
-                  {' '}
-                  {item.key}
-                  , Errores:
-                  {' '}
-                  {item.errors.map((value, key) => (key > 0 ? `- ${value}` : `${value} `))}
-                </li>
-              ))}
-          </ul>
-        )}
 
         {dataWhitErrors.length > 0 && (
-          <OrderCorrection />
+          <OrderCorrection
+            dataToValidate={dataToValidate}
+            dataWhitErrors={dataWhitErrors}
+          />
         )}
 
         {isLoadingData && <UpdatingOrders />}
