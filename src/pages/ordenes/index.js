@@ -110,7 +110,7 @@ const Orders = () => {
     },
     {
       Header: 'Fecha',
-      accessor: 'fecha',
+      accessor: 'date',
     },
     {
       Header: 'Destinatario',
@@ -118,11 +118,11 @@ const Orders = () => {
     },
     {
       Header: 'Estado',
-      accessor: 'estado',
+      accessor: 'status',
     },
     {
       Header: 'Nº Tracking',
-      accessor: 'numeroTracking',
+      accessor: 'trackingNumber',
     },
     {
       Header: 'Nº de referencia',
