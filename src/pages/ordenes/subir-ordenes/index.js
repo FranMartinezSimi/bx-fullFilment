@@ -114,10 +114,21 @@ const UploadOrders = () => {
         )}
 
         {dataWhitErrors.length > 0 && (
-          <OrderCorrection
-            dataToValidate={dataToValidate}
-            dataWhitErrors={dataWhitErrors}
-          />
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-12">
+                <h2 className="display-font">Por favor corrige tus errores</h2>
+              </div>
+              <div className="col-md-9">
+                <Card className="shadow my-4">
+                  <OrderCorrection
+                    dataToValidate={dataToValidate}
+                    dataWhitErrors={dataWhitErrors}
+                  />
+                </Card>
+              </div>
+            </div>
+          </div>
         )}
 
         {isLoadingData && <UpdatingOrders />}

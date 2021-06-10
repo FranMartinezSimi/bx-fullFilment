@@ -10,7 +10,6 @@ import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reload.svg';
-import warningIcon from 'assets/brand/warningIcon.svg';
 import styles from './styles.module.scss';
 
 const Orders = () => {
@@ -21,7 +20,7 @@ const Orders = () => {
   const [date, setDate] = useState(null);
   const [list, setList] = useState([]);
   const [message, setMessage] = useState('');
-  const [totalPages, setTotalPages] = useState('');
+  // const [totalPages, setTotalPages] = useState('');
   const [orderId, setOrderId] = useState('');
   const [orderNumber, setOrderNumber] = useState('');
   const [orderTracking, setOrderTracking] = useState('');
@@ -32,7 +31,10 @@ const Orders = () => {
   const getData = () => {
     setError(false);
     setMessage('');
-    clientFetch('orders/getOrdersList', {
+    clientFetch('order/v1/orders/getOrdersList', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: {
         page: 1,
         warehouse: 'bx1',
@@ -40,10 +42,10 @@ const Orders = () => {
       },
     })
       .then((data) => {
-        // console.log('orderData:', data);
+        console.log('orderData:', data);
         setLoading(false);
-        setList(data.order);
-        setTotalPages(data.total_pages);
+        setList(data);
+        // setTotalPages(data.total_pages);
         const DATE = new Date();
         const monthNames = [
           'Ene',
@@ -104,7 +106,7 @@ const Orders = () => {
   const columns = useMemo(() => [
     {
       Header: 'Nº orden',
-      accessor: 'order_id',
+      accessor: 'orderId',
     },
     {
       Header: 'Fecha',
@@ -112,7 +114,7 @@ const Orders = () => {
     },
     {
       Header: 'Destinatario',
-      accessor: (d) => `${d.first_name} ${d.last_name}`,
+      accessor: (d) => `${d.firstName} ${d.lastName}`,
     },
     {
       Header: 'Estado',
@@ -120,11 +122,11 @@ const Orders = () => {
     },
     {
       Header: 'Nº Tracking',
-      accessor: 'numero_tracking',
+      accessor: 'numeroTracking',
     },
     {
       Header: 'Nº de referencia',
-      accessor: 'order_number',
+      accessor: 'orderNumber',
     },
     {
       accessor: 'ver',
@@ -158,12 +160,7 @@ const Orders = () => {
       break;
     case 'error':
       componentMessage = (
-        <p className="py-5">
-          <span className={`${styles.badge} ${styles.errorMessage}`}>
-            <img src={warningIcon} alt="Actualizar Ordenes" width="25" />
-            <span> Ups, ¡No se logro actualizar! </span>
-          </span>
-        </p>
+        <Alert className="mt-5" type="warning" text="Ooopss! ¡No se logro actualizar!" />
       );
       break;
     default:
@@ -193,7 +190,7 @@ const Orders = () => {
           <MainTable
             columns={columns}
             data={data}
-            totalPagesFetch={totalPages}
+            // totalPagesFetch={totalPages}
             handleClick={handleClickUpdateOrder}
             handleClickUpdate={handleClickUpdateList}
           />

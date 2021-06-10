@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './styles.module.scss';
 
 const OrderCorrection = ({ dataToValidate, dataWhitErrors }) => {
   console.log('dataToValidate', dataToValidate);
@@ -6,10 +7,14 @@ const OrderCorrection = ({ dataToValidate, dataWhitErrors }) => {
   return (
     <>
       {dataWhitErrors.length > 0 && (
-        <ul>
+        <ul className={`px-4 py-0 m-0 ${styles.list}`}>
           {dataWhitErrors.map((item) => (
-            <li key={item.key}>
-              <div>
+            <li key={item.key} className="list-item">
+              <div className="list-item--header">
+                <p>
+                  Nº de OS:
+                  {item.item.NUMERO_ORDEN}
+                </p>
                 Fila:
                 {' '}
                 {item.key}
@@ -17,7 +22,7 @@ const OrderCorrection = ({ dataToValidate, dataWhitErrors }) => {
                 {' '}
                 {item.errors.map((value, key) => (key > 0 ? `- ${value}` : `${value} `))}
               </div>
-              <div>
+              <div className="list-item--form">
                 {item.errors.map((value) => (
                   <label htmlFor="inputNombre" className="form-label text-uppercase w-100">
                     <span className="d-block">
