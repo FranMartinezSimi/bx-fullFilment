@@ -93,9 +93,15 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
   );
 };
 
+UploadCsv.defaultProps = {
+  setDataToValidate: () => {},
+  setDataToUpload: () => {},
+  setDataWhitErrors: () => {},
+};
+
 UploadCsv.propTypes = {
-  setDataToValidate: PropTypes.func.isRequired,
-  setDataToUpload: PropTypes.func.isRequired,
-  setDataWhitErrors: PropTypes.func.isRequired,
+  setDataToValidate: PropTypes.func,
+  setDataToUpload: PropTypes.func,
+  setDataWhitErrors: PropTypes.func,
 };
 export default UploadCsv;

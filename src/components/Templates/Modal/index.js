@@ -37,13 +37,14 @@ Modal.defaultProps = {
   subtitle: '',
   children: null,
   size: '',
+  onClick: undefined,
 };
 
 Modal.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   children: PropTypes.node,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   showModal: PropTypes.bool.isRequired,
   size: PropTypes.string,
 };

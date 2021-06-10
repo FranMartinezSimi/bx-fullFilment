@@ -7,11 +7,13 @@ import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import OrderedList from 'components/Molecules/OrderedList';
 import ColumnChart from 'components/Atoms/ColumnChart';
+import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import styles from './styles.module.scss';
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [orderFetchError, setOrderFetchError] = useState(false);
   const [dataOrders, setDataOrders] = useState({
     series: [
       {
@@ -169,14 +171,16 @@ const Home = () => {
       })
       .catch((error) => {
         console.log('error', error);
+        setOrderFetchError(true);
+        setIsLoading(false);
       });
   };
   useEffect(() => {
     chart();
   }, []);
   return (
-    <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360">
-      <div className="container">
+    <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
+      <div className="container mt-5">
         <div className="row justify-content-between align-items-center">
           <PageTitle
             className="col"
@@ -205,11 +209,19 @@ const Home = () => {
                   <Spinner />
                 </div>
               )}
-              { !isLoading && (dataOrders != null) && (
-                <ColumnChart
-                  data={dataOrders}
-                />
-              )}
+              {!orderFetchError
+                ? (
+                  <ColumnChart
+                    data={dataOrders}
+                  />
+                )
+                : (
+                  <Alert
+                    className="mt-5"
+                    type="warning"
+                    text="Ooopss! Ocurrió un error, intentalo más tarde..."
+                  />
+                )}
             </Card>
           </div>
           <div className="col-lg-6">

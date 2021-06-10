@@ -5,7 +5,7 @@ import Alert from 'components/Atoms/Alert';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
-import InventoryDetail from 'pages/inventarios/InventoryDetail';
+import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 
@@ -77,7 +77,10 @@ const Inventory = () => {
   }
 
   useEffect(() => {
-    clientFetch('inventory/getProductsList', {
+    clientFetch('bff/v1/inventory/getProductsList', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: {
         page: 1,
         warehouse: 'bx1',

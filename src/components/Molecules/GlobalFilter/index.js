@@ -18,7 +18,6 @@ const GlobalFilter = ({
   }, 200);
 
   const checkUrl = (window.location.pathname === '/inventario');
-
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-start">
@@ -59,7 +58,7 @@ const GlobalFilter = ({
 };
 
 GlobalFilter.defaultProps = {
-  preGlobalFilteredRows: () => {},
+  preGlobalFilteredRows: {},
   globalFilter: () => {},
   setGlobalFilter: () => {},
   handleClick: () => {},
@@ -67,7 +66,7 @@ GlobalFilter.defaultProps = {
 };
 
 GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.func,
+  preGlobalFilteredRows: PropTypes.shape(PropTypes.object),
   globalFilter: PropTypes.func,
   setGlobalFilter: PropTypes.func,
   handleClick: PropTypes.func,

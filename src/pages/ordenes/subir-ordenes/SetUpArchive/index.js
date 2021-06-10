@@ -120,8 +120,8 @@ SetUpArchive.defaultProps = {
 };
 
 SetUpArchive.propTypes = {
-  dataToUpload: PropTypes.shape(PropTypes.array),
-  dataWhitErrors: PropTypes.shape(PropTypes.array),
+  dataToUpload: PropTypes.arrayOf(PropTypes.object),
+  dataWhitErrors: PropTypes.arrayOf(PropTypes.object),
   setDataToValidate: PropTypes.func.isRequired,
   setDataToUpload: PropTypes.func.isRequired,
   setDataWhitErrors: PropTypes.func.isRequired,

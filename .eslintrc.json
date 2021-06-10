@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jest": true
     },
     "extends": [
         "eslint:recommended",
@@ -16,7 +17,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "jest"
     ],
     "rules": {
         "react/react-in-jsx-scope": "off",
@@ -24,6 +26,7 @@
         "react/jsx-filename-extension": [1,{"extensions": [".js",".jsx"]}],
         // "no-unused-vars": "warn",
         // "react/prop-types": "warn",
+        "react/prop-types": "off",
         "no-console": "off",
         "no-nested-ternary": "off",
         "no-underscore-dangle": "off",

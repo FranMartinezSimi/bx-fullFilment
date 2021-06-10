@@ -5,6 +5,7 @@ import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import Button from 'components/Atoms/Button';
+import OrderCorrection from 'components/Molecules/OrderCorrection';
 import SetUpArchive from './SetUpArchive';
 import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
@@ -53,13 +54,16 @@ const UploadOrders = () => {
             ...itemsWhitErrors,
             {
               key,
+              item,
               errors,
             },
           ];
         }
-        setDataWhitErrors(itemsWhitErrors);
         return item;
       });
+
+      setDataWhitErrors(itemsWhitErrors);
+
       if (!itemsWhitErrors.length && dataToValidate.length) {
         const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
           order_number: item.NUMERO_ORDEN,
@@ -108,32 +112,23 @@ const UploadOrders = () => {
             sendData={sendData}
           />
         )}
-        <pre className="d-none">
-          <code>
-            {JSON.stringify(
-              {
-                dataWhitErrors,
-              },
-              null,
-              2,
-            )}
-          </code>
-        </pre>
+
         {dataWhitErrors.length > 0 && (
-          <ul>
-            <li>{isProccesing && <p>Procesando...</p>}</li>
-            {dataWhitErrors.length
-              && dataWhitErrors.map((item) => (
-                <li key={item.key}>
-                  Fila:
-                  {' '}
-                  {item.key}
-                  , Errores:
-                  {' '}
-                  {item.errors.map((value, key) => (key > 0 ? `- ${value}` : `${value} `))}
-                </li>
-              ))}
-          </ul>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-12">
+                <h2 className="display-font">Por favor corrige tus errores</h2>
+              </div>
+              <div className="col-md-9">
+                <Card className="shadow my-4">
+                  <OrderCorrection
+                    dataToValidate={dataToValidate}
+                    dataWhitErrors={dataWhitErrors}
+                  />
+                </Card>
+              </div>
+            </div>
+          </div>
         )}
 
         {isLoadingData && <UpdatingOrders />}
