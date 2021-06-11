@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
 import PageLayout from 'components/Templates/PageLayout';
-import Alert from 'components/Atoms/Alert';
+import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reload.svg';
-import styles from './styles.module.scss';
+import Button from 'components/Atoms/Button';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ const Orders = () => {
       },
     })
       .then((data) => {
-        console.log('orderData:', data);
+        // console.log('orderData:', data);
         setLoading(false);
         setList(data);
         // setTotalPages(data.total_pages);
@@ -148,24 +148,38 @@ const Orders = () => {
 
   let component;
   if (error) {
-    component = <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..." />;
+    component = <Alert className="mt-5" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />;
   } else {
     component = <Spinner />;
   }
 
-  let componentMessage;
+  let messageComponent;
   switch (message) {
     case 'success':
-      componentMessage = <p className="py-5"><span className={`${styles.badge}`}>¡Tus órdenes han sido actualizadas con éxito!</span></p>;
+      messageComponent = <Alert className="" type="success" message="¡Tus órdenes han sido actualizadas con éxito!" />;
       break;
     case 'error':
-      componentMessage = (
-        <Alert className="mt-5" type="warning" text="Ooopss! ¡No se logro actualizar!" />
+      messageComponent = (
+        <Alert className="mt-5" type="warning" message="Ooopss! ¡No se logro actualizar!" />
       );
       break;
     default:
-      componentMessage = null;
+      messageComponent = null;
   }
+
+  const updateComponent = (
+    <a href="#!" className="d-flex" onClick={handleClickUpdateList}>
+      <Button
+        text="Actualizar Órdenes"
+        className="btn btn-secondary me-3 py-2"
+      />
+      <div className="d-flex align-items-center">
+        <span className="me-2 text-grey"><small>Última actualización</small></span>
+        <span className="me-2 text-grey"><small>{`${date?.day}, ${date?.month} ${date?.time}`}</small></span>
+        <img src={reload} alt="Actualizar Ordenes" width="19" />
+      </div>
+    </a>
+  );
 
   useEffect(() => {
     getData();
@@ -173,27 +187,23 @@ const Orders = () => {
   return (
     <PageLayout title="Tus órdenes" description="Te mostramos tus órdenes de los últimos días">
       <PageTitle title="Tus órdenes" subtitle="Te mostramos tus órdenes de los últimos días" />
-      {isUpdate && (
-        componentMessage
-      )}
-      {date && !isUpdate && (
-        <a href="#!" onClick={handleClickUpdateList}>
-          <div className="pt-2 mb-5 d-flex align-items-center">
-            <span className="me-2">Última actualización</span>
-            <span className="me-2">{`${date.day}, ${date.month} ${date.time}`}</span>
-            <img src={reload} alt="Actualizar Ordenes" width="19" />
-          </div>
-        </a>
-      )}
+      <div style={{ height: 80 }}>
+        {isUpdate && (
+          messageComponent
+        )}
+      </div>
       {list.length && !loading && !error
         ? (
-          <MainTable
-            columns={columns}
-            data={data}
-            // totalPagesFetch={totalPages}
-            handleClick={handleClickUpdateOrder}
-            handleClickUpdate={handleClickUpdateList}
-          />
+          <div className="mb-5">
+            <MainTable
+              columns={columns}
+              data={data}
+              // totalPagesFetch={totalPages}
+              handleClick={handleClickUpdateOrder}
+              handleClickUpdate={handleClickUpdateList}
+              update={updateComponent}
+            />
+          </div>
         )
         : component}
       <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>

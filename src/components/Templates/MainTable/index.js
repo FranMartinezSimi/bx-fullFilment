@@ -16,6 +16,7 @@ function MainTable({
   handleClick,
   handleClickUpdate,
   totalPagesFetch,
+  update,
 }) {
   const {
     getTableProps,
@@ -52,7 +53,10 @@ function MainTable({
       <pre className="d-none">
         <code>
           {JSON.stringify(
-            typeof (totalPagesFetch),
+            {
+              pageSize,
+              pageCount,
+            },
             null,
             2,
           )}
@@ -65,6 +69,7 @@ function MainTable({
         setGlobalFilter={setGlobalFilter}
         handleClick={handleClick}
         handleClickUpdate={handleClickUpdate}
+        update={update}
       />
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
         <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
@@ -135,6 +140,7 @@ function MainTable({
           totalPagesFetch={totalPagesFetch}
           pageSize={pageSize}
           setPageSize={setPageSize}
+          preGlobalFilteredRows={preGlobalFilteredRows}
         />
       )}
 

@@ -7,6 +7,15 @@ const AlertMessage = ({ type, message }) => {
     case 'danger':
       component = <img src="/emoti-sad.png" alt="sad" width="30" />;
       break;
+    case 'success':
+      component = <img src="/emoti-happy.png" alt="sad" width="30" />;
+      break;
+    case 'info':
+      component = <img src="/emoti-celebrate.png" alt="sad" width="30" />;
+      break;
+    case 'warning':
+      component = <img src="/alert-icon.png" alt="sad" width="30" />;
+      break;
     default:
       component = null;
   }

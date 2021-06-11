@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import clientFetch from 'lib/client-fetch';
 
-import Alert from 'components/Atoms/Alert';
+import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
@@ -71,7 +71,7 @@ const Inventory = () => {
   let component;
 
   if (error) {
-    component = <Alert className="mt-5" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..." />;
+    component = <Alert className="mt-5" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />;
   } else {
     component = <Spinner />;
   }

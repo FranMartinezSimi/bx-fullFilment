@@ -10,7 +10,7 @@ const Pagination = ({
   gotoPage,
   pageCount,
   pageOptions,
-  totalPagesFetch,
+  preGlobalFilteredRows,
   pageSize,
   setPageSize,
 }) => (
@@ -37,10 +37,10 @@ const Pagination = ({
             )}
           </li>
           <li>
-            {totalPagesFetch > 0 && (
+            {preGlobalFilteredRows && (
               <p className="mb-0 text-grey">
                 {`Mostrando ${pageSize} de ${
-                  totalPagesFetch * 20
+                  preGlobalFilteredRows.length
                 }`}
               </p>
             )}
@@ -139,10 +139,6 @@ const Pagination = ({
   </div>
 );
 
-Pagination.defaultProps = {
-  totalPagesFetch: 0,
-};
-
 Pagination.propTypes = {
   pageIndex: PropTypes.number.isRequired,
   previousPage: PropTypes.func.isRequired,
@@ -152,7 +148,6 @@ Pagination.propTypes = {
   gotoPage: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
   pageOptions: PropTypes.arrayOf(PropTypes.number).isRequired,
-  totalPagesFetch: PropTypes.number,
   pageSize: PropTypes.number.isRequired,
   setPageSize: PropTypes.func.isRequired,
 };

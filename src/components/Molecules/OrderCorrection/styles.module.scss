@@ -1,0 +1,17 @@
+.list {
+  &ItemHeader {
+    width: 100%;
+  }
+  &ItemForm {
+    background: #FBFBFB;
+    padding: 20px 10px;
+    border-top: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+  }
+  &ItemFormOff {
+    padding: 0;
+    height: 0;
+  }
+}

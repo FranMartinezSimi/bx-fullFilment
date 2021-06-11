@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clientFetch from 'lib/client-fetch';
 
 import Spinner from 'components/Atoms/Spinner';
-import Alert from 'components/Atoms/Alert';
+import Alert from 'components/Atoms/AlertMessage';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
@@ -46,7 +46,7 @@ const InventoryDetail = ({ id }) => {
         : (
           <>
             {error
-              ? <Alert className="" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..." />
+              ? <Alert className="" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />
               : (
                 <>
                   <div>
