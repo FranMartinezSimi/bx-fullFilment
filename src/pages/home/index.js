@@ -110,7 +110,10 @@ const Home = () => {
   );
 
   const chart = () => {
-    clientFetch('orders/getDashboradOrders', {
+    clientFetch('order/v1/orders/getDashboradOrders', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: {
         page: 1,
         warehouse: 'bx1',
@@ -118,7 +121,7 @@ const Home = () => {
       },
     })
       .then((data) => {
-        // console.log("orders_deliver", data.orders_deliver);
+        console.log('orders_deliver', data);
         setIsLoading(false);
         const dates = data.orders_deliver.map((item) => (item.date));
         const send = data.orders_deliver.map((item) => (item.enviado));
@@ -167,7 +170,6 @@ const Home = () => {
             },
           },
         });
-        setOrderFetchError(true);
       })
       .catch((error) => {
         console.log('error', error);
