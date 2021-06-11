@@ -7,7 +7,7 @@ import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import OrderedList from 'components/Molecules/OrderedList';
 import ColumnChart from 'components/Atoms/ColumnChart';
-import Alert from 'components/Atoms/Alert';
+import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 import styles from './styles.module.scss';
 
@@ -110,7 +110,6 @@ const Home = () => {
   );
 
   const chart = () => {
-    console.log('start fetch...');
     clientFetch('orders/getDashboradOrders', {
       body: {
         page: 1,
@@ -168,13 +167,23 @@ const Home = () => {
             },
           },
         });
+        setOrderFetchError(true);
       })
       .catch((error) => {
         console.log('error', error);
-        setOrderFetchError(true);
         setIsLoading(false);
+        setOrderFetchError(true);
       });
   };
+
+  let component;
+
+  if (orderFetchError) {
+    component = <Alert className="mt-5" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />;
+  } else {
+    component = null;
+  }
+
   useEffect(() => {
     chart();
   }, []);
@@ -209,19 +218,13 @@ const Home = () => {
                   <Spinner />
                 </div>
               )}
-              {!orderFetchError
+              {!orderFetchError && !isLoading
                 ? (
                   <ColumnChart
                     data={dataOrders}
                   />
                 )
-                : (
-                  <Alert
-                    className="mt-5"
-                    type="warning"
-                    text="Ooopss! Ocurrió un error, intentalo más tarde..."
-                  />
-                )}
+                : component}
             </Card>
           </div>
           <div className="col-lg-6">

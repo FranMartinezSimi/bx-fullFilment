@@ -28,11 +28,13 @@ const UploadOrders = () => {
       .then((data) => {
         console.log('responseDetail:', data);
         setUpdatedData([data]);
+        setDataWhitErrors([]);
         setIsLoadingData(false);
       })
       .catch((error) => {
         console.log('error', error);
-        // setUpdatedData(error);
+        setUpdatedData([error]);
+        setDataWhitErrors([]);
         setIsLoadingData(false);
       });
   };
@@ -41,30 +43,42 @@ const UploadOrders = () => {
       setIsProccesing(true);
 
       let itemsWhitErrors = [];
+      let count = 0;
       const DATA_TO_VALIDATE = dataToValidate.map((item, key) => {
         let errors = [];
-        Object.keys(item).map((property) => {
+        const itemData = Object.keys(item);
+        itemData.map((property) => {
           if (item[property].length === 0) {
             errors = [...errors, property];
+            count = 1;
           }
+
           return property;
         });
         if (errors.length) {
           itemsWhitErrors = [
             ...itemsWhitErrors,
             {
+              ...item,
               key,
-              item,
               errors,
+            },
+          ];
+        } else {
+          itemsWhitErrors = [
+            ...itemsWhitErrors,
+            {
+              ...item,
+              key,
             },
           ];
         }
         return item;
       });
-
-      setDataWhitErrors(itemsWhitErrors);
-
-      if (!itemsWhitErrors.length && dataToValidate.length) {
+      if (count > 0) {
+        setDataWhitErrors(itemsWhitErrors);
+      }
+      if (count === 0 && dataToValidate.length) {
         const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
           order_number: item.NUMERO_ORDEN,
           shipping: {
@@ -101,7 +115,10 @@ const UploadOrders = () => {
       <PageTitle title="Subir órdenes" />
       <p>(Puedes importar un archivo .csv separado por comas)</p>
       <Card>
-        {!isLoadingData && !isProccesing && updatedData.length === 0 && (
+        {!isLoadingData
+          && !isProccesing
+          && updatedData.length === 0
+          && dataWhitErrors.length === 0 && (
           <SetUpArchive
             dataToValidate={dataToValidate}
             dataToUpload={dataToUpload}
@@ -113,22 +130,12 @@ const UploadOrders = () => {
           />
         )}
 
-        {dataWhitErrors.length > 0 && (
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12">
-                <h2 className="display-font">Por favor corrige tus errores</h2>
-              </div>
-              <div className="col-md-9">
-                <Card className="shadow my-4">
-                  <OrderCorrection
-                    dataToValidate={dataToValidate}
-                    dataWhitErrors={dataWhitErrors}
-                  />
-                </Card>
-              </div>
-            </div>
-          </div>
+        {!isLoadingData && dataWhitErrors.length > 0 && (
+          <OrderCorrection
+            dataWhitErrors={dataWhitErrors}
+            setDataToUpload={setDataToUpload}
+          />
+
         )}
 
         {isLoadingData && <UpdatingOrders />}

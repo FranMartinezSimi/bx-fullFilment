@@ -4,7 +4,7 @@ import clientFetch from 'lib/client-fetch';
 
 import Spinner from '../../Atoms/Spinner';
 import DropDown from '../DropDown';
-import Alert from '../../Atoms/Alert';
+import Alert from '../../Atoms/AlertMessage';
 import Todo from '../../../assets/brand/todo.svg';
 import Calendar from '../../../assets/brand/calendar.svg';
 import Flag from '../../../assets/brand/flag.svg';
@@ -109,7 +109,7 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
                       : (
                         <tr>
                           <td>
-                            <Alert className="" type="warning" text="Ooopss! Ocurrió un error, intentalo más tarde..." />
+                            <Alert className="" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />
                           </td>
                         </tr>
                       )}
