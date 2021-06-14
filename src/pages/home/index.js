@@ -217,7 +217,7 @@ const Home = () => {
 
       <div className="container">
         <div className="row align-items-stretch">
-          <div className="col-lg-12">
+          <div className="col-lg-6">
             <Card
               className={`${styles.card} shadow my-5`}
               footer={componentOrders}
@@ -238,7 +238,7 @@ const Home = () => {
                 : component}
             </Card>
           </div>
-          <div className="col-lg-6 d-none">
+          <div className="col-lg-6">
             <Card
               className={`${styles.card} shadow my-5`}
               footer={componentInventory}
