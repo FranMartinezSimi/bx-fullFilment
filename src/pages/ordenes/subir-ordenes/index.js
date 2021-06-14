@@ -41,76 +41,77 @@ const UploadOrders = () => {
         setIsLoadingData(false);
       });
   };
-  useEffect(() => {
-    const validateData = () => {
-      setIsProccesing(true);
+  const validateData = () => {
+    setIsProccesing(true);
 
-      let itemsWhitErrors = [];
-      let count = 0;
-      const DATA_TO_VALIDATE = dataToValidate.map((item, key) => {
-        let errors = [];
-        const itemData = Object.keys(item);
-        itemData.map((property) => {
-          if (item[property].length === 0) {
-            errors = [...errors, property];
-            count = 1;
-          }
-
-          return property;
-        });
-        if (errors.length) {
-          itemsWhitErrors = [
-            ...itemsWhitErrors,
-            {
-              ...item,
-              key,
-              errors,
-            },
-          ];
-        } else {
-          itemsWhitErrors = [
-            ...itemsWhitErrors,
-            {
-              ...item,
-              key,
-            },
-          ];
+    let itemsWhitErrors = [];
+    let count = 0;
+    const DATA_TO_VALIDATE = dataToValidate.map((item, key) => {
+      let errors = [];
+      const itemData = Object.keys(item);
+      itemData.map((property) => {
+        if (item[property].length === 0) {
+          errors = [...errors, property];
+          count = 1;
         }
-        return item;
+
+        return property;
       });
-      if (count > 0) {
-        setDataWhitErrors(itemsWhitErrors);
-      }
-      if (count === 0 && dataToValidate.length) {
-        const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
-          order_number: item.NUMERO_ORDEN,
-          shipping: {
-            method: item.METODO_ENVIO,
+      if (errors.length) {
+        itemsWhitErrors = [
+          ...itemsWhitErrors,
+          {
+            ...item,
+            key,
+            errors,
           },
-          customer: {
-            first_name: item.NOMBRE_CLIENTE,
-            last_name: item.APELLIDO_CLIENTE,
-            address1: item.DIRECCION,
-            city: item.COMUNA,
-            state: item.REGION,
-            zip: item.CODIGO_IATA,
-            country: 'CHILE',
+        ];
+      } else {
+        itemsWhitErrors = [
+          ...itemsWhitErrors,
+          {
+            ...item,
+            key,
           },
-          items: [
-            {
-              sku: item.SKU,
-              quantity: item.CANTIDAD,
-            },
-          ],
-        }));
-        const dataToSend = {
-          warehouse: 'bx1',
-          orders: dataToSendFormat,
-        };
-        setDataToUpload(dataToSend);
+        ];
       }
-      setIsProccesing(false);
-    };
+      return item;
+    });
+    if (count > 0) {
+      setDataWhitErrors(itemsWhitErrors);
+    }
+    if (count === 0 && dataToValidate.length) {
+      const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
+        order_number: item.NUMERO_ORDEN,
+        shipping: {
+          method: item.METODO_ENVIO,
+        },
+        customer: {
+          first_name: item.NOMBRE_CLIENTE,
+          last_name: item.APELLIDO_CLIENTE,
+          address1: item.DIRECCION,
+          city: item.COMUNA,
+          state: item.REGION,
+          zip: item.CODIGO_IATA,
+          country: 'CHILE',
+        },
+        items: [
+          {
+            sku: item.SKU,
+            quantity: item.CANTIDAD,
+          },
+        ],
+      }));
+      const dataToSend = {
+        warehouse: 'bx1',
+        orders: dataToSendFormat,
+      };
+      setDataWhitErrors([]);
+      setDataToUpload(dataToSend);
+    }
+    setIsProccesing(false);
+  };
+  useEffect(() => {
     validateData();
   }, [dataToValidate]);
   return (
@@ -133,7 +134,7 @@ const UploadOrders = () => {
         {!isLoadingData && dataWhitErrors.length > 0 && (
           <OrderCorrection
             dataWhitErrors={dataWhitErrors}
-            setDataToUpload={setDataToUpload}
+            setDataToValidate={setDataToValidate}
           />
         )}
 

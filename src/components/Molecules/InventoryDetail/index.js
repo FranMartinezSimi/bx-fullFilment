@@ -12,7 +12,10 @@ const InventoryDetail = ({ id }) => {
   const [InventoryData, setInventoryData] = useState({});
 
   const getData = (productId) => {
-    clientFetch('inventory/getProductDetail', {
+    clientFetch('bff/v1/inventory/getProductDetail', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: {
         warehouse: 'bx1',
         product_id: `${productId}`,
