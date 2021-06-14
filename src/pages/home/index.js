@@ -121,13 +121,22 @@ const Home = () => {
       },
     })
       .then((data) => {
-        console.log('orders_deliver', data);
-        setIsLoading(false);
-        const dates = data.orders_deliver.map((item) => (item.date));
-        const send = data.orders_deliver.map((item) => (item.enviado));
-        const process = data.orders_deliver.map((item) => (item.procesado));
-        const delivered = data.orders_deliver.map((item) => (item.entregado));
+        const items = data.orders_deliver.sort((a, b) => {
+          if (a.index < b.index) {
+            return 1;
+          }
+          if (a.index > b.index) {
+            return -1;
+          }
+          return 0;
+        });
+        console.log('orders_deliver', items);
+        const dates = items.map((item) => (item.date));
+        const send = items.map((item) => (item.enviado));
+        const process = items.map((item) => (item.procesado));
+        const delivered = items.map((item) => (item.entregado));
 
+        setIsLoading(false);
         setDataOrders({
           series: [
             {

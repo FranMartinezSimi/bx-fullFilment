@@ -22,7 +22,10 @@ const UploadOrders = () => {
     console.log(dataToUpload);
     setIsLoadingData(true);
 
-    clientFetch('orders/addOrders', {
+    clientFetch('order/bulk/v1/shipedge-publisher', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: dataToUpload,
     })
       .then((data) => {
@@ -115,10 +118,7 @@ const UploadOrders = () => {
       <PageTitle title="Subir órdenes" />
       <p>(Puedes importar un archivo .csv separado por comas)</p>
       <Card>
-        {!isLoadingData
-          && !isProccesing
-          && updatedData.length === 0
-          && dataWhitErrors.length === 0 && (
+        {!isLoadingData && !isProccesing && updatedData.length === 0 && (
           <SetUpArchive
             dataToValidate={dataToValidate}
             dataToUpload={dataToUpload}
@@ -135,7 +135,6 @@ const UploadOrders = () => {
             dataWhitErrors={dataWhitErrors}
             setDataToUpload={setDataToUpload}
           />
-
         )}
 
         {isLoadingData && <UpdatingOrders />}

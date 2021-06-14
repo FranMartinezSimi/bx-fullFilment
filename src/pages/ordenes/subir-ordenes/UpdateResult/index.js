@@ -23,7 +23,7 @@ const UpdateResult = () => {
             realizar esta acción sólo debes hacer clic en el botón continuar
             para visualizar la tabla.
           </p>
-          <ul className="py-3 w-100 d-flex justify-content-between align-items-center">
+          <ul className="py-3 w-100 d-flex justify-content-between align-items-center d-none">
             <li>
               <p>
                 <b>Procesados</b>
@@ -52,7 +52,7 @@ const UpdateResult = () => {
           <div className="text-center">
             <Button
               text="Ir a mis órdenes"
-              className="btn btn-secondary ms-auto"
+              className="btn btn-secondary ms-auto mt-5"
               onClick={handleClick}
             />
           </div>

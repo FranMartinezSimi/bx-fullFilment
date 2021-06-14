@@ -96,10 +96,10 @@ const Orders = () => {
 
   const handleClickOrderDeatil = (e, tableData) => {
     e.preventDefault();
-    setOrderId(tableData.row.original.order_id);
-    setOrderNumber(tableData.row.original.order_number);
-    setOrderTracking(tableData.row.original.numero_tracking);
-    setUnifyState(tableData.row.original.estado);
+    setOrderId(tableData.row.original.orderId);
+    setOrderNumber(tableData.row.original.orderNumber);
+    setOrderTracking(tableData.row.original.numeroTracking);
+    setUnifyState(tableData.row.original.status);
     setModal(true);
   };
 
@@ -170,7 +170,7 @@ const Orders = () => {
   const updateComponent = (
     <a href="#!" className="d-flex" onClick={handleClickUpdateList}>
       <Button
-        text="Actualizar Órdenes"
+        text="Actualizar"
         className="btn btn-secondary me-3 py-2"
       />
       <div className="d-flex align-items-center">
