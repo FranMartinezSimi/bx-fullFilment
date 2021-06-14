@@ -122,15 +122,15 @@ const Home = () => {
     })
       .then((data) => {
         const items = data.orders_deliver.sort((a, b) => {
-          if (a.index > b.index) {
+          if (a.index < b.index) {
             return 1;
           }
-          if (a.index < b.index) {
+          if (a.index > b.index) {
             return -1;
           }
           return 0;
         });
-        // console.log('orders_deliver', items);
+        console.log('orders_deliver', items);
         const dates = items.map((item) => (item.date));
         const send = items.map((item) => (item.enviado));
         const process = items.map((item) => (item.procesado));
