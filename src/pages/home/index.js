@@ -112,7 +112,7 @@ const Home = () => {
   const chart = () => {
     clientFetch('order/v1/orders/getDashboradOrders', {
       headers: {
-        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+        apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: {
         page: 1,

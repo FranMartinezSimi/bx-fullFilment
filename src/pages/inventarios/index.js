@@ -79,7 +79,7 @@ const Inventory = () => {
   useEffect(() => {
     clientFetch('bff/v1/inventory/getProductsList', {
       headers: {
-        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+        apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: {
         page: 1,
