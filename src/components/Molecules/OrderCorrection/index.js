@@ -4,18 +4,24 @@ import Card from 'components/Molecules/Card';
 import styles from './styles.module.scss';
 
 const OrderCorrection = ({
-  dataWhitErrors, setDataToUpload,
+  dataWhitErrors, setDataToValidate,
 }) => {
   const [dataToCorrect, setDataToCorrect] = useState([]);
+  const [validatedData, setValidatedData] = useState([]);
 
   const handleClick = (e) => {
     e.preventDefault();
   };
 
+  const handleValidate = (e) => {
+    e.preventDefault();
+    setDataToValidate(validatedData);
+  };
+
   const handleChange = (e, value, index) => {
     const fixedData = [...dataWhitErrors];
     fixedData[index][value] = e.target.value;
-    setDataToUpload(fixedData);
+    setValidatedData(fixedData);
   };
 
   useEffect(() => {
@@ -80,6 +86,11 @@ const OrderCorrection = ({
                   ))}
                 </ul>
               </Card>
+            </div>
+            <div className="col-9">
+              <div className="text-end mt-4">
+                <a href="#!" className="btn btn-complementary" onClick={handleValidate}>Validar Datos</a>
+              </div>
             </div>
           </div>
         </div>

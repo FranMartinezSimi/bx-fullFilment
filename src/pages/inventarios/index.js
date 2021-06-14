@@ -88,7 +88,7 @@ const Inventory = () => {
       },
     })
       .then((products) => {
-        console.log('inventoryData:', products);
+        // console.log('inventoryData:', products);
         setLoading(false);
         setList(products.products);
       })
