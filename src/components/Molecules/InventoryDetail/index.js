@@ -14,7 +14,7 @@ const InventoryDetail = ({ id }) => {
   const getData = (productId) => {
     clientFetch('bff/v1/inventory/getProductDetail', {
       headers: {
-        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+        apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: {
         warehouse: 'bx1',

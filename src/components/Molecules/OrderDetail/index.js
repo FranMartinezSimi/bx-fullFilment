@@ -17,7 +17,7 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
   const getData = (order) => {
     clientFetch('order/v1/orders/getOrderDetail', {
       headers: {
-        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+        apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: {
         warehouse: 'bx1',
