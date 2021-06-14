@@ -15,7 +15,10 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
   const [orderData, setOrderData] = useState({});
 
   const getData = (order) => {
-    clientFetch('orders/getOrderDetail', {
+    clientFetch('order/v1/orders/getOrderDetail', {
+      headers: {
+        apikey: 'PDY4iyrXsHe16a8OTDl5OghRpJ25qSIt',
+      },
       body: {
         warehouse: 'bx1',
         id: `${order}`,

@@ -170,7 +170,7 @@ const Orders = () => {
   const updateComponent = (
     <a href="#!" className="d-flex" onClick={handleClickUpdateList}>
       <Button
-        text="Actualizar Órdenes"
+        text="Actualizar"
         className="btn btn-secondary me-3 py-2"
       />
       <div className="d-flex align-items-center">

@@ -8,8 +8,8 @@ const GlobalFilter = ({
   globalFilter,
   setGlobalFilter,
   handleClick,
-  handleClickUpdate,
   update,
+  exportData,
   // setUpdate
 }) => {
   const count = preGlobalFilteredRows.length;
@@ -51,7 +51,7 @@ const GlobalFilter = ({
                 </a>
               </li>
               <li>
-                <a href="#!" className="btn btn-complementary" onClick={handleClickUpdate}>
+                <a href="#!" className="btn btn-complementary" onClick={() => { exportData('csv', true); }}>
                   {/* <img src={reload} className="me-2" alt="Actualizar" width="25" /> */}
                   <span>
                     Descargar Órdenes
@@ -71,7 +71,6 @@ GlobalFilter.defaultProps = {
   globalFilter: () => {},
   setGlobalFilter: () => {},
   handleClick: () => {},
-  handleClickUpdate: () => {},
 };
 
 GlobalFilter.propTypes = {
@@ -79,7 +78,6 @@ GlobalFilter.propTypes = {
   globalFilter: PropTypes.func,
   setGlobalFilter: PropTypes.func,
   handleClick: PropTypes.func,
-  handleClickUpdate: PropTypes.func,
 };
 
 export default GlobalFilter;

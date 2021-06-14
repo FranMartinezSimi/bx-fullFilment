@@ -3,6 +3,8 @@ import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
 import PropTypes from 'prop-types';
+import { useExportData } from 'react-table-plugins';
+import Papa from 'papaparse';
 import GlobalFilter from '../../Molecules/GlobalFilter';
 import Pagination from '../../Molecules/Pagination';
 import Sort from '../../../assets/brand/sort.svg';
@@ -10,6 +12,17 @@ import SortUp from '../../../assets/brand/sortUp.svg';
 import SortDown from '../../../assets/brand/sortDown.svg';
 import styles from './styles.module.scss';
 
+function getExportFileBlob({
+  columns, data, fileType,
+}) {
+  if (fileType === 'csv') {
+    // CSV example
+    const headerNames = columns.map((col) => col.exportValue);
+    const csvString = Papa.unparse({ fields: headerNames, data });
+    return new Blob([csvString], { type: 'text/csv' });
+  }
+  return false;
+}
 function MainTable({
   columns,
   data,
@@ -35,17 +48,20 @@ function MainTable({
     preGlobalFilteredRows,
     setGlobalFilter,
     setPageSize,
+    exportData,
     state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
+      getExportFileBlob,
     },
     useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination,
+    useExportData,
   );
 
   return (
@@ -70,6 +86,8 @@ function MainTable({
         handleClick={handleClick}
         handleClickUpdate={handleClickUpdate}
         update={update}
+        getExportFileBlob={getExportFileBlob}
+        exportData={exportData}
       />
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
         <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
