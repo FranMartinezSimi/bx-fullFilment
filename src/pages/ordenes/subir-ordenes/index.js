@@ -118,10 +118,7 @@ const UploadOrders = () => {
       <PageTitle title="Subir órdenes" />
       <p>(Puedes importar un archivo .csv separado por comas)</p>
       <Card>
-        {!isLoadingData
-          && !isProccesing
-          && updatedData.length === 0
-          && (
+        {!isLoadingData && !isProccesing && updatedData.length === 0 && (
           <SetUpArchive
             dataToValidate={dataToValidate}
             dataToUpload={dataToUpload}
@@ -131,14 +128,13 @@ const UploadOrders = () => {
             setDataWhitErrors={setDataWhitErrors}
             sendData={sendData}
           />
-          )}
+        )}
 
         {!isLoadingData && dataWhitErrors.length > 0 && (
           <OrderCorrection
             dataWhitErrors={dataWhitErrors}
             setDataToUpload={setDataToUpload}
           />
-
         )}
 
         {isLoadingData && <UpdatingOrders />}
