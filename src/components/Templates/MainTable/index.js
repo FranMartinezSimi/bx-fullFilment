@@ -28,7 +28,6 @@ function MainTable({
   data,
   handleClick,
   handleClickUpdate,
-  totalPagesFetch,
   update,
 }) {
   const {
@@ -155,7 +154,6 @@ function MainTable({
           gotoPage={gotoPage}
           pageCount={pageCount}
           pageOptions={pageOptions}
-          totalPagesFetch={totalPagesFetch}
           pageSize={pageSize}
           setPageSize={setPageSize}
           preGlobalFilteredRows={preGlobalFilteredRows}
@@ -167,19 +165,13 @@ function MainTable({
 }
 
 MainTable.defaultProps = {
-  columns: {},
-  data: {},
   handleClick: () => {},
   handleClickUpdate: () => {},
-  totalPagesFetch: 0,
 };
 
 MainTable.propTypes = {
-  columns: PropTypes.shape(PropTypes.object),
-  data: PropTypes.shape(PropTypes.object),
   handleClick: PropTypes.func,
   handleClickUpdate: PropTypes.func,
-  totalPagesFetch: PropTypes.number,
 };
 
 export default MainTable;

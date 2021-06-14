@@ -96,10 +96,10 @@ const Orders = () => {
 
   const handleClickOrderDeatil = (e, tableData) => {
     e.preventDefault();
-    setOrderId(tableData.row.original.order_id);
-    setOrderNumber(tableData.row.original.order_number);
-    setOrderTracking(tableData.row.original.numero_tracking);
-    setUnifyState(tableData.row.original.estado);
+    setOrderId(tableData.row.original.orderId);
+    setOrderNumber(tableData.row.original.orderNumber);
+    setOrderTracking(tableData.row.original.numeroTracking);
+    setUnifyState(tableData.row.original.status);
     setModal(true);
   };
 

@@ -125,11 +125,14 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
     </>
   );
 };
-
+OrderDetail.defaultProps = {
+  unifyState: undefined,
+  tracking: undefined,
+};
 OrderDetail.propTypes = {
   id: PropTypes.string.isRequired,
-  tracking: PropTypes.string.isRequired,
-  unifyState: PropTypes.string.isRequired,
+  tracking: PropTypes.string,
+  unifyState: PropTypes.string,
 };
 
 export default OrderDetail;

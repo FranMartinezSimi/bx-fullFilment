@@ -67,14 +67,12 @@ const GlobalFilter = ({
 };
 
 GlobalFilter.defaultProps = {
-  preGlobalFilteredRows: {},
   globalFilter: () => {},
   setGlobalFilter: () => {},
   handleClick: () => {},
 };
 
 GlobalFilter.propTypes = {
-  preGlobalFilteredRows: PropTypes.shape(PropTypes.object),
   globalFilter: PropTypes.func,
   setGlobalFilter: PropTypes.func,
   handleClick: PropTypes.func,
