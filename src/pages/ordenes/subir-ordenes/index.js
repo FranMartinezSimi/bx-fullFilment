@@ -10,6 +10,8 @@ import SetUpArchive from './SetUpArchive';
 import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
 
+import socket from '../../../services/socket-client.service';
+
 const UploadOrders = () => {
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
@@ -103,6 +105,7 @@ const UploadOrders = () => {
         ],
       }));
       const dataToSend = {
+        socket_id: socket.id,
         warehouse: 'bx1',
         orders: dataToSendFormat,
       };
