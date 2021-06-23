@@ -5,10 +5,15 @@ import LogoBlue from 'assets/brand/logoBlue.svg';
 import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
 import Button from 'components/Atoms/Button';
+import Alert from 'components/Atoms/AlertMessage';
+// import clientFetch, { setAccessToken, setRefreshToken } from 'lib/client-fetch';
 import styles from './styles.module.scss';
+
+const urlLogin = process.env.REACT_APP_API_KEY_KONG;
 
 const LogIn = () => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [invalidUserError, setInvalidUserError] = useState(false);
   const {
     register, handleSubmit, formState: { errors },
   } = useForm();
@@ -27,8 +32,39 @@ const LogIn = () => {
   };
 
   const handleSingIn = (data) => {
-    console.log(data);
-    // console.log(errors);
+    const { username, password } = data;
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append('grant_type', 'password');
+    urlencoded.append('client_id', 'public-cli');
+    urlencoded.append('username', username.trim());
+    urlencoded.append('password', password.trim());
+
+    const requestOptions = {
+      method: 'POST',
+      headers,
+      body: urlencoded,
+      redirect: 'follow',
+    };
+
+    fetch(urlLogin, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result && result?.access_token) {
+          console.log('result', result);
+          setInvalidUserError(false);
+          return result;
+        }
+
+        return Promise.reject(new Error(result.error_description));
+      })
+      .catch((error) => {
+        console.log(error);
+        setInvalidUserError(error);
+      });
   };
   return (
     <>
@@ -46,27 +82,30 @@ const LogIn = () => {
               <img src={LogoBlue} alt="BlueExpress" width="192" />
             </div>
             <div className={`${styles.formContainer} text-center py-5 my-5 m-auto`}>
+              {invalidUserError && (
+                <Alert className="mt-5" type="danger" message="Los datos ingresados son incorrectos" />
+              )}
               <h3 className={`${styles.formTitle} display-font`}>Ingresa con tu correo electrónico</h3>
               <form className="form mt-5" onSubmit={handleSubmit(handleSingIn)}>
                 <div className="form-group text-start my-4">
-                  <label htmlFor="email" className="form-label w-100">
+                  <label htmlFor="username" className="form-label w-100">
                     <span className={`${styles.formLabel}`}>
                       Correo electrónico
                     </span>
                     <input
-                      type="email"
+                      type="text"
                       className={`${styles.formInput} form-control mt-2`}
-                      name="email"
-                      placeholder="miguel@gmail.com"
-                      {...register('email', {
+                      name="username"
+                      placeholder="miguel"
+                      {...register('username', {
                         required: true,
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: 'Email Invalido',
-                        },
+                        // pattern: {
+                        //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        //   message: 'Email Invalido',
+                        // },
                       })}
                     />
-                    {errors.email && (
+                    {errors.username && (
                       <span className="input-error">Email requerido</span>
                     )}
                   </label>
