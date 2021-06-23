@@ -1,0 +1,123 @@
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
+import LogoBlue from 'assets/brand/logoBlue.svg';
+import eyeOpen from 'assets/brand/eyeOpen.svg';
+import eyeClose from 'assets/brand/eyeClose.svg';
+import Button from 'components/Atoms/Button';
+import styles from './styles.module.scss';
+
+const LogIn = () => {
+  const [passwordShown, setPasswordShown] = useState(false);
+  const {
+    register, handleSubmit, formState: { errors },
+  } = useForm();
+
+  let component;
+
+  if (passwordShown) {
+    component = <img src={eyeClose} alt="ShowPassword" />;
+  } else {
+    component = <img src={eyeOpen} alt="ShowPassword" />;
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setPasswordShown(!passwordShown);
+  };
+
+  const handleSingIn = (data) => {
+    console.log(data);
+    // console.log(errors);
+  };
+  return (
+    <>
+      <Helmet>
+        <title>Fulfillment By BlueExpress</title>
+        <meta
+          name="description"
+          content="Fulfillment By BlueExpress"
+        />
+      </Helmet>
+      <div className="container-fluid bg-background-login">
+        <div className="row h-100 justify-content-center align-items-center">
+          <div className="col-md-6">
+            <div className={`${styles.formImg} text-center py-5 my-5`}>
+              <img src={LogoBlue} alt="BlueExpress" width="192" />
+            </div>
+            <div className={`${styles.formContainer} text-center py-5 my-5 m-auto`}>
+              <h3 className={`${styles.formTitle} display-font`}>Ingresa con tu correo electrónico</h3>
+              <form className="form mt-5" onSubmit={handleSubmit(handleSingIn)}>
+                <div className="form-group text-start my-4">
+                  <label htmlFor="email" className="form-label w-100">
+                    <span className={`${styles.formLabel}`}>
+                      Correo electrónico
+                    </span>
+                    <input
+                      type="email"
+                      className={`${styles.formInput} form-control mt-2`}
+                      name="email"
+                      placeholder="miguel@gmail.com"
+                      {...register('email', {
+                        required: true,
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: 'Email Invalido',
+                        },
+                      })}
+                    />
+                    {errors.email && (
+                      <span className="input-error">Email requerido</span>
+                    )}
+                  </label>
+                </div>
+                <div className="form-group text-start my-4">
+                  <label htmlFor="password" className="form-label w-100 position-relative">
+                    <span className={`${styles.formLabel}`}>
+                      Contraseña
+                    </span>
+                    <input
+                      type={passwordShown ? 'text' : 'password'}
+                      className={`${styles.formInput} form-control mt-2`}
+                      name="password"
+                      placeholder="**********"
+                      {...register('password', {
+                        required: true,
+                      })}
+                    />
+                    <a href="#!" className={`${styles.formShowPassword}`} onClick={handleClick}>
+                      {component}
+                    </a>
+                    {errors.password && (
+                      <span className="input-error">Password Requerido</span>
+                    )}
+                  </label>
+                </div>
+                <div className="form-group">
+                  <Button
+                    className="btn btn-secondary mt-4 w-75"
+                    text="Ingresar"
+                    // loading={loading}
+                    submit
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="d-none d-md-block col-md-6 p-0">
+            <div className={`${styles.ilustrationContainer}`}>
+              <div className={`${styles.ilustrationImage} w-100`}>
+                <img src="/bg-login-intro.png" alt="Bienvenido a la App" />
+              </div>
+              <svg height="100vh" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 920">
+                <path d="M263.313 275.35C258.908 141.823 365.935 36.147 420 0H0v920h291.848c29.035-10.161 84.201-65.265 72.587-204.389C349.917 541.706 268.82 442.26 263.313 275.35z" fill="#fff" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default LogIn;

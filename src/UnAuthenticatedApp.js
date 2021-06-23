@@ -6,11 +6,15 @@ import {
 } from 'react-router-dom';
 import ErrorPage from 'pages/404';
 import Sync from './pages/sync';
+import LogIn from './pages/login';
 import './styles/main.scss';
 
 const UnauthenticatedApp = () => (
   <Router>
     <Switch>
+      <Route exact path="/login">
+        <LogIn />
+      </Route>
       <Route exact path="/">
         <Sync />
       </Route>
