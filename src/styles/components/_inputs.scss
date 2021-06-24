@@ -16,11 +16,9 @@
 .input-error {
   color: $danger-color !important;
   text-transform: initial !important;
-  font-size: 10px !important;
+  font-size: 14px !important;
   margin: 0 5px;
-  padding-top: 6px;
   display: block;
-  border-top: 1px solid $danger-color;
 }
 
 .custom-control-input ~ .custom-control-label::before{
