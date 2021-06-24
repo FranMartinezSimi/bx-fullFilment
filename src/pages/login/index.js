@@ -38,6 +38,7 @@ const LogIn = () => {
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('apikey', process.env.REACT_APP_API_KEY_KONG);
 
     const urlencoded = new URLSearchParams();
     urlencoded.append('grant_type', 'password');

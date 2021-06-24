@@ -11,7 +11,6 @@ import './styles/main.scss';
 const App = () => {
   const { userKeyclock } = useKeyclockAuth();
   const { user } = useAuth();
-  console.log(userKeyclock);
   return (
     <HelmetProvider>
       {!userKeyclock && <UnLoggedUserApp />}
