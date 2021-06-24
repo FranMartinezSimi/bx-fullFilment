@@ -58,6 +58,12 @@ const LogIn = () => {
         if (result && result?.access_token) {
           console.log('result', result);
           const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
+          const accessToken = result.access_token;
+          const refreshToken = result.refresh_token;
+          // console.log('result.access_token', result.access_token);
+          // console.log('result.access_token', result.refresh_token);
+          localStorage.setItem('__access-token__', JSON.stringify(accessToken));
+          localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
           setUserKeyclock(bxBusinessActiveSession);
           setInvalidUserError(false);
           return result;

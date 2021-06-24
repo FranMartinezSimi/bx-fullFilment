@@ -16,7 +16,7 @@ const App = () => {
     <HelmetProvider>
       {!userKeyclock && <UnLoggedUserApp />}
       {userKeyclock && !user && <UnauthenticatedApp />}
-      {user && <AuthenticatedApp />}
+      {userKeyclock && user && <AuthenticatedApp />}
     </HelmetProvider>
   );
 };
