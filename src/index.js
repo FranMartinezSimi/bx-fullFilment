@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
+import { AuthKeyclockProvider } from './context/userKeyclockContext';
 import { AuthProvider } from './context/userContex';
 import App from './App';
 
 ReactDOM.render(
-  <AuthProvider>
-    <App />
-  </AuthProvider>,
+  <AuthKeyclockProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </AuthKeyclockProvider>,
   document.getElementById('root'),
 );
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
+import { useKeyclockAuth } from 'context/userKeyclockContext';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
@@ -9,9 +10,10 @@ import Alert from 'components/Atoms/AlertMessage';
 // import clientFetch, { setAccessToken, setRefreshToken } from 'lib/client-fetch';
 import styles from './styles.module.scss';
 
-const urlLogin = process.env.REACT_APP_API_KEY_KONG;
+const urlLogin = process.env.REACT_APP_AUTH_URL;
 
 const LogIn = () => {
+  const { setUserKeyclock } = useKeyclockAuth();
   const [passwordShown, setPasswordShown] = useState(false);
   const [invalidUserError, setInvalidUserError] = useState(false);
   const {
@@ -55,6 +57,8 @@ const LogIn = () => {
       .then((result) => {
         if (result && result?.access_token) {
           console.log('result', result);
+          const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
+          setUserKeyclock(bxBusinessActiveSession);
           setInvalidUserError(false);
           return result;
         }
