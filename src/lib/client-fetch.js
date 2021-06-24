@@ -58,20 +58,19 @@ export default async function clientFetch(
 
   return window.fetch(`${apiUrl}/${APIConstans.fulfillment}/${endpoint}`, config)
     .then(async (response) => {
-      console.log('Response', response);
+      // console.log('Response', response);
       if (response.status >= 500) {
         const errorMessage = await response.text();
         console.log('error 500', errorMessage);
         return Promise.reject(new Error(errorMessage));
       }
       if (response.status === 401) {
-        console.log('error 401', response);
-        // console.log('401');
+        console.log('error:', response.status);
         const refreshToken = getRefreshToken();
-        // console.log(refreshToken.replaceAll('"', ''));
 
         const newHeaders = new Headers();
         newHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+        newHeaders.append('apikey', process.env.REACT_APP_API_KEY_KONG);
 
         const urlencoded = new URLSearchParams();
         urlencoded.append('grant_type', 'refresh_token');
@@ -87,8 +86,8 @@ export default async function clientFetch(
         fetch(urlLogin, requestOptions)
           .then((response401) => response401.json())
           .then((result) => {
+            console.log('result', result);
             if (result && result?.access_token) {
-              console.log('result', result);
               localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
               localStorage.setItem('__access-token__', JSON.stringify(result.access_token));
               localStorage.setItem('__refresh-token__', JSON.stringify(result.refresh_token));
