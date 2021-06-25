@@ -130,7 +130,7 @@ const Home = () => {
           }
           return 0;
         });
-        console.log('orders_deliver', items);
+        // console.log('orders_deliver', items);
         const dates = items.map((item) => (item.date));
         const send = items.map((item) => (item.enviado));
         const process = items.map((item) => (item.procesado));
