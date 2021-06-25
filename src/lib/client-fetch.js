@@ -1,6 +1,6 @@
 import { apiUrl, APIConstans } from '../config';
 
-const urlLogin = 'http://desa.sso.bluex.cl/auth/realms/fulfillment/protocol/openid-connect/token';
+const urlLogin = process.env.REACT_APP_AUTH_URL;
 const ACCESS_TOKEN_KEY = '__access-token__';
 const REFRESH_TOKEN_KEY = '__refresh-token__';
 
@@ -66,9 +66,9 @@ export default async function clientFetch(
         return response.json();
       }
       const errorMessage = await response.text();
-      // const grantError = {...errorMessage, status: response.status}
+      const grantError = { errorMessage, status: response.status };
       console.log('error de token', errorMessage);
-      return Promise.reject(new Error(errorMessage));
+      return Promise.reject(grantError);
     })
     .catch(async (error) => {
       console.log('error', error);
@@ -78,7 +78,7 @@ export default async function clientFetch(
       console.log({ expectedError });
 
       if (!expectedError) {
-        cleanTokens();
+        // cleanTokens();
         const errorMessage = error.message;
         console.log('error no esperado < 500', errorMessage);
         return Promise.reject(new Error(errorMessage));
