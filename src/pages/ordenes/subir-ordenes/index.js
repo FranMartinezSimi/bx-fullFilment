@@ -34,6 +34,7 @@ const UploadOrders = () => {
         console.log('responseDetail:', data);
 
         console.log('validando data');
+        socket.emit('msgToServer', { id: socket.id, mensaje: 'Esto desde la app' });
         socket.on('client', (payload) => {
           console.log(payload);
         });
