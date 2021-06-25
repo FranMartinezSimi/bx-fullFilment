@@ -1,6 +1,6 @@
 import { apiUrl, APIConstans } from '../config';
 
-const urlLogin = process.env.REACT_APP_AUTH_URL;
+const urlLogin = 'http://desa.sso.bluex.cl/auth/realms/fulfillment/protocol/openid-connect/token';
 const ACCESS_TOKEN_KEY = '__access-token__';
 const REFRESH_TOKEN_KEY = '__refresh-token__';
 
