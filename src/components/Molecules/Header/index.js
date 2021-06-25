@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useHistory } from 'react-router-dom';
-import { useAuth } from 'context/userContex';
+import { useKeyclockAuth } from 'context/userKeyclockContext';
 
 import alarm from 'assets/brand/alarm.svg';
 import bento from 'assets/brand/bento.svg';
@@ -13,7 +13,7 @@ import styles from './styles.module.scss';
 
 const Header = ({ activeNavbar, setActiveNavbar }) => {
   const history = useHistory();
-  const { setUser } = useAuth();
+  const { setUserKeyclock } = useKeyclockAuth();
   const handleClick = (e) => {
     e.preventDefault();
     setActiveNavbar(!activeNavbar);
@@ -21,8 +21,10 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const signOut = (e) => {
     e.preventDefault();
     history.push('/');
-    localStorage.removeItem('bxBusinessActiveFulfillment');
-    setUser(null);
+    localStorage.removeItem('bxBusinessActiveSession');
+    localStorage.removeItem('__access-token__');
+    localStorage.removeItem('__refresh-token__');
+    setUserKeyclock(null);
   };
   return (
     <header className={styles.header}>
