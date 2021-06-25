@@ -1,0 +1,37 @@
+
+name: Blue Express Fulfillment PROD Flow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_upload_to_s3:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: run yarn install and build
+      run: |
+        yarn install
+        yarn build:main
+      env:
+        CI: true
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_PROD_FRONT_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_PROD_FRONT_SECRET_ACCESS_KEY }}
+        aws_bucket: bx-prod-front-fulfillment
+        source_dir: 'build'
+        destination_dir: ''
