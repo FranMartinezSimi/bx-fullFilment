@@ -72,9 +72,9 @@ export default async function clientFetch(
     })
     .catch(async (error) => {
       console.log('error', error);
-      const theError = JSON.parse(error.message);
+      const theError = error;
       console.log('Status', theError);
-      const expectedError = theError && theError.message === 'Unauthorized';
+      const expectedError = theError && theError.status >= 400 && theError.status < 500;
       console.log({ expectedError });
 
       if (!expectedError) {
@@ -84,15 +84,14 @@ export default async function clientFetch(
         return Promise.reject(new Error(errorMessage));
       }
 
-      if (theError.message === 'Unauthorized' && !_retry) {
-        console.log('error:', theError.message);
+      if (theError.status === 401 && !_retry) {
+        console.log('error:', theError);
         _retry = true;
         const refreshToken = getRefreshToken();
-        console.log({ refreshToken });
+        console.log(refreshToken.replaceAll('"', ''));
 
         const newHeaders = new Headers();
         newHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-        newHeaders.append('apikey', process.env.REACT_APP_API_KEY_KONG);
 
         const urlencoded = new URLSearchParams();
         urlencoded.append('grant_type', 'refresh_token');
@@ -112,14 +111,11 @@ export default async function clientFetch(
         console.log(_refreshTokenResponse);
 
         if (_refreshTokenResponse.ok) {
-          const {
-            _accessToken,
-            _refreshToken,
-          } = await _refreshTokenResponse.json();
+          const finalydata = await _refreshTokenResponse.json();
           // cleanTokens();
-          console.log('funca');
-          setAccessToken(_accessToken);
-          setRefreshToken(_refreshToken);
+          console.log('finalydata', finalydata);
+          setAccessToken(finalydata.access_token);
+          setRefreshToken(finalydata.refresh_token);
           return clientFetch(
             endpoint,
             { body, ...customConfig },
