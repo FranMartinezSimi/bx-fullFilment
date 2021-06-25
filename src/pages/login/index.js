@@ -10,7 +10,7 @@ import Alert from 'components/Atoms/AlertMessage';
 // import clientFetch, { setAccessToken, setRefreshToken } from 'lib/client-fetch';
 import styles from './styles.module.scss';
 
-const urlLogin = process.env.REACT_APP_AUTH_URL;
+const urlLogin = 'http://desa.sso.bluex.cl/auth/realms/fulfillment/protocol/openid-connect/token';
 
 const LogIn = () => {
   const { setUserKeyclock } = useKeyclockAuth();
@@ -38,6 +38,7 @@ const LogIn = () => {
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    // headers.append('apikey', process.env.REACT_APP_API_KEY_KONG);
 
     const urlencoded = new URLSearchParams();
     urlencoded.append('grant_type', 'password');
