@@ -42,7 +42,7 @@ ButtonSubmit.propTypes = {
   text: PropTypes.string.isRequired,
   loading: PropTypes.bool,
   className: PropTypes.string,
-  submit: PropTypes.string,
+  submit: PropTypes.bool,
   onClick: PropTypes.func,
   imgPrev: PropTypes.node,
   imgNext: PropTypes.node,

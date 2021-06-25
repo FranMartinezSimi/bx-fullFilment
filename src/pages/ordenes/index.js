@@ -98,7 +98,7 @@ const Orders = () => {
     e.preventDefault();
     setOrderId(tableData.row.original.orderId);
     setOrderNumber(tableData.row.original.orderNumber);
-    setOrderTracking(tableData.row.original.numeroTracking);
+    setOrderTracking(tableData.row.original.trackingNumber);
     setUnifyState(tableData.row.original.status);
     setModal(true);
   };

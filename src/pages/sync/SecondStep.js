@@ -41,8 +41,8 @@ const SecondStep = ({ setSelectedItem }) => {
     clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
         key: form.key,
-        account_id: form.account_id,
         warehouse: 'bx1',
+        account_id: form.account_id,
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
     })

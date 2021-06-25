@@ -42,25 +42,25 @@ const GlobalFilter = ({
             </li>
           </ul>
         </div>
-        {!checkUrl && (
-          <div className="col">
-            <ul className="d-flex justify-content-end">
+        <div className="col">
+          <ul className="d-flex justify-content-end">
+            {!checkUrl && (
               <li className="me-5">
                 <a href="#!" className="btn btn-complementary" onClick={handleClick}>
                   Subir Órdenes
                 </a>
               </li>
-              <li>
-                <a href="#!" className="btn btn-complementary" onClick={() => { exportData('csv', true); }}>
-                  {/* <img src={reload} className="me-2" alt="Actualizar" width="25" /> */}
-                  <span>
-                    Descargar Órdenes
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        )}
+            )}
+            <li>
+              <a href="#!" className="btn btn-complementary" onClick={() => { exportData('csv', true); }}>
+                {/* <img src={reload} className="me-2" alt="Actualizar" width="25" /> */}
+                <span>
+                  Descargar todas
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

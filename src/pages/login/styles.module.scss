@@ -1,0 +1,45 @@
+@import "styles/utils/mixins";
+.ilustration {
+  &Container {
+    position: relative;
+    background: linear-gradient(
+      85.92deg, #3363ff 14.32%, #2bb9ff 99.53%
+    );
+  }
+  &Image {
+    position: absolute;
+    @include centerer();
+    width: 100%;
+    max-width: 563px;
+  }
+}
+
+.form {
+  &Img {
+    & img {
+      max-width: 200px;
+    }
+  }
+  &Title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 23px;
+  }
+  &Container {
+    max-width: 320px;
+  }
+  &Label {
+    font-size: 14px !important;
+    color: #212121 !important;
+  }
+  &Input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-color: #155C80;
+  }
+  &ShowPassword {
+    position: absolute;
+    right: 15px;
+    top: 35px;
+  }
+}
