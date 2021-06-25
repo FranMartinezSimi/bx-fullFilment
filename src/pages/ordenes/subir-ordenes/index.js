@@ -10,6 +10,8 @@ import SetUpArchive from './SetUpArchive';
 import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
 
+import socket from '../../../services/socket-client.service';
+
 const UploadOrders = () => {
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
@@ -30,6 +32,18 @@ const UploadOrders = () => {
     })
       .then((data) => {
         console.log('responseDetail:', data);
+
+        console.log('validando data');
+        socket.emit('msgToServer', { id: socket.id, mensaje: 'Esto desde la app' });
+        socket.on('client', (payload) => {
+          console.log(payload);
+        });
+        socket.on('connect', (client) => {
+          console.log(client);
+        });
+        socket.on('msgToClient', (event) => {
+          console.log(event);
+        });
         setUpdatedData([data]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
@@ -102,7 +116,9 @@ const UploadOrders = () => {
           },
         ],
       }));
+      console.log(socket.id);
       const dataToSend = {
+        socket_id: socket.id,
         warehouse: 'bx1',
         orders: dataToSendFormat,
       };
