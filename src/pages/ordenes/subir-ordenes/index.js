@@ -32,6 +32,17 @@ const UploadOrders = () => {
     })
       .then((data) => {
         console.log('responseDetail:', data);
+
+        console.log('validando data');
+        socket.on('client', (payload) => {
+          console.log(payload);
+        });
+        socket.on('connect', (client) => {
+          console.log(client);
+        });
+        socket.on('msgToClient', (event) => {
+          console.log(event);
+        });
         setUpdatedData([data]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
@@ -104,6 +115,7 @@ const UploadOrders = () => {
           },
         ],
       }));
+      console.log(socket.id);
       const dataToSend = {
         socket_id: socket.id,
         warehouse: 'bx1',
