@@ -67,28 +67,30 @@ export default async function clientFetch(
       }
       const errorMessage = await response.text();
       const grantError = { errorMessage, status: response.status };
-      console.log('error de token', errorMessage);
+      // console.log('error de token', errorMessage);
       return Promise.reject(grantError);
     })
     .catch(async (error) => {
-      console.log('error', error);
+      // console.log('error', error);
       const theError = error;
-      console.log('Status', theError);
-      const expectedError = theError && theError.status >= 400 && theError.status < 500;
-      console.log({ expectedError });
+      // console.log('Status', theError);
+      const expectedError = theError && theError.status === 401;
+      // console.log({ expectedError });
 
       if (!expectedError) {
-        // cleanTokens();
         const errorMessage = error.message;
-        console.log('error no esperado < 500', errorMessage);
+        // console.log('error no esperado', errorMessage);
+        cleanTokens();
+        window.localStorage.removeItem('bxBusinessActiveSession');
+        window.location.reload();
         return Promise.reject(new Error(errorMessage));
       }
 
       if (theError.status === 401 && !_retry) {
-        console.log('error:', theError);
+        // console.log('error:', theError);
         _retry = true;
         const refreshToken = getRefreshToken();
-        console.log(refreshToken.replaceAll('"', ''));
+        // console.log(refreshToken.replaceAll('"', ''));
 
         const newHeaders = new Headers();
         newHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -110,10 +112,18 @@ export default async function clientFetch(
 
         console.log(_refreshTokenResponse);
 
+        if (_refreshTokenResponse.status === 400) {
+          cleanTokens();
+          window.localStorage.removeItem('bxBusinessActiveSession');
+          window.location.assign('/');
+          window.location.reload();
+          return Promise.reject(error);
+        }
+
         if (_refreshTokenResponse.ok) {
           const finalydata = await _refreshTokenResponse.json();
           // cleanTokens();
-          console.log('finalydata', finalydata);
+          // console.log('finalydata', finalydata);
           setAccessToken(finalydata.access_token);
           setRefreshToken(finalydata.refresh_token);
           return clientFetch(
