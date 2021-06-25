@@ -25,12 +25,14 @@ const getRefreshToken = () => {
 export const cleanTokens = () => {
   window.localStorage.removeItem(ACCESS_TOKEN_KEY);
   window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+  // window.localStorage.removeItem('bxBusinessActiveSession');
+  // window.location.reload();
 };
 
 export default async function clientFetch(
   endpoint,
   { body, ...customConfig } = {},
-  { withAuth = true } = { withAuth: true },
+  { withAuth = true, _retry = false } = { withAuth: true, _retry: false },
 ) {
   const headers = { 'content-type': 'application/json' };
   const apiKeys = JSON.parse(window.localStorage.getItem('bxBusinessActiveFulfillment'));
@@ -59,14 +61,34 @@ export default async function clientFetch(
   return window.fetch(`${apiUrl}/${APIConstans.fulfillment}/${endpoint}`, config)
     .then(async (response) => {
       // console.log('Response', response);
-      if (response.status >= 500) {
-        const errorMessage = await response.text();
-        console.log('error 500', errorMessage);
+      if (response.ok) {
+        // console.log('ok');
+        return response.json();
+      }
+      const errorMessage = await response.text();
+      // const grantError = {...errorMessage, status: response.status}
+      console.log('error de token', errorMessage);
+      return Promise.reject(new Error(errorMessage));
+    })
+    .catch(async (error) => {
+      console.log('error', error);
+      const theError = JSON.parse(error.message);
+      console.log('Status', theError);
+      const expectedError = theError && theError.message === 'Unauthorized';
+      console.log({ expectedError });
+
+      if (!expectedError) {
+        cleanTokens();
+        const errorMessage = error.message;
+        console.log('error no esperado < 500', errorMessage);
         return Promise.reject(new Error(errorMessage));
       }
-      if (response.status === 401) {
-        console.log('error:', response.status);
+
+      if (theError.message === 'Unauthorized' && !_retry) {
+        console.log('error:', theError.message);
+        _retry = true;
         const refreshToken = getRefreshToken();
+        console.log({ refreshToken });
 
         const newHeaders = new Headers();
         newHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -83,29 +105,28 @@ export default async function clientFetch(
           body: urlencoded,
           redirect: 'follow',
         };
-        fetch(urlLogin, requestOptions)
-          .then((response401) => response401.json())
-          .then((result) => {
-            console.log('result', result);
-            if (result && result?.access_token) {
-              localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
-              localStorage.setItem('__access-token__', JSON.stringify(result.access_token));
-              localStorage.setItem('__refresh-token__', JSON.stringify(result.refresh_token));
-              return result;
-            }
+        const _refreshTokenResponse = await window.fetch(urlLogin, requestOptions, {
+          withAuth: false,
+        });
 
-            return Promise.reject(new Error(result.error_description));
-          })
-          .catch((error) => {
-            console.log(error);
-            // setInvalidUserError(error);
-          });
+        console.log(_refreshTokenResponse);
+
+        if (_refreshTokenResponse.ok) {
+          const {
+            _accessToken,
+            _refreshToken,
+          } = await _refreshTokenResponse.json();
+          // cleanTokens();
+          console.log('funca');
+          setAccessToken(_accessToken);
+          setRefreshToken(_refreshToken);
+          return clientFetch(
+            endpoint,
+            { body, ...customConfig },
+            { withAuth, _retry },
+          );
+        }
       }
-      if (response.ok) {
-        console.log('ok');
-        return response.json();
-      }
-      const errorMessage = await response.text();
-      return Promise.reject(new Error(errorMessage));
+      return Promise.reject(error);
     });
 }

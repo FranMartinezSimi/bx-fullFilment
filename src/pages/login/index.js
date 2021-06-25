@@ -57,7 +57,7 @@ const LogIn = () => {
       .then((response) => response.json())
       .then((result) => {
         if (result && result?.access_token) {
-          console.log('result', result);
+          // console.log('result', result);
           const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
           const accessToken = result.access_token;
           const refreshToken = result.refresh_token;
@@ -96,12 +96,12 @@ const LogIn = () => {
               {invalidUserError && (
                 <Alert className="mt-5" type="danger" message="Los datos ingresados son incorrectos" />
               )}
-              <h3 className={`${styles.formTitle} display-font`}>Ingresa con tu correo electrónico</h3>
+              <h3 className={`${styles.formTitle} display-font`}>Ingresa con tu nombre de usuario</h3>
               <form className="form mt-5" onSubmit={handleSubmit(handleSingIn)}>
                 <div className="form-group text-start my-4">
                   <label htmlFor="username" className="form-label w-100">
                     <span className={`${styles.formLabel}`}>
-                      Correo electrónico
+                      Nombre de usuario
                     </span>
                     <input
                       type="text"

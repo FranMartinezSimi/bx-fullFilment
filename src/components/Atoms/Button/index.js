@@ -32,7 +32,7 @@ const ButtonSubmit = ({
 ButtonSubmit.defaultProps = {
   loading: false,
   className: '',
-  submit: '',
+  submit: false,
   onClick: () => {},
   imgPrev: null,
   imgNext: null,
