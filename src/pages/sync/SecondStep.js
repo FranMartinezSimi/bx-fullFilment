@@ -43,7 +43,7 @@ const SecondStep = ({ setSelectedItem }) => {
     const USER_DATA = jwt(TOKEN);
     const { sub, name, email } = USER_DATA;
 
-    console.log('data:', { sub, name, email });
+    // console.log('data:', { sub, name, email });
 
     clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
