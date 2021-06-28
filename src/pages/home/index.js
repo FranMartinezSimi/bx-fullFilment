@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
+import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
@@ -12,6 +13,7 @@ import Spinner from 'components/Atoms/Spinner';
 import styles from './styles.module.scss';
 
 const Home = () => {
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [orderFetchError, setOrderFetchError] = useState(false);
   const [dataOrders, setDataOrders] = useState({
@@ -57,6 +59,8 @@ const Home = () => {
     },
   });
   const history = useHistory();
+  const userData = JSON.parse(user);
+  const userActive = userData.credential.user.name;
 
   const listData = [
     {
@@ -204,7 +208,7 @@ const Home = () => {
         <div className="row justify-content-between align-items-center">
           <PageTitle
             className="col"
-            subtitle="Nicolás Cruz"
+            subtitle={userActive}
             title="Bienvenido a Blue360"
           />
           <div className="col">

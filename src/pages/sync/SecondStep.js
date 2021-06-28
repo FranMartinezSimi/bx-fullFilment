@@ -43,7 +43,7 @@ const SecondStep = ({ setSelectedItem }) => {
     const USER_DATA = jwt(TOKEN);
     const { sub, name, email } = USER_DATA;
 
-    console.log('data:', { sub, name, email });
+    // console.log('data:', { sub, name, email });
 
     clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
@@ -61,7 +61,7 @@ const SecondStep = ({ setSelectedItem }) => {
       .then((data) => {
         // console.log(data);
         if (data.status === 'successful') {
-          const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(form));
+          const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(data));
           setLoading(false);
           setUser(bxBusinessActiveFulfillment);
           return;
@@ -69,7 +69,7 @@ const SecondStep = ({ setSelectedItem }) => {
         setSelectedItem('failStep');
       })
       .catch((err) => {
-        console.log('error', err);
+        alert('error', err);
         setSelectedItem('failStep');
       });
   };
@@ -105,7 +105,7 @@ const SecondStep = ({ setSelectedItem }) => {
                 <img src="./fulfill2.jpg" alt="imagen" width="300" />
               </div>
             </div>
-            <ol className={`${styles.orderedList} p-0 ps-3`}>
+            <ol className={`${styles.orderedList} p-0 ps-3 mx-5`}>
               <li>
                 <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{ fontSize: '16px' }}>Ingresa a este link a Shipedge</a>
               </li>
@@ -114,7 +114,7 @@ const SecondStep = ({ setSelectedItem }) => {
               </li>
             </ol>
             <div className="pt-2">
-              <form className="form">
+              <form className="form px-5 mx-5">
                 <div className="form-group">
                   <label htmlFor="accountId" className="form-label w-100">
                     <span>

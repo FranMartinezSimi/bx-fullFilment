@@ -42,8 +42,8 @@ export default async function clientFetch(
   }
 
   if (apiKeys) {
-    headers.key = apiKeys.key;
-    headers.account_id = apiKeys.account_id;
+    headers.key = apiKeys.credential.key;
+    headers.account_id = apiKeys.credential.accountId;
   }
   const config = {
     method: 'POST',
@@ -80,9 +80,9 @@ export default async function clientFetch(
       if (!expectedError) {
         const errorMessage = error.message;
         // console.log('error no esperado', errorMessage);
-        cleanTokens();
-        window.localStorage.removeItem('bxBusinessActiveSession');
-        window.location.reload();
+        // cleanTokens();
+        // window.localStorage.removeItem('bxBusinessActiveSession');
+        // window.location.reload();
         return Promise.reject(new Error(errorMessage));
       }
 

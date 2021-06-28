@@ -14,10 +14,20 @@ const FirstStep = ({ setSelectedItem }) => (
         <img src="./fulfill1.png" alt="imagen" width="220" />
       </div>
     </div>
-    <h4 className="display-font">Gestiona tu bodega</h4>
-    <p className="display-font" style={{ fontSize: '16px' }}>Sincroniza tu cuenta Shipedge para acceder a tus órdenes de servicio e inventario.</p>
-    <h4 className="display-font">¿Cómo hacerlo?</h4>
-    <p className="display-font" style={{ fontSize: '16px' }}>Sigue las instrucciones que te presentaremos a continuación.</p>
+    <div className="text-center">
+      <h4 className="display-font">Gestiona tu bodega</h4>
+      <p className="display-font" style={{ fontSize: '16px' }}>
+        Sincroniza tu cuenta Shipedge para acceder a
+        <br />
+        tus órdenes de servicio e inventario.
+      </p>
+      <h4 className="display-font mt-5">¿Cómo hacerlo?</h4>
+      <p className="display-font" style={{ fontSize: '16px' }}>
+        Sigue las instrucciones que te presentaremos
+        <br />
+        a continuación.
+      </p>
+    </div>
     <div className="text-center pt-4">
       <Button
         className="btn btn-secondary px-5"
