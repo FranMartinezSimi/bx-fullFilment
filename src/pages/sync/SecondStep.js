@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
+import jwt from 'jwt-decode';
 
 import Button from 'components/Atoms/Button';
 import Current from 'assets/brand/secondStep.svg';
@@ -38,12 +39,23 @@ const SecondStep = ({ setSelectedItem }) => {
 
     setLoading(true);
 
+    const TOKEN = window.localStorage.getItem('__access-token__');
+    const USER_DATA = jwt(TOKEN);
+    const { sub, name, email } = USER_DATA;
+
+    console.log('data:', { sub, name, email });
+
     clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
         key: form.key,
         warehouse: 'bx1',
         account_id: form.account_id,
         apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        sub,
+        name,
+        email,
       },
     })
       .then((data) => {
