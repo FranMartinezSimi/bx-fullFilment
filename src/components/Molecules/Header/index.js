@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
+import { useAuth } from 'context/userContex';
 
 import alarm from 'assets/brand/alarm.svg';
 import bento from 'assets/brand/bento.svg';
@@ -14,6 +15,10 @@ import styles from './styles.module.scss';
 const Header = ({ activeNavbar, setActiveNavbar }) => {
   const history = useHistory();
   const { setUserKeyclock } = useKeyclockAuth();
+  const { user } = useAuth();
+  const userData = JSON.parse(user);
+  const userActive = userData.credential.user.name;
+
   const handleClick = (e) => {
     e.preventDefault();
     setActiveNavbar(!activeNavbar);
@@ -40,9 +45,9 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           <img src={avatar} alt="Cuenta" />
           <a href="!#" onClick={signOut} className="d-flex">
             <p>
-              Nicolás Cruz
+              {userActive}
               <br />
-              <small>Fulfillment By</small>
+              <small>Fulfillment</small>
             </p>
             <img src={arrowDown} alt="Down" width="20" />
           </a>

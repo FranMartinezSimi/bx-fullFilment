@@ -20,7 +20,7 @@ const AlertMessage = ({ type, message }) => {
       component = null;
   }
   return (
-    <div className={`alert-${type}--icon alert alert-${type}`}>
+    <div className={`alert-${type}--icon alert alert-${type}`} style={{ maxWidth: '450px' }}>
       <ul className="d-flex align-items-center mb-0">
         <li className="me-3">
           { component }
