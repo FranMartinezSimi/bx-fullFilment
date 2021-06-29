@@ -6,7 +6,6 @@ import clientFetch from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
-import OrderedList from 'components/Molecules/OrderedList';
 import ColumnChart from 'components/Atoms/ColumnChart';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
@@ -62,29 +61,6 @@ const Home = () => {
   const userData = JSON.parse(user);
   const userActive = userData.credential.user.name;
 
-  const listData = [
-    {
-      name: 'Nombre Producto1',
-      sku: '9874754754745',
-      stock: '140',
-      qty: '11569',
-      update: '6 hrs',
-    },
-    {
-      name: 'Nombre Producto 2',
-      sku: '9877798978',
-      stock: '13',
-      qty: '128',
-      update: '6 hrs',
-    },
-    {
-      name: 'Nombre Producto 3',
-      sku: '987765567',
-      stock: '1340',
-      qty: '4',
-      update: '6 hrs',
-    },
-  ];
   const handleInventory = (e, path) => {
     e.preventDefault();
     history.push(path);
@@ -98,17 +74,6 @@ const Home = () => {
     >
       <p className="text-end me-2">
         <small>ir a ordenes&gt;</small>
-      </p>
-    </a>
-  );
-  const componentInventory = (
-    <a
-      href="#!"
-      style={{ color: '#2BB9FF' }}
-      onClick={(e) => handleInventory(e, '/inventario')}
-    >
-      <p className="text-end me-2">
-        <small>ir a inventario &gt;</small>
       </p>
     </a>
   );
@@ -221,7 +186,7 @@ const Home = () => {
 
       <div className="container">
         <div className="row align-items-stretch">
-          <div className="col-lg-6">
+          <div className="col-lg-12">
             <Card
               className={`${styles.card} shadow my-5`}
               footer={componentOrders}
@@ -240,16 +205,6 @@ const Home = () => {
                   />
                 )
                 : component}
-            </Card>
-          </div>
-          <div className="col-lg-6">
-            <Card
-              className={`${styles.card} shadow my-5`}
-              footer={componentInventory}
-            >
-              <h4 className="display-font">Productos más vendidos</h4>
-              <p>Últimos 30 días</p>
-              <OrderedList listData={listData} />
             </Card>
           </div>
         </div>
