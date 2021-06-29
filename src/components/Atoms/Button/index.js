@@ -13,7 +13,7 @@ const ButtonSubmit = ({
   <button
     className={className}
     type={submit ? 'submit' : 'button'}
-    disabled={loading}
+    // disabled={loading}
     onClick={onClick}
   >
     {imgPrev && <span className="me-2">{imgPrev}</span>}

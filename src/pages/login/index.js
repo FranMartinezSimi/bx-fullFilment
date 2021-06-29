@@ -16,6 +16,7 @@ const LogIn = () => {
   const { setUserKeyclock } = useKeyclockAuth();
   const [passwordShown, setPasswordShown] = useState(false);
   const [invalidUserError, setInvalidUserError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {
     register, handleSubmit, formState: { errors },
   } = useForm();
@@ -34,6 +35,7 @@ const LogIn = () => {
   };
 
   const handleSingIn = (data) => {
+    setLoading(true);
     const { username, password } = data;
 
     const headers = new Headers();
@@ -67,6 +69,7 @@ const LogIn = () => {
           localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
           setUserKeyclock(bxBusinessActiveSession);
           setInvalidUserError(false);
+          setLoading(false);
           return result;
         }
 
@@ -75,6 +78,7 @@ const LogIn = () => {
       .catch((error) => {
         console.log(error);
         setInvalidUserError(error);
+        setLoading(false);
       });
   };
   return (
@@ -147,7 +151,7 @@ const LogIn = () => {
                   <Button
                     className="btn btn-secondary mt-4 w-75"
                     text="Ingresar"
-                    // loading={loading}
+                    loading={loading}
                     submit
                   />
                 </div>

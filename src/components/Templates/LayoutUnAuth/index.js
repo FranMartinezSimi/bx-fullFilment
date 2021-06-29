@@ -13,7 +13,7 @@ const Layout = ({ title, description, children }) => (
     </Helmet>
     <div className="container-fluid bg-background-login" style={{ backgroundImage: 'url("/background-login.jpg")' }}>
       <div className="row h-100 justify-content-center align-items-center">
-        <div className="col-sm-8 col-md-6 col-xl-4 col-xxl-3">
+        <div className="col-sm-10 col-md-8 col-xl-6 col-xxl-4">
           {children}
         </div>
       </div>
