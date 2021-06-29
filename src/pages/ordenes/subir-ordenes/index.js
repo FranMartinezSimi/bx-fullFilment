@@ -32,18 +32,14 @@ const UploadOrders = () => {
     })
       .then((data) => {
         console.log('responseDetail:', data);
-
         console.log('validando data');
-        socket.emit('msgToServer', { id: socket.id, mensaje: 'Esto desde la app' });
         socket.on('client', (payload) => {
-          console.log(payload);
-        });
-        socket.on('connect', (client) => {
-          console.log(client);
+          console.log('desde el socket: ', payload);
         });
         socket.on('msgToClient', (event) => {
           console.log(event);
         });
+
         setUpdatedData([data]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
