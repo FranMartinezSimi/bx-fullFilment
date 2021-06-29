@@ -69,7 +69,7 @@ const SecondStep = ({ setSelectedItem }) => {
         setSelectedItem('failStep');
       })
       .catch((err) => {
-        alert('error', err);
+        console.log('error', err);
         setSelectedItem('failStep');
       });
   };
