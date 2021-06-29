@@ -17,7 +17,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const { setUserKeyclock } = useKeyclockAuth();
   const { user } = useAuth();
   const userData = JSON.parse(user);
-  const userActive = userData.credential.user.name;
+  const userActive = userData.credential.user.name ? userData.credential.user.name : 'no encontrado';
 
   const handleClick = (e) => {
     e.preventDefault();

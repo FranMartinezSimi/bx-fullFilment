@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
+import { useAuth } from 'context/userContex';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
@@ -14,6 +15,7 @@ const urlLogin = process.env.REACT_APP_AUTH_URL;
 
 const LogIn = () => {
   const { setUserKeyclock } = useKeyclockAuth();
+  const { setUser } = useAuth();
   const [passwordShown, setPasswordShown] = useState(false);
   const [invalidUserError, setInvalidUserError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -81,6 +83,14 @@ const LogIn = () => {
         setLoading(false);
       });
   };
+  useEffect(() => {
+    setUser(null);
+    setUserKeyclock(null);
+    localStorage.removeItem('__access-token__');
+    localStorage.removeItem('__refresh-token__');
+    localStorage.removeItem('bxBusinessActiveSession');
+    localStorage.removeItem('bxBusinessActiveFulfillment');
+  }, []);
   return (
     <>
       <Helmet>
