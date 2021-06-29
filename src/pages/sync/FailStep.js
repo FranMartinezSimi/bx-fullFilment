@@ -22,7 +22,7 @@ const FailStep = ({ setSelectedItem }) => {
         </li>
       </ol>
       <div className="card-img my-4">
-        <img className="w-100" src="./fulfill2.jpg" alt="imagen" />
+        <img className="w-100" src="./fulfill2.jpg" alt="imagen" width="300" />
       </div>
       <div className="text-center pt-5">
         <Button

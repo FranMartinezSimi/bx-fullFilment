@@ -1,21 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useKeyclockAuth } from 'context/userKeyclockContext';
-import { useAuth } from 'context/userContex';
 import PageLayout from 'components/Templates/PageLayout';
 import Button from '../../components/Atoms/Button';
 
 const ErrorPage = () => {
   const history = useHistory();
-  const { setUserKeyclock } = useKeyclockAuth();
-  const { setUser } = useAuth();
-
-  setUser(null);
-  setUserKeyclock(null);
-  localStorage.removeItem('__access-token__');
-  localStorage.removeItem('__refresh-token__');
-  localStorage.removeItem('bxBusinessActiveSession');
-  localStorage.removeItem('bxBusinessActiveFulfillment');
   const handleClick = (e) => {
     e.preventDefault();
     history.push('/');
