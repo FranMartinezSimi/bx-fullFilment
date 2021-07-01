@@ -25,12 +25,10 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
       },
     })
       .then((data) => {
-        // console.log('orderDetail:', data);
         setOrderData(data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log('error', error);
+      .catch(() => {
         setLoading(false);
       });
   };

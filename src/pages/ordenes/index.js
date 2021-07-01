@@ -20,7 +20,6 @@ const Orders = () => {
   const [date, setDate] = useState(null);
   const [list, setList] = useState([]);
   const [message, setMessage] = useState('');
-  // const [totalPages, setTotalPages] = useState('');
   const [orderId, setOrderId] = useState('');
   const [orderNumber, setOrderNumber] = useState('');
   const [orderTracking, setOrderTracking] = useState('');
@@ -42,10 +41,8 @@ const Orders = () => {
       },
     })
       .then((data) => {
-        // console.log('orderData:', data);
         setLoading(false);
         setList(data);
-        // setTotalPages(data.total_pages);
         const DATE = new Date();
         const monthNames = [
           'Ene',
@@ -61,7 +58,6 @@ const Orders = () => {
           'Nov',
           'Dic',
         ];
-        // console.log(DATE.getDate());
         setDate({
           day: DATE.getDate(),
           month: monthNames[DATE.getMonth()],
@@ -69,8 +65,7 @@ const Orders = () => {
         });
         setMessage('success');
       })
-      .catch((err) => {
-        console.log('error', err);
+      .catch(() => {
         setError(true);
         setLoading(false);
         setMessage('error');
@@ -198,7 +193,6 @@ const Orders = () => {
             <MainTable
               columns={columns}
               data={data}
-              // totalPagesFetch={totalPages}
               handleClick={handleClickUpdateOrder}
               handleClickUpdate={handleClickUpdateList}
               update={updateComponent}

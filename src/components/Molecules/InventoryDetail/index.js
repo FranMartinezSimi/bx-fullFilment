@@ -23,7 +23,6 @@ const InventoryDetail = ({ id }) => {
     })
       .then((data) => {
         if (data.statusCode === 500) {
-          // console.log('error', data);
           setLoading(false);
           setError(true);
         } else {
@@ -31,8 +30,7 @@ const InventoryDetail = ({ id }) => {
           setLoading(false);
         }
       })
-      .catch((err) => {
-        console.log('error', err);
+      .catch(() => {
         setLoading(false);
         setError(true);
       });

@@ -11,8 +11,6 @@ import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
 import UpdatedWidthErrors from './UpdatedWidthErrors';
 
-// import socket from '../../../services/socket-client.service';
-
 const UploadOrders = () => {
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
@@ -24,7 +22,6 @@ const UploadOrders = () => {
   const [errorScreen, setErrorScreen] = useState(false);
 
   const sendData = () => {
-    // console.log(dataToUpload);
     setIsLoadingData(true);
 
     clientFetch('order/v1/orders/addOrders', {
@@ -37,10 +34,8 @@ const UploadOrders = () => {
         setUpdatedData([data]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
-        // console.log('data enviada ', data);
       })
       .catch((error) => {
-        console.log('error', error);
         setUpdatedData([error]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
@@ -107,7 +102,6 @@ const UploadOrders = () => {
           },
         ],
       }));
-      // console.log(socket.id);
       const dataToSend = {
         warehouse: 'bx1',
         orders: dataToSendFormat,

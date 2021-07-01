@@ -7,7 +7,6 @@ import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
 import Button from 'components/Atoms/Button';
 import Alert from 'components/Atoms/AlertMessage';
-// import clientFetch, { setAccessToken, setRefreshToken } from 'lib/client-fetch';
 import styles from './styles.module.scss';
 
 const urlLogin = process.env.REACT_APP_AUTH_URL;
@@ -40,7 +39,6 @@ const LogIn = () => {
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    // headers.append('apikey', process.env.REACT_APP_API_KEY_KONG);
 
     const urlencoded = new URLSearchParams();
     urlencoded.append('grant_type', 'password');
@@ -59,12 +57,9 @@ const LogIn = () => {
       .then((response) => response.json())
       .then((result) => {
         if (result && result?.access_token) {
-          // console.log('result', result);
           const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
           const accessToken = result.access_token;
           const refreshToken = result.refresh_token;
-          // console.log('result.access_token', result.access_token);
-          // console.log('result.access_token', result.refresh_token);
           localStorage.setItem('__access-token__', JSON.stringify(accessToken));
           localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
           setUserKeyclock(bxBusinessActiveSession);
@@ -76,7 +71,6 @@ const LogIn = () => {
         return Promise.reject(new Error(result.error_description));
       })
       .catch((error) => {
-        console.log(error);
         setInvalidUserError(error);
         setLoading(false);
       });
@@ -114,10 +108,6 @@ const LogIn = () => {
                       placeholder="miguel"
                       {...register('username', {
                         required: true,
-                        // pattern: {
-                        //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        //   message: 'Email Invalido',
-                        // },
                       })}
                     />
                     {errors.username && (

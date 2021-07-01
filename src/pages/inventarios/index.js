@@ -88,12 +88,10 @@ const Inventory = () => {
       },
     })
       .then((products) => {
-        // console.log('inventoryData:', products);
         setLoading(false);
         setList(products.products);
       })
-      .catch((err) => {
-        console.log('error', err);
+      .catch(() => {
         setError(true);
         setLoading(false);
       });
