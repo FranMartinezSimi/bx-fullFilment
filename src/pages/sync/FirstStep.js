@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Atoms/Button';
 import Current from '../../assets/brand/firstStep.svg';
+import styles from './styles.module.scss';
 
 const FirstStep = ({ setSelectedItem }) => (
   <>
-    <div className="card-img mb-4">
+    <div className={`${styles.cardImg} my-4 text-center`}>
       <a href="#!" className="d-flex justify-content-end" style={{ cursor: 'pointer' }} onClick={() => setSelectedItem('failStep')}>
         <span aria-hidden="true" className="p-0 pe-3" style={{ fontSize: '22px' }}>&times;</span>
       </a>

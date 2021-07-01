@@ -9,35 +9,35 @@ import OrderCorrection from 'components/Molecules/OrderCorrection';
 import SetUpArchive from './SetUpArchive';
 import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
+import UpdatedWidthErrors from './UpdatedWidthErrors';
 
-import socket from '../../../services/socket-client.service';
+// import socket from '../../../services/socket-client.service';
 
 const UploadOrders = () => {
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
   const [updatedData, setUpdatedData] = useState([]);
+  const [errorList, setErrorList] = useState([]);
   const [dataToUpload, setDataToUpload] = useState(null);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isProccesing, setIsProccesing] = useState(false);
+  const [errorScreen, setErrorScreen] = useState(false);
 
   const sendData = () => {
-    console.log(dataToUpload);
+    // console.log(dataToUpload);
     setIsLoadingData(true);
 
-    clientFetch('order/bulk/v1/shipedge-publisher', {
+    clientFetch('order/v1/orders/addOrders', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: dataToUpload,
     })
       .then((data) => {
-        console.log('validando data');
-        socket.on('client', (client) => {
-          console.log('datos del servidor: ', client);
-        });
         setUpdatedData([data]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
+        // console.log('data enviada ', data);
       })
       .catch((error) => {
         console.log('error', error);
@@ -107,9 +107,8 @@ const UploadOrders = () => {
           },
         ],
       }));
-      console.log(socket.id);
+      // console.log(socket.id);
       const dataToSend = {
-        socket_id: socket.id,
         warehouse: 'bx1',
         orders: dataToSendFormat,
       };
@@ -147,7 +146,19 @@ const UploadOrders = () => {
 
         {isLoadingData && <UpdatingOrders />}
 
-        {!isLoadingData && updatedData.length > 0 && <UpdateResult />}
+        {!isLoadingData
+        && updatedData.length > 0
+        && !errorScreen
+        && (
+          <UpdateResult
+            updatedData={updatedData}
+            setErrorList={setErrorList}
+            setErrorScreen={setErrorScreen}
+          />
+        )}
+
+        {errorList.length > 0 && errorScreen && <UpdatedWidthErrors errorList={errorList} />}
+
       </Card>
       <div className="container">
         <div className="row">

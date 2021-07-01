@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const [activeNavbar, setActiveNavbar] = useState(false);
   return (
     <div className="d-flex bg-ligth-blue">
-      <Sidebar activeNavbar={activeNavbar} />
+      <Sidebar activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar} />
       <div className="App flex-fill">
         <Header activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar} />
         <main className="container content-wrapper">

@@ -1,0 +1,19 @@
+@import "styles/utils/mixins";
+
+.number {
+  &Icon {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: #2BB9FF;
+    position: relative;
+    border-radius: 50rem;
+    margin-right: 21px;
+  }
+  &Text {
+    color: white;
+    @include centerer();
+    font-size: 15px;
+    font-weight: 900;
+  }
+}

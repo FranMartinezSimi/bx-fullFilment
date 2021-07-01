@@ -88,7 +88,7 @@ const SecondStep = ({ setSelectedItem }) => {
         )
         : (
           <>
-            <div className="card-img mb-4">
+            <div className={`${styles.cardImg} my-4 text-center`}>
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
                   <a href="#!" onClick={() => setSelectedItem('firstStep')}>
