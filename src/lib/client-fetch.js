@@ -25,8 +25,6 @@ const getRefreshToken = () => {
 export const cleanTokens = () => {
   window.localStorage.removeItem(ACCESS_TOKEN_KEY);
   window.localStorage.removeItem(REFRESH_TOKEN_KEY);
-  // window.localStorage.removeItem('bxBusinessActiveSession');
-  // window.location.reload();
 };
 
 export default async function clientFetch(
@@ -60,37 +58,25 @@ export default async function clientFetch(
 
   return window.fetch(`${apiUrl}/${APIConstans.fulfillment}/${endpoint}`, config)
     .then(async (response) => {
-      // console.log('Response', response);
       if (response.ok) {
-        // console.log('ok');
         return response.json();
       }
       const errorMessage = await response.text();
       const grantError = { errorMessage, status: response.status };
-      // console.log('error de token', errorMessage);
       return Promise.reject(grantError);
     })
     .catch(async (error) => {
-      // console.log('error', error);
       const theError = error;
-      // console.log('Status', theError);
       const expectedError = theError && theError.status === 401;
-      // console.log({ expectedError });
 
       if (!expectedError) {
         const errorMessage = error.message;
-        // console.log('error no esperado', errorMessage);
-        // cleanTokens();
-        // window.localStorage.removeItem('bxBusinessActiveSession');
-        // window.location.reload();
         return Promise.reject(new Error(errorMessage));
       }
 
       if (theError.status === 401 && !_retry) {
-        // console.log('error:', theError);
         _retry = true;
         const refreshToken = getRefreshToken();
-        // console.log(refreshToken.replaceAll('"', ''));
 
         const newHeaders = new Headers();
         newHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -110,8 +96,6 @@ export default async function clientFetch(
           withAuth: false,
         });
 
-        console.log(_refreshTokenResponse);
-
         if (_refreshTokenResponse.status === 400) {
           cleanTokens();
           window.localStorage.removeItem('bxBusinessActiveSession');
@@ -122,8 +106,6 @@ export default async function clientFetch(
 
         if (_refreshTokenResponse.ok) {
           const finalydata = await _refreshTokenResponse.json();
-          // cleanTokens();
-          // console.log('finalydata', finalydata);
           setAccessToken(finalydata.access_token);
           setRefreshToken(finalydata.refresh_token);
           return clientFetch(

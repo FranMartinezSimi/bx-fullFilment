@@ -21,8 +21,8 @@ const FailStep = ({ setSelectedItem }) => {
           <p className="display-font d-inline" style={{ fontSize: '16px' }}>Recuerda seguir los pasos que te mostramos en la siguiente imagen:</p>
         </li>
       </ol>
-      <div className="card-img my-4">
-        <img className="w-100" src="./fulfill2.jpg" alt="imagen" width="300" />
+      <div className={`${styles.cardImg} my-4 text-center`}>
+        <img src="./fulfill2.jpg" alt="imagen" width="300" />
       </div>
       <div className="text-center pt-5">
         <Button

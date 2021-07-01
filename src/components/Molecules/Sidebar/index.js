@@ -7,7 +7,7 @@ import Todo from 'assets/brand/todo.svg';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const Sidebar = ({ activeNavbar }) => {
+const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
   const primaryLinks = [
     {
       name: 'Dashboard',
@@ -45,9 +45,18 @@ const Sidebar = ({ activeNavbar }) => {
       active: false,
     },
   ];
+  const handleClick = (e) => {
+    e.preventDefault();
+    setActiveNavbar(!activeNavbar);
+  };
   return (
     <nav className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose} shadow bg-white py-4 px-3 px-lg-4`}>
-      <div className="">
+      <a href="!#" onClick={handleClick} className={styles.navigationToggle} style={{ left: activeNavbar ? '135px' : '75px' }}>
+        <span className={styles.navigationToggleSymbol}>
+          {activeNavbar ? '<' : '>'}
+        </span>
+      </a>
+      <div className="mb-5">
         <img src={LogoBlue} alt="Blue express" width="50" />
       </div>
       <ul className={`${styles.navigationContent} d-flex flex-column justify-content-between my-4`}>

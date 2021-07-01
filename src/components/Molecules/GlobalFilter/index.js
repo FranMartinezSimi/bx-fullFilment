@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
-// import reload from 'assets/brand/reload.svg';
 import PropTypes from 'prop-types';
 
 const GlobalFilter = ({
@@ -10,7 +9,6 @@ const GlobalFilter = ({
   handleClick,
   update,
   exportData,
-  // setUpdate
 }) => {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
@@ -23,8 +21,8 @@ const GlobalFilter = ({
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-start">
-        <div className="col px-0">
-          <ul className="d-flex align-items-center">
+        <div className="col-md-6 px-0">
+          <ul className="d-md-flex align-items-center">
             <li className="me-4">
               <input
                 value={value || ''}
@@ -37,13 +35,13 @@ const GlobalFilter = ({
                 placeholder={`Buscar en ${count} items`}
               />
             </li>
-            <li>
+            <li className="d-none d-md-block">
               {update && update}
             </li>
           </ul>
         </div>
-        <div className="col">
-          <ul className="d-flex justify-content-end">
+        <div className="col-md-6">
+          <ul className="d-flex justify-content-md-end">
             {!checkUrl && (
               <li className="me-5">
                 <a href="#!" className="btn btn-complementary" onClick={handleClick}>

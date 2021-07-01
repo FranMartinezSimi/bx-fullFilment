@@ -43,8 +43,6 @@ const SecondStep = ({ setSelectedItem }) => {
     const USER_DATA = jwt(TOKEN);
     const { sub, name, email } = USER_DATA;
 
-    // console.log('data:', { sub, name, email });
-
     clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
         key: form.key,
@@ -59,7 +57,6 @@ const SecondStep = ({ setSelectedItem }) => {
       },
     })
       .then((data) => {
-        // console.log(data);
         if (data.status === 'successful') {
           const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(data));
           setLoading(false);
@@ -68,8 +65,7 @@ const SecondStep = ({ setSelectedItem }) => {
         }
         setSelectedItem('failStep');
       })
-      .catch((err) => {
-        console.log('error', err);
+      .catch(() => {
         setSelectedItem('failStep');
       });
   };
@@ -88,7 +84,7 @@ const SecondStep = ({ setSelectedItem }) => {
         )
         : (
           <>
-            <div className="card-img mb-4">
+            <div className={`${styles.cardImg} my-4 text-center`}>
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
                   <a href="#!" onClick={() => setSelectedItem('firstStep')}>

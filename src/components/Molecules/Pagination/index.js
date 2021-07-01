@@ -17,7 +17,7 @@ const Pagination = ({
   <div className="container px-0">
     <div className="row justify-content-between">
       <div className="col-md-6">
-        <ul className="d-flex">
+        <ul className="d-flex align-items-center">
           <li className="me-4">
             {pageSize && (
               <select
@@ -25,6 +25,7 @@ const Pagination = ({
                 onChange={(e) => {
                   setPageSize(Number(e.target.value));
                 }}
+                className="form-select"
               >
                 {[10, 20, 30, 40, 50].map((itemPageSize) => (
                   <option key={itemPageSize} value={itemPageSize}>

@@ -43,7 +43,8 @@ const Home = () => {
       plotOptions: {
         bar: {
           horizontal: false,
-          borderRadius: 0,
+          borderRadius: 20,
+          columnWidth: '10%',
         },
       },
       xaxis: {
@@ -99,7 +100,6 @@ const Home = () => {
           }
           return 0;
         });
-        // console.log('orders_deliver', items);
         const dates = items.map((item) => (item.date));
         const send = items.map((item) => (item.enviado));
         const process = items.map((item) => (item.procesado));
@@ -134,7 +134,8 @@ const Home = () => {
             plotOptions: {
               bar: {
                 horizontal: false,
-                borderRadius: 0,
+                borderRadius: '20px',
+                columnWidth: '30%',
               },
             },
             xaxis: {
@@ -149,8 +150,7 @@ const Home = () => {
           },
         });
       })
-      .catch((error) => {
-        console.log('error', error);
+      .catch(() => {
         setIsLoading(false);
         setOrderFetchError(true);
       });
@@ -177,7 +177,7 @@ const Home = () => {
             title="Bienvenido a Blue360"
           />
           <div className="col">
-            <div className="text-center">
+            <div className="text-end">
               <img src="/fulfill1.png" alt="" width="180" />
             </div>
           </div>

@@ -8,8 +8,6 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
   const handleOnDrop = (data) => {
     const dataWhitErrors = data.some((item) => item.errors.length > 0);
 
-    // console.log(dataWhitErrors);
-
     if (dataWhitErrors) {
       setDataWhitErrors([{
         key: 'error en archivo:',
@@ -21,20 +19,14 @@ const UploadCsv = ({ setDataToValidate, setDataToUpload, setDataWhitErrors }) =>
 
     const formatData = data.map((item) => item.data);
     setDataToValidate(formatData);
-    // console.log('dataToValidate', formatData);
   };
 
-  const handleOnError = (err, file, inputElem, reason) => {
-    console.log('error', err);
-    console.log('error', file);
-    console.log('error', inputElem);
-    console.log('error', reason);
+  const handleOnError = (err) => {
     setDataWhitErrors(err);
     setDataToValidate([]);
   };
 
-  const handleOnRemoveFile = (data) => {
-    console.log('dataRemove', data);
+  const handleOnRemoveFile = () => {
     setDataToValidate([]);
     setDataWhitErrors([]);
     setDataToUpload(null);

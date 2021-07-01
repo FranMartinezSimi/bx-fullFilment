@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../../components/Atoms/Button';
+import styles from './styles.module.scss';
 
 const SuccessStep = () => {
   const history = useHistory();
@@ -9,7 +10,7 @@ const SuccessStep = () => {
   };
   return (
     <>
-      <div className="card-img mb-4">
+      <div className={`${styles.cardImg} my-4 text-center`}>
         <img className="w-100" src="./nonImg.jpg" alt="imagen" />
       </div>
       <h4 className="display-font text-center">¡Felicidades!</h4>
