@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
-// import reload from 'assets/brand/reload.svg';
 import PropTypes from 'prop-types';
 
 const GlobalFilter = ({
@@ -10,7 +9,6 @@ const GlobalFilter = ({
   handleClick,
   update,
   exportData,
-  // setUpdate
 }) => {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);

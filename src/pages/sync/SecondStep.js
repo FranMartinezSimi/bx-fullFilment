@@ -43,8 +43,6 @@ const SecondStep = ({ setSelectedItem }) => {
     const USER_DATA = jwt(TOKEN);
     const { sub, name, email } = USER_DATA;
 
-    // console.log('data:', { sub, name, email });
-
     clientFetch('user/sync-oms-shipedge/v1/validate', {
       headers: {
         key: form.key,
@@ -59,7 +57,6 @@ const SecondStep = ({ setSelectedItem }) => {
       },
     })
       .then((data) => {
-        // console.log(data);
         if (data.status === 'successful') {
           const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(data));
           setLoading(false);
@@ -68,8 +65,7 @@ const SecondStep = ({ setSelectedItem }) => {
         }
         setSelectedItem('failStep');
       })
-      .catch((err) => {
-        console.log('error', err);
+      .catch(() => {
         setSelectedItem('failStep');
       });
   };
