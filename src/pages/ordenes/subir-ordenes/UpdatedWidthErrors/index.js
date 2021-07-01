@@ -23,8 +23,8 @@ const UpdatedWidthErrors = ({ errorList }) => {
   return (
     <div className="container mt-5">
       <div className="row justify-content-between">
-        <div className="col-5">
-          <Card className="mb-4">
+        <div className="col-xl-4 col-xxl-5">
+          <Card className="mb-2">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -36,7 +36,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
               </li>
             </ul>
           </Card>
-          <Card className="mb-4">
+          <Card className="mb-2">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -51,7 +51,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
               </li>
             </ul>
           </Card>
-          <Card className="mb-4">
+          <Card className="mb-2">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -66,7 +66,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
               </li>
             </ul>
           </Card>
-          <Card className="mb-4">
+          <Card className="mb-2">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -82,7 +82,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
             </ul>
           </Card>
         </div>
-        <div className="col-6">
+        <div className="col-xl-8 col-xxl-6">
           <GenericTable
             columns={columns}
             data={data}

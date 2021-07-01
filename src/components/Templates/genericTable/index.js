@@ -58,7 +58,7 @@ function MainTable({
       </pre>
 
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
-        <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
+        <table {...getTableProps()} className={`table table-hover mb-0 ${styles.table}`}>
           <thead style={{ background: '#99B1FF' }}>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
