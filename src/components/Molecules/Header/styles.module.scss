@@ -4,6 +4,7 @@ header{
   background-color: $emphasis-color;
   display: flex;
   justify-content: flex-end;
+  position: relative;
 }
 
 header img {
@@ -23,4 +24,17 @@ header p{
 }
 header small{
   color: #FCBE69;
+}
+
+.headerCard {
+  position: absolute;
+  right: 40px;
+  top: 68px;
+  padding: 0 30px !important;
+  & p {
+    color: $primary-color;
+  }
+  & span {
+    color: $emphasis-color;
+  }
 }

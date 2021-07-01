@@ -1,3 +1,5 @@
+@import "../../../styles/utils/variables";
+@import "../../../styles/utils/mixins";
 .navigation {
   position: relative;
   transition: all .5s cubic-bezier(0.2,0,0,1) 0s;
@@ -22,6 +24,20 @@
         width: auto;
         transition: all .5s ease-in-out;
       }
+    }
+  }
+  &Toggle{
+    width: 30px;
+    height: 30px;
+    color: $white;
+    background: $emphasis-color;
+    display: inline-block;
+    border-radius: 50rem;
+    position: absolute;
+    top: 70px;
+    &Symbol {
+      @include centerer();
+      color: $white;
     }
   }
 }

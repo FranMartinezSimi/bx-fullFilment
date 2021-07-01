@@ -173,7 +173,7 @@ const Orders = () => {
         text="Actualizar"
         className="btn btn-secondary me-3 py-2"
       />
-      <div className="d-flex align-items-center">
+      <div className="d-xl-flex align-items-center d-none">
         <span className="me-2 text-grey"><small>Última actualización</small></span>
         <span className="me-2 text-grey"><small>{`${date?.day}, ${date?.month} ${date?.time}`}</small></span>
         <img src={reload} alt="Actualizar Ordenes" width="19" />

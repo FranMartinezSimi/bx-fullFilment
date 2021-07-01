@@ -43,7 +43,8 @@ const Home = () => {
       plotOptions: {
         bar: {
           horizontal: false,
-          borderRadius: 0,
+          borderRadius: 20,
+          columnWidth: '10%',
         },
       },
       xaxis: {
@@ -134,7 +135,8 @@ const Home = () => {
             plotOptions: {
               bar: {
                 horizontal: false,
-                borderRadius: 0,
+                borderRadius: '20px',
+                columnWidth: '30%',
               },
             },
             xaxis: {
@@ -177,7 +179,7 @@ const Home = () => {
             title="Bienvenido a Blue360"
           />
           <div className="col">
-            <div className="text-center">
+            <div className="text-end">
               <img src="/fulfill1.png" alt="" width="180" />
             </div>
           </div>
