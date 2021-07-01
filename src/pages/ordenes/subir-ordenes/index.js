@@ -33,7 +33,7 @@ const UploadOrders = () => {
       .then((data) => {
         console.log('validando data');
         socket.on('client', (client) => {
-          console.log('dfatos del servidor: ', client);
+          console.log('datos del servidor: ', client);
         });
         setUpdatedData([data]);
         setDataWhitErrors([]);
