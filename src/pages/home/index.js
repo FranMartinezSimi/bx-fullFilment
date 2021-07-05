@@ -134,7 +134,6 @@ const Home = () => {
             plotOptions: {
               bar: {
                 horizontal: false,
-                borderRadius: '20px',
                 columnWidth: '30%',
               },
             },
