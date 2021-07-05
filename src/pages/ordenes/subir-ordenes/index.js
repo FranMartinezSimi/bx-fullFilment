@@ -84,15 +84,15 @@ const UploadOrders = () => {
       const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
         order_number: item.NUMERO_ORDEN,
         shipping: {
-          method: item.METODO_ENVIO,
+          method: item.METODO_ENVIO.toUpperCase(),
         },
         customer: {
-          first_name: item.NOMBRE_CLIENTE,
-          last_name: item.APELLIDO_CLIENTE,
-          address1: item.DIRECCION,
-          city: item.COMUNA,
-          state: item.REGION,
-          zip: item.CODIGO_IATA,
+          first_name: item.NOMBRE_CLIENTE.toUpperCase(),
+          last_name: item.APELLIDO_CLIENTE.toUpperCase(),
+          address1: item.DIRECCION.toUpperCase(),
+          city: item.COMUNA.toUpperCase(),
+          state: item.REGION.toUpperCase(),
+          zip: item.CODIGO_IATA.toUpperCase(),
           country: 'CHILE',
         },
         items: [
