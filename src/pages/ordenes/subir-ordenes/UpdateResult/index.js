@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import clientFetch from 'lib/client-fetch';
 import Button from 'components/Atoms/Button';
 import styles from './styles.module.scss';
 
@@ -22,6 +23,12 @@ const UpdateResult = ({ updatedData, setErrorList, setErrorScreen }) => {
     setAlow(allowed);
     setDenied(errors);
     setErrorList(errorsList);
+
+    clientFetch('order/v1/orders/migrationOrderMasive', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+    });
   }, [updatedData]);
   return (
     <div className="container py-5">
