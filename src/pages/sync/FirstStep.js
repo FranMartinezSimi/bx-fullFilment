@@ -3,16 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../components/Atoms/Button';
 import Current from '../../assets/brand/firstStep.svg';
-import styles from './styles.module.scss';
 
 const FirstStep = ({ setSelectedItem }) => (
   <>
-    <div className={`${styles.cardImg} my-4 text-center`}>
+    <div className="my-4 text-center">
       <a href="#!" className="d-flex justify-content-end" style={{ cursor: 'pointer' }} onClick={() => setSelectedItem('failStep')}>
         <span aria-hidden="true" className="p-0 pe-3" style={{ fontSize: '22px' }}>&times;</span>
       </a>
       <div className="text-center mb-5">
-        <img src="./fulfill1.png" alt="imagen" width="220" />
+        <img src="./fulfill1.png" alt="imagen" width="300" />
       </div>
     </div>
     <div className="text-center">

@@ -84,7 +84,7 @@ const SecondStep = ({ setSelectedItem }) => {
         )
         : (
           <>
-            <div className={`${styles.cardImg} my-4 text-center`}>
+            <div className="my-4 text-center">
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
                   <a href="#!" onClick={() => setSelectedItem('firstStep')}>
@@ -98,7 +98,7 @@ const SecondStep = ({ setSelectedItem }) => {
                 </li>
               </ul>
               <div className="text-center">
-                <img src="./fulfill2.jpg" alt="imagen" width="300" />
+                <img src="./sincronizacion-shipedge.gif" alt="imagen" width="400" />
               </div>
             </div>
             <ol className={`${styles.orderedList} p-0 ps-3 mx-5`}>
@@ -106,7 +106,7 @@ const SecondStep = ({ setSelectedItem }) => {
                 <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{ fontSize: '16px' }}>Ingresa a este link a Shipedge</a>
               </li>
               <li>
-                <p className="display-font d-inline" style={{ fontSize: '16px' }}>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
+                <p className="display-font d-inline" style={{ fontSize: '16px' }}>Copia tu Account ID y Key, sigue los pasos del gif y luego ingresa los datos en el formulario.</p>
               </li>
             </ol>
             <div className="pt-2">
