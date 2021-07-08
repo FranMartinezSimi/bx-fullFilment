@@ -18,11 +18,11 @@ const FailStep = ({ setSelectedItem }) => {
           <p className="display-font d-inline" style={{ fontSize: '16px' }}>Verifica que la información ingresada sea correcta.</p>
         </li>
         <li>
-          <p className="display-font d-inline" style={{ fontSize: '16px' }}>Recuerda seguir los pasos que te mostramos en la siguiente imagen:</p>
+          <p className="display-font d-inline" style={{ fontSize: '16px' }}>Recuerda seguir los pasos que te mostramos en el gif:</p>
         </li>
       </ol>
-      <div className={`${styles.cardImg} my-4 text-center`}>
-        <img src="./fulfill2.jpg" alt="imagen" width="300" />
+      <div className="my-4 text-center">
+        <img src="./sincronizacion-shipedge.gif" alt="imagen" width="350" />
       </div>
       <div className="text-center pt-5">
         <Button
