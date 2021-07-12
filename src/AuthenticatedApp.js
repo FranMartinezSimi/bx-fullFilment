@@ -5,6 +5,7 @@ import ErrorPage from 'pages/404';
 import Layout from './components/Templates/Layout';
 import Home from './pages/home';
 import Orders from './pages/ordenes';
+import Onboarding from './pages/onboarding';
 import Errors from './pages/ordenes/subir-ordenes/UpdatedWidthErrors';
 import Inventory from './pages/inventarios';
 import UpdateOrders from './pages/ordenes/subir-ordenes';
@@ -20,6 +21,9 @@ const App = () => (
         </Route>
         <Route exact path="/ordenes">
           <Orders />
+        </Route>
+        <Route exact path="/onboarding">
+          <Onboarding />
         </Route>
         <Route exact path="/error-ordenes">
           <Errors />
