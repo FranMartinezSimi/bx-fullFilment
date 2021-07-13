@@ -1,0 +1,10 @@
+.dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50rem;
+  background: #D5F1FF;
+  display: block;
+  &Active {
+    background: #FF8B57;
+  }
+}

@@ -1,5 +1,18 @@
 .card{
+  position: absolute;
+  top: 0;
   &ImageContainer {
-    height: 200px;
+    height: 160px;
+    & img {
+      max-height: 180px;
+    }
   }
+}
+
+.navigationList {
+  width: 33.3333%;
+}
+
+.navigationLink {
+  color: #2BB9FF;
 }
