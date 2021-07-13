@@ -63,7 +63,6 @@ const Onborading = () => {
 
     if (item <= 3 && direction === 'back') {
       nextItem = item - 1;
-      console.log(nextItem);
     }
     if (nextItem === undefined) {
       return;
