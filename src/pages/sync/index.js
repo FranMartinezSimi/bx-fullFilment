@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LayoutUnAuth from 'components/Templates/LayoutUnAuth';
-import Card from '../../components/Molecules/Card';
+import Card from 'components/Molecules/Card';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import FailStep from './FailStep';

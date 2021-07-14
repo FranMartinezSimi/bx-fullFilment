@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Back from '../../../assets/brand/back.svg';
+import styles from './styles.module.scss';
 
 const Card = ({
-  className, title, subtitle, children, close, handleClose, back, handleBack, footer,
+  className,
+  title,
+  subtitle,
+  children,
+  close,
+  handleClose,
+  back,
+  handleBack,
+  footer,
+  cardBackground,
 }) => (
-  <div className={`card py-4 px-3 ${className}`} style={{ borderRadius: '15px', border: 'none' }}>
+  <div className={`card py-4 px-3 ${className} ${styles.mainCard}`} style={{ borderRadius: '15px', border: 'none', backgroundImage: `url(${cardBackground})` }}>
     {title
       ? (
         <ul className="d-flex w-100 justify-content-between">
@@ -51,6 +61,7 @@ Card.defaultProps = {
   back: false,
   handleBack: () => {},
   footer: null,
+  cardBackground: '',
 };
 
 Card.propTypes = {
@@ -63,6 +74,7 @@ Card.propTypes = {
   back: PropTypes.bool,
   handleBack: PropTypes.func,
   footer: PropTypes.node,
+  cardBackground: PropTypes.string,
 };
 
 export default Card;

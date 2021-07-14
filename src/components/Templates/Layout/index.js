@@ -13,7 +13,9 @@ const Layout = ({ children }) => {
         <Header activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar} />
         <main className="container content-wrapper">
           <div className="row">
-            <div className="col-12">{children}</div>
+            <div className="col-12">
+              { children }
+            </div>
           </div>
         </main>
         <Footer />
