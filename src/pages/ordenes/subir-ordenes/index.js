@@ -21,6 +21,16 @@ const UploadOrders = () => {
   const [isProccesing, setIsProccesing] = useState(false);
   const [errorScreen, setErrorScreen] = useState(false);
 
+  const handleClick = () => {
+    setDataToValidate([]);
+    setDataWhitErrors([]);
+    setUpdatedData([]);
+    setErrorList([]);
+    setDataToUpload(null);
+    setIsLoadingData(false);
+    setIsProccesing(false);
+    setErrorScreen(false);
+  };
   const sendData = () => {
     setIsLoadingData(true);
 
@@ -116,44 +126,68 @@ const UploadOrders = () => {
   }, [dataToValidate]);
   return (
     <PageLayout title="Subir órdenes">
-      <PageTitle title="Subir órdenes" />
-      <p>(Puedes importar un archivo .csv separado por comas)</p>
-      <Card>
-        {!isLoadingData && !isProccesing && updatedData.length === 0 && (
-          <SetUpArchive
-            dataToValidate={dataToValidate}
-            dataToUpload={dataToUpload}
-            dataWhitErrors={dataWhitErrors}
-            setDataToValidate={setDataToValidate}
-            setDataToUpload={setDataToUpload}
-            setDataWhitErrors={setDataWhitErrors}
-            sendData={sendData}
-          />
-        )}
+      <div className="container">
+        <div className="row align-items-center">
+          <div className="col-md-8">
+            <PageTitle title="Subir órdenes" />
+            <p>(Puedes importar un archivo .csv separado por comas)</p>
+          </div>
+          <div className="col-md-4">
+            {errorList.length > 0 && errorScreen && (
+              <div className="text-end me-md-4">
+                <Button
+                  className="btn btn-complementary px-5"
+                  text="Cargar órdenes"
+                  onClick={handleClick}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {!errorScreen && (
+        <Card className="mt-5 pt-5">
+          {!isLoadingData && !isProccesing && updatedData.length === 0 && (
+            <SetUpArchive
+              dataToValidate={dataToValidate}
+              dataToUpload={dataToUpload}
+              dataWhitErrors={dataWhitErrors}
+              setDataToValidate={setDataToValidate}
+              setDataToUpload={setDataToUpload}
+              setDataWhitErrors={setDataWhitErrors}
+              sendData={sendData}
+            />
+          )}
 
-        {!isLoadingData && dataWhitErrors.length > 0 && (
-          <OrderCorrection
-            dataWhitErrors={dataWhitErrors}
-            setDataToValidate={setDataToValidate}
-          />
-        )}
+          {!isLoadingData && dataWhitErrors.length > 0 && (
+            <OrderCorrection
+              dataWhitErrors={dataWhitErrors}
+              setDataToValidate={setDataToValidate}
+            />
+          )}
 
-        {isLoadingData && <UpdatingOrders />}
+          {isLoadingData && <UpdatingOrders />}
 
-        {!isLoadingData
-        && updatedData.length > 0
-        && !errorScreen
-        && (
-          <UpdateResult
-            updatedData={updatedData}
-            setErrorList={setErrorList}
-            setErrorScreen={setErrorScreen}
-          />
-        )}
+          {!isLoadingData
+          && updatedData.length > 0
+          && !errorScreen
+          && (
+            <UpdateResult
+              updatedData={updatedData}
+              setErrorList={setErrorList}
+              setErrorScreen={setErrorScreen}
+            />
+          )}
 
-        {errorList.length > 0 && errorScreen && <UpdatedWidthErrors errorList={errorList} />}
-
-      </Card>
+        </Card>
+      )}
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            {errorList.length > 0 && errorScreen && <UpdatedWidthErrors errorList={errorList} />}
+          </div>
+        </div>
+      </div>
       <div className="container">
         <div className="row">
           <div className="col-12">

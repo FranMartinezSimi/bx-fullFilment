@@ -18,13 +18,21 @@ const UpdatedWidthErrors = ({ errorList }) => {
     {
       Header: 'Error',
       accessor: 'CommentAPI',
+      Cell: (table) => {
+        const { cell } = table;
+        return (
+          <small className="text-danger">
+            {cell.value}
+          </small>
+        );
+      },
     },
   ], []);
   return (
     <div className="container mt-5">
       <div className="row justify-content-between">
         <div className="col-xl-4 col-xxl-5">
-          <Card className="mb-2">
+          <Card className="mb-4">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -36,7 +44,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
               </li>
             </ul>
           </Card>
-          <Card className="mb-2">
+          <Card className="mb-4">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -51,7 +59,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
               </li>
             </ul>
           </Card>
-          <Card className="mb-2">
+          <Card className="mb-4">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
@@ -66,7 +74,7 @@ const UpdatedWidthErrors = ({ errorList }) => {
               </li>
             </ul>
           </Card>
-          <Card className="mb-2">
+          <Card className="mb-4">
             <ul className="d-flex align-items-center m-0">
               <li>
                 <span className={styles.numberIcon}>
