@@ -54,6 +54,7 @@ const SecondStep = ({ setSelectedItem }) => {
         sub,
         name,
         email,
+        onboarding: false,
       },
     })
       .then((data) => {

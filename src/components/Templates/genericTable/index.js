@@ -57,7 +57,7 @@ function MainTable({
         </code>
       </pre>
 
-      <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
+      <div className={`${styles.tableWrapper} table-responsive bg-white`} style={{ overflowY: 'hidden' }}>
         <table {...getTableProps()} className={`table table-hover mb-0 ${styles.table}`}>
           <thead style={{ background: '#99B1FF' }}>
             {headerGroups.map((headerGroup) => (
@@ -112,22 +112,20 @@ function MainTable({
           </tbody>
         </table>
       </div>
-      {(canNextPage || canPreviousPage)
-      && (
-        <Pagination
-          pageIndex={pageIndex}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          gotoPage={gotoPage}
-          pageCount={pageCount}
-          pageOptions={pageOptions}
-          pageSize={false}
-          setPageSize={setPageSize}
-          preGlobalFilteredRows={preGlobalFilteredRows}
-        />
-      )}
+
+      <Pagination
+        pageIndex={pageIndex}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        gotoPage={gotoPage}
+        pageCount={pageCount}
+        pageOptions={pageOptions}
+        pageSize={false}
+        setPageSize={setPageSize}
+        preGlobalFilteredRows={preGlobalFilteredRows}
+      />
 
     </>
   );

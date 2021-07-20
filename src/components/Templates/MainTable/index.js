@@ -16,7 +16,7 @@ function getExportFileBlob({
   columns, data, fileType,
 }) {
   if (fileType === 'csv') {
-    const headerNames = columns.filter((col) => (col.exportValue !== 'ver')).map((col) => col.exportValue);
+    const headerNames = columns.filter((col) => (col.exportValue !== 'ver')).map((col) => col.exportValue.replace('Nº', 'Nro'));
     const csvString = Papa.unparse({ fields: headerNames, data });
     return new Blob([csvString], { type: 'text/csv' });
   }
@@ -142,22 +142,20 @@ function MainTable({
           </tbody>
         </table>
       </div>
-      {(canNextPage || canPreviousPage)
-      && (
-        <Pagination
-          pageIndex={pageIndex}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          gotoPage={gotoPage}
-          pageCount={pageCount}
-          pageOptions={pageOptions}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          preGlobalFilteredRows={preGlobalFilteredRows}
-        />
-      )}
+
+      <Pagination
+        pageIndex={pageIndex}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        gotoPage={gotoPage}
+        pageCount={pageCount}
+        pageOptions={pageOptions}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        preGlobalFilteredRows={preGlobalFilteredRows}
+      />
 
     </>
   );

@@ -47,7 +47,7 @@ const InventoryDetail = ({ id }) => {
         : (
           <>
             {error
-              ? <Alert className="" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />
+              ? <Alert className="" type="warning" message="Producto sin información en Shipedge" />
               : (
                 <>
                   <div>
