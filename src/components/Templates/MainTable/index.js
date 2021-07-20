@@ -142,22 +142,20 @@ function MainTable({
           </tbody>
         </table>
       </div>
-      {(canNextPage || canPreviousPage)
-      && (
-        <Pagination
-          pageIndex={pageIndex}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canPreviousPage={canPreviousPage}
-          canNextPage={canNextPage}
-          gotoPage={gotoPage}
-          pageCount={pageCount}
-          pageOptions={pageOptions}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          preGlobalFilteredRows={preGlobalFilteredRows}
-        />
-      )}
+
+      <Pagination
+        pageIndex={pageIndex}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        gotoPage={gotoPage}
+        pageCount={pageCount}
+        pageOptions={pageOptions}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        preGlobalFilteredRows={preGlobalFilteredRows}
+      />
 
     </>
   );
