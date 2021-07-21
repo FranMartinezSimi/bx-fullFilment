@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from 'context/userContex';
+import { useKeyclockAuth } from 'context/userKeyclockContext';
+
 import clientFetch from 'lib/client-fetch';
 import jwt from 'jwt-decode';
 
@@ -10,6 +12,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const SecondStep = ({ setSelectedItem }) => {
+  const { setUserKeyclock } = useKeyclockAuth();
   const { setUser } = useAuth();
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
@@ -29,7 +32,13 @@ const SecondStep = ({ setSelectedItem }) => {
   const handleClickGoBack = () => {
     setSelectedItem('firstStep');
   };
-
+  const handleClickClose = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('bxBusinessActiveSession');
+    localStorage.removeItem('__access-token__');
+    localStorage.removeItem('__refresh-token__');
+    setUserKeyclock(null);
+  };
   const handleClick = () => {
     if (form.account_id.trim() === '' || form.key.trim() === '') {
       setErrorMessage('Todos los datos son obligatorios');
@@ -88,12 +97,12 @@ const SecondStep = ({ setSelectedItem }) => {
             <div className="my-4 text-center">
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
-                  <a href="#!" onClick={() => setSelectedItem('firstStep')}>
+                  <a href="#!" onClick={(e) => { e.preventDefault(); setSelectedItem('firstStep'); }}>
                     <img src={ArrowBack} alt="back" width="20" />
                   </a>
                 </li>
                 <li>
-                  <a href="#!" onClick={() => setSelectedItem('failStep')}>
+                  <a href="#!" onClick={handleClickClose}>
                     <span aria-hidden="true" className="p-0 pe-3" style={{ fontSize: '22px' }}>&times;</span>
                   </a>
                 </li>
