@@ -9,7 +9,7 @@ import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
-import reload from 'assets/brand/reload.svg';
+import reload from 'assets/brand/reloadWhite.svg';
 import Button from 'components/Atoms/Button';
 
 const Orders = () => {
@@ -167,11 +167,11 @@ const Orders = () => {
       <Button
         text="Actualizar"
         className="btn btn-secondary me-3 py-2"
+        imgPrev={<img src={reload} alt="Actualizar Ordenes" width="13" />}
       />
       <div className="d-xl-flex align-items-center d-none">
-        <span className="me-2 text-grey"><small>Última actualización</small></span>
-        <span className="me-2 text-grey"><small>{`${date?.day}, ${date?.month} ${date?.time}`}</small></span>
-        <img src={reload} alt="Actualizar Ordenes" width="19" />
+        <span className="me-2 text-grey"><small><i>Última actualización</i></small></span>
+        <span className="me-2 text-grey"><small><i>{`${date?.day}, ${date?.month} ${date?.time}`}</i></small></span>
       </div>
     </a>
   );

@@ -94,7 +94,7 @@ function MainTable({
               <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
                 {headerGroup.headers.map((column) => (
                   <th
-                    className={styles.tableTh}
+                    className={`display-font ${styles.tableTh}`}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
                     {column.render('Header')}
