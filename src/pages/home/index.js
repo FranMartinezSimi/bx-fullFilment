@@ -171,12 +171,14 @@ const Home = () => {
       <div className="container mt-5">
         <div className="row justify-content-between align-items-center">
           <PageTitle
-            className="col"
+            className="col-8"
             subtitle={userActive}
+            subtitleClassName="display-font fw-bold fs-3"
             title="Bienvenido a Blue360"
+            titleSize="50px"
           />
-          <div className="col">
-            <div className="text-end">
+          <div className="col-4">
+            <div className="text-center">
               <img src="/fulfill1.png" alt="" width="180" />
             </div>
           </div>

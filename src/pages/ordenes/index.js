@@ -182,7 +182,7 @@ const Orders = () => {
   return (
     <PageLayout title="Tus órdenes" description="Te mostramos tus órdenes de los últimos días">
       <PageTitle title="Tus órdenes" subtitle="Te mostramos tus órdenes de los últimos días" />
-      <div style={{ height: 80 }}>
+      <div style={{ height: 65 }}>
         {isUpdate && (
           messageComponent
         )}
