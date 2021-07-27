@@ -13,12 +13,14 @@ import styles from './styles.module.scss';
 const SecondStep = ({ setSelectedItem }) => {
   const { setUserKeyclock } = useKeyclockAuth();
   const { setUser } = useAuth();
-  const [errorMessage, setErrorMessage] = useState('');
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     account_id: '',
     key: '',
+  });
+  const [error, setError] = useState({
+    account_id: false,
+    key: false,
   });
 
   const handleChange = (e) => {
@@ -26,6 +28,10 @@ const SecondStep = ({ setSelectedItem }) => {
       ...form,
       [e.target.name]: e.target.value,
     });
+    setError((state) => ({
+      ...state,
+      [e.target.name]: false,
+    }));
   };
   const handleClickClose = (e) => {
     e.preventDefault();
@@ -35,12 +41,23 @@ const SecondStep = ({ setSelectedItem }) => {
     setUserKeyclock(null);
   };
   const handleClick = () => {
-    if (form.account_id.trim() === '' || form.key.trim() === '') {
-      setErrorMessage('Todos los datos son obligatorios');
-      setError(true);
+    if (form.key.trim() === '') {
+      setError((state) => ({
+        ...state,
+        key: true,
+      }));
+    }
+    if (form.account_id.trim() === '') {
+      setError((state) => ({
+        ...state,
+        account_id: true,
+      }));
+    }
+    console.log(error);
+
+    if (form.account_id.trim().length < 2 || form.key.trim().length < 2) {
       return;
     }
-
     setLoading(true);
 
     const TOKEN = window.localStorage.getItem('__access-token__');
@@ -131,6 +148,7 @@ const SecondStep = ({ setSelectedItem }) => {
                         placeholder="Account ID"
                         onChange={handleChange}
                       />
+                      {error.account_id && (<span className="text-danger">El campo está vácio, ingresa un Account ID</span>)}
                     </label>
                   </div>
                   <div className="form-group pt-2">
@@ -145,13 +163,11 @@ const SecondStep = ({ setSelectedItem }) => {
                         placeholder="Key"
                         onChange={handleChange}
                       />
+                      {error.key && (<span className="text-danger">El campo está vácio, ingresa un Account ID</span>)}
                     </label>
                   </div>
                 </form>
               </div>
-              { error
-                ? <p className="alert alert-danger mt-3" role="alert">{errorMessage}</p>
-                : null}
               <div className="text-center mt-5 pt-4">
                 <ul className="d-flex align-items-center justify-content-center">
                   <li className="me-5">
