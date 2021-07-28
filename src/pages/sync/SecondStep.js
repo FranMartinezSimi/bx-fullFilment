@@ -6,7 +6,6 @@ import clientFetch from 'lib/client-fetch';
 import jwt from 'jwt-decode';
 
 import Button from 'components/Atoms/Button';
-import Current from 'assets/brand/secondStep.svg';
 import ArrowBack from 'assets/brand/back.svg';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
@@ -14,12 +13,14 @@ import styles from './styles.module.scss';
 const SecondStep = ({ setSelectedItem }) => {
   const { setUserKeyclock } = useKeyclockAuth();
   const { setUser } = useAuth();
-  const [errorMessage, setErrorMessage] = useState('');
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     account_id: '',
     key: '',
+  });
+  const [error, setError] = useState({
+    account_id: false,
+    key: false,
   });
 
   const handleChange = (e) => {
@@ -27,10 +28,10 @@ const SecondStep = ({ setSelectedItem }) => {
       ...form,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const handleClickGoBack = () => {
-    setSelectedItem('firstStep');
+    setError((state) => ({
+      ...state,
+      [e.target.name]: false,
+    }));
   };
   const handleClickClose = (e) => {
     e.preventDefault();
@@ -40,12 +41,23 @@ const SecondStep = ({ setSelectedItem }) => {
     setUserKeyclock(null);
   };
   const handleClick = () => {
-    if (form.account_id.trim() === '' || form.key.trim() === '') {
-      setErrorMessage('Todos los datos son obligatorios');
-      setError(true);
+    if (form.key.trim() === '') {
+      setError((state) => ({
+        ...state,
+        key: true,
+      }));
+    }
+    if (form.account_id.trim() === '') {
+      setError((state) => ({
+        ...state,
+        account_id: true,
+      }));
+    }
+    console.log(error);
+
+    if (form.account_id.trim().length < 2 || form.key.trim().length < 2) {
       return;
     }
-
     setLoading(true);
 
     const TOKEN = window.localStorage.getItem('__access-token__');
@@ -93,8 +105,8 @@ const SecondStep = ({ setSelectedItem }) => {
           </div>
         )
         : (
-          <>
-            <div className="my-4 text-center">
+          <div className="px-5">
+            <div className="text-center d-none">
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
                   <a href="#!" onClick={(e) => { e.preventDefault(); setSelectedItem('firstStep'); }}>
@@ -107,65 +119,75 @@ const SecondStep = ({ setSelectedItem }) => {
                   </a>
                 </li>
               </ul>
-              <div className="text-center">
-                <img src="./sincronizacion-shipedge.gif" alt="imagen" width="400" />
-              </div>
             </div>
-            <ol className={`${styles.orderedList} p-0 ps-3 mx-5`}>
+            <ol className={`${styles.orderedList} p-0 mt-5`}>
               <li>
-                <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{ fontSize: '16px' }}>Ingresa a este link a Shipedge</a>
+                <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{ fontSize: '18px' }}>Ingresa a este link a Shipedge</a>
               </li>
               <li>
-                <p className="display-font d-inline" style={{ fontSize: '16px' }}>Copia tu Account ID y Key, sigue los pasos del gif y luego ingresa los datos en el formulario.</p>
+                <p className="display-font d-inline" style={{ fontSize: '18px' }}>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
               </li>
             </ol>
-            <div className="pt-2">
-              <form className="form px-5 mx-5">
-                <div className="form-group">
-                  <label htmlFor="accountId" className="form-label w-100">
-                    <span>
-                      Account ID
-                    </span>
-                    <input
-                      type="text"
-                      className="form-control mt-2"
-                      name="account_id"
-                      placeholder="Account ID"
-                      onChange={handleChange}
-                    />
-                  </label>
+            <div className="row pt-2">
+              <div className="col-6">
+                <div className="text-center">
+                  <img src="./sincronizacion-shipedge.gif" alt="imagen" className="w-100" />
                 </div>
-                <div className="form-group pt-2">
-                  <label htmlFor="key" className="form-label w-100">
-                    <span>
-                      Key
-                    </span>
-                    <input
-                      type="text"
-                      className="form-control mt-2"
-                      name="key"
-                      placeholder="Key"
-                      onChange={handleChange}
+              </div>
+              <div className="col-6">
+                <form className="form ps-xl-5">
+                  <div className="form-group mb-5">
+                    <label htmlFor="accountId" className="form-label w-100">
+                      <span>
+                        Account ID
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control mt-2"
+                        name="account_id"
+                        placeholder="Account ID"
+                        onChange={handleChange}
+                      />
+                      {error.account_id && (<span className="text-danger">El campo está vácio, ingresa un Account ID</span>)}
+                    </label>
+                  </div>
+                  <div className="form-group pt-2">
+                    <label htmlFor="key" className="form-label w-100">
+                      <span>
+                        Key
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control mt-2"
+                        name="key"
+                        placeholder="Key"
+                        onChange={handleChange}
+                      />
+                      {error.key && (<span className="text-danger">El campo está vácio, ingresa un Account ID</span>)}
+                    </label>
+                  </div>
+                </form>
+              </div>
+              <div className="text-center mt-5 pt-4">
+                <ul className="d-flex align-items-center justify-content-center">
+                  <li className="me-5">
+                    <Button
+                      className="btn btn-complementary fs-5 px-5"
+                      text="Atrás"
+                      onClick={() => setSelectedItem('firstStep')}
                     />
-                  </label>
-                </div>
-              </form>
-              { error
-                ? <p className="alert alert-danger mt-3" role="alert">{errorMessage}</p>
-                : null}
-              <div className="text-center">
-                <Button
-                  className="btn btn-secondary mt-4 px-5"
-                  text="Siguiente"
-                  onClick={handleClick}
-                  loading={loading}
-                />
-                <a href="#!" className="mt-4 d-block" onClick={handleClickGoBack}>
-                  <img src={Current} alt="current" />
-                </a>
+                  </li>
+                  <li className="ms-5">
+                    <Button
+                      className="btn btn-secondary px-4 fs-5"
+                      text="Sincronizar"
+                      onClick={handleClick}
+                    />
+                  </li>
+                </ul>
               </div>
             </div>
-          </>
+          </div>
         )}
     </>
   );
