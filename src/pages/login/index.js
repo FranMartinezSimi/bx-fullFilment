@@ -16,6 +16,7 @@ const LogIn = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [invalidUserError, setInvalidUserError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const {
     register, handleSubmit, formState: { errors },
   } = useForm();
@@ -34,6 +35,8 @@ const LogIn = () => {
   };
 
   const handleSingIn = (data) => {
+    setErrorMessage('');
+    setInvalidUserError(false);
     setLoading(true);
     const { username, password } = data;
 
@@ -54,7 +57,12 @@ const LogIn = () => {
     };
 
     fetch(urlLogin, requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(response);
+      })
       .then((result) => {
         if (result && result?.access_token) {
           const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
@@ -71,8 +79,13 @@ const LogIn = () => {
         return Promise.reject(new Error(result.error_description));
       })
       .catch((error) => {
-        setInvalidUserError(error);
+        if (error.status === 401) {
+          setErrorMessage('Los datos ingresados son incorrectos');
+        } else {
+          setErrorMessage('Los servicios no responden...');
+        }
         setLoading(false);
+        setInvalidUserError(true);
       });
   };
   return (
@@ -85,14 +98,14 @@ const LogIn = () => {
         />
       </Helmet>
       <div className="container-fluid bg-background-login">
-        <div className="row h-100 justify-content-center align-items-center">
-          <div className="col-md-6">
-            <div className={`${styles.formImg} text-center py-5 my-5`}>
+        <div className="row h-100 justify-content-end align-items-center">
+          <div className="col-md-4">
+            <div className={`${styles.formImg} text-center py-4 my-5`}>
               <img src={LogoBlue} alt="BlueExpress" width="192" />
             </div>
             <div className={`${styles.formContainer} text-center py-5 my-5 m-auto`}>
               {invalidUserError && (
-                <Alert className="mt-5" type="danger" message="Los datos ingresados son incorrectos" />
+                <Alert className="mt-5" type="danger" message={errorMessage} />
               )}
               <h3 className={`${styles.formTitle} display-font`}>Ingresa con tu nombre de usuario</h3>
               <form className="form mt-5" onSubmit={handleSubmit(handleSingIn)}>
@@ -103,15 +116,15 @@ const LogIn = () => {
                     </span>
                     <input
                       type="text"
-                      className={`${styles.formInput} form-control mt-2`}
+                      className={`${styles.formInput} ${errors.username ? styles.formInputError : ''} form-control mt-2`}
                       name="username"
-                      placeholder="miguel"
+                      placeholder="Introduce un nommbre"
                       {...register('username', {
                         required: true,
                       })}
                     />
                     {errors.username && (
-                      <span className="input-error">Email requerido</span>
+                      <span className={`${styles.formInputSpanError}`}>Email requerido</span>
                     )}
                   </label>
                 </div>
@@ -122,7 +135,7 @@ const LogIn = () => {
                     </span>
                     <input
                       type={passwordShown ? 'text' : 'password'}
-                      className={`${styles.formInput} form-control mt-2`}
+                      className={`${styles.formInput} ${errors.password ? styles.formInputError : ''} form-control mt-2`}
                       name="password"
                       placeholder="**********"
                       {...register('password', {
@@ -133,13 +146,13 @@ const LogIn = () => {
                       {component}
                     </a>
                     {errors.password && (
-                      <span className="input-error">Password Requerido</span>
+                      <span className={`${styles.formInputSpanError}`}>Password Requerido</span>
                     )}
                   </label>
                 </div>
                 <div className="form-group">
                   <Button
-                    className="btn btn-secondary mt-4 w-75"
+                    className="btn btn-secondary mt-4 w-100 fs-4"
                     text="Ingresar"
                     loading={loading}
                     submit
@@ -148,7 +161,7 @@ const LogIn = () => {
               </form>
             </div>
           </div>
-          <div className="d-none d-md-block col-md-6 p-0">
+          <div className="d-none d-md-block col-md-7 p-0">
             <div className={`${styles.ilustrationContainer}`}>
               <div className={`${styles.ilustrationImage} w-100`}>
                 <img src="/bg-login-intro.png" alt="Bienvenido a la App" />
