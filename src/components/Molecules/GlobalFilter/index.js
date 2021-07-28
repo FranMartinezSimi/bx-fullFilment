@@ -80,8 +80,12 @@ const GlobalFilter = ({
                   </li>
                 </ul>
               </a>
-              <div className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`} style={{ width: 190, borderRadius: 15 }}>
-                <a href="#!" className="d-block" onClick={() => { exportData('csv', true); }}>
+              <div
+                className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
+                style={{ width: 190, borderRadius: 15 }}
+                onBlur={() => setDropDown(false)}
+              >
+                <a href="#!" className="d-block" onClick={(e) => { e.preventDefault(); exportData('csv', true); }}>
                   <span>
                     Descargar todas
                   </span>
