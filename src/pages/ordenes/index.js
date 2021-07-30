@@ -11,10 +11,12 @@ import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reloadWhite.svg';
 import Button from 'components/Atoms/Button';
+import FromToDownloader from 'components/Molecules/FromToDownloader';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
+  const [modalDate, setModalDate] = useState(false);
   const [error, setError] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [date, setDate] = useState(null);
@@ -96,6 +98,10 @@ const Orders = () => {
     setOrderTracking(tableData.row.original.trackingNumber);
     setUnifyState(tableData.row.original.status);
     setModal(true);
+  };
+
+  const handleDropDown = () => {
+    setModalDate(true);
   };
 
   const columns = useMemo(() => [
@@ -195,13 +201,17 @@ const Orders = () => {
               data={data}
               handleClick={handleClickUpdateOrder}
               handleClickUpdate={handleClickUpdateList}
+              handleDropDown={handleDropDown}
               update={updateComponent}
             />
           </div>
         )
         : component}
-      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
+      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
         <OrderDetail id={orderId} tracking={orderTracking} unifyState={unifyState} />
+      </Modal>
+      <Modal showModal={modalDate} size="lg" onClick={(e) => { e.preventDefault(); setModalDate(false); }}>
+        <FromToDownloader />
       </Modal>
     </PageLayout>
   );

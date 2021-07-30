@@ -56,22 +56,22 @@ const Pagination = ({
       <div className="col-md-6 col-xl-4 d-flex justify-content-end">
         {(canNextPage || canPreviousPage) && pageCount > 1 && (
         <div
-          className="bg-white d-flex align-items-center justify-content-center mb-4 shadow"
+          className="bg-white d-flex align-items-center justify-content-center mb-4 shadow px-4"
           style={{
-            maxWidth: 300, borderRadius: '15px', height: '58px', boxShadow: '0px 2px 4px -2px rgba(24, 39, 75, 0.12), 0px 4px 4px -2px rgba(24, 39, 75, 0.08)',
+            borderRadius: '15px', height: '58px', boxShadow: '0px 2px 4px -2px rgba(24, 39, 75, 0.12), 0px 4px 4px -2px rgba(24, 39, 75, 0.08)',
           }}
         >
-          <div style={{ width: 43 }}>
-            {pageIndex > 2 && (
-            <button
-              className="btn btn-pagination--inactive fs-6"
-              type="button"
-              onClick={() => gotoPage(0)}
-            >
-              {'<'}
-            </button>
-            )}
-          </div>
+          {pageIndex > 2 && (
+            <div style={{ width: 43 }}>
+              <button
+                className="btn btn-pagination--inactive fs-6"
+                type="button"
+                onClick={() => gotoPage(0)}
+              >
+                {'<'}
+              </button>
+            </div>
+          )}
 
           {pageIndex > 1 && (
           <div style={{ width: 43 }}>

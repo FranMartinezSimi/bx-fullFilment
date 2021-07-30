@@ -107,7 +107,7 @@ const Inventory = () => {
           />
         )
         : component}
-      <Modal title={`Detalle SKU ${skuId}`} subtitle={`ID de producto ${inventoryId}`} showModal={modal} onClick={() => setModal(false)}>
+      <Modal title={`Detalle SKU ${skuId}`} subtitle={`ID de producto ${inventoryId}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
         <InventoryDetail id={inventoryId} />
       </Modal>
     </PageLayout>

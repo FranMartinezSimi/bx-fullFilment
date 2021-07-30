@@ -53,7 +53,6 @@ const SecondStep = ({ setSelectedItem }) => {
         account_id: true,
       }));
     }
-    console.log(error);
 
     if (form.account_id.trim().length < 2 || form.key.trim().length < 2) {
       return;
