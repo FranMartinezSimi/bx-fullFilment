@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 
 const FromToDatePicker = () => {
   const DATE = new Date();
+  const [loading, setLoadinng] = useState(false);
   const [startDate, setStartDate] = useState(DATE);
   const [endDate, setEndDate] = useState(DATE);
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -21,22 +22,26 @@ const FromToDatePicker = () => {
     </button>
   ));
   function getExportFileBlob(data) {
-    console.log('data', data);
-    const headerNames = ['Id', 'Fecha de creación', 'fecha', 'Nombre', 'Apellido', 'Id de orden', 'Nro de orden', 'Estado', 'Nro de tracking'];
-    const csvString = Papa.unparse({ fields: headerNames, data });
+    const transform = JSON.stringify(data);
+    const csvString = Papa.unparse(transform);
 
-    return new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvString]);
+    const file = document.createElement('a');
+    file.href = URL.createObjectURL(blob, { type: 'text/csv;charset=utf-8;' });
+    file.download = `order_export_from_${startDate.getDate()}-${startDate.getMonth() + 1}-${startDate.getFullYear()}_to_${endDate.getDate()}-${endDate.getMonth() + 1}-${endDate.getFullYear()}.csv`;
+    document.body.appendChild(file);
+    file.click();
+    document.body.removeChild(file);
   }
   const handleClickReset = () => {
     setStartDate(DATE);
     setEndDate(DATE);
   };
   const handleSubmit = () => {
-    const starting = `${startDate.getDate()}-${startDate.getMonth()}-${startDate.getFullYear()}`;
-    const ending = `${endDate.getDate()}-${endDate.getMonth()}-${endDate.getFullYear()}`;
+    setLoadinng(true);
+    const starting = `${startDate.getDate()}-${startDate.getMonth() + 1}-${startDate.getFullYear()}`;
+    const ending = `${endDate.getDate()}-${endDate.getMonth() + 1}-${endDate.getFullYear()}`;
 
-    console.log('startDate', starting);
-    console.log('endDate', ending);
     clientFetch('order/v1/orders/getOrdersListDate', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -48,9 +53,10 @@ const FromToDatePicker = () => {
     })
       .then((data) => {
         getExportFileBlob(data);
+        setLoadinng(false);
       })
-      .catch((error) => {
-        console.log('error', error);
+      .catch(() => {
+        setLoadinng(false);
       });
   };
   return (
@@ -100,6 +106,7 @@ const FromToDatePicker = () => {
               text="Descargar"
               className="btn btn-secondary me-5"
               onClick={handleSubmit}
+              loading={loading}
             />
           </li>
         </ul>
