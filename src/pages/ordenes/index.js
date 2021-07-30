@@ -9,12 +9,14 @@ import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
-import reload from 'assets/brand/reload.svg';
+import reload from 'assets/brand/reloadWhite.svg';
 import Button from 'components/Atoms/Button';
+import FromToDownloader from 'components/Molecules/FromToDownloader';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
+  const [modalDate, setModalDate] = useState(false);
   const [error, setError] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [date, setDate] = useState(null);
@@ -98,6 +100,10 @@ const Orders = () => {
     setModal(true);
   };
 
+  const handleDropDown = () => {
+    setModalDate(true);
+  };
+
   const columns = useMemo(() => [
     {
       Header: 'Nº orden',
@@ -167,11 +173,11 @@ const Orders = () => {
       <Button
         text="Actualizar"
         className="btn btn-secondary me-3 py-2"
+        imgPrev={<img src={reload} alt="Actualizar Ordenes" width="13" />}
       />
       <div className="d-xl-flex align-items-center d-none">
-        <span className="me-2 text-grey"><small>Última actualización</small></span>
-        <span className="me-2 text-grey"><small>{`${date?.day}, ${date?.month} ${date?.time}`}</small></span>
-        <img src={reload} alt="Actualizar Ordenes" width="19" />
+        <span className="me-2 text-grey"><small><i>Última actualización</i></small></span>
+        <span className="me-2 text-grey"><small><i>{`${date?.day}, ${date?.month} ${date?.time}`}</i></small></span>
       </div>
     </a>
   );
@@ -195,13 +201,17 @@ const Orders = () => {
               data={data}
               handleClick={handleClickUpdateOrder}
               handleClickUpdate={handleClickUpdateList}
+              handleDropDown={handleDropDown}
               update={updateComponent}
             />
           </div>
         )
         : component}
-      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
+      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
         <OrderDetail id={orderId} tracking={orderTracking} unifyState={unifyState} />
+      </Modal>
+      <Modal showModal={modalDate} size="lg" onClick={(e) => { e.preventDefault(); setModalDate(false); }}>
+        <FromToDownloader />
       </Modal>
     </PageLayout>
   );

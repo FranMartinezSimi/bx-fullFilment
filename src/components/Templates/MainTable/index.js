@@ -27,6 +27,7 @@ function MainTable({
   data,
   handleClick,
   handleClickUpdate,
+  handleDropDown,
   update,
 }) {
   const {
@@ -83,6 +84,7 @@ function MainTable({
         setGlobalFilter={setGlobalFilter}
         handleClick={handleClick}
         handleClickUpdate={handleClickUpdate}
+        handleDropDown={handleDropDown}
         update={update}
         getExportFileBlob={getExportFileBlob}
         exportData={exportData}
@@ -94,7 +96,7 @@ function MainTable({
               <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
                 {headerGroup.headers.map((column) => (
                   <th
-                    className={styles.tableTh}
+                    className={`display-font ${styles.tableTh}`}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
                     {column.render('Header')}
