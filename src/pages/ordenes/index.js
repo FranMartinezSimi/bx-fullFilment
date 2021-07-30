@@ -100,7 +100,8 @@ const Orders = () => {
     setModal(true);
   };
 
-  const handleDropDown = () => {
+  const handleDropDown = (e) => {
+    e.preventDefault();
     setModalDate(true);
   };
 

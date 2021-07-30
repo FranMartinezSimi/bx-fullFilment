@@ -112,7 +112,6 @@ const Onborading = () => {
       .then((response) => {
         if (response.status === 'successful') {
           const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(response));
-          // setLoading(false);
           setUser(bxBusinessActiveFulfillment);
         }
       })
