@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import clientFetch from 'lib/client-fetch';
 import Papa from 'papaparse';
 import Button from 'components/Atoms/Button';
+import AlertMessage from 'components/Atoms/AlertMessage';
 
 import styles from './styles.module.scss';
 
@@ -11,6 +12,7 @@ const FromToDatePicker = () => {
   const [loading, setLoadinng] = useState(false);
   const [startDate, setStartDate] = useState(DATE);
   const [endDate, setEndDate] = useState(DATE);
+  const [error, setError] = useState(false);
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
       type="button"
@@ -57,6 +59,10 @@ const FromToDatePicker = () => {
       })
       .catch(() => {
         setLoadinng(false);
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 2000);
       });
   };
   return (
@@ -93,6 +99,7 @@ const FromToDatePicker = () => {
         />
       </div>
       <div className="col-12 mt-5 mb-3">
+        {error && (<AlertMessage type="danger" message="Ocurrio un error de comunicación con el servidor..." />)}
         <ul className="d-flex justify-content-end">
           <li>
             <Button
