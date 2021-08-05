@@ -139,10 +139,11 @@ const Orders = () => {
       accessor: 'trackingNumber',
     },
     {
-      Header: 'Nº de referencia',
+      Header: 'Nº referencia',
       accessor: 'orderNumber',
     },
     {
+      Header: 'Incidencia',
       accessor: 'label',
       isVisible: true,
       Cell: (table) => (
@@ -152,8 +153,10 @@ const Orders = () => {
           role="button"
           className="d-block font-weight-bold font-weight-bold"
         >
-          <small className="text-complementary-color">
-            crear ticket
+          <small className="text-secondary-color text-underline">
+            <u>
+              Crear ticket
+            </u>
           </small>
         </a>
       ),

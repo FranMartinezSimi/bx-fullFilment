@@ -47,7 +47,8 @@ const FormTicket = ({ orderID, setModalTicket }) => {
           </p>
           <DropZone boxText="Arrastra tu archivo o selecciona desde tu computadora" />
         </div>
-        <div className="text-center mt-5 pt-4">
+        <div className="text-center">
+          <p className="text-start">( * ) Campo obligatorio</p>
           <ul className="d-flex align-items-center justify-content-center">
             <li className="me-5">
               <Button

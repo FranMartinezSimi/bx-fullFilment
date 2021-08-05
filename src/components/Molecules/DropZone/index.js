@@ -2,7 +2,7 @@ import { useDropzone } from 'react-dropzone';
 import plus from 'assets/brand/plus.svg';
 
 const Dropzone = ({ boxText }) => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({ maxFiles: 2 });
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({ maxFiles: 12 });
 
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>
@@ -28,7 +28,7 @@ const Dropzone = ({ boxText }) => {
           </p>
         </span>
       </div>
-      <aside className="d-none">
+      <aside className="">
         <h4>Files</h4>
         <ul>{files}</ul>
       </aside>

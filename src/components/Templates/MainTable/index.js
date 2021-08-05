@@ -16,7 +16,9 @@ function getExportFileBlob({
   columns, data, fileType,
 }) {
   if (fileType === 'csv') {
-    const headerNames = columns.filter((col) => (col.exportValue !== 'ver')).map((col) => col.exportValue.replace('Nº', 'Nro'));
+    const headerNames = columns
+      .filter((col) => (col.exportValue !== 'ver' && col.exportValue !== 'label'))
+      .map((col) => col.exportValue.replace('Nº', 'Nro'));
     const csvString = Papa.unparse({ fields: headerNames, data });
     return new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
   }
