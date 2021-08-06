@@ -1,8 +1,11 @@
+import { useState, useEffect } from 'react';
+import clientFetch from 'lib/client-fetch';
 import DropZone from 'components/Molecules/DropZone';
 import Button from 'components/Atoms/Button';
 
-const FormTicket = ({ orderID, setModalTicket }) => {
-  console.log('orderID', orderID);
+const FormTicket = ({ setModalTicket }) => {
+  const [form, setForm] = useState([]);
+  // const [options, setOptions] = useState([]):
   const OPTIONS = [
     'Producto Erróneo',
     'Producto Faltante',
@@ -13,7 +16,21 @@ const FormTicket = ({ orderID, setModalTicket }) => {
   const DATE = new Date();
   const handleSubmit = () => {
     console.log('submit');
+    setForm([...form]);
   };
+  useEffect(() => {
+    clientFetch('ticket/v1/motivo/getAll', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <h6 className="display-font text-center font-bold" style={{ fontSize: 22 }}>Crear ticket</h6>
@@ -41,11 +58,11 @@ const FormTicket = ({ orderID, setModalTicket }) => {
           </label>
         </div>
         <div className="form-group mb-5">
-          <h6 className="display-font text-center font-bold" style={{ fontSize: 18 }}>Carga tu archivo</h6>
-          <p className="text-center">
-            Adjunta la evidencia, puede ser en formato jpg o png (opcional)
-          </p>
-          <DropZone boxText="Arrastra tu archivo o selecciona desde tu computadora" />
+          <DropZone
+            boxText="Arrastra tu archivo o selecciona desde tu computadora"
+            title="Carga tu archivo"
+            subTitle="Adjunta la evidencia, puede ser en formato jpg o png (opcional)"
+          />
         </div>
         <div className="text-center">
           <p className="text-start">( * ) Campo obligatorio</p>
@@ -61,6 +78,7 @@ const FormTicket = ({ orderID, setModalTicket }) => {
               <Button
                 className="btn btn-secondary fs-5 px-5"
                 text="Crear"
+                submit
               />
             </li>
           </ul>
