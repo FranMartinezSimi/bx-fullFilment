@@ -9,12 +9,16 @@ import Modal from 'components/Templates/Modal';
 import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
-import reload from 'assets/brand/reload.svg';
+import reload from 'assets/brand/reloadWhite.svg';
 import Button from 'components/Atoms/Button';
+import FromToDownloader from 'components/Molecules/FromToDownloader';
+import FromTicket from 'components/Molecules/FormTicket';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
+  const [modalDate, setModalDate] = useState(false);
+  const [modalTicket, setModalTicket] = useState(false);
   const [error, setError] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [date, setDate] = useState(null);
@@ -98,6 +102,21 @@ const Orders = () => {
     setModal(true);
   };
 
+  const hadleClickDropDown = (e) => {
+    e.preventDefault();
+    setModalDate(true);
+  };
+
+  const handleClickTicket = (e, tableData) => {
+    e.preventDefault();
+    console.log(tableData.row.original.orderId);
+    setOrderId(tableData.row.original.orderId);
+    setOrderNumber(tableData.row.original.orderNumber);
+    setOrderTracking(tableData.row.original.trackingNumber);
+    setUnifyState(tableData.row.original.status);
+    setModalTicket(true);
+  };
+
   const columns = useMemo(() => [
     {
       Header: 'Nº orden',
@@ -120,8 +139,27 @@ const Orders = () => {
       accessor: 'trackingNumber',
     },
     {
-      Header: 'Nº de referencia',
+      Header: 'Nº referencia',
       accessor: 'orderNumber',
+    },
+    {
+      Header: 'Incidencia',
+      accessor: 'label',
+      isVisible: true,
+      Cell: (table) => (
+        <a
+          href="#!"
+          onClick={(e) => { e.preventDefault(); handleClickTicket(e, table); }}
+          role="button"
+          className="d-block font-weight-bold font-weight-bold"
+        >
+          <small className="text-secondary-color text-underline">
+            <u>
+              Crear ticket
+            </u>
+          </small>
+        </a>
+      ),
     },
     {
       accessor: 'ver',
@@ -167,11 +205,11 @@ const Orders = () => {
       <Button
         text="Actualizar"
         className="btn btn-secondary me-3 py-2"
+        imgPrev={<img src={reload} alt="Actualizar Ordenes" width="13" />}
       />
       <div className="d-xl-flex align-items-center d-none">
-        <span className="me-2 text-grey"><small>Última actualización</small></span>
-        <span className="me-2 text-grey"><small>{`${date?.day}, ${date?.month} ${date?.time}`}</small></span>
-        <img src={reload} alt="Actualizar Ordenes" width="19" />
+        <span className="me-2 text-grey"><small><i>Última actualización</i></small></span>
+        <span className="me-2 text-grey"><small><i>{`${date?.day}, ${date?.month} ${date?.time}`}</i></small></span>
       </div>
     </a>
   );
@@ -182,7 +220,7 @@ const Orders = () => {
   return (
     <PageLayout title="Tus órdenes" description="Te mostramos tus órdenes de los últimos días">
       <PageTitle title="Tus órdenes" subtitle="Te mostramos tus órdenes de los últimos días" />
-      <div style={{ height: 80 }}>
+      <div style={{ height: 65 }}>
         {isUpdate && (
           messageComponent
         )}
@@ -195,13 +233,26 @@ const Orders = () => {
               data={data}
               handleClick={handleClickUpdateOrder}
               handleClickUpdate={handleClickUpdateList}
+              hadleClickDropDown={hadleClickDropDown}
               update={updateComponent}
             />
           </div>
         )
         : component}
-      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
+      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
         <OrderDetail id={orderId} tracking={orderTracking} unifyState={unifyState} />
+      </Modal>
+      <Modal showModal={modalDate} size="lg" onClick={(e) => { e.preventDefault(); setModalDate(false); }}>
+        <FromToDownloader />
+      </Modal>
+      <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
+        <FromTicket
+          orderID={orderId}
+          orderNumber={orderNumber}
+          tracking={orderTracking}
+          unifyState={unifyState}
+          setModalTicket={setModalTicket}
+        />
       </Modal>
     </PageLayout>
   );

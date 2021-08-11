@@ -38,15 +38,6 @@ const data = [
     cardBg: '/onboarding-bg3.png',
     key: 2,
   },
-  {
-    name: 'fourthStep',
-    active: false,
-    title: 'Sincroniza con Shipedge',
-    subTitle: 'Si ya tienes una cuenta Shipedge, sincronízala y así no perderás tu información.',
-    imgPath: './onboarding-ico4.png',
-    cardBg: '/onboarding-bg4.png',
-    key: 3,
-  },
 ];
 
 const Onborading = () => {
@@ -61,7 +52,7 @@ const Onborading = () => {
       nextItem = item + 1;
     }
 
-    if (item <= 3 && direction === 'back') {
+    if (item <= 2 && direction === 'back') {
       nextItem = item - 1;
     }
     if (nextItem === undefined) {
@@ -121,7 +112,6 @@ const Onborading = () => {
       .then((response) => {
         if (response.status === 'successful') {
           const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(response));
-          // setLoading(false);
           setUser(bxBusinessActiveFulfillment);
         }
       })
@@ -138,10 +128,11 @@ const Onborading = () => {
   }, []);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
+      <span className={`position-absolute ${styles.blackLayer}`} />
       <div className="container">
         <div className="content-wrapper row justify-content-center align-items-center">
           <div className="col-lg-9 col-xxl-8">
-            <TransitionGroup className="todo-list position-relative" style={{ minHeight: 510 }}>
+            <TransitionGroup className="todo-list position-relative" style={{ minHeight: 510, zIndex: 5 }}>
               {selectedItem.filter((item) => item.active).map((content) => (
                 <CSSTransition
                   timeout={300}
@@ -174,7 +165,7 @@ const Onborading = () => {
                             <NavigationDots list={selectedItem} setListItem={handleClickDot} />
                           </li>
                           <li className={`${styles.navigationList}`}>
-                            {content.key < 3 && (
+                            {content.key < 2 && (
                               <a className={styles.navigationLink} href="#!" onClick={(e) => handleClick(e, content.key, 'next')}>
                                 Continuar
                                 {' >'}

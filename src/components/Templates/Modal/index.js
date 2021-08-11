@@ -13,19 +13,19 @@ const Modal = ({
     unmountOnExit
   >
     <div className={styles.modal}>
-      <div className={`${size === 'sm' ? styles.sm : styles.md} bg-white shadows m-auto p-3 border-0`} style={{ borderRadius: '16px' }}>
-        <div className="modal-header py-2 border-0 d-flex justify-content-between align-items-start">
+      <div className={`${size === 'sm' ? styles.sm : styles.md} ${size === 'lg' ? styles.lg : ''}  bg-white shadow m-auto p-3 border-0`} style={{ borderRadius: '16px' }}>
+        <div className="modal-header py-2 border-0 d-flex justify-content-between align-items-center mb-2">
           <div>
             <h5 className={`${styles.modalTitle} display-font mb-1`}>{title}</h5>
             {subtitle && (
             <p className={`${styles.modalSubtitle}`}>{subtitle}</p>
             )}
           </div>
-          <button type="button" data-testid="printed-username" className={`p-0 ${styles.close}`} onClick={onClick}>
+          <a href="!#" data-testid="printed-username" className={`p-0 ${styles.close}`} onClick={onClick}>
             <span aria-hidden="true" className="p-0">&times;</span>
-          </button>
+          </a>
         </div>
-        <div className="modal-body p-3">
+        <div className="modal-body p-0 px-3">
           {children}
         </div>
       </div>
@@ -34,6 +34,7 @@ const Modal = ({
 );
 
 Modal.defaultProps = {
+  title: '',
   subtitle: '',
   children: null,
   size: '',
@@ -41,7 +42,7 @@ Modal.defaultProps = {
 };
 
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.string,
   children: PropTypes.node,
   onClick: PropTypes.func,
