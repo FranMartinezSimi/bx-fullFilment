@@ -27,7 +27,7 @@ jobs:
         yarn build:qa
       env:
         CI: true
-    - uses: Blue-Express/helm-eks-action@main
+    - uses: shallwefootball/s3-upload-action@master
       name: Upload S3
       id: S3
       with:
