@@ -16,7 +16,9 @@ function getExportFileBlob({
   columns, data, fileType,
 }) {
   if (fileType === 'csv') {
-    const headerNames = columns.filter((col) => (col.exportValue !== 'ver')).map((col) => col.exportValue.replace('Nº', 'Nro'));
+    const headerNames = columns
+      .filter((col) => (col.exportValue !== 'ver' && col.exportValue !== 'label'))
+      .map((col) => col.exportValue.replace('Nº', 'Nro'));
     const csvString = Papa.unparse({ fields: headerNames, data });
     return new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
   }
@@ -27,7 +29,7 @@ function MainTable({
   data,
   handleClick,
   handleClickUpdate,
-  handleDropDown,
+  hadleClickDropDown,
   update,
 }) {
   const {
@@ -84,7 +86,7 @@ function MainTable({
         setGlobalFilter={setGlobalFilter}
         handleClick={handleClick}
         handleClickUpdate={handleClickUpdate}
-        handleDropDown={handleDropDown}
+        hadleClickDropDown={hadleClickDropDown}
         update={update}
         getExportFileBlob={getExportFileBlob}
         exportData={exportData}

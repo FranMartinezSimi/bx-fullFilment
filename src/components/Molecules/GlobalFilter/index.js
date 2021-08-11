@@ -12,7 +12,7 @@ const GlobalFilter = ({
   handleClick,
   update,
   exportData,
-  handleDropDown,
+  hadleClickDropDown,
 }) => {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
@@ -93,7 +93,7 @@ const GlobalFilter = ({
                 {!checkUrl && (
                   <>
                     <hr />
-                    <a href="#!" className="d-block" onClick={handleDropDown}>
+                    <a href="#!" className="d-block" onClick={hadleClickDropDown}>
                       <span>
                         Descargar por fecha
                       </span>
@@ -113,14 +113,14 @@ GlobalFilter.defaultProps = {
   globalFilter: () => {},
   setGlobalFilter: () => {},
   handleClick: () => {},
-  handleDropDown: () => {},
+  hadleClickDropDown: () => {},
 };
 
 GlobalFilter.propTypes = {
   globalFilter: PropTypes.func,
   setGlobalFilter: PropTypes.func,
   handleClick: PropTypes.func,
-  handleDropDown: PropTypes.func,
+  hadleClickDropDown: PropTypes.func,
 };
 
 export default GlobalFilter;
