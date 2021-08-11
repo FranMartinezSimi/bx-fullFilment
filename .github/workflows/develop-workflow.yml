@@ -30,7 +30,7 @@ jobs:
     #     sonarqube_url: ${{ secrets.SONARQUBE_DEV_URL }}
     #     sonarqube_token: ${{ secrets.SONARQUBE_DEV_TOKEN }}
     #     projectKey: bx-fulfillment-web
-    - uses: koslibpro/helm-eks-action@master
+    - uses: Blue-Express/helm-eks-action@main
       name: Upload S3
       id: S3
       with:
