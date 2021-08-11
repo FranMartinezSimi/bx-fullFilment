@@ -29,7 +29,7 @@ function MainTable({
   data,
   handleClick,
   handleClickUpdate,
-  handleDropDown,
+  hadleClickDropDown,
   update,
 }) {
   const {
@@ -86,7 +86,7 @@ function MainTable({
         setGlobalFilter={setGlobalFilter}
         handleClick={handleClick}
         handleClickUpdate={handleClickUpdate}
-        handleDropDown={handleDropDown}
+        hadleClickDropDown={hadleClickDropDown}
         update={update}
         getExportFileBlob={getExportFileBlob}
         exportData={exportData}

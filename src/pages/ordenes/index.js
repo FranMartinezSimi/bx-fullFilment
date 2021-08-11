@@ -149,7 +149,7 @@ const Orders = () => {
       Cell: (table) => (
         <a
           href="#!"
-          onClick={(e) => handleClickTicket(e, table)}
+          onClick={(e) => { e.preventDefault(); handleClickTicket(e, table); }}
           role="button"
           className="d-block font-weight-bold font-weight-bold"
         >

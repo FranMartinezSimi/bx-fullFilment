@@ -5,17 +5,9 @@ import Button from 'components/Atoms/Button';
 
 const FormTicket = ({ setModalTicket }) => {
   const [form, setForm] = useState([]);
-  // const [options, setOptions] = useState([]):
-  const OPTIONS = [
-    'Producto Erróneo',
-    'Producto Faltante',
-    'Detalle de envío',
-    'Despacho retrasado',
-    'Cambio de dirección',
-  ];
+  const [options, setOptions] = useState([]);
   const DATE = new Date();
   const handleSubmit = () => {
-    console.log('submit');
     setForm([...form]);
   };
   useEffect(() => {
@@ -25,10 +17,12 @@ const FormTicket = ({ setModalTicket }) => {
       },
     })
       .then((data) => {
-        console.log(data);
+        setOptions(data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        setOptions([{
+          motivo: 'No pudimos cargar los motivos, intentalo más tarde',
+        }]);
       });
   }, []);
   return (
@@ -44,8 +38,8 @@ const FormTicket = ({ setModalTicket }) => {
             <span className="text-danger"> *</span>
             <select className="form-select" id="selectBugType" style={{ borderRadius: 16, border: '1px solid #1A6F99', minHeight: 40 }}>
               <option selected>Selecciona la opción del motivo</option>
-              {OPTIONS.map((item) => (
-                <option value={item}>{item}</option>
+              {options.map((item) => (
+                <option value={item.motivo}>{item.motivo}</option>
               ))}
             </select>
           </label>

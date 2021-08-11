@@ -14,6 +14,8 @@ import exitSession from 'assets/brand/exitSession.svg';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
+const urlLogin = process.env.REACT_APP_LOGOUT_URL;
+
 const Header = ({ activeNavbar, setActiveNavbar }) => {
   const history = useHistory();
   const { setUserKeyclock } = useKeyclockAuth();
@@ -34,8 +36,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const handleClickRemember = () => {
     setRememberShipedge(!rememberShipedge);
   };
-  const signOut = (e) => {
-    e.preventDefault();
+  const logOut = () => {
     history.push('/');
     localStorage.removeItem('bxBusinessActiveSession');
     localStorage.removeItem('__access-token__');
@@ -45,6 +46,31 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
       setUser(null);
     }
     setUserKeyclock(null);
+  };
+  const signOut = (e) => {
+    e.preventDefault();
+    const REFRESH_TOKEN = localStorage.getItem('__refresh-token__');
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    const urlencoded = new FormData();
+    urlencoded.append('client_id', `${userData.credential.user.sub}&refresh_token=${REFRESH_TOKEN}`);
+
+    const requestOptions = {
+      method: 'POST',
+      headers,
+      body: urlencoded,
+      redirect: 'follow',
+    };
+
+    fetch(urlLogin, requestOptions)
+      .then((response) => response.json())
+      .then(() => {
+        logOut();
+      })
+      .catch(() => {
+        logOut();
+      });
   };
   return (
     <header className={styles.header}>
