@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import Home from 'assets/brand/home.svg';
-import Box from 'assets/brand/box.svg';
 import Tag from 'assets/brand/label.svg';
-import Todo from 'assets/brand/todo.svg';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
@@ -15,18 +13,6 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
       img: Home,
       active: true,
       route: '/',
-    },
-    {
-      name: 'Órdenes',
-      img: Todo,
-      active: true,
-      route: '/ordenes',
-    },
-    {
-      name: 'Inventario',
-      img: Box,
-      active: true,
-      route: '/inventario',
     },
     {
       name: 'Incidencias',

@@ -123,3 +123,16 @@ label[for="react-csv-reader-input"] {
   font-size: .8rem;
 }
 
+$palette: (
+    abierto: #C2D0FF,
+    enproceso: #EAF8FF,
+    resuelto: #333333,
+);
+
+@each $name, $color in $palette {
+  .badge--#{$name} {
+    background-color: $color;
+    color: darken($color, 30%);
+    border-radius: 4px;
+  }
+}
