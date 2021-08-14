@@ -31,6 +31,7 @@ function MainTable({
   handleClickUpdate,
   hadleClickDropDown,
   update,
+  noFilters,
 }) {
   const {
     getTableProps,
@@ -67,100 +68,104 @@ function MainTable({
 
   return (
     <>
-      <pre className="d-none">
-        <code>
-          {JSON.stringify(
-            {
-              pageSize,
-              pageCount,
-            },
-            null,
-            2,
+      {page.length > 0 ? (
+        <>
+          <pre className="d-none">
+            <code>
+              {JSON.stringify(
+                {
+                  pageSize,
+                  pageCount,
+                },
+                null,
+                2,
+              )}
+            </code>
+          </pre>
+
+          {!noFilters && (
+            <GlobalFilter
+              preGlobalFilteredRows={preGlobalFilteredRows}
+              globalFilter={state.globalFilter}
+              setGlobalFilter={setGlobalFilter}
+              handleClick={handleClick}
+              handleClickUpdate={handleClickUpdate}
+              hadleClickDropDown={hadleClickDropDown}
+              update={update}
+              getExportFileBlob={getExportFileBlob}
+              exportData={exportData}
+            />
           )}
-        </code>
-      </pre>
-
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-        handleClick={handleClick}
-        handleClickUpdate={handleClickUpdate}
-        hadleClickDropDown={hadleClickDropDown}
-        update={update}
-        getExportFileBlob={getExportFileBlob}
-        exportData={exportData}
-      />
-      <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
-        <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
-          <thead style={{ background: '#99B1FF' }}>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
-                {headerGroup.headers.map((column) => (
-                  <th
-                    className={`display-font ${styles.tableTh}`}
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                  >
-                    {column.render('Header')}
-                    {!column.isSorted
-                      ? (
-                        <span className={styles.symbol}>
-                          <img src={Sort} alt="sort" className="ms-2" width="8" />
+          <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
+            <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
+              <thead style={{ background: '#99B1FF' }}>
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
+                    {headerGroup.headers.map((column) => (
+                      <th
+                        className={`display-font ${styles.tableTh}`}
+                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                      >
+                        {column.render('Header')}
+                        {!column.isSorted
+                          ? (
+                            <span className={styles.symbol}>
+                              <img src={Sort} alt="sort" className="ms-2" width="8" />
+                            </span>
+                          )
+                          : (
+                            null
+                          )}
+                        <span>
+                          {column.isSorted
+                            ? column.isSortedDesc
+                              ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10" />)
+                              : (<img src={SortUp} alt="sortUp" className="ms-2" width="10" />)
+                            : ''}
                         </span>
-                      )
-                      : (
-                        null
-                      )}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10" />)
-                          : (<img src={SortUp} alt="sortUp" className="ms-2" width="10" />)
-                        : ''}
-                    </span>
-                  </th>
+                      </th>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-            {page.length === 0 && (
-              <tr>
-                <td>
-                  <p>No se encontraron resultados...</p>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      <Pagination
-        pageIndex={pageIndex}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        canNextPage={canNextPage}
-        gotoPage={gotoPage}
-        pageCount={pageCount}
-        pageOptions={pageOptions}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        preGlobalFilteredRows={preGlobalFilteredRows}
-      />
-
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()}>
+                          {cell.render('Cell')}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          {pageCount > 1 && (
+            <Pagination
+              pageIndex={pageIndex}
+              previousPage={previousPage}
+              nextPage={nextPage}
+              canPreviousPage={canPreviousPage}
+              canNextPage={canNextPage}
+              gotoPage={gotoPage}
+              pageCount={pageCount}
+              pageOptions={pageOptions}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              preGlobalFilteredRows={preGlobalFilteredRows}
+            />
+          )}
+        </>
+      ) : (
+        <div className="text-center">
+          <img src="/errorpage.png" alt="Contenido no encontrado" data-testid="image" />
+          <p>No se encontraron datos</p>
+        </div>
+      )}
     </>
   );
 }

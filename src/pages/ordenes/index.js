@@ -28,6 +28,7 @@ const Orders = () => {
   const [orderNumber, setOrderNumber] = useState('');
   const [orderTracking, setOrderTracking] = useState('');
   const [unifyState, setUnifyState] = useState('');
+  const [issue, setIssue] = useState('');
 
   const history = useHistory();
 
@@ -99,6 +100,7 @@ const Orders = () => {
     setOrderNumber(tableData.row.original.orderNumber);
     setOrderTracking(tableData.row.original.trackingNumber);
     setUnifyState(tableData.row.original.status);
+    setIssue(tableData.row.original.statusInc);
     setModal(true);
   };
 
@@ -107,13 +109,14 @@ const Orders = () => {
     setModalDate(true);
   };
 
-  const handleClickTicket = (e, tableData) => {
+  const handleClickTicket = (e, row) => {
     e.preventDefault();
-    console.log(tableData.row.original.orderId);
-    setOrderId(tableData.row.original.orderId);
-    setOrderNumber(tableData.row.original.orderNumber);
-    setOrderTracking(tableData.row.original.trackingNumber);
-    setUnifyState(tableData.row.original.status);
+    console.log(row.original);
+    setOrderId(row.original.orderId);
+    setOrderNumber(row.original.orderNumber);
+    setOrderTracking(row.original.trackingNumber);
+    setUnifyState(row.original.status);
+    setModal(false);
     setModalTicket(true);
   };
 
@@ -146,20 +149,29 @@ const Orders = () => {
       Header: 'Incidencia',
       accessor: 'label',
       isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => { e.preventDefault(); handleClickTicket(e, table); }}
-          role="button"
-          className="d-block font-weight-bold font-weight-bold"
-        >
-          <small className="text-secondary-color text-underline">
-            <u>
-              Crear ticket
-            </u>
+      Cell: ({ row }) => {
+        const component = row.original.statusInc && row.original.statusInc.length > 0 ? (
+          <small className={`badge--${row.original.statusInc.replace(' ', '').toLowerCase()} px-4 py-1`}>
+            { row.original.statusInc }
           </small>
-        </a>
-      ),
+        ) : (
+          <a
+            href="#!"
+            onClick={(e) => { e.preventDefault(); handleClickTicket(e, row); }}
+            role="button"
+            className="d-block font-weight-bold font-weight-bold"
+          >
+            <small className="text-secondary-color text-underline">
+              <u>
+                Crear Ticket
+              </u>
+            </small>
+          </a>
+        );
+        return (
+          component
+        );
+      },
     },
     {
       accessor: 'ver',
@@ -240,18 +252,26 @@ const Orders = () => {
         )
         : component}
       <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
-        <OrderDetail id={orderId} tracking={orderTracking} unifyState={unifyState} />
+        <OrderDetail
+          orderNumber={orderNumber}
+          id={orderId}
+          tracking={orderTracking}
+          unifyState={unifyState}
+          issue={issue}
+          handleClickTicket={handleClickTicket}
+        />
       </Modal>
       <Modal showModal={modalDate} size="lg" onClick={(e) => { e.preventDefault(); setModalDate(false); }}>
         <FromToDownloader />
       </Modal>
-      <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
+      <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); getData(); }}>
         <FromTicket
-          orderID={orderId}
+          orderId={orderId}
           orderNumber={orderNumber}
           tracking={orderTracking}
           unifyState={unifyState}
           setModalTicket={setModalTicket}
+          getData={getData}
         />
       </Modal>
     </PageLayout>
