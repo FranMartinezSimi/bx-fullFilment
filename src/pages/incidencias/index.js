@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from 'context/userContex';
+import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/AlertMessage';
@@ -10,6 +11,7 @@ import PageLayout from 'components/Templates/PageLayout';
 
 const Incidencias = () => {
   const { user } = useAuth();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
@@ -61,7 +63,7 @@ const Incidencias = () => {
       Cell: (table) => (
         <a
           href="#!"
-          onClick={(e) => console.log(e, table.row.original)}
+          onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${table.row.original._id}`); }}
           role="button"
           className="font-weight-bold font-weight-bold"
         >
