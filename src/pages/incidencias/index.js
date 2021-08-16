@@ -32,6 +32,15 @@ const Incidencias = () => {
     {
       Header: 'Descripción',
       accessor: 'descTicket',
+      Cell: ({ row }) => {
+        const maxCharacter = row.original.descTicket.length;
+        return (
+          <small>
+            { row.original.descTicket.slice(0, 40) }
+            { maxCharacter >= 40 ? ' ...' : '' }
+          </small>
+        );
+      },
     },
     {
       Header: 'Fecha',
@@ -54,7 +63,7 @@ const Incidencias = () => {
           href="#!"
           onClick={(e) => console.log(e, table.row.original)}
           role="button"
-          className="font-weight-bold font-weight-bold d-none"
+          className="font-weight-bold font-weight-bold"
         >
           <small className="d-block text-complementary-color">
             Ver Más &gt;
