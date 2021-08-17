@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from 'context/userContex';
+import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/AlertMessage';
@@ -10,6 +11,7 @@ import PageLayout from 'components/Templates/PageLayout';
 
 const Incidencias = () => {
   const { user } = useAuth();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
@@ -32,6 +34,15 @@ const Incidencias = () => {
     {
       Header: 'Descripción',
       accessor: 'descTicket',
+      Cell: ({ row }) => {
+        const maxCharacter = row.original.descTicket.length;
+        return (
+          <small>
+            { row.original.descTicket.slice(0, 40) }
+            { maxCharacter >= 40 ? ' ...' : '' }
+          </small>
+        );
+      },
     },
     {
       Header: 'Fecha',
@@ -52,9 +63,9 @@ const Incidencias = () => {
       Cell: (table) => (
         <a
           href="#!"
-          onClick={(e) => console.log(e, table.row.original)}
+          onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${table.row.original._id}`); }}
           role="button"
-          className="font-weight-bold font-weight-bold d-none"
+          className="font-weight-bold font-weight-bold"
         >
           <small className="d-block text-complementary-color">
             Ver Más &gt;
