@@ -18,7 +18,7 @@ const App = () => {
     const userKeyclockData = JSON.parse(userKeyclock);
     const TOKEN = userKeyclockData.access_token;
     const USER_DATA = jwt(TOKEN);
-    resolutor = USER_DATA.realm_access.roles.some((item) => item === 'default-roles-fulfillment');
+    resolutor = USER_DATA.realm_access.roles.some((item) => item === 'fulfillment-resolutor');
   }
   return (
     <HelmetProvider>
