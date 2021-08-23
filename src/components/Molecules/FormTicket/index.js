@@ -18,7 +18,7 @@ const FormTicket = ({
     motivo: '',
     descTicket: '',
     clienteID: userActive,
-    archivo: '',
+    archivo: [],
     orderId,
   });
   const [options, setOptions] = useState([]);
