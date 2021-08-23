@@ -1,0 +1,51 @@
+@import "../../../styles/utils/media";
+
+.tableWrapper {
+  border-radius: 12px 12px 0 0;
+  min-height: 400px;
+  padding-bottom: 10px;
+}
+.tableRowHeader th:last-child {
+  .symbol {
+    display: none;
+  }
+}
+// .tableRowHeader th:nth-child(7) {
+//   .symbol {
+//     display: none;
+//   }
+// }
+
+.table {
+  th {
+    @include MQ(M) {
+      padding: 15px !important;
+      font-size: 18px;
+    }
+    text-align: center;
+    white-space: nowrap;
+  }
+  tr {
+    text-align: center;
+    font-size: 14px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.fileItem {
+  padding: 5px 12px;
+  background-color: #f6f6f6;
+  margin: 8px 0;
+  border-radius: 5px;
+  font-size: 10px;
+}
+.fileSize {
+  color: #3363FF;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+}

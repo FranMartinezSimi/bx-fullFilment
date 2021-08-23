@@ -1,17 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
-// import { useAuth } from 'context/userContex';
-import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
-import MainTable from 'components/Templates/MainTable';
+import ResolutorTable from 'components/Templates/ResolutorTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 
 const Incidencias = () => {
-  // const { user } = useAuth();
-  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
@@ -38,8 +34,8 @@ const Incidencias = () => {
         const maxCharacter = row.original.descTicket.length;
         return (
           <small>
-            { row.original.descTicket.slice(0, 40) }
-            { maxCharacter >= 40 ? ' ...' : '' }
+            { row.original.descTicket.slice(0, 30) }
+            { maxCharacter >= 30 ? ' ...' : '' }
           </small>
         );
       },
@@ -57,22 +53,6 @@ const Incidencias = () => {
         </small>
       ),
     },
-    {
-      accessor: 'ver',
-      isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${table.row.original._id}`); }}
-          role="button"
-          className="font-weight-bold font-weight-bold"
-        >
-          <small className="d-block text-complementary-color">
-            Ver Más &gt;
-          </small>
-        </a>
-      ),
-    },
   ], []);
 
   let component;
@@ -83,18 +63,10 @@ const Incidencias = () => {
     component = <Spinner />;
   }
 
-  // const userData = JSON.parse(user);
-  // console.log(userData);
-  // const userActive = userData.credential.accountId;
-
   useEffect(() => {
-    clientFetch('ticket/v1/ticketera/getTickets', {
+    clientFetch('ticket/v1/ticketera/getAllTickets', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        accountId: 13,
-        rol: 'resolutor',
       },
     })
       .then((issues) => {
@@ -111,10 +83,10 @@ const Incidencias = () => {
       <PageTitle title="Lista de tickets con incidencias" className="mb-5" />
       {list && !loading
         ? (
-          <MainTable
+          <ResolutorTable
             columns={columns}
             data={data}
-            noFilters
+            // noFilters
           />
         )
         : component}

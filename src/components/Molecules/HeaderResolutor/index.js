@@ -33,7 +33,6 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const signOut = (e) => {
     e.preventDefault();
     logOut();
-    console.log('logOut');
   };
   return (
     <header className={styles.header}>
