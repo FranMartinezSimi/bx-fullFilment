@@ -86,12 +86,12 @@ const FormTicket = ({
         console.log(data);
         setTicketNumber(data._id);
         setTicketCreated(true);
-        setLoading(true);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
         setFetchError(true);
-        setLoading(true);
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -151,7 +151,6 @@ const FormTicket = ({
               className="btn btn-secondary fs-5 px-5"
               text="Aceptar"
               onClick={reset}
-              loading={loading}
             />
           </li>
         </ul>
@@ -175,7 +174,7 @@ const FormTicket = ({
                     onChange={handleChange}
                     name="motivo"
                   >
-                    <option value="">Selecciona la opción del motivo</option>
+                    <option value="" disabled>Selecciona la opción del motivo</option>
                     {options.map((item) => (
                       <option value={item.motivo} key={item._id}>{item.motivo}</option>
                     ))}
@@ -220,6 +219,7 @@ const FormTicket = ({
                       className="btn btn-secondary fs-5 px-5"
                       text="Crear"
                       submit
+                      loading={loading}
                     />
                   </li>
                 </ul>
