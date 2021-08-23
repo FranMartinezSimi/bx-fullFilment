@@ -89,7 +89,7 @@ const IssueDetail = () => {
                 <p className="py-4">
                   {ticket.descTicket}
                 </p>
-                {ticket.archivo && (
+                {ticket.archivo.length > 0 && (
                 <ul>
                   <li>
                     <p className="fs-5 mb-4">Archivos Adjuntos</p>
