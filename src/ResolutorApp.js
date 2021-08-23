@@ -5,7 +5,8 @@ import {
   Route,
 } from 'react-router-dom';
 import ErrorPage from 'pages/404';
-import Home from './pages/home-resolutor';
+import Home from './pages/resolutor/home';
+import Issues from './pages/resolutor/incidencias';
 import Layout from './components/Templates/LayoutResolutor';
 import './styles/main.scss';
 
@@ -16,10 +17,11 @@ const UnauthenticatedApp = () => (
         <Route exact path="/">
           <Home />
         </Route>
+        <Route exact path="/incidencias">
+          <Issues />
+        </Route>
         <Route exact path="*">
-          <div style={{ background: '#EAF8FF', minHeight: '100vh' }}>
-            <ErrorPage />
-          </div>
+          <ErrorPage />
         </Route>
       </Switch>
     </Layout>
