@@ -22,6 +22,7 @@ const FormTicket = ({
     orderId,
   });
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
   const [ticketNumber, setTicketNumber] = useState('');
@@ -74,7 +75,7 @@ const FormTicket = ({
     if (form.motivo?.trim().length < 1 || form.descTicket?.trim().length < 1) {
       return;
     }
-
+    setLoading(true);
     clientFetch('ticket/v1/ticketera/addTicket', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -85,10 +86,12 @@ const FormTicket = ({
         console.log(data);
         setTicketNumber(data._id);
         setTicketCreated(true);
+        setLoading(true);
       })
       .catch((err) => {
         console.log(err);
         setFetchError(true);
+        setLoading(true);
       });
   };
   useEffect(() => {
@@ -148,6 +151,7 @@ const FormTicket = ({
               className="btn btn-secondary fs-5 px-5"
               text="Aceptar"
               onClick={reset}
+              loading={loading}
             />
           </li>
         </ul>
