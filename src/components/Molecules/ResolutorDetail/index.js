@@ -3,13 +3,14 @@ import clientFetch from 'lib/client-fetch';
 
 import DropZone from 'components/Molecules/DropZone';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
+import arrowDown from 'assets/brand/arrow-down.svg';
 import Button from 'components/Atoms/Button';
 import Modal from 'components/Templates/Modal';
 import styles from './styles.module.scss';
 
 const list = ['Abierto', 'En Proceso', 'Cerrado'];
 
-const ResolutorDetail = ({ detailData }) => {
+const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
@@ -31,12 +32,10 @@ const ResolutorDetail = ({ detailData }) => {
   };
   const handleDropDown = (e) => {
     e.preventDefault();
-    console.log('funca', e);
     setDropDown(!dropDown);
   };
   const handleChangeTicketState = (e, item) => {
     e.preventDefault();
-    console.log('funca', item);
     setForm((statusState) => ({
       ...statusState,
       status: item,
@@ -69,6 +68,9 @@ const ResolutorDetail = ({ detailData }) => {
       .then((data) => {
         console.log(data);
         setLoading(false);
+        setModalTicket(false);
+        setShowSlideNav(false);
+        getData();
       })
       .catch((err) => {
         console.log(err);
@@ -110,6 +112,7 @@ const ResolutorDetail = ({ detailData }) => {
                   <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-1`}>
                     { form.status }
                   </small>
+                  <span className="ms-2"><img src={arrowDown} alt="open" /></span>
                 </a>
                 <ul
                   className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
@@ -168,6 +171,7 @@ const ResolutorDetail = ({ detailData }) => {
                   placeholder="Agrega un comentario"
                   name="comentario"
                   onChange={handleChange}
+                  value={form.comentario}
                 />
                 {error.comentario && (<span className="text-danger">Debes completar este campo para continuar</span>)}
               </label>
