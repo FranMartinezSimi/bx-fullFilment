@@ -79,8 +79,7 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
       },
       body: form,
     })
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setLoading(false);
         setModalTicket(false);
         setShowSlideNav(false);

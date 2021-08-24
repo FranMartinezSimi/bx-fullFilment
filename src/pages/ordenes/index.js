@@ -111,7 +111,6 @@ const Orders = () => {
 
   const handleClickTicket = (e, row) => {
     e.preventDefault();
-    console.log(row.original);
     setOrderId(row.original.orderId);
     setOrderNumber(row.original.orderNumber);
     setOrderTracking(row.original.trackingNumber);

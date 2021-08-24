@@ -57,7 +57,6 @@ const homeResolutor = () => {
       },
     })
       .then((dashData) => {
-        console.log(dashData);
         const statistics = dashData.totales;
         setTotalStatisticsData([
           {

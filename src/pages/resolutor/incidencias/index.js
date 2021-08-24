@@ -91,7 +91,6 @@ const Incidencias = () => {
       .then((issues) => {
         setLoading(false);
         setList(issues);
-        console.log(issues);
       })
       .catch(() => {
         setError(true);

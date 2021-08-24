@@ -48,7 +48,6 @@ const GlobalFilter = ({
   const handleClickFilter = (e) => {
     e.preventDefault();
     getDataByDate(startDate, endDate);
-    console.log('funca');
   };
   const onChange = useAsyncDebounce((targetValue) => {
     setGlobalFilter(targetValue.trim() || undefined);
