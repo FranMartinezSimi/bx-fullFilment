@@ -174,7 +174,7 @@ const FormTicket = ({
                     onChange={handleChange}
                     name="motivo"
                   >
-                    <option value="" disabled>Selecciona la opción del motivo</option>
+                    <option value="">Selecciona la opción del motivo</option>
                     {options.map((item) => (
                       <option value={item.motivo} key={item._id}>{item.motivo}</option>
                     ))}
