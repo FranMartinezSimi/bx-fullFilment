@@ -14,6 +14,7 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
+  const [responseError, setResponseError] = useState(false);
   const [form, setForm] = useState(null);
   const [error, setError] = useState({
     comentario: false,
@@ -40,6 +41,19 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
       ...statusState,
       status: item,
     }));
+
+    // clientFetch('ticket/v1/ticketera/updateTicket', {
+    //   headers: {
+    //     apikey: process.env.REACT_APP_API_KEY_KONG,
+    //   },
+    //   body: form,
+    // })
+    //   .then((data) => {
+    //     setForm(data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
   const handleClickConfirm = (e) => {
     e.preventDefault();
@@ -75,6 +89,7 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
+        setResponseError(true);
       });
   };
   useEffect(() => {
@@ -193,28 +208,46 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
             </div>
           </form>
           <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
-            <div className="px-4 text-center">
-              <img src="/errorgloboalert.png" alt="aleta" />
-              <h4 style={{ fontSize: 22 }} className="display-font py-4">Confirmación</h4>
-              <p style={{ fontSize: 16 }} className="py-4">
-                Si envias el comentario a cliente, automaticamente el ticket
-                <br />
-                cambiara de estado ha resuelto, dando por finalizado el ticket.
-                <br />
-                ¿Estas seguro que quieres enviar el comentario?
-              </p>
-              <Button
-                className="btn btn-complementary fs-5 px-5 mb-5 me-4"
-                text="No"
-                onClick={(e) => { e.preventDefault(); setModalTicket(false); }}
-              />
-              <Button
-                className="btn btn-secondary fs-5 px-5 mb-5"
-                text="Si"
-                loading={loading}
-                onClick={handleSubmit}
-              />
-            </div>
+            {responseError ? (
+              <div className="px-4 text-center">
+                <img src="/errorgloboalert.png" alt="aleta" />
+                <p style={{ fontSize: 16 }} className="py-4">
+                  ¡Se ha producido un error de comunicación con los
+                  <br />
+                  servidores, vuelve a intentarlo!
+                </p>
+                <Button
+                  className="btn btn-complementary fs-5 px-5 mb-5 me-4"
+                  text="volver"
+                  onClick={(e) => {
+                    e.preventDefault(); setResponseError(false); setModalTicket(false);
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="px-4 text-center">
+                <img src="/errorgloboalert.png" alt="aleta" />
+                <h4 style={{ fontSize: 22 }} className="display-font py-4">Confirmación</h4>
+                <p style={{ fontSize: 16 }} className="py-4">
+                  Si envias el comentario a cliente, automaticamente el ticket
+                  <br />
+                  cambiara de estado ha resuelto, dando por finalizado el ticket.
+                  <br />
+                  ¿Estas seguro que quieres enviar el comentario?
+                </p>
+                <Button
+                  className="btn btn-complementary fs-5 px-5 mb-5 me-4"
+                  text="No"
+                  onClick={(e) => { e.preventDefault(); setModalTicket(false); }}
+                />
+                <Button
+                  className="btn btn-secondary fs-5 px-5 mb-5"
+                  text="Si"
+                  loading={loading}
+                  onClick={handleSubmit}
+                />
+              </div>
+            )}
           </Modal>
         </>
       ) : (

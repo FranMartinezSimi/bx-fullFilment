@@ -55,7 +55,10 @@ const GlobalFilter = ({
           <ul className="d-flex justify-content-md-end align-items-center">
             <li>
               <a href="#!" onClick={handleClickDropDown} className="position-relative">
-                <ul className="d-flex align-items-center bg-white px-4" style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}>
+                <ul
+                  className="d-flex align-items-center bg-white px-4"
+                  style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}
+                >
                   <li>
                     <img src={downloadArrow} alt="download" width="14" />
                   </li>
@@ -72,7 +75,7 @@ const GlobalFilter = ({
               <ul
                 className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
                 style={{ width: 190, borderRadius: 15 }}
-                onBlur={() => setDropDown(false)}
+                onMouseLeave={() => setDropDown(false)}
               >
                 {list && list.map((item) => (
                   <li key={item} className="text-center">
