@@ -136,17 +136,21 @@ const IssueDetail = () => {
                     </ul>
                   </div>
                 ) : null}
-                <p>
-                  ¿Estas conforme con la resolución de tu ticket?,
-                  si no estas conforme puedes volver a crear un ticket de incidencia.
-                </p>
-                <div className="text-end">
-                  <Button
-                    className="btn btn-secondary px-4"
-                    text="Crear Ticket"
-                    onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
-                  />
-                </div>
+                {ticket.status === 'Cerrado' && (
+                  <>
+                    <p>
+                      ¿Estas conforme con la resolución de tu ticket?,
+                      si no estas conforme puedes volver a crear un ticket de incidencia.
+                    </p>
+                    <div className="text-end">
+                      <Button
+                        className="btn btn-secondary px-4"
+                        text="Crear Ticket"
+                        onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>

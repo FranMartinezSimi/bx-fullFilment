@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import clientFetch from 'lib/client-fetch';
+
 import PageLayout from 'components/Templates/PageLayout';
-// import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import Chart from 'react-apexcharts';
 
 const homeResolutor = () => {
+  const [statisticsData, setTotalStatisticsData] = useState([]);
   const [data] = useState({
     series: [{
       name: 'Desktops',
@@ -44,28 +46,45 @@ const homeResolutor = () => {
       },
     },
   });
-  const items = [
-    {
-      img: '/boxOpenIcon.png',
-      number: 1230,
-      state: 'Abiertos',
-    },
-    {
-      img: '/boxWarningIcon.png',
-      number: 85,
-      state: 'En proceso',
-    },
-    {
-      img: '/boxClosedIcon.png',
-      number: 745,
-      state: 'Resueltos',
-    },
-    {
-      img: '/boxInfoIcon.png',
-      number: 2010,
-      state: 'Total',
-    },
-  ];
+  // const [items] = useState([]);
+  const chart = () => {
+    clientFetch('ticket/v1/dashboard/getDashboard', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+    })
+      .then((dashData) => {
+        const statistics = dashData.totales;
+        setTotalStatisticsData([
+          {
+            img: '/boxOpenIcon.png',
+            number: statistics.abiertos,
+            state: 'Abiertos',
+          },
+          {
+            img: '/boxWarningIcon.png',
+            number: statistics.proceso,
+            state: 'En proceso',
+          },
+          {
+            img: '/boxClosedIcon.png',
+            number: statistics.resueltos,
+            state: 'Resueltos',
+          },
+          {
+            img: '/boxInfoIcon.png',
+            number: statistics.total,
+            state: 'Total',
+          },
+        ]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    chart();
+  }, []);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
       <div className="container">
@@ -76,7 +95,7 @@ const homeResolutor = () => {
             >
               <h4 className="display-font mb-4">Estadísticas de incidencias</h4>
               <ul className="d-flex justify-content-around mb-5">
-                {items.map((item) => (
+                {statisticsData.length > 0 && statisticsData.map((item) => (
                   <li key={item.state}>
                     <div className="item d-flex align-items-center">
                       <div className="me-3">
