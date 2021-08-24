@@ -62,8 +62,7 @@ const Incidencias = () => {
   } else {
     component = <Spinner />;
   }
-
-  useEffect(() => {
+  const getData = () => {
     clientFetch('ticket/v1/ticketera/getAllTickets', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -77,6 +76,10 @@ const Incidencias = () => {
         setError(true);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
   return (
     <PageLayout title="Lista de tickets con incidencias">
@@ -86,7 +89,7 @@ const Incidencias = () => {
           <ResolutorTable
             columns={columns}
             data={data}
-            // noFilters
+            getData={getData}
           />
         )
         : component}

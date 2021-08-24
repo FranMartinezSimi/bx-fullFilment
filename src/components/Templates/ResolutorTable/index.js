@@ -34,6 +34,7 @@ function MainTable({
   hadleClickDropDown,
   update,
   noFilters,
+  getData,
 }) {
   const [showSlideNav, setShowSlideNav] = useState(false);
   const [slideNavData, setSlideNavData] = useState(false);
@@ -91,6 +92,7 @@ function MainTable({
           getExportFileBlob={getExportFileBlob}
           exportData={exportData}
           setFilter={setFilter}
+          getData={getData}
         />
       )}
 
@@ -192,6 +194,8 @@ function MainTable({
       >
         <ResolutorDetail
           detailData={slideNavData}
+          getData={getData}
+          setShowSlideNav={setShowSlideNav}
         />
       </ContextualMenuRight>
     </>
