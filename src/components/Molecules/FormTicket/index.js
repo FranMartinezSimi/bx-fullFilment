@@ -84,7 +84,7 @@ const FormTicket = ({
     })
       .then((data) => {
         console.log(data);
-        setTicketNumber(data._id);
+        setTicketNumber(data.numTicket);
         setTicketCreated(true);
         setLoading(false);
       })

@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { useAsyncDebounce } from 'react-table';
+
+import DatePicker from 'react-datepicker';
+import Button from 'components/Atoms/Button';
 import zoom from 'assets/brand/zoom.svg';
+import calendar from 'assets/brand/calendar.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
-import downloadArrow from 'assets/brand/downloadarrow.svg';
 import PropTypes from 'prop-types';
+import styles from './styles.module.scss';
 
 const list = ['Estado del ticket', 'Abierto', 'Proceso', 'Cerrado'];
 const GlobalFilter = ({
@@ -12,16 +16,40 @@ const GlobalFilter = ({
   setGlobalFilter,
   update,
   setFilter,
+  getDataByDate,
 }) => {
   const count = preGlobalFilteredRows.length;
-  const [value, setValue] = useState(globalFilter);
-  const [dropDown, setDropDown] = useState(false);
+  const [ticketValue, setTicketValue] = useState(globalFilter);
+  const [dropDownState, setDropDownState] = useState(false);
+  const [dropDownDate, setDropDownDate] = useState(false);
 
-  const handleClickDropDown = (e) => {
+  const DATE = new Date();
+  const [startDate, setStartDate] = useState(DATE);
+  const [endDate, setEndDate] = useState(DATE);
+
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+    <button
+      type="button"
+      className={`form-control text-start ${styles.input}`}
+      onClick={onClick}
+      ref={ref}
+    >
+      {value}
+    </button>
+  ));
+  const handleClickDropDownState = (e) => {
     e.preventDefault();
-    setDropDown(!dropDown);
+    setDropDownState(!dropDownState);
   };
-
+  const handleClickDropDownDate = (e) => {
+    e.preventDefault();
+    setDropDownDate(!dropDownDate);
+  };
+  const handleClickFilter = (e) => {
+    e.preventDefault();
+    getDataByDate(startDate, endDate);
+    console.log('funca');
+  };
   const onChange = useAsyncDebounce((targetValue) => {
     setGlobalFilter(targetValue.trim() || undefined);
   }, 200);
@@ -33,11 +61,11 @@ const GlobalFilter = ({
           <ul className="d-md-flex align-items-center">
             <li className="me-4 position-relative">
               <input
-                value={value || ''}
+                value={ticketValue || ''}
                 className="form-control px-4"
                 style={{ borderRadius: '50rem', border: '1px solid #1A6F99' }}
                 onChange={(e) => {
-                  setValue(e.target.value);
+                  setTicketValue(e.target.value);
                   onChange(e.target.value);
                 }}
                 placeholder={`Buscar en ${count} items`}
@@ -53,35 +81,96 @@ const GlobalFilter = ({
         </div>
         <div className="col-md-6">
           <ul className="d-flex justify-content-md-end align-items-center">
-            <li>
-              <a href="#!" onClick={handleClickDropDown} className="position-relative">
-                <ul className="d-flex align-items-center bg-white px-4" style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}>
+            <li className="me-4">
+              <a href="#!" onClick={handleClickDropDownDate} className="position-relative">
+                <ul
+                  className="d-flex align-items-center bg-white px-4"
+                  style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}
+                >
                   <li>
-                    <img src={downloadArrow} alt="download" width="14" />
+                    <img src={calendar} alt="download" width="14" />
+                  </li>
+                  <li className="mx-2">
+                    <span>
+                      seleccionar fecha
+                    </span>
+                  </li>
+                </ul>
+              </a>
+              <ul
+                className={`${dropDownDate ? 'd-flex' : 'd-none'} bg-white shadow position-absolute flex-wrap py-4 px-5`}
+                style={{ borderRadius: 15 }}
+                onMouseLeave={() => setDropDownDate(false)}
+              >
+                <li className={`${styles.item} me-5`}>
+                  <p>
+                    Fecha de inicio
+                  </p>
+                  <DatePicker
+                    dateFormat="dd/MM/yyyy"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    customInput={<ExampleCustomInput />}
+                    maxDate={Date.now()}
+                  />
+                </li>
+                <li className={styles.item}>
+                  <p>
+                    Fecha final
+                  </p>
+                  <DatePicker
+                    dateFormat="dd/MM/yyyy"
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    maxDate={Date.now()}
+                    customInput={<ExampleCustomInput />}
+                  />
+                </li>
+                <li className={`${styles.itemLast} mt-3`}>
+                  <Button
+                    className="btn btn-secondary fs-5 px-5"
+                    text="filtrar"
+                    onClick={handleClickFilter}
+                  />
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#!" onClick={handleClickDropDownState} className="position-relative">
+                <ul
+                  className="d-flex align-items-center bg-white px-4"
+                  style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}
+                >
+                  <li>
+                    <img src={arrowDown} alt="download" width="14" />
                   </li>
                   <li className="mx-2">
                     <span>
                       Estado del ticket
                     </span>
                   </li>
-                  <li>
-                    <img src={arrowDown} alt="Show" width="12" />
-                  </li>
                 </ul>
               </a>
               <ul
-                className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
+                className={`${dropDownState ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
                 style={{ width: 190, borderRadius: 15 }}
-                onBlur={() => setDropDown(false)}
+                onMouseLeave={() => setDropDownState(false)}
               >
                 {list && list.map((item) => (
                   <li key={item} className="text-center">
                     {item === 'Estado del ticket' ? (
-                      <a className="py-2 d-block" href="#!" onClick={() => { setFilter('status', ''); setDropDown(false); }}>
+                      <a className="py-2 d-block" href="#!" onClick={() => { setFilter('status', ''); setDropDownState(false); }}>
                         Todos
                       </a>
                     ) : (
-                      <a className="py-2 d-block" href="#!" onClick={() => { setFilter('status', item); setDropDown(false); }}>
+                      <a className="py-2 d-block" href="#!" onClick={() => { setFilter('status', item); setDropDownState(false); }}>
                         {item}
                       </a>
                     )}
