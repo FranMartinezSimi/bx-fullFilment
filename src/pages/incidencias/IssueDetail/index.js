@@ -80,7 +80,7 @@ const IssueDetail = () => {
             <hr className="my-4" />
             <div className="row">
               <div className="col-lg-6 pe-5">
-                <h2 style={{ fontSize: 22, fontWeight: 400 }}>Nombre del motivo</h2>
+                <h2 style={{ fontSize: 22, fontWeight: 400 }}>{ticket.motivo}</h2>
                 <p>
                   Fecha:
                   {' '}

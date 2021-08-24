@@ -21,7 +21,7 @@ const Incidencias = () => {
     },
     {
       Header: 'Nº ticket',
-      accessor: '_id',
+      accessor: 'numTicket',
     },
     {
       Header: 'Motivo',
@@ -77,6 +77,27 @@ const Incidencias = () => {
         setLoading(false);
       });
   };
+  const getDataByDate = (startDate, endDate) => {
+    setLoading(true);
+    clientFetch('ticket/v1/ticketera/getTicketsDates', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        startDate,
+        endDate,
+      },
+    })
+      .then((issues) => {
+        setLoading(false);
+        setList(issues);
+        console.log(issues);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     getData();
@@ -90,6 +111,7 @@ const Incidencias = () => {
             columns={columns}
             data={data}
             getData={getData}
+            getDataByDate={getDataByDate}
           />
         )
         : component}

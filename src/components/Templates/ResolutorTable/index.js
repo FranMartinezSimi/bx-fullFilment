@@ -35,6 +35,7 @@ function MainTable({
   update,
   noFilters,
   getData,
+  getDataByDate,
 }) {
   const [showSlideNav, setShowSlideNav] = useState(false);
   const [slideNavData, setSlideNavData] = useState(false);
@@ -93,6 +94,7 @@ function MainTable({
           exportData={exportData}
           setFilter={setFilter}
           getData={getData}
+          getDataByDate={getDataByDate}
         />
       )}
 

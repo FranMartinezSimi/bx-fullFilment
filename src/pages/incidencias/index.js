@@ -25,7 +25,7 @@ const Incidencias = () => {
     },
     {
       Header: 'Nº ticket',
-      accessor: '_id',
+      accessor: 'numTicket',
     },
     {
       Header: 'Motivo',
