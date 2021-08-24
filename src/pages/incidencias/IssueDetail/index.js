@@ -17,6 +17,7 @@ import styles from './styles.module.scss';
 const IssueDetail = () => {
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
+  const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
@@ -38,7 +39,7 @@ const IssueDetail = () => {
       },
     })
       .then((data) => {
-        console.log(data);
+        setTitle(data.numTicket);
         setTicket(data);
         setLoading(false);
       })
@@ -48,8 +49,8 @@ const IssueDetail = () => {
       });
   }, []);
   return (
-    <PageLayout title={`Ticket ${id}`}>
-      <PageTitle title={`Número del Ticket: ${id}`} className="mb-5" />
+    <PageLayout title={`Ticket ${title}`}>
+      <PageTitle title={`Número del Ticket: ${title}`} className="mb-5" />
       <Card>
         {ticket != null && !loading ? (
           <>

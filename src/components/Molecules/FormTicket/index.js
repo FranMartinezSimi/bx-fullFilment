@@ -83,7 +83,6 @@ const FormTicket = ({
       body: form,
     })
       .then((data) => {
-        console.log(data);
         setTicketNumber(data.numTicket);
         setTicketCreated(true);
         setLoading(false);

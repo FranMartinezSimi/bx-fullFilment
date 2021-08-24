@@ -74,7 +74,6 @@ function MainTable({
   );
 
   const rowClick = (rowData) => {
-    console.log(rowData);
     setSlideNavData(rowData);
     setShowSlideNav(true);
   };
