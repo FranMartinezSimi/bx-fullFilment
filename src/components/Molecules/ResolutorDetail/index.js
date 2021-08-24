@@ -4,6 +4,7 @@ import clientFetch from 'lib/client-fetch';
 import DropZone from 'components/Molecules/DropZone';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import Button from 'components/Atoms/Button';
+import Modal from 'components/Templates/Modal';
 import styles from './styles.module.scss';
 
 const list = ['Abierto', 'En Proceso', 'Cerrado'];
@@ -11,6 +12,7 @@ const list = ['Abierto', 'En Proceso', 'Cerrado'];
 const ResolutorDetail = ({ detailData }) => {
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [modalTicket, setModalTicket] = useState(false);
   const [form, setForm] = useState(null);
   const [error, setError] = useState({
     comentario: false,
@@ -40,20 +42,23 @@ const ResolutorDetail = ({ detailData }) => {
       status: item,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleClickConfirm = (e) => {
     e.preventDefault();
-
     if (form.comentario === '') {
       setError((state) => ({
         ...state,
         comentario: true,
       }));
-      console.log('error');
     }
 
     if (form.comentario?.trim().length < 1) {
       return;
     }
+    setModalTicket(true);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     setLoading(true);
     clientFetch('ticket/v1/ticketera/updateTicket', {
       headers: {
@@ -151,7 +156,7 @@ const ResolutorDetail = ({ detailData }) => {
             </li>
           </ul>
           )}
-          <form className="py-5" onSubmit={handleSubmit}>
+          <form className="py-5">
             <div className="form-group mb-5">
               <label htmlFor="textArea" className="w-100">
                 Comentario
@@ -179,10 +184,34 @@ const ResolutorDetail = ({ detailData }) => {
                 className="btn btn-secondary fs-5 px-5"
                 text="Enviar"
                 submit
-                loading={loading}
+                onClick={handleClickConfirm}
               />
             </div>
           </form>
+          <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
+            <div className="px-4 text-center">
+              <img src="/errorgloboalert.png" alt="aleta" />
+              <h4 style={{ fontSize: 22 }} className="display-font py-4">Confirmación</h4>
+              <p style={{ fontSize: 16 }} className="py-4">
+                Si envias el comentario a cliente, automaticamente el ticket
+                <br />
+                cambiara de estado ha resuelto, dando por finalizado el ticket.
+                <br />
+                ¿Estas seguro que quieres enviar el comentario?
+              </p>
+              <Button
+                className="btn btn-complementary fs-5 px-5 mb-5 me-4"
+                text="No"
+                onClick={(e) => { e.preventDefault(); setModalTicket(false); }}
+              />
+              <Button
+                className="btn btn-secondary fs-5 px-5 mb-5"
+                text="Si"
+                loading={loading}
+                onClick={handleSubmit}
+              />
+            </div>
+          </Modal>
         </>
       ) : (
         <p>funca</p>
