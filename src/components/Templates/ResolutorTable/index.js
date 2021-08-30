@@ -1,15 +1,17 @@
-import React from 'react';
+import { useState } from 'react';
 import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
 import PropTypes from 'prop-types';
 import { useExportData } from 'react-table-plugins';
 import Papa from 'papaparse';
-import GlobalFilter from '../../Molecules/GlobalFilter';
-import Pagination from '../../Molecules/Pagination';
-import Sort from '../../../assets/brand/sort.svg';
-import SortUp from '../../../assets/brand/sortUp.svg';
-import SortDown from '../../../assets/brand/sortDown.svg';
+import ContextualMenuRight from 'components/Molecules/ContextualMenuRight';
+import GlobalFilter from 'components/Molecules/ResolutorFilter';
+import ResolutorDetail from 'components/Molecules/ResolutorDetail';
+import Pagination from 'components/Molecules/Pagination';
+import Sort from 'assets/brand/sort.svg';
+import SortUp from 'assets/brand/sortUp.svg';
+import SortDown from 'assets/brand/sortDown.svg';
 import styles from './styles.module.scss';
 
 function getExportFileBlob({
@@ -32,7 +34,11 @@ function MainTable({
   hadleClickDropDown,
   update,
   noFilters,
+  getData,
+  getDataByDate,
 }) {
+  const [showSlideNav, setShowSlideNav] = useState(false);
+  const [slideNavData, setSlideNavData] = useState(false);
   const {
     getTableProps,
     getTableBodyProps,
@@ -51,6 +57,7 @@ function MainTable({
     setGlobalFilter,
     setPageSize,
     exportData,
+    setFilter,
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -66,8 +73,30 @@ function MainTable({
     useExportData,
   );
 
+  const rowClick = (rowData) => {
+    setSlideNavData(rowData);
+    setShowSlideNav(true);
+  };
+
   return (
     <>
+      {!noFilters && (
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+          handleClick={handleClick}
+          handleClickUpdate={handleClickUpdate}
+          hadleClickDropDown={hadleClickDropDown}
+          update={update}
+          getExportFileBlob={getExportFileBlob}
+          exportData={exportData}
+          setFilter={setFilter}
+          getData={getData}
+          getDataByDate={getDataByDate}
+        />
+      )}
+
       <pre className="d-none">
         <code>
           {JSON.stringify(
@@ -81,19 +110,6 @@ function MainTable({
         </code>
       </pre>
 
-      {!noFilters && (
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-        handleClick={handleClick}
-        handleClickUpdate={handleClickUpdate}
-        hadleClickDropDown={hadleClickDropDown}
-        update={update}
-        getExportFileBlob={getExportFileBlob}
-        exportData={exportData}
-      />
-      )}
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
         <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
           <thead style={{ background: '#99B1FF' }}>
@@ -132,7 +148,11 @@ function MainTable({
                 {page.map((row) => {
                   prepareRow(row);
                   return (
-                    <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
+                    <tr
+                      style={{ whiteSpace: 'nowrap' }}
+                      {...row.getRowProps()}
+                      onClick={() => rowClick(row.original)}
+                    >
                       {row.cells.map((cell) => (
                         <td {...cell.getCellProps()}>
                           {cell.render('Cell')}
@@ -152,21 +172,33 @@ function MainTable({
           </tbody>
         </table>
       </div>
+
       {pageCount > 1 && (
-      <Pagination
-        pageIndex={pageIndex}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        canNextPage={canNextPage}
-        gotoPage={gotoPage}
-        pageCount={pageCount}
-        pageOptions={pageOptions}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        preGlobalFilteredRows={preGlobalFilteredRows}
-      />
+        <Pagination
+          pageIndex={pageIndex}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          gotoPage={gotoPage}
+          pageCount={pageCount}
+          pageOptions={pageOptions}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          preGlobalFilteredRows={preGlobalFilteredRows}
+        />
       )}
+
+      <ContextualMenuRight
+        menuContextOpen={showSlideNav}
+        handleClick={() => setShowSlideNav(false)}
+      >
+        <ResolutorDetail
+          detailData={slideNavData}
+          getData={getData}
+          setShowSlideNav={setShowSlideNav}
+        />
+      </ContextualMenuRight>
     </>
   );
 }

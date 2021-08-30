@@ -2,8 +2,10 @@ import React from 'react';
 
 import { HelmetProvider } from 'react-helmet-async';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
+import jwt from 'jwt-decode';
 import { useAuth } from './context/userContex';
 import UnLoggedUserApp from './UnLoggedUserApp';
+import ResolutorApp from './ResolutorApp';
 import AuthenticatedApp from './AuthenticatedApp';
 import UnauthenticatedApp from './UnAuthenticatedApp';
 import './styles/main.scss';
@@ -11,11 +13,19 @@ import './styles/main.scss';
 const App = () => {
   const { userKeyclock } = useKeyclockAuth();
   const { user } = useAuth();
+  let resolutor;
+  if (userKeyclock) {
+    const userKeyclockData = JSON.parse(userKeyclock);
+    const TOKEN = userKeyclockData.access_token;
+    const USER_DATA = jwt(TOKEN);
+    resolutor = USER_DATA.realm_access.roles.some((item) => item === 'fulfillment-resolutor');
+  }
   return (
     <HelmetProvider>
       {!userKeyclock && <UnLoggedUserApp />}
-      {userKeyclock && !user && <UnauthenticatedApp />}
-      {userKeyclock && user && <AuthenticatedApp />}
+      {userKeyclock && resolutor && !user && <ResolutorApp />}
+      {userKeyclock && !resolutor && !user && <UnauthenticatedApp />}
+      {userKeyclock && !resolutor && user && <AuthenticatedApp />}
     </HelmetProvider>
   );
 };

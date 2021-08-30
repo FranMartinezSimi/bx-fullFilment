@@ -10,6 +10,8 @@ import Orders from './pages/ordenes';
 import Onboarding from './pages/onboarding';
 import Errors from './pages/ordenes/subir-ordenes/UpdatedWidthErrors';
 import Inventory from './pages/inventarios';
+import Issues from './pages/incidencias';
+import IssueDetail from './pages/incidencias/IssueDetail';
 import UpdateOrders from './pages/ordenes/subir-ordenes';
 
 import './styles/main.scss';
@@ -43,6 +45,12 @@ const App = () => {
           </Route>
           <Route exact path="/inventario">
             <Inventory />
+          </Route>
+          <Route exact path="/incidencias">
+            <Issues />
+          </Route>
+          <Route path="/incidencia/:id">
+            <IssueDetail />
           </Route>
           <Route exact path="/ordenes/subir-ordenes">
             <UpdateOrders />

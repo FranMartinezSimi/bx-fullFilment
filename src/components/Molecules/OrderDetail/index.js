@@ -10,9 +10,43 @@ import Calendar from '../../../assets/brand/calendar.svg';
 import Flag from '../../../assets/brand/flag.svg';
 import Checkmap from '../../../assets/brand/checkmap.svg';
 
-const OrderDetail = ({ id, tracking, unifyState }) => {
+const OrderDetail = ({
+  orderNumber, id, tracking, unifyState, issue, handleClickTicket,
+}) => {
   const [loading, setLoading] = useState(true);
   const [orderData, setOrderData] = useState({});
+
+  const tableData = {
+    original: {
+      orderId: id,
+      orderNumber,
+      trackingNumber: tracking,
+      status: unifyState,
+      statusInc: issue,
+    },
+  };
+
+  const component = issue.length > 1 ? (
+    <p className="my-4">
+      Tienes un ticket en estado
+      <span className={`badge--${issue.replace(' ', '').toLowerCase()} px-2 py-1 mx-2`}>
+        {issue}
+      </span>
+    </p>
+  ) : (
+    <div className="my-4 px-lg-4">
+      <p className="mx-4 fs-6">¿Tienes algún inconveniente con la orden?, crea un ticket con la incidencia para que un resolutor lo solucione.</p>
+      <div className="text-center pt-3">
+        <a
+          href="!#"
+          className="btn btn-secondary"
+          onClick={(e) => { e.preventDefault(); handleClickTicket(e, tableData); }}
+        >
+          Crear Ticket
+        </a>
+      </div>
+    </div>
+  );
 
   const getData = (order) => {
     clientFetch('order/v1/orders/getOrderDetail', {
@@ -117,6 +151,7 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
                   </tbody>
                 </table>
               </DropDown>
+              {component}
             </div>
           </>
         )}
@@ -124,13 +159,17 @@ const OrderDetail = ({ id, tracking, unifyState }) => {
   );
 };
 OrderDetail.defaultProps = {
+  orderNumber: '',
   unifyState: undefined,
   tracking: undefined,
+  issue: '',
 };
 OrderDetail.propTypes = {
+  orderNumber: PropTypes.string,
   id: PropTypes.string.isRequired,
   tracking: PropTypes.string,
   unifyState: PropTypes.string,
+  issue: PropTypes.string,
 };
 
 export default OrderDetail;

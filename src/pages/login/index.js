@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
+import jwt from 'jwt-decode';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
@@ -65,14 +66,30 @@ const LogIn = () => {
       })
       .then((result) => {
         if (result && result?.access_token) {
-          const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
+          const USER_ACTIVE = window.localStorage.getItem('bxBusinessActiveFulfillment');
           const accessToken = result.access_token;
           const refreshToken = result.refresh_token;
+
+          if (USER_ACTIVE) {
+            const userActiveData = JSON.parse(USER_ACTIVE);
+            const USER_DATA = jwt(accessToken);
+            const { sub } = USER_DATA;
+            const compare = sub === userActiveData.credential.user.sub;
+
+            if (!compare) {
+              setErrorMessage('Usuario no coincide con el recordado');
+              return Promise.reject(new Error('Usuario no coincide con el almacenado en local storage'));
+            }
+          }
+
+          const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
           localStorage.setItem('__access-token__', JSON.stringify(accessToken));
           localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
+
           setUserKeyclock(bxBusinessActiveSession);
           setInvalidUserError(false);
           setLoading(false);
+
           return result;
         }
 
@@ -81,7 +98,9 @@ const LogIn = () => {
       .catch((error) => {
         if (error.status === 401) {
           setErrorMessage('Los datos ingresados son incorrectos');
-        } else {
+        }
+
+        if (error.status >= 500) {
           setErrorMessage('Los servicios no responden...');
         }
         setLoading(false);
