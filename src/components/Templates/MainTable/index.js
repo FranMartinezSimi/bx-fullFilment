@@ -68,67 +68,67 @@ function MainTable({
 
   return (
     <>
-      {page.length > 0 ? (
-        <>
-          <pre className="d-none">
-            <code>
-              {JSON.stringify(
-                {
-                  pageSize,
-                  pageCount,
-                },
-                null,
-                2,
-              )}
-            </code>
-          </pre>
-
-          {!noFilters && (
-            <GlobalFilter
-              preGlobalFilteredRows={preGlobalFilteredRows}
-              globalFilter={state.globalFilter}
-              setGlobalFilter={setGlobalFilter}
-              handleClick={handleClick}
-              handleClickUpdate={handleClickUpdate}
-              hadleClickDropDown={hadleClickDropDown}
-              update={update}
-              getExportFileBlob={getExportFileBlob}
-              exportData={exportData}
-            />
+      <pre className="d-none">
+        <code>
+          {JSON.stringify(
+            {
+              pageSize,
+              pageCount,
+            },
+            null,
+            2,
           )}
-          <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
-            <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
-              <thead style={{ background: '#99B1FF' }}>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
-                    {headerGroup.headers.map((column) => (
-                      <th
-                        className={`display-font ${styles.tableTh}`}
-                        {...column.getHeaderProps(column.getSortByToggleProps())}
-                      >
-                        {column.render('Header')}
-                        {!column.isSorted
-                          ? (
-                            <span className={styles.symbol}>
-                              <img src={Sort} alt="sort" className="ms-2" width="8" />
-                            </span>
-                          )
-                          : (
-                            null
-                          )}
-                        <span>
-                          {column.isSorted
-                            ? column.isSortedDesc
-                              ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10" />)
-                              : (<img src={SortUp} alt="sortUp" className="ms-2" width="10" />)
-                            : ''}
+        </code>
+      </pre>
+
+      {!noFilters && (
+      <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        globalFilter={state.globalFilter}
+        setGlobalFilter={setGlobalFilter}
+        handleClick={handleClick}
+        handleClickUpdate={handleClickUpdate}
+        hadleClickDropDown={hadleClickDropDown}
+        update={update}
+        getExportFileBlob={getExportFileBlob}
+        exportData={exportData}
+      />
+      )}
+      <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
+        <table {...getTableProps()} className={`table table-borderless table-hover mb-0 ${styles.table}`}>
+          <thead style={{ background: '#99B1FF' }}>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className={styles.tableRowHeader}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    className={`display-font ${styles.tableTh}`}
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                  >
+                    {column.render('Header')}
+                    {!column.isSorted
+                      ? (
+                        <span className={styles.symbol}>
+                          <img src={Sort} alt="sort" className="ms-2" width="8" />
                         </span>
-                      </th>
-                    ))}
-                  </tr>
+                      )
+                      : (
+                        null
+                      )}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? (<img src={SortDown} alt="sortDown" className="ms-2" width="10" />)
+                          : (<img src={SortUp} alt="sortUp" className="ms-2" width="10" />)
+                        : ''}
+                    </span>
+                  </th>
                 ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.length > 0 ? (
+              <>
                 {page.map((row) => {
                   prepareRow(row);
                   return (
@@ -141,30 +141,31 @@ function MainTable({
                     </tr>
                   );
                 })}
-              </tbody>
-            </table>
-          </div>
-          {pageCount > 1 && (
-            <Pagination
-              pageIndex={pageIndex}
-              previousPage={previousPage}
-              nextPage={nextPage}
-              canPreviousPage={canPreviousPage}
-              canNextPage={canNextPage}
-              gotoPage={gotoPage}
-              pageCount={pageCount}
-              pageOptions={pageOptions}
-              pageSize={pageSize}
-              setPageSize={setPageSize}
-              preGlobalFilteredRows={preGlobalFilteredRows}
-            />
-          )}
-        </>
-      ) : (
-        <div className="text-center">
-          <img src="/errorpage.png" alt="Contenido no encontrado" data-testid="image" />
-          <p>No se encontraron datos</p>
-        </div>
+              </>
+            ) : (
+              <tr>
+                <td>
+                  <p>No se encontraron datos</p>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {pageCount > 1 && (
+      <Pagination
+        pageIndex={pageIndex}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canPreviousPage={canPreviousPage}
+        canNextPage={canNextPage}
+        gotoPage={gotoPage}
+        pageCount={pageCount}
+        pageOptions={pageOptions}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        preGlobalFilteredRows={preGlobalFilteredRows}
+      />
       )}
     </>
   );

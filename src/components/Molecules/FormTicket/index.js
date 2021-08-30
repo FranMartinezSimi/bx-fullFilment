@@ -22,6 +22,7 @@ const FormTicket = ({
     orderId,
   });
   const [options, setOptions] = useState([]);
+  const [filesData, setFilesData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
@@ -108,6 +109,14 @@ const FormTicket = ({
         }]);
       });
   }, []);
+  useEffect(() => {
+    console.log(filesData);
+    setForm((formState) => ({
+      ...formState,
+      archivo: filesData,
+    }
+    ));
+  }, [filesData]);
   return (
     <>
       {fetchError && (
@@ -201,6 +210,7 @@ const FormTicket = ({
                   boxText="Arrastra tu archivo o selecciona desde tu computadora"
                   title="Carga tu archivo"
                   subTitle="Adjunta la evidencia, puede ser en formato jpg o png (opcional)"
+                  setFilesData={setFilesData}
                 />
               </div>
               <div className="text-center">

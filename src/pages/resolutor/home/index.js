@@ -133,7 +133,7 @@ const homeResolutor = () => {
               ) : <Spinner />}
             </Card>
             <Card
-              className="shadow my-5"
+              className="shadow my-5 d-none"
             >
               <h4 className="display-font">Estado de tus órdenes</h4>
               {statisticsData.length > 0 ? (
