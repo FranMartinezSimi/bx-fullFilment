@@ -31,10 +31,12 @@ const Incidencias = () => {
       Header: 'Descripción',
       accessor: 'descTicket',
       Cell: ({ row }) => {
-        const maxCharacter = row.original.descTicket.length;
+        const maxCharacter = row.original.descTicket ? row.original.descTicket.length : 0;
         return (
           <small>
-            { row.original.descTicket.slice(0, 30) }
+            {row.original.descTicket ? (
+              row.original.descTicket.slice(0, 30)
+            ) : null}
             { maxCharacter >= 30 ? ' ...' : '' }
           </small>
         );
@@ -49,7 +51,7 @@ const Incidencias = () => {
       accessor: 'status',
       Cell: ({ row }) => (
         <small className={`badge--${row.original.status.replace(' ', '').toLowerCase()} px-4 py-1`}>
-          { row.original.status }
+          { row.original.status ? row.original.status : ''}
         </small>
       ),
     },

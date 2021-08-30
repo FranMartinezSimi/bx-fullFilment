@@ -1,16 +1,19 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import plus from 'assets/brand/plus.svg';
 import styles from './styles.module.scss';
 
-const Dropzone = ({ boxText, title, subTitle }) => {
+const Dropzone = ({
+  boxText, title, subTitle, setFilesData,
+}) => {
   const [files, setFiles] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
     setFiles([...files, ...acceptedFiles]);
+    setFilesData([...files, ...acceptedFiles]);
   }, [files]);
 
-  const { getRootProps, getInputProps } = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
 
@@ -23,6 +26,17 @@ const Dropzone = ({ boxText, title, subTitle }) => {
   const removeAll = () => {
     setFiles([]);
   };
+
+  useEffect(() => {
+    const formData = new FormData();
+
+    acceptedFiles.map((file) => {
+      formData.append('assets', file, file.name);
+      return file;
+    });
+
+    // console.log(formData.getAll('assets'));
+  }, [files]);
 
   return (
     <section className="container">
