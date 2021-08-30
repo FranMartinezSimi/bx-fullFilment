@@ -110,7 +110,6 @@ const FormTicket = ({
       });
   }, []);
   useEffect(() => {
-    console.log(filesData);
     setForm((formState) => ({
       ...formState,
       archivo: filesData,
