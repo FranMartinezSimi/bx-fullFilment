@@ -16,6 +16,7 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
   const [modalTicket, setModalTicket] = useState(false);
   const [responseError, setResponseError] = useState(false);
   const [form, setForm] = useState(null);
+  const [comment] = useState(false);
   const [error, setError] = useState({
     comentario: false,
   });
@@ -175,20 +176,27 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
           )}
           <form className="py-5">
             <div className="form-group mb-5">
-              <label htmlFor="textArea" className="w-100">
-                Comentario
-                <span className="text-danger"> *</span>
-                <textarea
-                  className="form-control"
-                  rows="4"
-                  id="textArea"
-                  placeholder="Agrega un comentario"
-                  name="comentario"
-                  onChange={handleChange}
-                  value={form.comentario}
-                />
-                {error.comentario && (<span className="text-danger">Debes completar este campo para continuar</span>)}
-              </label>
+              {comment ? (
+                <label htmlFor="textArea" className="w-100">
+                  Comentario
+                  <span className="text-danger"> *</span>
+                  <textarea
+                    className="form-control"
+                    rows="4"
+                    id="textArea"
+                    placeholder="Agrega un comentario"
+                    name="comentario"
+                    onChange={handleChange}
+                    value={form.comentario}
+                  />
+                  {error.comentario && (<span className="text-danger">Debes completar este campo para continuar</span>)}
+                </label>
+              ) : (
+                <>
+                  <p className="fs-5 mb-4">Comentario</p>
+                  <p>{form.comentario}</p>
+                </>
+              )}
             </div>
             <div className="form-group mb-5 d-none">
               <DropZone
@@ -198,6 +206,12 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
               />
             </div>
             <div className="text-end">
+              <Button
+                className="btn btn-secondary fs-5 px-5"
+                text="Editar comentario"
+                submit
+                // onClick={setComment(true)}
+              />
               <Button
                 className="btn btn-secondary fs-5 px-5"
                 text="Enviar"
