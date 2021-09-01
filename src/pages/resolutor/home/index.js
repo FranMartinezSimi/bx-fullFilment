@@ -10,43 +10,34 @@ import Spinner from 'components/Atoms/Spinner';
 const homeResolutor = () => {
   const history = useHistory();
   const [statisticsData, setTotalStatisticsData] = useState([]);
-  const [data] = useState({
-    series: [{
-      name: 'Desktops',
-      data: [150, 41, 35, 62, 133, 91, 148],
-    }],
+  const [legendData, setLegendData] = useState([]);
+  const [data, setData] = useState({
+    series: [150, 41, 35, 62, 133, 91, 148],
     options: {
-      colors: ['#99B1FF'],
+      colors: ['#FF7E44', '#3363FF', '#155C80', '#2294CC', '#7092FF', '#408D5C', '#2BB9FF'],
+      labels: ['Producto erróneo', 'Producto faltante.', 'Incluir carta', 'Detalle de envío', 'Despacho retrasado', 'Detener envío', 'Cambio de dirección'],
       chart: {
+        type: 'donut',
         height: 350,
-        type: 'line',
         zoom: {
           enabled: false,
         },
-        toolbar: {
-          show: false,
-        },
       },
-      dataLabels: {
-        enabled: false,
+      legend: {
+        show: false,
       },
       stroke: {
-        curve: 'straight',
-        width: 1,
+        show: false,
       },
-      title: {
-        // text: 'Product Trends by Month',
-        align: 'left',
-      },
-      grid: {
-        row: {
-          // colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
-      },
+      // tooltip: {
+      //   custom({
+      //     series, seriesIndex, dataPointIndex,
+      //   }) {
+      //     return `${'<div class="arrow_box">'
+      //       + '<span>'}${series[seriesIndex][dataPointIndex]}</span>`
+      //       + '</div>';
+      //   },
+      // },
     },
   });
   // const [items] = useState([]);
@@ -57,7 +48,9 @@ const homeResolutor = () => {
       },
     })
       .then((dashData) => {
+        console.log(dashData);
         const statistics = dashData.totales;
+        const originalLegend = dashData.chart;
         setTotalStatisticsData([
           {
             img: '/boxOpenIcon.png',
@@ -80,6 +73,32 @@ const homeResolutor = () => {
             state: 'Total',
           },
         ]);
+        setData({
+          series: dashData.chart.series,
+          options: {
+            colors: ['#FF7E44', '#3363FF', '#155C80', '#2294CC', '#7092FF', '#408D5C', '#2BB9FF'],
+            labels: dashData.chart.label,
+            chart: {
+              type: 'donut',
+              height: 350,
+              zoom: {
+                enabled: false,
+              },
+            },
+            legend: {
+              show: false,
+            },
+            stroke: {
+              show: false,
+            },
+          },
+        });
+        const legendFormated = originalLegend.label.map((value, index) => ({
+          img: `/res-ico-${index}`,
+          name: value,
+          value: originalLegend.series[index],
+        }));
+        setLegendData(legendFormated);
       })
       .catch((error) => {
         console.log(error);
@@ -133,16 +152,44 @@ const homeResolutor = () => {
               ) : <Spinner />}
             </Card>
             <Card
-              className="shadow my-5 d-none"
+              className="shadow my-5"
             >
               <h4 className="display-font">Estado de tus órdenes</h4>
               {statisticsData.length > 0 ? (
-                <Chart
-                  options={data.options}
-                  series={data.series}
-                  type="line"
-                  height={350}
-                />
+                <div className="row">
+                  <div className="col-md-7">
+                    <Chart
+                      options={data.options}
+                      series={data.series}
+                      type="donut"
+                      height={350}
+                    />
+                  </div>
+                  <div className="col-md-5">
+                    <div className="pt-4 ps-5" style={{ borderRadius: 15, border: '1px solid #D6E0FF' }}>
+                      <p>Todos los motivos</p>
+                      <ul className="d-flex flex-row flex-wrap w-100">
+                        {legendData && legendData.map((item) => (
+                          <li key={item.title} className="w-50">
+                            <ul className="d-flex mb-2">
+                              <li className="pe-4">
+                                <img src={`${item.img}.png`} alt={item.name} />
+                              </li>
+                              <li className="m-0">
+                                <h4 style={{ fontSize: 21 }}>{item.value}</h4>
+                                <p className="m-0">
+                                  <small style={{ fontSize: 10 }}>
+                                    {item.name}
+                                  </small>
+                                </p>
+                              </li>
+                            </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               ) : <Spinner />}
             </Card>
           </div>
