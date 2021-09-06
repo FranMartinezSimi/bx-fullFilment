@@ -28,32 +28,36 @@ const Incidencias = () => {
       accessor: 'motivo',
     },
     {
-      Header: 'Descripción',
-      accessor: 'descTicket',
-      Cell: ({ row }) => {
-        const maxCharacter = row.original.descTicket ? row.original.descTicket.length : 0;
-        return (
-          <small>
-            {row.original.descTicket ? (
-              row.original.descTicket.slice(0, 30)
-            ) : null}
-            { maxCharacter >= 30 ? ' ...' : '' }
-          </small>
-        );
-      },
-    },
-    {
-      Header: 'Fecha',
+      Header: 'F. Creación',
       accessor: 'fechaCreacion',
     },
+    // {
+    //   Header: 'Descripción',
+    //   accessor: 'descTicket',
+    //   Cell: ({ row }) => {
+    //     const maxCharacter = row.original.descTicket ? row.original.descTicket.length : 0;
+    //     return (
+    //       <small>
+    //         {row.original.descTicket ? (
+    //           row.original.descTicket.slice(0, 30)
+    //         ) : null}
+    //         { maxCharacter >= 30 ? ' ...' : '' }
+    //       </small>
+    //     );
+    //   },
+    // },
     {
       Header: 'Estado',
       accessor: 'status',
       Cell: ({ row }) => (
-        <small className={`badge--${row.original.status.replace(' ', '').toLowerCase()} px-4 py-1`}>
+        <small className={`badge--${row.original.status.replace(' ', '').toLowerCase()} px-4 py-2`}>
           { row.original.status ? row.original.status : ''}
         </small>
       ),
+    },
+    {
+      Header: 'F. Cierre',
+      accessor: 'fechaCierre',
     },
   ], []);
 

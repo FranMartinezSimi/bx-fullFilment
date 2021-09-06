@@ -37,10 +37,10 @@ const Incidencias = () => {
       Cell: ({ row }) => {
         const maxCharacter = row.original.descTicket.length ? row.original.descTicket.length : '';
         return (
-          <spam>
+          <span>
             { row.original.descTicket.slice(0, 40) }
             { maxCharacter >= 40 ? ' ...' : '' }
-          </spam>
+          </span>
         );
       },
     },

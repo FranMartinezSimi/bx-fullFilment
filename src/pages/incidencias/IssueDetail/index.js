@@ -96,11 +96,11 @@ const IssueDetail = () => {
                     <p className="fs-5 mb-4">Archivos Adjuntos</p>
                     <ul>
                       {ticket.archivo.map((file) => (
-                        <li key={file.path} className={styles.fileItem}>
+                        <li key={file._id} className={styles.fileItem}>
                           <a href="!#">
                             <ul className="d-flex justify-content-between align-items-center">
                               <li>
-                                {`${file.path} `}
+                                {`${file.name} `}
                                 <span className={styles.fileSize}>{`${file.size} KB`}</span>
                               </li>
                               <li>

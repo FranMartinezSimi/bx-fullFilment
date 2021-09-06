@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import plus from 'assets/brand/plus.svg';
 import styles from './styles.module.scss';
@@ -9,12 +9,21 @@ const Dropzone = ({
   const [files, setFiles] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
+    // setFiles(acceptedFiles.map((file) => Object.assign(file, {
+    //   preview: URL.createObjectURL(file),
+    // })));
     setFiles([...files, ...acceptedFiles]);
     setFilesData([...files, ...acceptedFiles]);
   }, [files]);
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const {
+    // acceptedFiles,
+    getRootProps,
+    getInputProps,
+    // fileRejections,
+  } = useDropzone({
     onDrop,
+    accept: 'image/jpeg, image/png, pdf',
   });
 
   const removeFile = (file) => () => {
@@ -27,16 +36,17 @@ const Dropzone = ({
     setFiles([]);
   };
 
-  useEffect(() => {
-    const formData = new FormData();
-
-    acceptedFiles.map((file) => {
-      formData.append('assets', file, file.name);
-      return file;
-    });
-
-    // console.log(formData.getAll('assets'));
-  }, [files]);
+  // const thumbs = files.map((file) => (
+  //   <div key={file.name}>
+  //     <div>
+  //       <img
+  //         alt="preview"
+  //         src={file.preview}
+  //         className="w-100"
+  //       />
+  //     </div>
+  //   </div>
+  // ));
 
   return (
     <section className="container">
@@ -70,12 +80,13 @@ const Dropzone = ({
           </>
         )}
       <aside className="fileList ">
+        {/* {thumbs} */}
         <ul>
           {files.map((file) => (
-            <li key={file.path} className={styles.fileItem}>
+            <li key={file} className={styles.fileItem}>
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
-                  {`${file.path} `}
+                  {`${file.name} `}
                   <span className={styles.fileSize}>{`${file.size} KB`}</span>
                 </li>
                 <li>
@@ -86,6 +97,7 @@ const Dropzone = ({
           ))}
         </ul>
       </aside>
+      {/* {fileRejectionItems} */}
       {files.length > 0 && (
         <a
           href="!#"

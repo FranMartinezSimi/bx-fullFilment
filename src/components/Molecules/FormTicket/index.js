@@ -22,7 +22,7 @@ const FormTicket = ({
     orderId,
   });
   const [options, setOptions] = useState([]);
-  const [filesData, setFilesData] = useState([]);
+  const [filesData, setFilesData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
@@ -77,6 +77,8 @@ const FormTicket = ({
       return;
     }
     setLoading(true);
+    console.log(form);
+
     clientFetch('ticket/v1/ticketera/addTicket', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -84,12 +86,13 @@ const FormTicket = ({
       body: form,
     })
       .then((data) => {
+        console.log('data', data);
         setTicketNumber(data.numTicket);
         setTicketCreated(true);
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log('err', err);
         setFetchError(true);
         setLoading(false);
       });
@@ -210,6 +213,8 @@ const FormTicket = ({
                   title="Carga tu archivo"
                   subTitle="Adjunta la evidencia, puede ser en formato jpg o png (opcional)"
                   setFilesData={setFilesData}
+                  minSize={0}
+                  maxSize={5242880}
                 />
               </div>
               <div className="text-center">

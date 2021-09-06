@@ -39,6 +39,7 @@ function MainTable({
 }) {
   const [showSlideNav, setShowSlideNav] = useState(false);
   const [slideNavData, setSlideNavData] = useState(false);
+  const [comment, setComment] = useState(false);
   const {
     getTableProps,
     getTableBodyProps,
@@ -75,6 +76,9 @@ function MainTable({
 
   const rowClick = (rowData) => {
     setSlideNavData(rowData);
+    if (rowData.comentario.length > 1) {
+      setComment(true);
+    }
     setShowSlideNav(true);
   };
 
@@ -197,6 +201,7 @@ function MainTable({
           detailData={slideNavData}
           getData={getData}
           setShowSlideNav={setShowSlideNav}
+          comment={comment}
         />
       </ContextualMenuRight>
     </>
