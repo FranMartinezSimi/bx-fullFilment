@@ -21,11 +21,12 @@ const FormTicket = ({
     archivo: [],
     orderId,
   });
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [options, setOptions] = useState([]);
-  const [filesData, setFilesData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [ticketNumber, setTicketNumber] = useState('');
   const [error, setError] = useState({
     motivo: false,
@@ -56,9 +57,8 @@ const FormTicket = ({
       }));
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (form.motivo === '') {
       setError((state) => ({
         ...state,
@@ -76,25 +76,35 @@ const FormTicket = ({
     if (form.motivo?.trim().length < 1 || form.descTicket?.trim().length < 1) {
       return;
     }
+
+    setBtnDisabled(true);
     setLoading(true);
-    console.log(form);
+
+    const formdata = new FormData();
+    formdata.append('archivo', selectedFiles[0]);
+    formdata.append('motivo', form.motivo);
+    formdata.append('descTicket', form.descTicket);
+    formdata.append('clienteID', form.clienteID);
+    formdata.append('orderId', form.orderId);
 
     clientFetch('ticket/v1/ticketera/addTicket', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
-      body: form,
-    })
+      body: formdata,
+    }, { withFile: true })
       .then((data) => {
         console.log('data', data);
         setTicketNumber(data.numTicket);
         setTicketCreated(true);
         setLoading(false);
+        setBtnDisabled(false);
       })
       .catch((err) => {
         console.log('err', err);
         setFetchError(true);
         setLoading(false);
+        setBtnDisabled(false);
       });
   };
   useEffect(() => {
@@ -112,13 +122,7 @@ const FormTicket = ({
         }]);
       });
   }, []);
-  useEffect(() => {
-    setForm((formState) => ({
-      ...formState,
-      archivo: filesData,
-    }
-    ));
-  }, [filesData]);
+  console.log('files', selectedFiles);
   return (
     <>
       {fetchError && (
@@ -212,9 +216,9 @@ const FormTicket = ({
                   boxText="Arrastra tu archivo o selecciona desde tu computadora"
                   title="Carga tu archivo"
                   subTitle="Adjunta la evidencia, puede ser en formato jpg o png (opcional)"
-                  setFilesData={setFilesData}
                   minSize={0}
                   maxSize={5242880}
+                  setSelectedFiles={setSelectedFiles}
                 />
               </div>
               <div className="text-center">
@@ -229,10 +233,11 @@ const FormTicket = ({
                   </li>
                   <li className="ms-5">
                     <Button
-                      className="btn btn-secondary fs-5 px-5"
+                      className={`btn btn-secondary ${btnDisabled ? 'disabled' : ''} fs-5 px-5`}
                       text="Crear"
                       submit
                       loading={loading}
+                      disabled={btnDisabled}
                     />
                   </li>
                 </ul>

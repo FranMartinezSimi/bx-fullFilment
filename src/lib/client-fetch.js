@@ -30,9 +30,13 @@ export const cleanTokens = () => {
 export default async function clientFetch(
   endpoint,
   { body, ...customConfig } = {},
-  { withAuth = true, _retry = false } = { withAuth: true, _retry: false },
+  {
+    withAuth = true,
+    _retry = false,
+    withFile = false,
+  } = { withAuth: true, _retry: false, withFile: false },
 ) {
-  const headers = { 'content-type': 'application/json' };
+  const headers = {};
   const apiKeys = JSON.parse(window.localStorage.getItem('bxBusinessActiveFulfillment'));
   if (withAuth) {
     const accessToken = getAccessToken();
@@ -43,6 +47,13 @@ export default async function clientFetch(
     headers.key = apiKeys.credential.key;
     headers.account_id = apiKeys.credential.accountId;
   }
+
+  if (body && withFile) {
+    headers['content-type'] = 'multipart/form-data';
+  } else if (body) {
+    headers['content-type'] = 'application/json';
+  }
+
   const config = {
     method: 'POST',
     ...customConfig,
@@ -52,7 +63,9 @@ export default async function clientFetch(
     },
   };
 
-  if (body) {
+  if (body && withFile) {
+    config.body = body;
+  } else if (body) {
     config.body = JSON.stringify(body);
   }
 

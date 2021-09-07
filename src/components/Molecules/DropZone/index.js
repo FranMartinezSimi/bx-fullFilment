@@ -4,23 +4,23 @@ import plus from 'assets/brand/plus.svg';
 import styles from './styles.module.scss';
 
 const Dropzone = ({
-  boxText, title, subTitle, setFilesData,
+  boxText, title, subTitle, setSelectedFiles,
 }) => {
   const [files, setFiles] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
+    console.log({ acceptedFiles });
+    // console.log('name:', acceptedFiles[0].name);
     // setFiles(acceptedFiles.map((file) => Object.assign(file, {
     //   preview: URL.createObjectURL(file),
     // })));
     setFiles([...files, ...acceptedFiles]);
-    setFilesData([...files, ...acceptedFiles]);
+    setSelectedFiles([...files, ...acceptedFiles]);
   }, [files]);
 
   const {
-    // acceptedFiles,
     getRootProps,
     getInputProps,
-    // fileRejections,
   } = useDropzone({
     onDrop,
     accept: 'image/jpeg, image/png, pdf',
@@ -35,18 +35,6 @@ const Dropzone = ({
   const removeAll = () => {
     setFiles([]);
   };
-
-  // const thumbs = files.map((file) => (
-  //   <div key={file.name}>
-  //     <div>
-  //       <img
-  //         alt="preview"
-  //         src={file.preview}
-  //         className="w-100"
-  //       />
-  //     </div>
-  //   </div>
-  // ));
 
   return (
     <section className="container">
@@ -80,7 +68,6 @@ const Dropzone = ({
           </>
         )}
       <aside className="fileList ">
-        {/* {thumbs} */}
         <ul>
           {files.map((file) => (
             <li key={file} className={styles.fileItem}>
@@ -97,7 +84,6 @@ const Dropzone = ({
           ))}
         </ul>
       </aside>
-      {/* {fileRejectionItems} */}
       {files.length > 0 && (
         <a
           href="!#"
