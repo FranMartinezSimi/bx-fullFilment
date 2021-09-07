@@ -81,7 +81,13 @@ function MainTable({
     }
     setShowSlideNav(true);
   };
-
+  const handleClickContextualMenu = (e) => {
+    e.preventDefault();
+    setShowSlideNav(false);
+    setTimeout(() => {
+      setComment(false);
+    }, 300);
+  };
   return (
     <>
       {!noFilters && (
@@ -195,13 +201,14 @@ function MainTable({
 
       <ContextualMenuRight
         menuContextOpen={showSlideNav}
-        handleClick={() => setShowSlideNav(false)}
+        handleClick={handleClickContextualMenu}
       >
         <ResolutorDetail
           detailData={slideNavData}
           getData={getData}
           setShowSlideNav={setShowSlideNav}
           comment={comment}
+          setComment={setComment}
         />
       </ContextualMenuRight>
     </>

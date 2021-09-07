@@ -74,11 +74,6 @@ const homeResolutor = () => {
             state: 'Abiertos',
           },
           {
-            img: '/boxWarningIcon.png',
-            number: statistics.proceso,
-            state: 'En proceso',
-          },
-          {
             img: '/boxClosedIcon.png',
             number: statistics.resueltos,
             state: 'Resueltos',
