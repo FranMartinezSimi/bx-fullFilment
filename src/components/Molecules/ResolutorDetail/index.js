@@ -10,13 +10,14 @@ import styles from './styles.module.scss';
 
 const list = ['Abierto', 'En Proceso', 'Cerrado'];
 
-const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
+const ResolutorDetail = ({
+  detailData, getData, setShowSlideNav, comment,
+}) => {
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
   const [responseError, setResponseError] = useState(false);
   const [form, setForm] = useState(null);
-  const [comment] = useState(false);
   const [error, setError] = useState({
     comentario: false,
   });
@@ -42,19 +43,6 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
       ...statusState,
       status: item,
     }));
-
-    // clientFetch('ticket/v1/ticketera/updateTicket', {
-    //   headers: {
-    //     apikey: process.env.REACT_APP_API_KEY_KONG,
-    //   },
-    //   body: form,
-    // })
-    //   .then((data) => {
-    //     setForm(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
   const handleClickConfirm = (e) => {
     e.preventDefault();
@@ -154,11 +142,11 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
               <p className="fs-5 mb-4">Archivos Adjuntos</p>
               <ul>
                 {form.archivo.map((file) => (
-                  <li key={file.path} className={styles.fileItem}>
+                  <li key={file._id} className={styles.fileItem}>
                     <a href="!#">
                       <ul className="d-flex justify-content-between align-items-center">
                         <li>
-                          {`${file.path} `}
+                          {`${file.name} `}
                           <span className={styles.fileSize}>{`${file.size} KB`}</span>
                         </li>
                         <li>
@@ -176,7 +164,7 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
           )}
           <form className="py-5">
             <div className="form-group mb-5">
-              {comment ? (
+              {!comment ? (
                 <label htmlFor="textArea" className="w-100">
                   Comentario
                   <span className="text-danger"> *</span>
@@ -206,18 +194,22 @@ const ResolutorDetail = ({ detailData, getData, setShowSlideNav }) => {
               />
             </div>
             <div className="text-end">
-              <Button
-                className="btn btn-secondary fs-5 px-5"
-                text="Editar comentario"
-                submit
-                // onClick={setComment(true)}
-              />
-              <Button
-                className="btn btn-secondary fs-5 px-5"
-                text="Enviar"
-                submit
-                onClick={handleClickConfirm}
-              />
+              {comment && (
+                <Button
+                  className="btn btn-complementary fs-5 px-5"
+                  text="Editar comentario"
+                  submit
+                  // onClick={setModifyComment(true)}
+                />
+              )}
+              {!comment && (
+                <Button
+                  className="btn btn-secondary fs-5 px-5"
+                  text="Enviar"
+                  submit
+                  onClick={handleClickConfirm}
+                />
+              )}
             </div>
           </form>
           <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>

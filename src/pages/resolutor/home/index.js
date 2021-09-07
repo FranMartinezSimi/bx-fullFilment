@@ -5,14 +5,17 @@ import clientFetch from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import Card from 'components/Molecules/Card';
 import Chart from 'react-apexcharts';
+import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 
 const homeResolutor = () => {
   const history = useHistory();
   const [statisticsData, setTotalStatisticsData] = useState([]);
   const [legendData, setLegendData] = useState([]);
+  const [errorTotales, setErrorTotales] = useState(false);
+  const [errorChart, setErrorChart] = useState(false);
   const [data, setData] = useState({
-    series: [150, 41, 35, 62, 133, 91, 148],
+    series: [],
     options: {
       colors: ['#FF7E44', '#3363FF', '#155C80', '#2294CC', '#7092FF', '#408D5C', '#2BB9FF'],
       labels: ['Producto erróneo', 'Producto faltante.', 'Incluir carta', 'Detalle de envío', 'Despacho retrasado', 'Detener envío', 'Cambio de dirección'],
@@ -40,7 +43,21 @@ const homeResolutor = () => {
       // },
     },
   });
-  // const [items] = useState([]);
+  let componentTotales;
+
+  if (errorTotales) {
+    componentTotales = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos para visualizar estaísticas..." />;
+  } else {
+    componentTotales = <Spinner />;
+  }
+
+  let componentChart;
+
+  if (errorChart) {
+    componentChart = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos para crear visualizar motivos..." />;
+  } else {
+    componentChart = <Spinner />;
+  }
   const chart = () => {
     clientFetch('ticket/v1/dashboard/getDashboard', {
       headers: {
@@ -48,7 +65,6 @@ const homeResolutor = () => {
       },
     })
       .then((dashData) => {
-        console.log(dashData);
         const statistics = dashData.totales;
         const originalLegend = dashData.chart;
         setTotalStatisticsData([
@@ -73,6 +89,10 @@ const homeResolutor = () => {
             state: 'Total',
           },
         ]);
+        if (dashData.chart.series.length === 0) {
+          setErrorChart(true);
+          return;
+        }
         setData({
           series: dashData.chart.series,
           options: {
@@ -100,8 +120,10 @@ const homeResolutor = () => {
         }));
         setLegendData(legendFormated);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
+        setErrorTotales(true);
+        setErrorChart(true);
       });
   };
   const handleClick = (e) => {
@@ -120,9 +142,9 @@ const homeResolutor = () => {
               className="shadow my-5"
             >
               <h4 className="display-font mb-4">Estadísticas de incidencias</h4>
-              {statisticsData.length > 0 ? (
+              {statisticsData.length > 0 && !errorTotales ? (
                 <>
-                  <ul className="d-flex justify-content-around mb-5">
+                  <ul className="d-flex justify-content-around mb-2">
                     {statisticsData.length > 0 && statisticsData.map((item) => (
                       <li key={item.state}>
                         <div className="item d-flex align-items-center">
@@ -149,14 +171,14 @@ const homeResolutor = () => {
                     </p>
                   </a>
                 </>
-              ) : <Spinner />}
+              ) : componentTotales}
             </Card>
             <Card
               className="shadow my-5"
             >
-              <h4 className="display-font">Estado de tus órdenes</h4>
-              {statisticsData.length > 0 ? (
-                <div className="row">
+              <h4 className="display-font">Visualización de motivos</h4>
+              {statisticsData.length > 0 && !errorChart ? (
+                <div className="row align-items-center">
                   <div className="col-md-7">
                     <Chart
                       options={data.options}
@@ -190,7 +212,7 @@ const homeResolutor = () => {
                     </div>
                   </div>
                 </div>
-              ) : <Spinner />}
+              ) : componentChart}
             </Card>
           </div>
         </div>

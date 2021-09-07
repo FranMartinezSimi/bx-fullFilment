@@ -137,7 +137,7 @@ const LogIn = () => {
                       type="text"
                       className={`${styles.formInput} ${errors.username ? styles.formInputError : ''} form-control mt-2`}
                       name="username"
-                      placeholder="Introduce un nommbre"
+                      placeholder="Introduce un nombre"
                       {...register('username', {
                         required: true,
                       })}
