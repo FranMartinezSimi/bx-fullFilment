@@ -43,11 +43,24 @@ const ResolutorDetail = ({
     if (form.comentario?.trim().length < 1) {
       return;
     }
+    setForm((statusState) => ({
+      ...statusState,
+      status: 'Cerrado',
+    }));
     setModalTicket(true);
+  };
+  const handleClickRegret = (e) => {
+    e.preventDefault();
+    if (detailData.status === 'Abierto') {
+      setForm((statusState) => ({
+        ...statusState,
+        status: 'Abierto',
+      }));
+    }
+    setModalTicket(false);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setLoading(true);
     clientFetch('ticket/v1/ticketera/updateTicket', {
       headers: {
@@ -265,7 +278,7 @@ const ResolutorDetail = ({
                 <Button
                   className="btn btn-complementary fs-5 px-5 mb-5 me-4"
                   text="No"
-                  onClick={(e) => { e.preventDefault(); setModalTicket(false); }}
+                  onClick={handleClickRegret}
                 />
                 <Button
                   className="btn btn-secondary fs-5 px-5 mb-5"
