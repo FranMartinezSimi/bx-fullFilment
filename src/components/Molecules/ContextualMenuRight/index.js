@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import closeX from 'assets/brand/closeX.svg';
 import styles from './styles.module.scss';
 
 const ContextualMenuRight = ({
@@ -20,7 +21,7 @@ const ContextualMenuRight = ({
       <div className="container py-4 px-5">
         <div className="text-end">
           <button type="button" className={`btn ${styles.btnClose}`} onClick={handleClick}>
-            X
+            <img src={closeX} alt="Cuenta" width="15" />
           </button>
         </div>
         {title && (
