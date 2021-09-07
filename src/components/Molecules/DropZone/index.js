@@ -10,10 +10,6 @@ const Dropzone = ({
 
   const onDrop = useCallback((acceptedFiles) => {
     console.log({ acceptedFiles });
-    // console.log('name:', acceptedFiles[0].name);
-    // setFiles(acceptedFiles.map((file) => Object.assign(file, {
-    //   preview: URL.createObjectURL(file),
-    // })));
     setFiles([...files, ...acceptedFiles]);
     setSelectedFiles([...files, ...acceptedFiles]);
   }, [files]);
@@ -24,6 +20,7 @@ const Dropzone = ({
   } = useDropzone({
     onDrop,
     accept: 'image/jpeg, image/png, pdf',
+    multiple: false,
   });
 
   const removeFile = (file) => () => {

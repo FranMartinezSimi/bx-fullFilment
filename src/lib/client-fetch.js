@@ -48,9 +48,7 @@ export default async function clientFetch(
     headers.account_id = apiKeys.credential.accountId;
   }
 
-  if (body && withFile) {
-    headers['content-type'] = 'multipart/form-data';
-  } else if (body) {
+  if (body && !withFile) {
     headers['content-type'] = 'application/json';
   }
 
