@@ -150,9 +150,9 @@ const FormTicket = ({
             <img src="/bgsuccess.jpg" alt="Proceso completado" width="150" />
           </li>
           <li className="py-4" style={{ fontSize: 16 }}>
-            {`¡Tu ticket ${ticketNumber} ha sido creado con exito!`}
+            {`¡Hemos creado tu ticket con el Nº ${ticketNumber}`}
             <br />
-            Revísa el detalle en la
+            Revísa el detalle en la lista de tickets.
             {' '}
             <a href="!#" onClick={handleClick}>
               <u style={{ color: '#6DCFFF' }}>lista de tickets.</u>
