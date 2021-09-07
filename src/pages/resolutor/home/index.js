@@ -65,7 +65,6 @@ const homeResolutor = () => {
       },
     })
       .then((dashData) => {
-        console.log(dashData);
         const statistics = dashData.totales;
         const originalLegend = dashData.chart;
         setTotalStatisticsData([
@@ -90,7 +89,6 @@ const homeResolutor = () => {
             state: 'Total',
           },
         ]);
-        console.log(dashData.chart.series.length);
         if (dashData.chart.series.length === 0) {
           setErrorChart(true);
           return;

@@ -9,7 +9,6 @@ const Dropzone = ({
   const [files, setFiles] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
-    console.log({ acceptedFiles });
     setFiles([...files, ...acceptedFiles]);
     setSelectedFiles([...files, ...acceptedFiles]);
   }, [files]);

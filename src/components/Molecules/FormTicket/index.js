@@ -94,7 +94,6 @@ const FormTicket = ({
       body: formdata,
     }, { withFile: true })
       .then((data) => {
-        console.log('data', data);
         setTicketNumber(data.numTicket);
         setTicketCreated(true);
         setLoading(false);
@@ -122,7 +121,6 @@ const FormTicket = ({
         }]);
       });
   }, []);
-  console.log('files', selectedFiles);
   return (
     <>
       {fetchError && (
