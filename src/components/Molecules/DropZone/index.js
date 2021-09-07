@@ -1,20 +1,25 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import plus from 'assets/brand/plus.svg';
 import styles from './styles.module.scss';
 
 const Dropzone = ({
-  boxText, title, subTitle, setFilesData,
+  boxText, title, subTitle, setSelectedFiles,
 }) => {
   const [files, setFiles] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
     setFiles([...files, ...acceptedFiles]);
-    setFilesData([...files, ...acceptedFiles]);
+    setSelectedFiles([...files, ...acceptedFiles]);
   }, [files]);
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const {
+    getRootProps,
+    getInputProps,
+  } = useDropzone({
     onDrop,
+    accept: 'image/jpeg, image/png, pdf',
+    multiple: false,
   });
 
   const removeFile = (file) => () => {
@@ -26,17 +31,6 @@ const Dropzone = ({
   const removeAll = () => {
     setFiles([]);
   };
-
-  useEffect(() => {
-    const formData = new FormData();
-
-    acceptedFiles.map((file) => {
-      formData.append('assets', file, file.name);
-      return file;
-    });
-
-    // console.log(formData.getAll('assets'));
-  }, [files]);
 
   return (
     <section className="container">
@@ -72,10 +66,10 @@ const Dropzone = ({
       <aside className="fileList ">
         <ul>
           {files.map((file) => (
-            <li key={file.path} className={styles.fileItem}>
+            <li key={file} className={styles.fileItem}>
               <ul className="d-flex justify-content-between align-items-center">
                 <li>
-                  {`${file.path} `}
+                  {`${file.name} `}
                   <span className={styles.fileSize}>{`${file.size} KB`}</span>
                 </li>
                 <li>

@@ -39,6 +39,7 @@ function MainTable({
 }) {
   const [showSlideNav, setShowSlideNav] = useState(false);
   const [slideNavData, setSlideNavData] = useState(false);
+  const [comment, setComment] = useState(false);
   const {
     getTableProps,
     getTableBodyProps,
@@ -75,9 +76,18 @@ function MainTable({
 
   const rowClick = (rowData) => {
     setSlideNavData(rowData);
+    if (rowData.comentario.length > 1) {
+      setComment(true);
+    }
     setShowSlideNav(true);
   };
-
+  const handleClickContextualMenu = (e) => {
+    e.preventDefault();
+    setShowSlideNav(false);
+    setTimeout(() => {
+      setComment(false);
+    }, 300);
+  };
   return (
     <>
       {!noFilters && (
@@ -191,12 +201,14 @@ function MainTable({
 
       <ContextualMenuRight
         menuContextOpen={showSlideNav}
-        handleClick={() => setShowSlideNav(false)}
+        handleClick={handleClickContextualMenu}
       >
         <ResolutorDetail
           detailData={slideNavData}
           getData={getData}
           setShowSlideNav={setShowSlideNav}
+          comment={comment}
+          setComment={setComment}
         />
       </ContextualMenuRight>
     </>

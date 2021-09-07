@@ -21,11 +21,12 @@ const FormTicket = ({
     archivo: [],
     orderId,
   });
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [options, setOptions] = useState([]);
-  const [filesData, setFilesData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [ticketNumber, setTicketNumber] = useState('');
   const [error, setError] = useState({
     motivo: false,
@@ -56,9 +57,8 @@ const FormTicket = ({
       }));
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (form.motivo === '') {
       setError((state) => ({
         ...state,
@@ -76,22 +76,34 @@ const FormTicket = ({
     if (form.motivo?.trim().length < 1 || form.descTicket?.trim().length < 1) {
       return;
     }
+
+    setBtnDisabled(true);
     setLoading(true);
+
+    const formdata = new FormData();
+    formdata.append('archivo', selectedFiles[0]);
+    formdata.append('motivo', form.motivo);
+    formdata.append('descTicket', form.descTicket);
+    formdata.append('clienteID', form.clienteID);
+    formdata.append('orderId', form.orderId);
+
     clientFetch('ticket/v1/ticketera/addTicket', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
-      body: form,
-    })
+      body: formdata,
+    }, { withFile: true })
       .then((data) => {
         setTicketNumber(data.numTicket);
         setTicketCreated(true);
         setLoading(false);
+        setBtnDisabled(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log('err', err);
         setFetchError(true);
         setLoading(false);
+        setBtnDisabled(false);
       });
   };
   useEffect(() => {
@@ -109,14 +121,6 @@ const FormTicket = ({
         }]);
       });
   }, []);
-  useEffect(() => {
-    console.log(filesData);
-    setForm((formState) => ({
-      ...formState,
-      archivo: filesData,
-    }
-    ));
-  }, [filesData]);
   return (
     <>
       {fetchError && (
@@ -146,9 +150,9 @@ const FormTicket = ({
             <img src="/bgsuccess.jpg" alt="Proceso completado" width="150" />
           </li>
           <li className="py-4" style={{ fontSize: 16 }}>
-            {`¡Tu ticket ${ticketNumber} ha sido creado con exito!`}
+            {`¡Hemos creado tu ticket con el Nº ${ticketNumber}`}
             <br />
-            Revísa el detalle en la
+            Revísa el detalle en la lista de tickets.
             {' '}
             <a href="!#" onClick={handleClick}>
               <u style={{ color: '#6DCFFF' }}>lista de tickets.</u>
@@ -210,7 +214,9 @@ const FormTicket = ({
                   boxText="Arrastra tu archivo o selecciona desde tu computadora"
                   title="Carga tu archivo"
                   subTitle="Adjunta la evidencia, puede ser en formato jpg o png (opcional)"
-                  setFilesData={setFilesData}
+                  minSize={0}
+                  maxSize={5242880}
+                  setSelectedFiles={setSelectedFiles}
                 />
               </div>
               <div className="text-center">
@@ -225,10 +231,11 @@ const FormTicket = ({
                   </li>
                   <li className="ms-5">
                     <Button
-                      className="btn btn-secondary fs-5 px-5"
+                      className={`btn btn-secondary ${btnDisabled ? 'disabled' : ''} fs-5 px-5`}
                       text="Crear"
                       submit
                       loading={loading}
+                      disabled={btnDisabled}
                     />
                   </li>
                 </ul>

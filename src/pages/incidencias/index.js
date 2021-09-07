@@ -31,21 +31,22 @@ const Incidencias = () => {
       Header: 'Motivo',
       accessor: 'motivo',
     },
+    // {
+    //   Header: 'Descripción',
+    //   accessor: 'descTicket',
+    //   Cell: ({ row }) => {
+    //     const maxCharacter =
+    // row.original.descTicket.length ? row.original.descTicket.length : '';
+    //     return (
+    //       <span>
+    //         { row.original.descTicket.slice(0, 40) }
+    //         { maxCharacter >= 40 ? ' ...' : '' }
+    //       </span>
+    //     );
+    //   },
+    // },
     {
-      Header: 'Descripción',
-      accessor: 'descTicket',
-      Cell: ({ row }) => {
-        const maxCharacter = row.original.descTicket.length ? row.original.descTicket.length : '';
-        return (
-          <spam>
-            { row.original.descTicket.slice(0, 40) }
-            { maxCharacter >= 40 ? ' ...' : '' }
-          </spam>
-        );
-      },
-    },
-    {
-      Header: 'Fecha',
+      Header: 'F. Creación',
       accessor: 'fechaCreacion',
     },
     {
@@ -56,6 +57,10 @@ const Incidencias = () => {
           { row.original.status }
         </small>
       ),
+    },
+    {
+      Header: 'F. Cierre',
+      accessor: 'fechaCierre',
     },
     {
       accessor: 'ver',

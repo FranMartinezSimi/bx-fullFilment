@@ -51,7 +51,7 @@ const IssueDetail = () => {
   return (
     <PageLayout title={`Ticket ${title}`}>
       <PageTitle title={`Número del Ticket: ${title}`} className="mb-5" />
-      <Card>
+      <Card className="px-5">
         {ticket != null && !loading ? (
           <>
             <ul className="d-flex justify-content-between" style={{ fontSize: 14 }}>
@@ -96,11 +96,11 @@ const IssueDetail = () => {
                     <p className="fs-5 mb-4">Archivos Adjuntos</p>
                     <ul>
                       {ticket.archivo.map((file) => (
-                        <li key={file.path} className={styles.fileItem}>
-                          <a href="!#">
+                        <li key={file._id} className={styles.fileItem}>
+                          <a href={file.uri} target="_blank" rel="noreferrer" download>
                             <ul className="d-flex justify-content-between align-items-center">
                               <li>
-                                {`${file.path} `}
+                                {`${file.name} `}
                                 <span className={styles.fileSize}>{`${file.size} KB`}</span>
                               </li>
                               <li>
