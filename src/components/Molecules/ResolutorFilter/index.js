@@ -9,7 +9,7 @@ import arrowDown from 'assets/brand/arrow-down.svg';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const list = ['Estado del ticket', 'Abierto', 'Proceso', 'Cerrado'];
+const list = ['Estado del ticket', 'Abierto', 'Cerrado'];
 const GlobalFilter = ({
   preGlobalFilteredRows,
   globalFilter,

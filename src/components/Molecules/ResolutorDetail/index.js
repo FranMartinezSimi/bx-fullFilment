@@ -231,7 +231,7 @@ const ResolutorDetail = ({
             <div className="text-end">
               {comment && (
                 <Button
-                  className="btn btn-complementary fs-5 px-5"
+                  className="btn btn-complementary fs-5 px-5 d-none"
                   text="Editar comentario"
                   submit
                   onClick={() => setComment(false)}
@@ -273,7 +273,7 @@ const ResolutorDetail = ({
                   enviar el comentario?
                 </h4>
                 <p style={{ fontSize: 16 }} className="py-4">
-                  Una vez comentado el ticket su estado cambiara a Resuelto.
+                  Una vez comentado el ticket su estado cambiara a Cerrado.
                 </p>
                 <Button
                   className="btn btn-complementary fs-5 px-5 mb-5 me-4"
