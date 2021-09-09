@@ -40,7 +40,11 @@ const FormTicket = ({
   };
 
   const reset = () => {
-    getData();
+    if (getData) {
+      getData();
+    } else {
+      history.push('/incidencias');
+    }
     setTicketCreated(false);
     setModalTicket(false);
   };
@@ -154,7 +158,7 @@ const FormTicket = ({
             <br />
             Revísa el detalle en la lista de tickets.
             {' '}
-            <a href="!#" onClick={handleClick}>
+            <a href="!#" onClick={handleClick} className="d-none">
               <u style={{ color: '#6DCFFF' }}>lista de tickets.</u>
             </a>
           </li>
