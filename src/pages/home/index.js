@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import {
+  useState, useEffect, useContext,
+} from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'context/userContex';
@@ -9,12 +11,15 @@ import Card from 'components/Molecules/Card';
 import ColumnChart from 'components/Atoms/ColumnChart';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
+import { SocketContext } from 'context/useContextSocketSeller';
 import styles from './styles.module.scss';
 
 const Home = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [orderFetchError, setOrderFetchError] = useState(false);
+  const [notify, setNotify] = useState(null);
+
   const [dataOrders, setDataOrders] = useState({
     series: [
       {
@@ -166,6 +171,33 @@ const Home = () => {
   useEffect(() => {
     chart();
   }, []);
+  const socket = useContext(SocketContext);
+
+  // const [joined, setJoined] = useState(false);
+
+  // const handleInviteAccepted = useCallback(() => {
+  //   setJoined(true);
+  // }, []);
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    socket.emit('server-socket', 'Funca!!!', (ticket) => {
+      console.log(ticket);
+    });
+  };
+
+  useEffect(() => {
+    socket.on('client', (data) => {
+      console.log(`esto viene desde el client ${data}`);
+      setNotify(data);
+    });
+
+    // setInterval(() => socket.emit('FromAPI', new Date().toGMTString()), 1000);
+
+    // return () => {
+    //   socket.off('notificaciones', handleInviteAccepted);
+    // };
+  }, [socket, notify]);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
       <div className="container mt-5">
@@ -207,6 +239,19 @@ const Home = () => {
                 )
                 : component}
             </Card>
+            <div>
+              {notify ? (
+                <p>
+                  {JSON.stringify(notify)}
+                </p>
+              ) : (
+                <p> no se encontraron notificaciones</p>
+              )}
+
+              <button type="button" onClick={handleAdd}>
+                Join Chat
+              </button>
+            </div>
           </div>
         </div>
       </div>

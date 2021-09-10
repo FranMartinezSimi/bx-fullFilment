@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
@@ -12,6 +12,7 @@ import menu from 'assets/brand/menu.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import exitSession from 'assets/brand/exitSession.svg';
 import PropTypes from 'prop-types';
+import { SocketContext } from 'context/useContextSocketSeller';
 import styles from './styles.module.scss';
 
 const urlLogin = process.env.REACT_APP_LOGOUT_URL;
@@ -20,10 +21,12 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const history = useHistory();
   const { setUserKeyclock } = useKeyclockAuth();
   const { user, setUser } = useAuth();
+  const socket = useContext(SocketContext);
   const userData = JSON.parse(user);
   const userActive = userData.credential.user.name ? userData.credential.user.name : 'no encontrado';
   const [rememberShipedge, setRememberShipedge] = useState(true);
   const [logOutCard, setLogOutCart] = useState(false);
+  const [responseSocket, setResponseSocket] = useState(null);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -72,8 +75,14 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
         logOut();
       });
   };
+  useEffect(() => {
+    socket.on('notificaciones', (payload) => {
+      setResponseSocket(payload);
+    });
+  }, [responseSocket]);
   return (
     <header className={styles.header}>
+      <p>{responseSocket ? 'respuesta ok!' : 'sin respuesta'}</p>
       <Card className={`${logOutCard ? '' : 'd-none'} ${styles.headerCard} shadow`}>
         <ul className="text-center">
           <li>
@@ -135,7 +144,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
 };
 
 Header.defaultProps = {
-  setActiveNavbar: () => {},
+  setActiveNavbar: () => { },
 };
 
 Header.propTypes = {
