@@ -266,9 +266,6 @@ const Orders = () => {
       <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); getData(); }}>
         <FromTicket
           orderId={orderId}
-          orderNumber={orderNumber}
-          tracking={orderTracking}
-          unifyState={unifyState}
           setModalTicket={setModalTicket}
           getData={getData}
         />
