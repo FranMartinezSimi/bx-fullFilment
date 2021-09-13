@@ -179,12 +179,12 @@ const Home = () => {
   //   setJoined(true);
   // }, []);
 
-  const handleAdd = (e) => {
-    e.preventDefault();
-    socket.emit('server-socket', 'Funca!!!', (ticket) => {
-      console.log(ticket);
-    });
-  };
+  // const handleAdd = (e) => {
+  //   e.preventDefault();
+  //   socket.emit('server-socket', 'Funca!!!', (ticket) => {
+  //     console.log(ticket);
+  //   });
+  // };
 
   useEffect(() => {
     socket.on('client', (data) => {
@@ -239,7 +239,7 @@ const Home = () => {
                 )
                 : component}
             </Card>
-            <div>
+            {/* <div>
               {notify ? (
                 <p>
                   {JSON.stringify(notify)}
@@ -251,7 +251,7 @@ const Home = () => {
               <button type="button" onClick={handleAdd}>
                 Join Chat
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
