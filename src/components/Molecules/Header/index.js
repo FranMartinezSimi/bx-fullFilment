@@ -92,7 +92,6 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
 
   useEffect(() => {
     socket.on(`client${userActive1}`, (data) => {
-      console.log(`esto viene desde el cliente ${Object.entries(data)}`);
       setResponseSocket([...responseSocket, data]);
     });
   }, [socket, responseSocket]);
