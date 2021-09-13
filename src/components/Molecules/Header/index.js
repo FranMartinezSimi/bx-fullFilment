@@ -24,6 +24,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const userActive = userData.credential.user.name ? userData.credential.user.name : 'no encontrado';
   const [rememberShipedge, setRememberShipedge] = useState(true);
   const [logOutCard, setLogOutCart] = useState(false);
+  const [notifyCard, setNotifyCart] = useState(false);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -31,7 +32,17 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   };
   const handleClickUser = (e) => {
     e.preventDefault();
+    if (notifyCard) {
+      setNotifyCart(false);
+    }
     setLogOutCart(!logOutCard);
+  };
+  const handleClickNotify = (e) => {
+    e.preventDefault();
+    if (logOutCard) {
+      setLogOutCart(false);
+    }
+    setNotifyCart(!notifyCard);
   };
   const handleClickRemember = () => {
     setRememberShipedge(!rememberShipedge);
@@ -110,6 +121,24 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           </li>
         </ul>
       </Card>
+      <Card className={`${notifyCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onBlur={() => setNotifyCart(false)}>
+        <ul>
+          <li>
+            <ul className="d-flex justify-content-between">
+              <li className="me-4"><h5>Notificaciones</h5></li>
+              <li><p><small>Borrar todo</small></p></li>
+            </ul>
+          </li>
+          <li>Notificación 1</li>
+          <li>Notificación 2</li>
+          <li>Notificación 3</li>
+          <li>Notificación 4</li>
+          <li>Notificación 5</li>
+          <li className="text-center mt-4">
+            <p><small>Ver más</small></p>
+          </li>
+        </ul>
+      </Card>
       <ul className="d-flex w-100 justify-content-end align-items-center my-2">
         <li className="px-4 d-none">
           <a href="!#" onClick={handleClick}>
@@ -117,16 +146,21 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           </a>
         </li>
         <li className="d-flex">
-          <img src={alarm} alt="Notificaciones" className="d-none" />
           <img src={bento} alt="Suite" className="d-none" />
-          <img src={avatar} alt="Cuenta" />
+          <a href="#!" className={`position-relative me-4 pt-2 ${styles.headerNotifyLink}`} onClick={handleClickNotify}>
+            <img src={alarm} alt="Notificaciones" className="w-100" width="50" />
+            <span className={styles.headerNotify}>
+              <span className={styles.headerNotifyNumber}>5</span>
+            </span>
+          </a>
           <a href="!#" onClick={handleClickUser} className="d-flex pe-5">
-            <p>
+            <img src={avatar} alt="Cuenta" width="50" />
+            <p className="d-none">
               {userActive}
               <br />
               <small>Fulfillment</small>
             </p>
-            <img src={arrowDown} alt="Down" width="20" />
+            <img src={arrowDown} alt="Down" width="20" className="d-none" />
           </a>
         </li>
       </ul>
