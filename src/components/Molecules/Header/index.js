@@ -23,6 +23,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const { user, setUser } = useAuth();
   const socket = useContext(SocketContext);
   const userData = JSON.parse(user);
+  const userActive1 = userData.credential.accountId;
   const userActive = userData.credential.user.name ? userData.credential.user.name : 'no encontrado';
   const [rememberShipedge, setRememberShipedge] = useState(true);
   const [logOutCard, setLogOutCart] = useState(false);
@@ -90,7 +91,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   };
 
   useEffect(() => {
-    socket.on('client', (data) => {
+    socket.on(`client${userActive1}`, (data) => {
       console.log(`esto viene desde el cliente ${Object.entries(data)}`);
       setResponseSocket([...responseSocket, data]);
     });
@@ -151,7 +152,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
                 <a href="#!" onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${item.ticktId}`); }}>
                   El ticket
                   {' '}
-                  {item.orderId}
+                  {item.numTicket}
                   {' '}
                   cambió de estado a
                   {' '}
