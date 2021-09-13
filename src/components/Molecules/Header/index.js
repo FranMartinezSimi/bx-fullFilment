@@ -27,7 +27,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const [rememberShipedge, setRememberShipedge] = useState(true);
   const [logOutCard, setLogOutCart] = useState(false);
   const [notifyCard, setNotifyCart] = useState(false);
-  const [responseSocket, setResponseSocket] = useState(null);
+  const [responseSocket, setResponseSocket] = useState([]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -45,7 +45,9 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
     if (logOutCard) {
       setLogOutCart(false);
     }
-    setNotifyCart(!notifyCard);
+    if (responseSocket.length > 0) {
+      setNotifyCart(!notifyCard);
+    }
   };
   const handleClickRemember = () => {
     setRememberShipedge(!rememberShipedge);
@@ -87,24 +89,14 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
       });
   };
 
-  const handleClickEmit = (e) => {
-    e.preventDefault();
-    console.log('Click al boton');
-    socket.emit('server-socket', 'Funca!!!', (ticket) => {
-      console.log(ticket);
-    });
-  };
-
   useEffect(() => {
     socket.on('client', (data) => {
-      console.log(`esto viene desde el cliente ${data}`);
-      setResponseSocket(data);
+      console.log(`esto viene desde el cliente ${Object.entries(data)}`);
+      setResponseSocket([...responseSocket, data]);
     });
-    console.log(responseSocket);
   }, [socket, responseSocket]);
   return (
     <header className={styles.header}>
-      <p>{responseSocket ? 'respuesta ok!' : 'sin respuesta'}</p>
       <Card className={`${logOutCard ? '' : 'd-none'} ${styles.headerCard} shadow`}>
         <ul className="text-center">
           <li>
@@ -141,24 +133,35 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           </li>
         </ul>
       </Card>
-      <Card className={`${notifyCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onBlur={() => setNotifyCart(false)}>
-        <ul>
-          <li>
-            <ul className="d-flex justify-content-between">
-              <li className="me-4"><h5>Notificaciones</h5></li>
-              <li><p><small>Borrar todo</small></p></li>
-            </ul>
-          </li>
-          <li>responseSocket</li>
-          <li>Notificación 2</li>
-          <li>Notificación 3</li>
-          <li>Notificación 4</li>
-          <li>Notificación 5</li>
-          <li className="text-center mt-4">
-            <p><button type="button" onClick={handleClickEmit}>Ver más</button></p>
-          </li>
-        </ul>
-      </Card>
+      {responseSocket.length > 0 && (
+        <Card className={`${notifyCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onBlur={() => setNotifyCart(false)}>
+          <ul>
+            <li>
+              <ul className="d-flex justify-content-between">
+                <li className="me-4"><h5>Notificaciones</h5></li>
+                <li className="">
+                  <a href="#!" onClick={(e) => { e.preventDefault(); setResponseSocket([]); }}>
+                    <small>Borrar todo</small>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            {responseSocket.length > 0 && responseSocket.map((item) => (
+              <li key="id">
+                <a href="#!" onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${item.ticktId}`); }}>
+                  El ticket
+                  {' '}
+                  {item.orderId}
+                  {' '}
+                  cambió de estado a
+                  {' '}
+                  {item.statusDesc}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
       <ul className="d-flex w-100 justify-content-end align-items-center my-2">
         <li className="px-4 d-none">
           <a href="!#" onClick={handleClick}>
@@ -169,9 +172,11 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           <img src={bento} alt="Suite" className="d-none" />
           <a href="#!" className={`position-relative me-4 pt-2 ${styles.headerNotifyLink}`} onClick={handleClickNotify}>
             <img src={alarm} alt="Notificaciones" className="w-100" width="50" />
-            <span className={styles.headerNotify}>
-              <span className={styles.headerNotifyNumber}>5</span>
-            </span>
+            {responseSocket.length > 0 && (
+              <span className={styles.headerNotify}>
+                <span className={styles.headerNotifyNumber}>{responseSocket.length}</span>
+              </span>
+            )}
           </a>
           <a href="!#" onClick={handleClickUser} className="d-flex pe-5">
             <img src={avatar} alt="Cuenta" width="50" />
