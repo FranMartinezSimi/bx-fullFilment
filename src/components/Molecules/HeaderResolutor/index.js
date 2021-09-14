@@ -55,7 +55,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   }, [socket, responseSocket]);
   return (
     <header className={styles.header}>
-      <Card className={`${logOutCard ? '' : 'd-none'} ${styles.headerCard} shadow`}>
+      <Card className={`${logOutCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onMouseLeave={() => setLogOutCart(false)}>
         <ul className="text-center">
           <li>
             <img src={avatar} alt="Cuenta" />
@@ -76,7 +76,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
         </ul>
       </Card>
       {responseSocket.length > 0 && (
-        <Card className={`${notifyCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onBlur={() => setNotifyCart(false)}>
+        <Card className={`${notifyCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onMouseLeave={() => setNotifyCart(false)}>
           <ul>
             <li>
               <ul className="d-flex justify-content-between">
