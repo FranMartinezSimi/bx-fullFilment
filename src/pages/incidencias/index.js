@@ -31,20 +31,6 @@ const Incidencias = () => {
       Header: 'Motivo',
       accessor: 'motivo',
     },
-    // {
-    //   Header: 'Descripción',
-    //   accessor: 'descTicket',
-    //   Cell: ({ row }) => {
-    //     const maxCharacter =
-    // row.original.descTicket.length ? row.original.descTicket.length : '';
-    //     return (
-    //       <span>
-    //         { row.original.descTicket.slice(0, 40) }
-    //         { maxCharacter >= 40 ? ' ...' : '' }
-    //       </span>
-    //     );
-    //   },
-    // },
     {
       Header: 'F. Creación',
       accessor: 'fechaCreacion',
