@@ -97,7 +97,7 @@ const IssueDetail = () => {
                     <ul>
                       {ticket.archivo.map((file) => (
                         <li key={file._id} className={styles.fileItem}>
-                          <a href={file.uri} target="_blank" rel="noreferrer" download>
+                          <a href={file.uri} target="_blank" rel="noreferrer" download onClick={(e) => e.preventDefault()}>
                             <ul className="d-flex justify-content-between align-items-center">
                               <li>
                                 {`${file.name} `}

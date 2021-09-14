@@ -187,7 +187,7 @@ const homeResolutor = () => {
                       <p>Todos los motivos</p>
                       <ul className="d-flex flex-row flex-wrap w-100">
                         {legendData && legendData.map((item) => (
-                          <li key={item.title} className="w-50">
+                          <li key={item.name} className="w-50">
                             <ul className="d-flex mb-2">
                               <li className="pe-4">
                                 <img src={`${item.img}.png`} alt={item.name} />

@@ -188,7 +188,7 @@ const Home = () => {
 
   useEffect(() => {
     socket.on('client', (data) => {
-      console.log(`esto viene desde el client ${data}`);
+      // console.log(`esto viene desde el client ${data}`);
       setNotify(data);
     });
 
