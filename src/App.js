@@ -3,6 +3,7 @@ import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import jwt from 'jwt-decode';
+import { SocketContext, socket } from './context/useContextSocketSeller';
 import { useAuth } from './context/userContex';
 import UnLoggedUserApp from './UnLoggedUserApp';
 import ResolutorApp from './ResolutorApp';
@@ -23,9 +24,17 @@ const App = () => {
   return (
     <HelmetProvider>
       {!userKeyclock && <UnLoggedUserApp />}
-      {userKeyclock && resolutor && !user && <ResolutorApp />}
+      {userKeyclock && resolutor && !user && (
+        <SocketContext.Provider value={socket}>
+          <ResolutorApp />
+        </SocketContext.Provider>
+      )}
       {userKeyclock && !resolutor && !user && <UnauthenticatedApp />}
-      {userKeyclock && !resolutor && user && <AuthenticatedApp />}
+      {userKeyclock && !resolutor && user && (
+        <SocketContext.Provider value={socket}>
+          <AuthenticatedApp />
+        </SocketContext.Provider>
+      )}
     </HelmetProvider>
   );
 };

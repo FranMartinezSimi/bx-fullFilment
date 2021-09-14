@@ -1,4 +1,6 @@
 @import "../../../styles/utils/variables";
+@import "../../../styles/utils/mixins";
+
 header{
   width: 100%;
   background-color: $emphasis-color;
@@ -37,5 +39,24 @@ header small{
   }
   & span {
     color: $emphasis-color;
+  }
+}
+
+.headerNotify {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  background: #FF7E44;
+  width: 25px;
+  height: 25px;
+  display: block;
+  border-radius: 5rem;
+  text-align: center;
+  &Number  {
+    font-weight: 900;
+    @include centerer();
+  }
+  &Link:hover {
+    color: white;
   }
 }

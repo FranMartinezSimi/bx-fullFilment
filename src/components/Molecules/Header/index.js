@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
@@ -12,6 +12,7 @@ import menu from 'assets/brand/menu.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import exitSession from 'assets/brand/exitSession.svg';
 import PropTypes from 'prop-types';
+import { SocketContext } from 'context/useContextSocketSeller';
 import styles from './styles.module.scss';
 
 const urlLogin = process.env.REACT_APP_LOGOUT_URL;
@@ -20,10 +21,14 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   const history = useHistory();
   const { setUserKeyclock } = useKeyclockAuth();
   const { user, setUser } = useAuth();
+  const socket = useContext(SocketContext);
   const userData = JSON.parse(user);
+  const userActive1 = userData.credential.accountId;
   const userActive = userData.credential.user.name ? userData.credential.user.name : 'no encontrado';
   const [rememberShipedge, setRememberShipedge] = useState(true);
   const [logOutCard, setLogOutCart] = useState(false);
+  const [notifyCard, setNotifyCart] = useState(false);
+  const [responseSocket, setResponseSocket] = useState([]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -31,7 +36,19 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
   };
   const handleClickUser = (e) => {
     e.preventDefault();
+    if (notifyCard) {
+      setNotifyCart(false);
+    }
     setLogOutCart(!logOutCard);
+  };
+  const handleClickNotify = (e) => {
+    e.preventDefault();
+    if (logOutCard) {
+      setLogOutCart(false);
+    }
+    if (responseSocket.length > 0) {
+      setNotifyCart(!notifyCard);
+    }
   };
   const handleClickRemember = () => {
     setRememberShipedge(!rememberShipedge);
@@ -72,6 +89,12 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
         logOut();
       });
   };
+
+  useEffect(() => {
+    socket.on(`client${userActive1}`, (data) => {
+      setResponseSocket([...responseSocket, data]);
+    });
+  }, [socket, responseSocket]);
   return (
     <header className={styles.header}>
       <Card className={`${logOutCard ? '' : 'd-none'} ${styles.headerCard} shadow`}>
@@ -110,6 +133,35 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           </li>
         </ul>
       </Card>
+      {responseSocket.length > 0 && (
+        <Card className={`${notifyCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onBlur={() => setNotifyCart(false)}>
+          <ul>
+            <li>
+              <ul className="d-flex justify-content-between">
+                <li className="me-4"><h5>Notificaciones</h5></li>
+                <li className="">
+                  <a href="#!" onClick={(e) => { e.preventDefault(); setResponseSocket([]); }}>
+                    <small>Borrar todo</small>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            {responseSocket.length > 0 && responseSocket.map((item) => (
+              <li key="id">
+                <a href="#!" onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${item.ticktId}`); }}>
+                  El ticket
+                  {' '}
+                  {item.numTicket}
+                  {' '}
+                  cambió de estado a
+                  {' '}
+                  {item.statusDesc}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
       <ul className="d-flex w-100 justify-content-end align-items-center my-2">
         <li className="px-4 d-none">
           <a href="!#" onClick={handleClick}>
@@ -117,16 +169,23 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
           </a>
         </li>
         <li className="d-flex">
-          <img src={alarm} alt="Notificaciones" className="d-none" />
           <img src={bento} alt="Suite" className="d-none" />
-          <img src={avatar} alt="Cuenta" />
+          <a href="#!" className={`position-relative me-4 pt-2 ${styles.headerNotifyLink}`} onClick={handleClickNotify}>
+            <img src={alarm} alt="Notificaciones" className="w-100" width="50" />
+            {responseSocket.length > 0 && (
+              <span className={styles.headerNotify}>
+                <span className={styles.headerNotifyNumber}>{responseSocket.length}</span>
+              </span>
+            )}
+          </a>
           <a href="!#" onClick={handleClickUser} className="d-flex pe-5">
-            <p>
+            <img src={avatar} alt="Cuenta" width="50" />
+            <p className="d-none">
               {userActive}
               <br />
               <small>Fulfillment</small>
             </p>
-            <img src={arrowDown} alt="Down" width="20" />
+            <img src={arrowDown} alt="Down" width="20" className="d-none" />
           </a>
         </li>
       </ul>
@@ -135,7 +194,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
 };
 
 Header.defaultProps = {
-  setActiveNavbar: () => {},
+  setActiveNavbar: () => { },
 };
 
 Header.propTypes = {
