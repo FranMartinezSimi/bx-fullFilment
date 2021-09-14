@@ -14,8 +14,9 @@ const Card = ({
   handleBack,
   footer,
   cardBackground,
+  onMouseLeave,
 }) => (
-  <div className={`card py-4 px-3 ${className} ${styles.mainCard}`} style={{ borderRadius: '15px', border: 'none', backgroundImage: `url(${cardBackground})` }}>
+  <div className={`card py-4 px-3 ${className} ${styles.mainCard}`} style={{ borderRadius: '15px', border: 'none', backgroundImage: `url(${cardBackground})` }} onMouseLeave={onMouseLeave}>
     {title
       ? (
         <ul className="d-flex w-100 justify-content-between">
@@ -60,6 +61,7 @@ Card.defaultProps = {
   handleClose: () => {},
   back: false,
   handleBack: () => {},
+  onMouseLeave: () => {},
   footer: null,
   cardBackground: '',
 };
@@ -73,6 +75,7 @@ Card.propTypes = {
   handleClose: PropTypes.func,
   back: PropTypes.bool,
   handleBack: PropTypes.func,
+  onMouseLeave: PropTypes.func,
   footer: PropTypes.node,
   cardBackground: PropTypes.string,
 };

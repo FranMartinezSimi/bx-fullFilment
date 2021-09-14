@@ -27,13 +27,32 @@ const FormTicket = ({
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [orderExist, setOrderExist] = useState(false);
   const [ticketNumber, setTicketNumber] = useState('');
   const [error, setError] = useState({
     motivo: false,
     descTicket: false,
   });
   const DATE = new Date();
+  let component;
 
+  if (orderExist) {
+    component = (
+      <p>
+        ¡Se ha producido un error de comunicación con los
+        <br />
+        servidores, vuelve a intentarlo!
+      </p>
+    );
+  } else {
+    component = (
+      <p>
+        ¡Ya existe un ticket asociado al número de órden
+        <br />
+        por favor espera que se cierre !
+      </p>
+    );
+  }
   const handleClick = (e) => {
     e.preventDefault();
     history.push('/incidencias');
@@ -63,6 +82,7 @@ const FormTicket = ({
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setOrderExist(false);
     if (form.motivo === '') {
       setError((state) => ({
         ...state,
@@ -105,6 +125,9 @@ const FormTicket = ({
       })
       .catch((err) => {
         console.log('err', err);
+        if (err.status === 500) {
+          setOrderExist(true);
+        }
         setFetchError(true);
         setLoading(false);
         setBtnDisabled(false);
@@ -133,11 +156,7 @@ const FormTicket = ({
             <img src="/bgerrors.png" alt="Proceso incompleto" width="150" />
           </li>
           <li className="py-4" style={{ fontSize: 16 }}>
-            <p>
-              ¡Se ha producido un error de comunicación con los
-              <br />
-              servidores, vuelve a intentarlo!
-            </p>
+            {component}
           </li>
           <li>
             <Button
