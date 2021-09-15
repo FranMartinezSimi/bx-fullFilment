@@ -11,6 +11,7 @@ import Onboarding from './pages/onboarding';
 import Errors from './pages/ordenes/subir-ordenes/UpdatedWidthErrors';
 import Inventory from './pages/inventarios';
 import Issues from './pages/incidencias';
+import Reposicion from './pages/reposicion';
 import IssueDetail from './pages/incidencias/IssueDetail';
 import UpdateOrders from './pages/ordenes/subir-ordenes';
 
@@ -51,6 +52,9 @@ const App = () => {
           </Route>
           <Route path="/incidencia/:id">
             <IssueDetail />
+          </Route>
+          <Route path="/reposicion">
+            <Reposicion />
           </Route>
           <Route exact path="/ordenes/subir-ordenes">
             <UpdateOrders />
