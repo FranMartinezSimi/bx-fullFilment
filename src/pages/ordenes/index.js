@@ -141,7 +141,7 @@ const Orders = () => {
       accessor: 'trackingNumber',
     },
     {
-      Header: 'Nº referencia',
+      Header: 'Nº Referencia',
       accessor: 'orderNumber',
     },
     {

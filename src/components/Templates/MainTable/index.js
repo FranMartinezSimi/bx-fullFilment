@@ -28,6 +28,7 @@ function MainTable({
   columns,
   data,
   handleClick,
+  handleClickInventory,
   handleClickUpdate,
   hadleClickDropDown,
   update,
@@ -87,6 +88,7 @@ function MainTable({
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
         handleClick={handleClick}
+        handleClickInventory={handleClickInventory}
         handleClickUpdate={handleClickUpdate}
         hadleClickDropDown={hadleClickDropDown}
         update={update}

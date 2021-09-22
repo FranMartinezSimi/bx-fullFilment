@@ -27,7 +27,7 @@ const GlobalFilter = ({
   const [startDate, setStartDate] = useState(DATE);
   const [endDate, setEndDate] = useState(DATE);
 
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+  const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
       type="button"
       className={`form-control text-start ${styles.input}`}
@@ -112,7 +112,7 @@ const GlobalFilter = ({
                     selectsStart
                     startDate={startDate}
                     endDate={endDate}
-                    customInput={<ExampleCustomInput />}
+                    customInput={<CustomInput />}
                     maxDate={Date.now()}
                   />
                 </li>
@@ -129,7 +129,7 @@ const GlobalFilter = ({
                     endDate={endDate}
                     minDate={startDate}
                     maxDate={Date.now()}
-                    customInput={<ExampleCustomInput />}
+                    customInput={<CustomInput />}
                   />
                 </li>
                 <li className={`${styles.itemLast} mt-3`}>

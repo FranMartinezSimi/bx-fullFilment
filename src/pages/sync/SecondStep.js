@@ -121,7 +121,7 @@ const SecondStep = ({ setSelectedItem }) => {
             </div>
             <ol className={`${styles.orderedList} p-0 mt-5`}>
               <li>
-                <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{ fontSize: '18px' }}>Ingresa a este link a Shipedge</a>
+                <a href="https://bx1.shipedge.com/login.php" target="_blank" rel="noreferrer" className="display-font" style={{ fontSize: '18px' }}>Ingresa con este link a Shipedge</a>
               </li>
               <li>
                 <p className="display-font d-inline" style={{ fontSize: '18px' }}>Copia tu Account ID y Key, (sigue los pasos de la imagen) y luego pégala en esta pantalla.</p>
