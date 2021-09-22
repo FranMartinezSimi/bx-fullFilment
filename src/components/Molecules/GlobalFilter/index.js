@@ -37,8 +37,8 @@ const GlobalFilter = ({
             <li className="me-4 position-relative">
               <input
                 value={value || ''}
-                className="form-control ps-2 pe-4"
-                style={{ borderRadius: '50rem', border: '1px solid #1A6F99' }}
+                className="form-control px-4"
+                style={{ borderRadius: '50rem', border: '1px solid #1A6F99', minWidth: '200px' }}
                 onChange={(e) => {
                   setValue(e.target.value);
                   onChange(e.target.value);
