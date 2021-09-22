@@ -15,12 +15,11 @@ const FormReplenishment = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
-  const [dataToUpload, setDataToUpload] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);
-  const [btnDisabled, setBtnDisabled] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(true);
   const [sellerData, setSellerData] = useState({
     emailContact: '',
     nameContact: '',
@@ -34,6 +33,7 @@ const FormReplenishment = () => {
     schedule: startDate,
     accountId: userActive,
     data: {
+      expected_delivery_date: startDate,
       warehouse: 'bx1',
       key: userData.credential.key,
       supplier_name: '',
@@ -74,6 +74,8 @@ const FormReplenishment = () => {
   };
 
   const validateData = () => {
+    setBtnDisabled(true);
+
     let itemsWhitErrors = [];
     let count = 0;
 
@@ -110,17 +112,17 @@ const FormReplenishment = () => {
     });
 
     if (count > 0) {
+      console.log('count', count);
       setDataWhitErrors(itemsWhitErrors);
     }
 
     if (count === 0 && dataToValidate.length) {
       const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
         sku: item.SKU,
-        cantida: item.CANTIDAD,
-        descipción: item.DESCRIPCION,
+        qty: item.CANTIDAD,
+        desciption: item.DESCRIPCION,
       }));
       setDataWhitErrors([]);
-      setDataToUpload(dataToSendFormat);
       setForm({
         ...form,
         data: {
@@ -128,12 +130,12 @@ const FormReplenishment = () => {
           items: dataToSendFormat,
         },
       });
+      setBtnDisabled(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (form.data.supplier_name === '') {
       setError((state) => ({
         ...state,
@@ -146,32 +148,28 @@ const FormReplenishment = () => {
     }
 
     setBtnDisabled(true);
-    setLoading(true);
 
-    const formdata = new FormData();
-    formdata.append('archivo', selectedFiles[0]);
-    formdata.append('motivo', form.motivo);
-    formdata.append('descTicket', form.descTicket);
-    formdata.append('clienteID', form.clienteID);
-    formdata.append('orderId', form.orderId);
+    // const formdata = new FormData();
+    console.log('archivo', selectedFiles[0]);
 
+    setBtnDisabled(true);
     clientFetch('bff/v1/replenishment/addReplenishment', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
-      body: formdata,
-    }, { withFile: true })
+      body: form,
+    })
       .then((data) => {
         console.log(data);
         setTicketCreated(true);
         setLoading(false);
-        setBtnDisabled(false);
+        setBtnDisabled(true);
       })
       .catch((err) => {
         console.log('err', err);
         setFetchError(true);
         setLoading(false);
-        setBtnDisabled(false);
+        setBtnDisabled(true);
       });
   };
 
@@ -198,9 +196,6 @@ const FormReplenishment = () => {
   }, []);
 
   useEffect(() => {
-    console.log('dataToValidate', dataToValidate);
-    console.log('dataWhitErrors', dataWhitErrors);
-    console.log('dataToUpload', dataToUpload);
     validateData();
   }, [dataToValidate]);
   return (
@@ -360,9 +355,11 @@ const FormReplenishment = () => {
                       size="small"
                       title="Carga o arrastra el archivo .csv o .xlx"
                       setDataToValidate={setDataToValidate}
-                      setDataToUpload={setDataToUpload}
                       setDataWhitErrors={setDataWhitErrors}
                     />
+                    {dataWhitErrors.length > 0 && (
+                      <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
+                    )}
                   </div>
                 </div>
                 <div className="col-12 text-center">
