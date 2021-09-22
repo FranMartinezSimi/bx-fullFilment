@@ -34,7 +34,7 @@ const Pagination = ({
               >
                 {[10, 20, 30, 40, 50].map((itemPageSize) => (
                   <option key={itemPageSize} value={itemPageSize}>
-                    item por pág:
+                    Item por pág:
                     {' '}
                     {itemPageSize}
                   </option>

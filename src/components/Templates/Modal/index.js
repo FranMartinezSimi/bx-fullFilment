@@ -13,7 +13,7 @@ const Modal = ({
     unmountOnExit
   >
     <div className={styles.modal}>
-      <div className={`${size === 'sm' ? styles.sm : styles.md} ${size === 'lg' ? styles.lg : ''}  bg-white shadow m-auto p-3 border-0`} style={{ borderRadius: '16px' }}>
+      <div className={`${size === 'sm' ? styles.sm : styles.md} ${size === 'lg' ? styles.lg : ''} ${size === 'xl' ? styles.xl : ''}  bg-white shadow m-auto p-3 border-0`} style={{ borderRadius: '16px' }}>
         <div className="modal-header py-2 border-0 d-flex justify-content-between align-items-center mb-2">
           <div>
             <h5 className={`${styles.modalTitle} display-font mb-1`}>{title}</h5>

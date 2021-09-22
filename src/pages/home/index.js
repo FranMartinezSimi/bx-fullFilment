@@ -79,7 +79,7 @@ const Home = () => {
       onClick={(e) => handleInventory(e, '/ordenes')}
     >
       <p className="text-end me-2">
-        <small>ir a ordenes&gt;</small>
+        <small>ir a órdenes &gt;</small>
       </p>
     </a>
   );
@@ -225,7 +225,6 @@ const Home = () => {
               footer={componentOrders}
             >
               <h4 className="display-font">Estado de tus órdenes</h4>
-              <p>Ingresa mensualmente</p>
               {isLoading && (
                 <div className="mt-5 pt-5">
                   <Spinner />

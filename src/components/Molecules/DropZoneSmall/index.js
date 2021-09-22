@@ -4,7 +4,7 @@ import plus from 'assets/brand/plus.svg';
 import styles from './styles.module.scss';
 
 const Dropzone = ({
-  boxText, title, subTitle, setSelectedFiles, className, size, internalTitle, nonvalidate,
+  boxText, title, subTitle, setSelectedFiles,
 }) => {
   const [files, setFiles] = useState([]);
 
@@ -32,19 +32,15 @@ const Dropzone = ({
     setFiles([]);
   };
 
-  const component = nonvalidate ? (
-    <div className="text-center">
-      <h6 className="display-font text-center font-bold" style={{ fontSize: 18 }}>
-        Validación completa
-      </h6>
-      <img src="/bgsuccess.jpg" alt="Validación completa" width="100" />
-    </div>
-  ) : '';
-
   return (
-    <section className={className}>
+    <section className="container">
       {files.length && files.length > 0
-        ? component : (
+        ? (
+          <div className="text-center">
+            <h6 className="display-font text-center font-bold" style={{ fontSize: 18 }}>Validación completa</h6>
+            <img src="/bgsuccess.jpg" alt="Validación completa" width="100" />
+          </div>
+        ) : (
           <>
             {title && (
               <h6 className="display-font text-center font-bold" style={{ fontSize: 18 }}>{title}</h6>
@@ -54,35 +50,16 @@ const Dropzone = ({
                 {subTitle}
               </p>
             )}
-            <div {...getRootProps({ className: `${styles.dropzone} ${size === 'small' ? styles.dropzoneSmall : styles.dropzoneNormal}` })}>
+            <div {...getRootProps({ className: styles.dropzone })}>
               <input {...getInputProps()} />
-              <div className={`${size === 'small' ? 'd-flex align-items-center' : ''}`}>
-                <div className={`${size === 'small' ? 'me-3 my-2' : 'my-3 text-center'}`}>
-                  <img src={plus} alt="Ordenes" width={`${size === 'small' ? '30' : '50'}`} />
+              <span>
+                <div className="my-3 text-center">
+                  <img src={plus} alt="Ordenes" width="50" />
                 </div>
-                <ul className="mb-0">
-                  {internalTitle && (
-                    <li>
-                      <p className="mb-0 mt-2">
-                        <b>
-                          { internalTitle }
-                        </b>
-                      </p>
-                    </li>
-                  ) }
-                  <li>
-                    {size === 'small' ? (
-                      <small style={{ fontSize: 10 }}>
-                        {boxText}
-                      </small>
-                    ) : (
-                      <p>
-                        {boxText}
-                      </p>
-                    )}
-                  </li>
-                </ul>
-              </div>
+                <p>
+                  {boxText}
+                </p>
+              </span>
             </div>
           </>
         )}

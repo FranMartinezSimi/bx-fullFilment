@@ -128,6 +128,8 @@ $palette: (
     enproceso: #80D5FF,
     resuelto: #7DD59D,
     cerrado: #7DD59D,
+		exitoso:#7DD59D,
+		error: #FE6767,
 );
 
 @each $name, $color in $palette {
@@ -136,4 +138,8 @@ $palette: (
     color: darken($color, 40%);
     border-radius: 4px;
   }
+}
+
+.react-datepicker__header--time{
+  min-height: 55px;
 }

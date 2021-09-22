@@ -141,7 +141,7 @@ const Orders = () => {
       accessor: 'trackingNumber',
     },
     {
-      Header: 'Nº referencia',
+      Header: 'Nº Referencia',
       accessor: 'orderNumber',
     },
     {
@@ -151,7 +151,7 @@ const Orders = () => {
       Cell: ({ row }) => {
         const component = row.original.statusInc && row.original.statusInc.length > 0 ? (
           <small className={`badge--${row.original.statusInc.replace(' ', '').toLowerCase()} px-4 py-1`}>
-            { row.original.statusInc }
+            {row.original.statusInc}
           </small>
         ) : (
           <a

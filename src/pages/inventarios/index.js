@@ -8,10 +8,12 @@ import MainTable from 'components/Templates/MainTable';
 import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
+import FormReplenishment from 'components/Molecules/FormReplenishment';
 
 const Inventory = () => {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
+  const [modalInventory, setModalInventory] = useState(false);
   const [list, setList] = useState([]);
   const [inventoryId, setInventoryId] = useState('');
   const [skuId, setSkuId] = useState('');
@@ -76,6 +78,11 @@ const Inventory = () => {
     component = <Spinner />;
   }
 
+  const handleClickInventory = (e) => {
+    e.preventDefault();
+    setModalInventory(true);
+  };
+
   useEffect(() => {
     clientFetch('bff/v1/inventory/getProductsList', {
       headers: {
@@ -104,11 +111,17 @@ const Inventory = () => {
           <MainTable
             columns={columns}
             data={data}
+            handleClickInventory={handleClickInventory}
           />
         )
         : component}
       <Modal title={`Detalle SKU ${skuId}`} subtitle={`ID de producto ${inventoryId}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
         <InventoryDetail id={inventoryId} />
+      </Modal>
+      <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
+        <FormReplenishment
+          setModalTicket={setModalInventory}
+        />
       </Modal>
     </PageLayout>
   );

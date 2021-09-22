@@ -1,17 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from 'context/userContex';
-import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
-import MainTable from 'components/Templates/MainTable';
+import ReplenishmentTable from 'components/Templates/ReplenishmentTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 
-const Incidencias = () => {
+const Reposition = () => {
   const { user } = useAuth();
-  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
@@ -20,49 +18,30 @@ const Incidencias = () => {
 
   const columns = useMemo(() => [
     {
-      Header: 'Nº de orden',
-      accessor: 'orderId',
-    },
-    {
-      Header: 'Nº ticket',
-      accessor: 'numTicket',
-    },
-    {
-      Header: 'Motivo',
-      accessor: 'motivo',
-    },
-    {
-      Header: 'F. Creación',
-      accessor: 'fechaCreacion',
+      Header: 'ID de carga ',
+      accessor: 'replenishmentId',
     },
     {
       Header: 'Estado',
-      accessor: 'status',
+      accessor: 'estado',
       Cell: ({ row }) => (
-        <small className={`badge--${row.original.status.replace(' ', '').toLowerCase()} px-4 py-1`}>
-          {row.original.status}
+        <small className={
+          `badge--${row.original.estado.replace(' ', '').toLowerCase()}
+          ${row.original.estado.toLowerCase() === 'exitoso' ? 'text-white' : ''}
+          px-4 py-1`
+        }
+        >
+          {row.original.estado}
         </small>
       ),
     },
     {
-      Header: 'F. Cierre',
-      accessor: 'fechaCierre',
+      Header: 'Fecha',
+      accessor: 'fecha',
     },
     {
-      accessor: 'ver',
-      isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => { e.preventDefault(); history.push(`/incidencia/${table.row.original._id}`); }}
-          role="button"
-          className="font-weight-bold font-weight-bold"
-        >
-          <small className="d-block text-complementary-color">
-            Ver Más &gt;
-          </small>
-        </a>
-      ),
+      Header: 'N° productos',
+      accessor: 'numProducts',
     },
   ], []);
 
@@ -75,16 +54,38 @@ const Incidencias = () => {
   }
 
   const userData = JSON.parse(user);
-  const userActive = userData.credential.accountId;
+  const { accountId } = userData.credential;
 
-  useEffect(() => {
-    clientFetch('ticket/v1/ticketera/getTickets', {
+  const getDataByDate = (startDate, endDate) => {
+    setLoading(true);
+    clientFetch('bff/v1/replenishment/findReplenishmentsDate', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: {
-        accountId: userActive,
-        rol: 'client',
+        startDate,
+        endDate,
+        accountId,
+      },
+    })
+      .then((issues) => {
+        setLoading(false);
+        setList(issues);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    clientFetch('bff/v1/replenishment/findReplenishments', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+
+      },
+      body: {
+        accountId,
       },
     })
       .then((issues) => {
@@ -97,19 +98,22 @@ const Incidencias = () => {
       });
   }, []);
   return (
-    <PageLayout title="Lista de tickets con incidencias">
-      <PageTitle title="Lista de tickets con incidencias" className="mb-5" />
+    <PageLayout title="Reposiciones">
+      <PageTitle title="Listado reposición de inventario" subtitle="Te mostramos el estado de las cargas de tu reposición" />
+
       {list && !loading
         ? (
-          <MainTable
+          <ReplenishmentTable
             columns={columns}
             data={data}
-            noFilters
+            getDataByDate={getDataByDate}
           />
         )
         : component}
+
     </PageLayout>
+
   );
 };
 
-export default Incidencias;
+export default Reposition;
