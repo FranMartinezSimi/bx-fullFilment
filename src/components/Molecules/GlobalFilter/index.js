@@ -3,7 +3,10 @@ import { useAsyncDebounce } from 'react-table';
 import zoom from 'assets/brand/zoom.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
+import calendar from 'assets/brand/calendar.svg';
 import PropTypes from 'prop-types';
+import DatePikerAtom from 'components/Atoms/DatePiker';
+import RepositionDropDown from 'components/Atoms/RepositionDropDown';
 
 const GlobalFilter = ({
   preGlobalFilteredRows,
@@ -27,6 +30,7 @@ const GlobalFilter = ({
     setDropDown(!dropDown);
   };
 
+  const checkReposition = (window.location.pathname === '/reposition');
   const checkUrl = (window.location.pathname === '/inventario');
   return (
     <div className="container-fluid px-2">
@@ -55,31 +59,58 @@ const GlobalFilter = ({
         </div>
         <div className="col-md-6">
           <ul className="d-flex justify-content-md-end align-items-center">
-            {!checkUrl && (
+            {checkUrl && (
               <li className="me-5">
                 <a href="#!" className="btn btn-complementary" onClick={handleClick}>
                   Subir Órdenes
                 </a>
               </li>
             )}
-            <li>
-              <a href="#!" onClick={handleClickDropDown} className="position-relative">
+            {checkReposition && (
+              <li className="me-5">
                 <ul className="d-flex align-items-center bg-white px-4" style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}>
                   <li>
-                    <img src={downloadArrow} alt="download" width="14" />
+                    <img src={calendar} alt="download" width="14" />
                   </li>
-                  <li className="mx-2">
-                    <span>
-                      Descargar
-                      {' '}
-                      {!checkUrl ? 'órdenes' : 'inventario'}
-                    </span>
-                  </li>
-                  <li>
-                    <img src={arrowDown} alt="Show" width="12" />
-                  </li>
+                  <DatePikerAtom />
                 </ul>
-              </a>
+              </li>
+            )}
+            <li>
+              {checkUrl && (
+                <a href="#!" onClick={handleClickDropDown} className="position-relative">
+                  <ul className="d-flex align-items-center bg-white px-4" style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}>
+                    <li>
+                      <img src={downloadArrow} alt="download" width="14" />
+                    </li>
+                    <li className="mx-2">
+                      <RepositionDropDown />
+                    </li>
+                    <li>
+                      <img src={arrowDown} alt="Show" width="12" />
+                    </li>
+                  </ul>
+                </a>
+              )}
+              {checkReposition && (
+                <a href="#!" onClick={handleClickDropDown} className="position-relative">
+                  <ul className="d-flex align-items-center bg-white px-4" style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}>
+                    <li>
+                      <img src={calendar} alt="download" width="14" />
+                    </li>
+                    <li className="mx-2">
+                      <span>
+                        Estado de carga
+                        {' '}
+                      </span>
+                    </li>
+                    <li>
+                      <img src={arrowDown} alt="Show" width="12" />
+                    </li>
+                  </ul>
+                </a>
+              )}
+
               <div
                 className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
                 style={{ width: 190, borderRadius: 15 }}
@@ -110,10 +141,11 @@ const GlobalFilter = ({
 };
 
 GlobalFilter.defaultProps = {
-  globalFilter: () => {},
-  setGlobalFilter: () => {},
-  handleClick: () => {},
-  hadleClickDropDown: () => {},
+  globalFilter: () => { },
+  setGlobalFilter: () => { },
+  handleClick: () => { },
+  hadleClickDropDown: () => { },
+
 };
 
 GlobalFilter.propTypes = {

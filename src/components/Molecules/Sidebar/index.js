@@ -38,7 +38,7 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
       name: 'Reposiciones',
       img: Tag,
       active: true,
-      route: '/reposicion',
+      route: '/reposition',
     },
   ];
   const secondaryLinks = [

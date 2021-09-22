@@ -1,0 +1,16 @@
+.input {
+  border-color: #27A6E5 !important;
+  height: 40px;
+  max-width: 254px;
+}
+
+.item {
+  flex: 1;
+  width: 50%;
+}
+
+.itemLast {
+  flex: 1;
+  min-width: 100%;
+  text-align: end;
+}
