@@ -6,6 +6,7 @@ import DropZone from 'components/Molecules/DropZone';
 import Button from 'components/Atoms/Button';
 import DatePicker from 'react-datepicker';
 import UploadCsv from 'components/Molecules/UploadCsv';
+import plantilla from 'assets/Masiva shipedge Reposición - Plantilla.csv';
 
 const FormReplenishment = () => {
   const history = useHistory();
@@ -324,6 +325,7 @@ const FormReplenishment = () => {
                       Fecha de inicio
                     </p>
                     <DatePicker
+                      dateFormat="dd/MM/yyyy hh:mm:ss"
                       showTimeSelect
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
@@ -346,14 +348,23 @@ const FormReplenishment = () => {
                       noValidation
                     />
                   </div>
-                  <p className="text-center my-4" style={{ fontSize: 14 }}>Descarga la plantilla y luego súbelo en formato .csv</p>
+                  <div className="text-center">
+                    <p className="text-center my-4" style={{ fontSize: 14 }}>Descarga la plantilla y luego súbelo en formato .csv</p>
+                    <a
+                      className="btn btn-complementary px-5"
+                      href={plantilla}
+                      download
+                    >
+                      Descarga plantilla de Resposición de productos
+                    </a>
+                  </div>
                   <div className="form-group my-3 px-5">
                     <p className="mb-2">
                       Planilla de Reposición
                     </p>
                     <UploadCsv
                       size="small"
-                      title="Carga o arrastra el archivo .csv o .xlx"
+                      title="Carga o arrastra el archivo .csv"
                       setDataToValidate={setDataToValidate}
                       setDataWhitErrors={setDataWhitErrors}
                     />
@@ -376,7 +387,6 @@ const FormReplenishment = () => {
                           type="checkbox"
                           id="flexCheckDefault"
                           name="flexCheckDefault"
-                          defaultChecked
                         />
                         <span className="ps-3">
                           Acepta los
