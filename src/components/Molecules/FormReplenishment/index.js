@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import UploadCsv from 'components/Molecules/UploadCsv';
 import plantilla from 'assets/Masiva shipedge Reposición - Plantilla.csv';
 
-const FormReplenishment = () => {
+const FormReplenishment = ({ setModalTicket }) => {
   const history = useHistory();
   const { user } = useAuth();
   const userData = JSON.parse(user);
@@ -238,7 +238,7 @@ const FormReplenishment = () => {
             <Button
               className="btn btn-secondary fs-5 px-5"
               text="Aceptar"
-              onClick={handleClick}
+              onClick={() => setModalTicket(false)}
             />
           </li>
         </ul>
