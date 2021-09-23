@@ -18,7 +18,7 @@ const Dropzone = ({
     getInputProps,
   } = useDropzone({
     onDrop,
-    accept: 'image/jpeg, image/png, pdf',
+    accept: 'image/jpeg, image/png, application/pdf',
     multiple: false,
   });
 

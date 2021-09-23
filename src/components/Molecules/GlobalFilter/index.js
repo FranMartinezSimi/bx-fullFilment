@@ -65,7 +65,7 @@ const GlobalFilter = ({
             ) : (
               <li className="me-5">
                 <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
-                  Preparar Reposición
+                  Programar Reposición
                 </a>
               </li>
             )}
