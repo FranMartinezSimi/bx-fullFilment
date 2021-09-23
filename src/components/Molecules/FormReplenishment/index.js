@@ -6,7 +6,7 @@ import DropZone from 'components/Molecules/DropZone';
 import Button from 'components/Atoms/Button';
 import DatePicker from 'react-datepicker';
 import UploadCsv from 'components/Molecules/UploadCsv';
-import plantilla from 'assets/Masiva shipedge Reposición - Plantilla.csv';
+import plantilla from 'assets/plantilla.csv';
 
 const FormReplenishment = ({ setModalTicket }) => {
   const history = useHistory();
