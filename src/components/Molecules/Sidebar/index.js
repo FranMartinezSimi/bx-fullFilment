@@ -21,12 +21,32 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
       img: Todo,
       active: true,
       route: '/ordenes',
+      children: [
+        {
+          name: 'Carga de Órdenes',
+          route: '/ordenes/subir-ordenes',
+        },
+        {
+          name: 'Listado de Órdenes',
+          route: '/ordenes',
+        },
+      ],
     },
     {
       name: 'Inventario',
       img: Box,
       active: true,
       route: '/inventario',
+      children: [
+        {
+          name: 'Listado de Inventario',
+          route: '/inventario',
+        },
+        {
+          name: 'Listado de Reposición',
+          route: '/reposition',
+        },
+      ],
     },
     {
       name: 'Incidencias',
@@ -58,7 +78,7 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
   };
   return (
     <nav className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose} shadow bg-white py-4 px-3 px-lg-4`}>
-      <a href="!#" onClick={handleClick} className={styles.navigationToggle} style={{ left: activeNavbar ? '135px' : '75px' }}>
+      <a href="!#" onClick={handleClick} className={styles.navigationToggle} style={{ left: activeNavbar ? '185px' : '75px' }}>
         <span className={styles.navigationToggleSymbol}>
           {activeNavbar ? '<' : '>'}
         </span>
@@ -81,7 +101,17 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
                     </div>
                   </div>
                 </Link>
-
+                {item.children?.length > 0 && (
+                  <ul className={`ps-5 ${activeNavbar ? styles.navigationSubItemTextOpen : styles.navigationSubItemTextColse}`}>
+                    {item.children.map((subItem) => (
+                      <li className="py-1">
+                        <Link to={`${subItem.route}`}>
+                          {subItem.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>

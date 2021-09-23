@@ -10,6 +10,7 @@ const GlobalFilter = ({
   globalFilter,
   setGlobalFilter,
   handleClick,
+  handleClickInventory,
   update,
   exportData,
   hadleClickDropDown,
@@ -37,7 +38,7 @@ const GlobalFilter = ({
               <input
                 value={value || ''}
                 className="form-control px-4"
-                style={{ borderRadius: '50rem', border: '1px solid #1A6F99' }}
+                style={{ borderRadius: '50rem', border: '1px solid #1A6F99', minWidth: '200px' }}
                 onChange={(e) => {
                   setValue(e.target.value);
                   onChange(e.target.value);
@@ -55,10 +56,16 @@ const GlobalFilter = ({
         </div>
         <div className="col-md-6">
           <ul className="d-flex justify-content-md-end align-items-center">
-            {!checkUrl && (
+            {!checkUrl ? (
               <li className="me-5">
                 <a href="#!" className="btn btn-complementary" onClick={handleClick}>
                   Subir Órdenes
+                </a>
+              </li>
+            ) : (
+              <li className="me-5">
+                <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
+                  Programar Reposición
                 </a>
               </li>
             )}

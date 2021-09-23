@@ -88,7 +88,7 @@ const OrderDetail = ({
                 <div className="me-4">
                   <img src={Calendar} alt="Lista" width="15" />
                 </div>
-                <p className="me-4 display-font" style={{ width: '140px', fontSize: 14, fontWeight: 800 }}>Fecha orden</p>
+                <p className="me-4 display-font" style={{ width: '140px', fontSize: 14, fontWeight: 800 }}>Fecha Orden</p>
                 <p>{orderData.date}</p>
               </li>
               <li className="d-flex my-3">

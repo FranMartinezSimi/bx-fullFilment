@@ -193,7 +193,7 @@ const FormTicket = ({
       {
         !fetchError && !ticketCreated && (
           <>
-            <h6 className="display-font text-center font-bold" style={{ fontSize: 22 }}>Crear ticket</h6>
+            <h6 className="display-font text-center font-bold" style={{ fontSize: 22 }}>Crear Ticket</h6>
             <p className="text-center">
               {`Fecha: ${DATE.getDate()}/${DATE.getMonth()}/${DATE.getFullYear()}`}
             </p>
@@ -211,7 +211,9 @@ const FormTicket = ({
                   >
                     <option value="">Selecciona la opción del motivo</option>
                     {options.map((item) => (
-                      <option value={item.motivo} key={item._id}>{item.motivo}</option>
+                      <option value={item.motivo} key={item._id}>
+                        {item.motivo}
+                      </option>
                     ))}
                   </select>
                 </label>
@@ -240,6 +242,7 @@ const FormTicket = ({
                   minSize={0}
                   maxSize={5242880}
                   setSelectedFiles={setSelectedFiles}
+                  className="container"
                 />
               </div>
               <div className="text-center">

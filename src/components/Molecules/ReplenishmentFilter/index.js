@@ -5,29 +5,29 @@ import DatePicker from 'react-datepicker';
 import Button from 'components/Atoms/Button';
 import zoom from 'assets/brand/zoom.svg';
 import calendar from 'assets/brand/calendar.svg';
-import arrowDown from 'assets/brand/arrow-down.svg';
+// import arrowDown from 'assets/brand/arrow-down.svg';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const list = ['Estado del ticket', 'Abierto', 'Cerrado'];
+// const list = ['Exitoso', 'En progreso', 'Error'];
 const GlobalFilter = ({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
   update,
-  setFilter,
+  // setFilter,
   getDataByDate,
 }) => {
   const count = preGlobalFilteredRows.length;
   const [ticketValue, setTicketValue] = useState(globalFilter);
-  const [dropDownState, setDropDownState] = useState(false);
+  // const [dropDownState, setDropDownState] = useState(false);
   const [dropDownDate, setDropDownDate] = useState(false);
 
   const DATE = new Date();
   const [startDate, setStartDate] = useState(DATE);
   const [endDate, setEndDate] = useState(DATE);
 
-  const CustomInput = forwardRef(({ value, onClick }, ref) => (
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
       type="button"
       className={`form-control text-start ${styles.input}`}
@@ -37,10 +37,10 @@ const GlobalFilter = ({
       {value}
     </button>
   ));
-  const handleClickDropDownState = (e) => {
-    e.preventDefault();
-    setDropDownState(!dropDownState);
-  };
+  // const handleClickDropDownState = (e) => {
+  //   e.preventDefault();
+  //   setDropDownState(!dropDownState);
+  // };
   const handleClickDropDownDate = (e) => {
     e.preventDefault();
     setDropDownDate(!dropDownDate);
@@ -67,7 +67,7 @@ const GlobalFilter = ({
                   setTicketValue(e.target.value);
                   onChange(e.target.value);
                 }}
-                placeholder={`Buscar en ${count} items`}
+                placeholder={`Buscar en ${count} resultados`}
               />
               <span className="position-absolute" style={{ top: '5px', right: '8px' }}>
                 <img src={zoom} alt="Show" width="16" />
@@ -91,7 +91,7 @@ const GlobalFilter = ({
                   </li>
                   <li className="mx-2">
                     <span>
-                      seleccionar fecha
+                      Selecciona una fecha
                     </span>
                   </li>
                 </ul>
@@ -112,7 +112,7 @@ const GlobalFilter = ({
                     selectsStart
                     startDate={startDate}
                     endDate={endDate}
-                    customInput={<CustomInput />}
+                    customInput={<ExampleCustomInput />}
                     maxDate={Date.now()}
                   />
                 </li>
@@ -129,7 +129,7 @@ const GlobalFilter = ({
                     endDate={endDate}
                     minDate={startDate}
                     maxDate={Date.now()}
-                    customInput={<CustomInput />}
+                    customInput={<ExampleCustomInput />}
                   />
                 </li>
                 <li className={`${styles.itemLast} mt-3`}>
@@ -142,7 +142,7 @@ const GlobalFilter = ({
               </ul>
             </li>
             <li>
-              <a href="#!" onClick={handleClickDropDownState} className="position-relative">
+              {/* <a href="#!" onClick={handleClickDropDownState} className="position-relative">
                 <ul
                   className="d-flex align-items-center bg-white px-4"
                   style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}
@@ -152,30 +152,11 @@ const GlobalFilter = ({
                   </li>
                   <li className="mx-2">
                     <span>
-                      Estado del ticket
+                      Estado de carga
                     </span>
                   </li>
                 </ul>
-              </a>
-              <ul
-                className={`${dropDownState ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
-                style={{ width: 190, borderRadius: 15 }}
-                onMouseLeave={() => setDropDownState(false)}
-              >
-                {list && list.map((item) => (
-                  <li key={item} className="text-center">
-                    {item === 'Estado del ticket' ? (
-                      <a className="py-2 d-block" href="#!" onClick={() => { setFilter('status', ''); setDropDownState(false); }}>
-                        Todos
-                      </a>
-                    ) : (
-                      <a className="py-2 d-block" href="#!" onClick={() => { setFilter('status', item); setDropDownState(false); }}>
-                        {item}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
+              </a> */}
             </li>
           </ul>
         </div>
