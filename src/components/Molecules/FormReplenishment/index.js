@@ -7,6 +7,8 @@ import Button from 'components/Atoms/Button';
 import DatePicker from 'react-datepicker';
 import UploadCsv from 'components/Molecules/UploadCsv';
 import plantilla from 'assets/plantilla.csv';
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
 
 const FormReplenishment = ({ setModalTicket }) => {
   const history = useHistory();
@@ -47,12 +49,12 @@ const FormReplenishment = ({ setModalTicket }) => {
     return day !== 0 && day !== 6;
   };
 
-  const filterPassedTime = (time) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(time);
+  // const filterPassedTime = (time) => {
+  //   const currentDate = new Date();
+  //   const selectedDate = new Date(time);
 
-    return currentDate.getTime() < selectedDate.getTime();
-  };
+  //   return currentDate.getTime() < selectedDate.getTime();
+  // };
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
@@ -66,7 +68,7 @@ const FormReplenishment = ({ setModalTicket }) => {
     </button>
   ));
 
-  const handleColor = (time) => (time.getHours() > 12 ? 'text-success' : 'text-error');
+  // const handleColor = (time) => (time.getHours() > 12 ? 'text-success' : 'text-error');
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -325,15 +327,19 @@ const FormReplenishment = ({ setModalTicket }) => {
                       Fecha de inicio
                     </p>
                     <DatePicker
-                      dateFormat="dd/MM/yyyy hh:mm:ss"
+                      dateFormat="dd/MM/yyyy h:mm aa"
                       showTimeSelect
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
-                      timeClassName={handleColor}
+                      // timeClassName={handleColor}
                       customInput={<CustomInput />}
                       minDate={Date.now()}
                       filterDate={isWeekday}
-                      filterTime={filterPassedTime}
+                      // filterTime={filterPassedTime}
+                      locale="es-ES"
+                      timeIntervals={30}
+                      minTime={setHours(setMinutes(new Date(), 30), 8)}
+                      maxTime={setHours(setMinutes(new Date(), 30), 16)}
                     />
                   </div>
                   <div className="form-group mb-3 mt-5 px-5">
@@ -381,7 +387,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                   </p>
                   <ul className="d-flex align-items-center justify-content-between">
                     <li className="me-5">
-                      <label className="form-check-label" htmlFor="flexCheckDefault">
+                      <label className="form-check-label d-none" htmlFor="flexCheckDefault">
                         <input
                           className="form-check-input"
                           type="checkbox"
