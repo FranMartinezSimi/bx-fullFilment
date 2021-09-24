@@ -104,7 +104,7 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
                 {item.children?.length > 0 && (
                   <ul className={`ps-5 ${activeNavbar ? styles.navigationSubItemTextOpen : styles.navigationSubItemTextColse}`}>
                     {item.children.map((subItem) => (
-                      <li className="py-1">
+                      <li className="py-1" key={subItem.route}>
                         <Link to={`${subItem.route}`}>
                           {subItem.name}
                         </Link>

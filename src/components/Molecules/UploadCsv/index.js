@@ -107,6 +107,7 @@ const UploadCsv = ({
       accept="text/csv, .csv"
       config={{
         header: true,
+        skipEmptyLines: true,
       }}
       style={size === 'small' ? styleSmall : styleXl}
     >
