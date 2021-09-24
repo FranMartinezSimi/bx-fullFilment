@@ -115,7 +115,6 @@ const FormReplenishment = ({ setModalTicket }) => {
     });
 
     if (count > 0) {
-      console.log('count', count);
       setDataWhitErrors(itemsWhitErrors);
     }
 
@@ -336,7 +335,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                       minDate={Date.now()}
                       filterDate={isWeekday}
                       // filterTime={filterPassedTime}
-                      locale="es-ES"
+                      // locale="es-ES"
                       timeIntervals={30}
                       minTime={setHours(setMinutes(new Date(), 30), 8)}
                       maxTime={setHours(setMinutes(new Date(), 30), 16)}
