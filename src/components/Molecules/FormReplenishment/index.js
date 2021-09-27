@@ -156,7 +156,7 @@ const FormReplenishment = ({ setModalTicket }) => {
     formdata.append('schedule', form.schedule);
     formdata.append('receptionDate', form.receptionDate);
     formdata.append('accountId', form.accountId);
-    formdata.append('data', form.data);
+    formdata.append('data', JSON.stringify(form.data));
 
     setBtnDisabled(true);
     clientFetch('bff/v1/replenishment/addReplenishment', {
