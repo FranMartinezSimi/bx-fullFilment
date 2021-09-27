@@ -151,16 +151,20 @@ const FormReplenishment = ({ setModalTicket }) => {
 
     setBtnDisabled(true);
 
-    // const formdata = new FormData();
-    console.log('archivo', selectedFiles[0]);
+    const formdata = new FormData();
+    formdata.append('archivo', selectedFiles[0]);
+    formdata.append('schedule', form.schedule);
+    formdata.append('receptionDate', form.receptionDate);
+    formdata.append('accountId', form.accountId);
+    formdata.append('data', form.data);
 
     setBtnDisabled(true);
     clientFetch('bff/v1/replenishment/addReplenishment', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
-      body: form,
-    })
+      body: formdata,
+    }, { withFile: true })
       .then((data) => {
         console.log(data);
         setTicketCreated(true);
