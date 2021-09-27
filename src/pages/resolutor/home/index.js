@@ -32,15 +32,6 @@ const homeResolutor = () => {
       stroke: {
         show: false,
       },
-      // tooltip: {
-      //   custom({
-      //     series, seriesIndex, dataPointIndex,
-      //   }) {
-      //     return `${'<div class="arrow_box">'
-      //       + '<span>'}${series[seriesIndex][dataPointIndex]}</span>`
-      //       + '</div>';
-      //   },
-      // },
     },
   });
   let componentTotales;
