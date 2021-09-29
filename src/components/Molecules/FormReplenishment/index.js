@@ -71,6 +71,7 @@ const FormReplenishment = ({ setModalTicket }) => {
     setStartDate(date);
     setForm({
       ...form,
+      schedule: date,
       data: {
         ...form.data,
         expected_delivery_date: date,
