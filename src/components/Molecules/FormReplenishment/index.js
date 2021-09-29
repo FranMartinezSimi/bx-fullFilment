@@ -49,13 +49,6 @@ const FormReplenishment = ({ setModalTicket }) => {
     return day !== 0 && day !== 6;
   };
 
-  // const filterPassedTime = (time) => {
-  //   const currentDate = new Date();
-  //   const selectedDate = new Date(time);
-
-  //   return currentDate.getTime() < selectedDate.getTime();
-  // };
-
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
       type="button"
@@ -68,12 +61,22 @@ const FormReplenishment = ({ setModalTicket }) => {
     </button>
   ));
 
-  // const handleColor = (time) => (time.getHours() > 12 ? 'text-success' : 'text-error');
-
   const handleClick = (e) => {
     e.preventDefault();
     setFetchError(false);
     setTicketCreated(false);
+  };
+
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    setForm({
+      ...form,
+      schedule: date,
+      data: {
+        ...form.data,
+        expected_delivery_date: date,
+      },
+    });
   };
 
   const validateData = () => {
@@ -333,7 +336,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                       dateFormat="dd/MM/yyyy h:mm aa"
                       showTimeSelect
                       selected={startDate}
-                      onChange={(date) => setStartDate(date)}
+                      onChange={(date) => handleDateChange(date)}
                       // timeClassName={handleColor}
                       customInput={<CustomInput />}
                       minDate={Date.now()}
