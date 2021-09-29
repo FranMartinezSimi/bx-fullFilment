@@ -120,7 +120,7 @@ const LogIn = () => {
         <div className="row h-100 justify-content-end align-items-center">
           <div className="col-md-4">
             <div className={`${styles.formImg} text-center py-4 my-5`}>
-              <img src={LogoBlue} alt="BlueExpress" width="192" />
+              <img src={LogoBlue} alt="BlueExpress" width="111" />
             </div>
             <div className={`${styles.formContainer} text-center py-5 my-5 m-auto`}>
               {invalidUserError && (
