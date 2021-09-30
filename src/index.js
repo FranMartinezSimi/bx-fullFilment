@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ddInit from 'utils/dd';
 import reportWebVitals from './reportWebVitals';
 import { AuthKeyclockProvider } from './context/userKeyclockContext';
 import { AuthProvider } from './context/userContex';
 import App from './App';
+
+ddInit();
 
 ReactDOM.render(
   <AuthKeyclockProvider>
