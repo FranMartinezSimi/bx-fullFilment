@@ -28,6 +28,10 @@ const Incidencias = () => {
       accessor: 'numTicket',
     },
     {
+      Header: 'Empresa',
+      accessor: 'empresa',
+    },
+    {
       Header: 'Motivo',
       accessor: 'motivo',
     },
@@ -88,6 +92,7 @@ const Incidencias = () => {
       },
     })
       .then((issues) => {
+        console.log(issues);
         setLoading(false);
         setList(issues);
       })

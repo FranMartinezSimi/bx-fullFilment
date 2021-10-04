@@ -1,16 +1,11 @@
-.input {
-  border-color: #27A6E5 !important;
-  height: 40px;
-  max-width: 254px;
+.bg-secondary {
+    background-color: #DADADA;
 }
-
-.item {
-  flex: 1;
-  width: 50%;
-}
-
-.itemLast {
-  flex: 1;
-  min-width: 100%;
-  text-align: end;
+.text-center {
+    text-align: center!important;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
 }
