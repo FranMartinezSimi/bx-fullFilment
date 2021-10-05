@@ -1,34 +1,34 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
-import Modal from 'components/Templates/Modal';
+// import Modal from 'components/Templates/Modal';
 
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
-import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
+// import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
 import ReplenishmentTable from 'components/Templates/ReplenishmentTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-import info from 'assets/brand/info.svg';
+// import info from 'assets/brand/info.svg';
 
 const Reposition = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [activeData, setActiveData] = useState('');
+  // const [modal, setModal] = useState(false);
+  // const [activeData, setActiveData] = useState('');
   const data = useMemo(() => list, [list]);
 
   const handleClickInventory = (e) => {
     e.preventDefault();
   };
 
-  const handleClickOrderDeatil = (e, tableData) => {
-    e.preventDefault();
-    setModal(true);
-    setActiveData(tableData.row.original.replenishmentId);
-  };
+  // const handleClickOrderDeatil = (e, tableData) => {
+  //   e.preventDefault();
+  //   setModal(true);
+  //   setActiveData(tableData.row.original.replenishmentId);
+  // };
 
   const columns = useMemo(() => [
     {
@@ -57,21 +57,21 @@ const Reposition = () => {
       Header: 'N° productos',
       accessor: 'numProducts',
     },
-    {
-      Header: 'Manifiesto',
-      accessor: 'ver',
-      isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => handleClickOrderDeatil(e, table)}
-          role="button"
-          className="d-block font-weight-bold font-weight-bold"
-        >
-          <img src={info} alt="Actualizar Ordenes" width="32" />
-        </a>
-      ),
-    },
+    // {
+    //   Header: 'Manifiesto',
+    //   accessor: 'ver',
+    //   isVisible: true,
+    //   Cell: (table) => (
+    //     <a
+    //       href="#!"
+    //       onClick={(e) => handleClickOrderDeatil(e, table)}
+    //       role="button"
+    //       className="d-block font-weight-bold font-weight-bold"
+    //     >
+    //       <img src={info} alt="Actualizar Ordenes" width="32" />
+    //     </a>
+    //   ),
+    // },
   ], []);
 
   let component;
@@ -142,9 +142,6 @@ const Reposition = () => {
           />
         )
         : component}
-      <Modal title={`Detalle Reposicion  Id ${activeData}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
-        <ReplenishmentDetail activeData={activeData} />
-      </Modal>
 
     </PageLayout>
 
