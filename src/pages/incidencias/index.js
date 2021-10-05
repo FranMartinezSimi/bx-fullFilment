@@ -28,10 +28,6 @@ const Incidencias = () => {
       accessor: 'numTicket',
     },
     {
-      Header: 'Empresa',
-      accessor: 'empresa',
-    },
-    {
       Header: 'Motivo',
       accessor: 'motivo',
     },
