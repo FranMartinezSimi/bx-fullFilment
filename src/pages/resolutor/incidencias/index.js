@@ -24,10 +24,6 @@ const Incidencias = () => {
       accessor: 'numTicket',
     },
     {
-      Header: 'Empresa',
-      accessor: 'empresa',
-    },
-    {
       Header: 'Motivo',
       accessor: 'motivo',
     },
@@ -55,7 +51,7 @@ const Incidencias = () => {
       accessor: 'status',
       Cell: ({ row }) => (
         <small className={`badge--${row.original.status.replace(' ', '').toLowerCase()} px-4 py-2`}>
-          {row.original.status ? row.original.status : ''}
+          { row.original.status ? row.original.status : ''}
         </small>
       ),
     },
