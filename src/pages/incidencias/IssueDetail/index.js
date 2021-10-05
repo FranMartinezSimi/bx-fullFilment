@@ -29,6 +29,27 @@ const IssueDetail = () => {
     component = <Spinner />;
   }
 
+  const handleClick = (e, file) => {
+    e.preventDefault();
+    const refreshToken = window.localStorage.getItem('__refresh-token__');
+    const URL = 'http://localhost:3000/fulfill1.png';
+
+    const headers = new Headers();
+    headers.append('Authorization', `Basic ${refreshToken.replaceAll('"', '')}`);
+
+    const requestOptions = {
+      method: 'GET',
+      headers,
+      redirect: 'follow',
+    };
+    fetch(`${URL}/${file.name}`, requestOptions)
+      // .then((response) => response.text())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     clientFetch('ticket/v1/ticketera/getTicketID', {
       headers: {
@@ -97,7 +118,7 @@ const IssueDetail = () => {
                     <ul>
                       {ticket.archivo.map((file) => (
                         <li key={file._id} className={styles.fileItem}>
-                          <a href={file.uri} target="_blank" rel="noreferrer" download onClick={(e) => e.preventDefault()}>
+                          <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
                             <ul className="d-flex justify-content-between align-items-center">
                               <li>
                                 {`${file.name} `}
