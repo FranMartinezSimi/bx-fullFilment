@@ -18,7 +18,7 @@ const FormReplenishment = ({ setModalTicket }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [dataToValidate, setDataToValidate] = useState([]);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [ticketCreated, setTicketCreated] = useState(false);

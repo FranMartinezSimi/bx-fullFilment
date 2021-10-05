@@ -88,6 +88,7 @@ const Incidencias = () => {
       },
     })
       .then((issues) => {
+        console.log(issues);
         setLoading(false);
         setList(issues);
       })
