@@ -45,7 +45,6 @@ const IssueDetail = () => {
     headers.append('realms', 'fulfillment');
     headers.append('client_secret', '0');
     headers.append('host_sso', 'desa.sso.bluex.cl');
-    headers.append('Access-Control-Allow-Origin', '*');
 
     const requestOptions = {
       method: 'GET',
