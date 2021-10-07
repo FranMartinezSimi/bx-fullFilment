@@ -43,7 +43,7 @@ const Pagination = ({
             )}
           </li>
           <li>
-            {preGlobalFilteredRows && (
+            {preGlobalFilteredRows && pageSize && (
               <p className="mb-0">
                 {`${pageSize} de ${
                   preGlobalFilteredRows.length

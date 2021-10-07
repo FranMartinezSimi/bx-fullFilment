@@ -21,6 +21,7 @@ const IssueDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
+  const [srcImage, setSrcImage] = useState(null);
 
   let component;
   if (error) {
@@ -32,22 +33,52 @@ const IssueDetail = () => {
   const handleClick = (e, file) => {
     e.preventDefault();
     const refreshToken = window.localStorage.getItem('__refresh-token__');
-    const URL = 'http://localhost:3000/fulfill1.png';
+    const URL = 'https://d3pnmd5dftfgx9.cloudfront.net/ticket';
 
     const headers = new Headers();
     headers.append('Authorization', `Basic ${refreshToken.replaceAll('"', '')}`);
+    headers.append('client_id', 'public-cli');
+    headers.append('realms', 'fulfillment');
+    headers.append('client_secret', '0');
+    headers.append('host_sso', 'desa.sso.bluex.cl');
 
     const requestOptions = {
       method: 'GET',
       headers,
       redirect: 'follow',
     };
+
     fetch(`${URL}/${file.name}`, requestOptions)
-      // .then((response) => response.text())
-      .then((res) => {
-        console.log(res);
+      .then((response) => response.blob())
+      .then((source) => {
+        console.log(source);
+        const el = document.createElement('a');
+        el.setAttribute('href', source);
+        el.setAttribute('download', file.name);
+        document.body.appendChild(el);
+        el.click();
+        el.remove();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
+    // const requestOptions = {
+    //   method: 'GET',
+    //   redirect: 'follow',
+    // };
+
+    // fetch('http://localhost:4000/api/hello', requestOptions)
+    //   .then((response) => response.blob())
+    //   .then((result) => {
+    //     console.log(result);
+    //     const objectURL = URL.createObjectURL(result);
+    //     setSrcImage(objectURL);
+    //     const el = document.createElement('a');
+    //     el.setAttribute('href', objectURL);
+    //     el.setAttribute('download', file.name);
+    //     document.body.appendChild(el);
+    //     el.click();
+    //     el.remove();
+    //   })
+    //   .catch((err) => console.log('error', err));
   };
 
   useEffect(() => {
@@ -133,6 +164,11 @@ const IssueDetail = () => {
                           </a>
                         </li>
                       ))}
+                      {srcImage && (
+                        <li>
+                          <img src={srcImage} alt="" />
+                        </li>
+                      )}
                     </ul>
                   </li>
                 </ul>
