@@ -91,18 +91,28 @@ const UploadOrders = () => {
       setDataWhitErrors(itemsWhitErrors);
     }
     if (count === 0 && dataToValidate.length) {
+      const required = DATA_TO_VALIDATE.some((item) => item.NUMERO_ORDEN);
+      if (!required) {
+        setDataWhitErrors([
+          {
+            item: 'error',
+            key: 0,
+          },
+        ]);
+        return;
+      }
       const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
         order_number: item.NUMERO_ORDEN,
         shipping: {
-          method: item.METODO_ENVIO.toUpperCase(),
+          method: item.METODO_ENVIO?.toUpperCase(),
         },
         customer: {
-          first_name: item.NOMBRE_CLIENTE.toUpperCase(),
-          last_name: item.APELLIDO_CLIENTE.toUpperCase(),
-          address1: item.DIRECCION.toUpperCase(),
-          city: item.COMUNA.toUpperCase(),
-          state: item.REGION.toUpperCase(),
-          zip: item.CODIGO_IATA.toUpperCase(),
+          first_name: item.NOMBRE_CLIENTE?.toUpperCase(),
+          last_name: item.APELLIDO_CLIENTE?.toUpperCase(),
+          address1: item.DIRECCION?.toUpperCase(),
+          city: item.COMUNA?.toUpperCase(),
+          state: item.REGION?.toUpperCase(),
+          zip: item.CODIGO_IATA?.toUpperCase(),
           country: 'CHILE',
         },
         items: [
@@ -130,7 +140,7 @@ const UploadOrders = () => {
         <div className="row align-items-center">
           <div className="col-md-8">
             <PageTitle title="Subir órdenes" />
-            <p>(Puedes importar un archivo .csv separado por comas)</p>
+            <p className="d-none">(Puedes importar un archivo .csv separado por comas)</p>
           </div>
           <div className="col-md-4">
             {errorList.length > 0 && errorScreen && (

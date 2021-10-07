@@ -50,11 +50,12 @@ const UpdateResult = ({ updatedData, setErrorList, setErrorScreen }) => {
                 <h1 className="display-font text-center pb-4">Proceso incompleto</h1>
                 <p>
                   Hemos encontrado
-                  <span>errores</span>
+                  <span style={{ color: '#FF7E44', fontWeight: 700 }}> errores </span>
                   en tu plantilla de órdenes,
                   por lo que no pudimos
                   cargarlas en tu lista. Puedes revisar y corregir los errores haciendo clic
-                  en el botón ver listado de errores.
+                  en el botón ver
+                  <span><a href="#!" onClick={handleClickErrors} style={{ color: '#FF7E44', fontWeight: 700 }}> listado de errores.</a></span>
                 </p>
               </>
             )

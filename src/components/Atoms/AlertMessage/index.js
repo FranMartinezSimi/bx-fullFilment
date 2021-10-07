@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './styles.module.scss';
 
-const AlertMessage = ({ type, message }) => {
+const AlertMessage = ({ type, message, block }) => {
   let component;
   switch (type) {
     case 'danger':
@@ -20,7 +21,7 @@ const AlertMessage = ({ type, message }) => {
       component = null;
   }
   return (
-    <div className={`alert-${type}--icon alert alert-${type}`} style={{ maxWidth: '450px' }}>
+    <div className={`alert-${type}--icon alert alert-${type} ${block ? '' : styles.width}`}>
       <ul className="d-flex align-items-center mb-0">
         <li className="me-3">
           { component }
