@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
-import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import Card from 'components/Molecules/Card';
 import Modal from 'components/Templates/Modal';
@@ -21,7 +20,6 @@ const IssueDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
-  // const [srcImage, setSrcImage] = useState(null);
 
   let component;
   if (error) {
@@ -60,25 +58,6 @@ const IssueDetail = () => {
         el.remove();
       })
       .catch((err) => console.error(err));
-    // const requestOptions = {
-    //   method: 'GET',
-    //   redirect: 'follow',
-    // };
-
-    // fetch('http://localhost:4000/api/hello', requestOptions)
-    //   .then((response) => response.blob())
-    //   .then((result) => {
-    //     console.log(result);
-    //     const objectURL = URL.createObjectURL(result);
-    //     setSrcImage(objectURL);
-    //     const el = document.createElement('a');
-    //     el.setAttribute('href', objectURL);
-    //     el.setAttribute('download', file.name);
-    //     document.body.appendChild(el);
-    //     el.click();
-    //     el.remove();
-    //   })
-    //   .catch((err) => console.log('error', err));
   };
 
   useEffect(() => {
@@ -102,21 +81,20 @@ const IssueDetail = () => {
   }, []);
   return (
     <PageLayout title={`Ticket ${title}`}>
-      <PageTitle title={`Número del Ticket: ${title}`} className="mb-5" />
-      <Card className="px-5">
+      <Card className="px-5 mt-3">
         {ticket != null && !loading ? (
           <>
-            <ul className="d-flex justify-content-between" style={{ fontSize: 14 }}>
+            <ul className="d-flex justify-content-between align-items-center" style={{ fontSize: 14 }}>
               <li>
-                <ul className="d-flex">
-                  <li className="me-2">Nº de orden asociada: </li>
-                  <li>{ticket.orderId}</li>
-                </ul>
-              </li>
-              <li>
-                <ul className="d-flex">
-                  <li className="me-2">Motivo: </li>
-                  <li>{ticket.motivo}</li>
+                <ul className="d-flex flex-column">
+                  <li>
+                    <h1 className="display-font" style={{ fontSize: 22 }}>Número de ticket:</h1>
+                  </li>
+                  <li className="me-2">
+                    Nº de orden asociada:
+                    {' '}
+                    {ticket.orderId}
+                  </li>
                 </ul>
               </li>
               <li>
@@ -133,7 +111,7 @@ const IssueDetail = () => {
             <hr className="my-4" />
             <div className="row">
               <div className="col-lg-6 pe-5">
-                <h2 style={{ fontSize: 22, fontWeight: 400 }}>{ticket.motivo}</h2>
+                <h2 className="display-font" style={{ fontSize: 18, fontWeight: 600 }}>{ticket.motivo}</h2>
                 <p>
                   Fecha:
                   {' '}
@@ -164,17 +142,12 @@ const IssueDetail = () => {
                           </a>
                         </li>
                       ))}
-                      {/* {srcImage && (
-                        <li>
-                          <img src={srcImage} alt="" />
-                        </li>
-                      )} */}
                     </ul>
                   </li>
                 </ul>
                 )}
               </div>
-              <div className="col-lg-6">
+              <div className="col-lg-6 border-start">
                 {ticket.comentario ? (
                   <div className="resolutorBox">
                     <p>
