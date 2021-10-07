@@ -21,7 +21,7 @@ const IssueDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
-  const [srcImage, setSrcImage] = useState(null);
+  // const [srcImage, setSrcImage] = useState(null);
 
   let component;
   if (error) {
@@ -164,11 +164,11 @@ const IssueDetail = () => {
                           </a>
                         </li>
                       ))}
-                      {srcImage && (
+                      {/* {srcImage && (
                         <li>
                           <img src={srcImage} alt="" />
                         </li>
-                      )}
+                      )} */}
                     </ul>
                   </li>
                 </ul>
