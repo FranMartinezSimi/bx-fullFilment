@@ -35,21 +35,6 @@ const Incidencias = () => {
       Header: 'F. Creación',
       accessor: 'fechaCreacion',
     },
-    // {
-    //   Header: 'Descripción',
-    //   accessor: 'descTicket',
-    //   Cell: ({ row }) => {
-    //     const maxCharacter = row.original.descTicket ? row.original.descTicket.length : 0;
-    //     return (
-    //       <small>
-    //         {row.original.descTicket ? (
-    //           row.original.descTicket.slice(0, 30)
-    //         ) : null}
-    //         { maxCharacter >= 30 ? ' ...' : '' }
-    //       </small>
-    //     );
-    //   },
-    // },
     {
       Header: 'Estado',
       accessor: 'status',

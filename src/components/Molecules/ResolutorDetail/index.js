@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import clientFetch from 'lib/client-fetch';
 
 import avatar from 'assets/brand/avatar.svg';
+import avatarResolutor from 'assets/brand/avatar-resolutor.svg';
 import DropZone from 'components/Molecules/DropZone';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import Button from 'components/Atoms/Button';
@@ -195,7 +196,7 @@ const ResolutorDetail = ({
                     <li>
                       <ul className="d-flex align-items-center mb-4">
                         <li className="me-2">
-                          <img src={avatar} alt="Cuenta" width="30" />
+                          <img src={avatarResolutor} alt="Respuesta" width="30" />
                         </li>
                         <li className="me-4">
                           <span>

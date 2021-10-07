@@ -152,8 +152,8 @@ const homeResolutor = () => {
                     style={{ color: '#2BB9FF' }}
                     onClick={handleClick}
                   >
-                    <p className="text-end me-2 mb-0">
-                      <small>Ver listado de tickets&gt;</small>
+                    <p className="text-end me-2 mb-0 pt-4">
+                      <small style={{ fontSize: '1.2em' }}>Ver listado de tickets &gt;</small>
                     </p>
                   </a>
                 </>
