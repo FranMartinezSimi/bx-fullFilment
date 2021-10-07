@@ -47,7 +47,9 @@ const SetUpArchive = ({
             <li>
               <p>
                 Descarga la plantilla de órdenes, llena los campos, en especial
-                los obligatorios, luego súbelo en formato .csv y estará listo
+                los obligatorios, luego súbelo en formato
+                <span style={{ color: '#FF7E44', fontWeight: 700 }}> .csv </span>
+                y estará listo
                 para ser procesado.
               </p>
             </li>
@@ -61,7 +63,7 @@ const SetUpArchive = ({
                 Los SKUs que no estén registrados previamente no serán
                 procesados, comunícate con nosotros
                 {' '}
-                <a href="#!">aquí</a>
+                <a href="#!" style={{ color: '#FF7E44', fontWeight: 700 }}>aquí</a>
                 {' '}
                 para
                 ingresarlos.
@@ -74,8 +76,9 @@ const SetUpArchive = ({
             </li>
             <li>
               <p>
-                En la plantilla de órdenes te pediremos el código IATA de tu
-                localidad. Si no lo conoces, puedes descargar nuestro documento
+                En la plantilla de órdenes te pediremos el código
+                <span style={{ color: '#FF7E44', fontWeight: 700 }}> IATA </span>
+                de tu localidad. Si no lo conoces, puedes descargar nuestro documento
                 de códigos.
               </p>
             </li>
@@ -96,6 +99,7 @@ const SetUpArchive = ({
             <AlerMessage
               type="danger"
               message="Algo salió mal, verifica el formato de tu archivo y los campos obligatorios"
+              block
             />
           )}
           <Card className="shadow text-center my-5">

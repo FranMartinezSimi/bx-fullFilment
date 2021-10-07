@@ -21,7 +21,7 @@ const ContextualMenuRight = ({
       <div className="container py-4 px-5">
         <div className="text-end">
           <button type="button" className={`btn ${styles.btnClose}`} onClick={handleClick}>
-            <img src={closeX} alt="Cuenta" width="15" />
+            <img src={closeX} alt="Cuenta" width="16" />
           </button>
         </div>
         {title && (

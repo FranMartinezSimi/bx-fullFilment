@@ -126,6 +126,7 @@ const FormReplenishment = ({ setModalTicket }) => {
         sku: item.SKU,
         qty: item.CANTIDAD,
         desciption: item.DESCRIPCION,
+        // weight: item.PESO,
       }));
       setDataWhitErrors([]);
       setForm({

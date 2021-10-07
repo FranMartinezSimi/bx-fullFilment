@@ -3,6 +3,7 @@
 .navigation {
   position: relative;
   transition: all .5s cubic-bezier(0.2,0,0,1) 0s;
+  min-height: 100vh;
   &Open {
     width: 200px;
   }
