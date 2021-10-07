@@ -31,7 +31,7 @@ const IssueDetail = () => {
   const handleClick = (e, file) => {
     e.preventDefault();
     const refreshToken = window.localStorage.getItem('__refresh-token__');
-    const URL = 'https://d3pnmd5dftfgx9.cloudfront.net/ticket';
+    const URL = process.env.REACT_APP_API_CLOUDFRONT;
 
     const headers = new Headers();
     headers.append('Authorization', `Basic ${refreshToken.replaceAll('"', '')}`);
