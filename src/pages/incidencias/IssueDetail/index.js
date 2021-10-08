@@ -37,7 +37,7 @@ const IssueDetail = () => {
   const handleClick = (e, file) => {
     e.preventDefault();
     const refreshToken = window.localStorage.getItem('__refresh-token__');
-    const URL = `${process.env.REACT_APP_API_URL}/fulfillment/ticket/v1/cloudfront/getImage/`;
+    const URL = process.env.REACT_APP_API_CLOUDFRONT;
 
     const headers = new Headers();
     headers.append('Authorization', `Baarer ${refreshToken.replaceAll('"', '')}`);
@@ -45,7 +45,7 @@ const IssueDetail = () => {
     headers.append('realms', 'fulfillment');
     headers.append('client_secret', '0');
     headers.append('host_sso', 'desa.sso.bluex.cl');
-    headers.append('nameImage', file.name);
+    // headers.append('nameImage', file.name);
 
     const requestOptions = {
       method: 'GET',
@@ -53,7 +53,7 @@ const IssueDetail = () => {
       redirect: 'follow',
     };
 
-    fetch(`${URL}`, requestOptions)
+    fetch(`${URL}${file.name}`, requestOptions)
       // .then((response) => response.text())
       .then((source) => {
         console.log(source);
