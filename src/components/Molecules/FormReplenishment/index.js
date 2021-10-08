@@ -169,8 +169,7 @@ const FormReplenishment = ({ setModalTicket }) => {
       },
       body: formdata,
     }, { withFile: true })
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setTicketCreated(true);
         setLoading(false);
         setBtnDisabled(true);
