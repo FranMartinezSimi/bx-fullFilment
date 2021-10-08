@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
+
+import Button from 'components/Atoms/Button';
 import zoom from 'assets/brand/zoom.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
+import uploadArrow from 'assets/brand/uploadarrow.svg';
 import PropTypes from 'prop-types';
 
 const GlobalFilter = ({
-  preGlobalFilteredRows,
+  // preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
   handleClick,
@@ -15,7 +18,7 @@ const GlobalFilter = ({
   exportData,
   hadleClickDropDown,
 }) => {
-  const count = preGlobalFilteredRows.length;
+  // const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
   const [dropDown, setDropDown] = useState(false);
 
@@ -43,7 +46,7 @@ const GlobalFilter = ({
                   setValue(e.target.value);
                   onChange(e.target.value);
                 }}
-                placeholder={`Buscar en ${count} items`}
+                placeholder="Búsqueda"
               />
               <span className="position-absolute" style={{ top: '5px', right: '8px' }}>
                 <img src={zoom} alt="Show" width="16" />
@@ -58,9 +61,12 @@ const GlobalFilter = ({
           <ul className="d-flex justify-content-md-end align-items-center">
             {!checkUrl ? (
               <li className="me-5">
-                <a href="#!" className="btn btn-complementary" onClick={handleClick}>
-                  Subir Órdenes
-                </a>
+                <Button
+                  text="Subir Órdenes"
+                  className="btn btn-secondary me-3 py-3"
+                  imgPrev={<img src={uploadArrow} alt="Actualizar Ordenes" width="13" />}
+                  onClick={handleClick}
+                />
               </li>
             ) : (
               <li className="me-5">

@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import jwt from 'jwt-decode';
+import useNotify from 'hooks/useNotify';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
 import Button from 'components/Atoms/Button';
-import Alert from 'components/Atoms/AlertMessage';
 import styles from './styles.module.scss';
 
 const urlLogin = process.env.REACT_APP_AUTH_URL;
@@ -15,9 +15,7 @@ const urlLogin = process.env.REACT_APP_AUTH_URL;
 const LogIn = () => {
   const { setUserKeyclock } = useKeyclockAuth();
   const [passwordShown, setPasswordShown] = useState(false);
-  const [invalidUserError, setInvalidUserError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const {
     register, handleSubmit, formState: { errors },
   } = useForm();
@@ -36,8 +34,6 @@ const LogIn = () => {
   };
 
   const handleSingIn = (data) => {
-    setErrorMessage('');
-    setInvalidUserError(false);
     setLoading(true);
     const { username, password } = data;
 
@@ -77,7 +73,7 @@ const LogIn = () => {
             const compare = sub === userActiveData.credential.user.sub;
 
             if (!compare) {
-              setErrorMessage('Usuario no coincide con el recordado');
+              useNotify('error', 'Usuario no coincide con el recordado');
               return Promise.reject(new Error('Usuario no coincide con el almacenado en local storage'));
             }
           }
@@ -87,7 +83,6 @@ const LogIn = () => {
           localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
 
           setUserKeyclock(bxBusinessActiveSession);
-          setInvalidUserError(false);
           setLoading(false);
 
           return result;
@@ -97,14 +92,13 @@ const LogIn = () => {
       })
       .catch((error) => {
         if (error.status === 401) {
-          setErrorMessage('Los datos ingresados son incorrectos');
+          useNotify('error', 'Los datos ingresados son incorrectos');
         }
 
         if (error.status >= 500) {
-          setErrorMessage('Los servicios no responden...');
+          useNotify('error', 'Los servicios no responden...');
         }
         setLoading(false);
-        setInvalidUserError(true);
       });
   };
   return (
@@ -123,9 +117,6 @@ const LogIn = () => {
               <img src={LogoBlue} alt="BlueExpress" width="111" />
             </div>
             <div className={`${styles.formContainer} text-center py-5 my-5 m-auto`}>
-              {invalidUserError && (
-                <Alert className="mt-5" type="danger" message={errorMessage} />
-              )}
               <h3 className={`${styles.formTitle} display-font`}>Ingresa con tu nombre de usuario</h3>
               <form className="form mt-5" onSubmit={handleSubmit(handleSingIn)}>
                 <div className="form-group text-start my-4">

@@ -219,7 +219,7 @@ const Orders = () => {
         imgPrev={<img src={reload} alt="Actualizar Ordenes" width="13" />}
       />
       <div className="d-xl-flex align-items-center">
-        <span style={{ color: '#FF7E44' }}>|</span>
+        <span className="me-2" style={{ background: '#FF7E44', width: 2, height: 20 }} />
         <span className="me-2">
           <small>
             {' '}
