@@ -1,7 +1,6 @@
 import {
   useState, useEffect, useContext,
 } from 'react';
-
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';

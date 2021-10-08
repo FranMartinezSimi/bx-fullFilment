@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
 
-import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import Card from 'components/Molecules/Card';
 import Modal from 'components/Templates/Modal';
@@ -11,17 +11,21 @@ import Alert from 'components/Atoms/AlertMessage';
 import Button from 'components/Atoms/Button';
 import FromTicket from 'components/Molecules/FormTicket';
 import avatar from 'assets/brand/avatar.svg';
+import avatarResolutor from 'assets/brand/avatar-resolutor.svg';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import styles from './styles.module.scss';
 
 const IssueDetail = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
-  // const [srcImage, setSrcImage] = useState(null);
+
+  const userData = JSON.parse(user);
+  const userActive = userData.credential.user.name ? userData.credential.user.name : 'Cliente';
 
   let component;
   if (error) {
@@ -33,14 +37,15 @@ const IssueDetail = () => {
   const handleClick = (e, file) => {
     e.preventDefault();
     const refreshToken = window.localStorage.getItem('__refresh-token__');
-    const URL = 'https://d3pnmd5dftfgx9.cloudfront.net/ticket';
+    const URL = `${process.env.REACT_APP_API_URL}/fulfillment/ticket/v1/cloudfront/getImage/`;
 
     const headers = new Headers();
-    headers.append('Authorization', `Basic ${refreshToken.replaceAll('"', '')}`);
+    headers.append('Authorization', `Baarer ${refreshToken.replaceAll('"', '')}`);
     headers.append('client_id', 'public-cli');
     headers.append('realms', 'fulfillment');
     headers.append('client_secret', '0');
     headers.append('host_sso', 'desa.sso.bluex.cl');
+    headers.append('nameImage', file.name);
 
     const requestOptions = {
       method: 'GET',
@@ -48,37 +53,34 @@ const IssueDetail = () => {
       redirect: 'follow',
     };
 
-    fetch(`${URL}/${file.name}`, requestOptions)
-      .then((response) => response.blob())
+    fetch(`${URL}`, requestOptions)
+      // .then((response) => response.text())
       .then((source) => {
         console.log(source);
-        const el = document.createElement('a');
-        el.setAttribute('href', source);
-        el.setAttribute('download', file.name);
-        document.body.appendChild(el);
-        el.click();
-        el.remove();
+        // const el = document.createElement('a');
+        // el.setAttribute('href', source);
+        // el.setAttribute('download', file.name);
+        // document.body.appendChild(el);
+        // el.click();
+        // el.remove();
       })
       .catch((err) => console.error(err));
-    // const requestOptions = {
-    //   method: 'GET',
-    //   redirect: 'follow',
-    // };
 
-    // fetch('http://localhost:4000/api/hello', requestOptions)
-    //   .then((response) => response.blob())
-    //   .then((result) => {
-    //     console.log(result);
-    //     const objectURL = URL.createObjectURL(result);
-    //     setSrcImage(objectURL);
-    //     const el = document.createElement('a');
-    //     el.setAttribute('href', objectURL);
-    //     el.setAttribute('download', file.name);
-    //     document.body.appendChild(el);
-    //     el.click();
-    //     el.remove();
+    // clientFetch('ticket/v1/cloudfront/getImage', {
+    //   headers: {
+    //     apikey: process.env.REACT_APP_API_KEY_KONG,
+    //     nameImage: file.name,
+    //     host_sso: 'desa.sso.bluex.cl',
+    //     client_secret: '0',
+    //     realms: 'fulfillment',
+    //     client_id: 'client_id',
+    //     token: `${refreshToken.replaceAll('"', '')}`,
+    //   },
+    // })
+    //   .then((data) => {
+    //     console.log('success:', { data });
     //   })
-    //   .catch((err) => console.log('error', err));
+    //   .catch((err) => console.log('err', err));
   };
 
   useEffect(() => {
@@ -102,21 +104,20 @@ const IssueDetail = () => {
   }, []);
   return (
     <PageLayout title={`Ticket ${title}`}>
-      <PageTitle title={`Número del Ticket: ${title}`} className="mb-5" />
-      <Card className="px-5">
+      <Card className="px-5 mt-3 shadow">
         {ticket != null && !loading ? (
           <>
-            <ul className="d-flex justify-content-between" style={{ fontSize: 14 }}>
+            <ul className="d-flex justify-content-between align-items-center" style={{ fontSize: 14 }}>
               <li>
-                <ul className="d-flex">
-                  <li className="me-2">Nº de orden asociada: </li>
-                  <li>{ticket.orderId}</li>
-                </ul>
-              </li>
-              <li>
-                <ul className="d-flex">
-                  <li className="me-2">Motivo: </li>
-                  <li>{ticket.motivo}</li>
+                <ul className="d-flex flex-column">
+                  <li>
+                    <h1 className="display-font" style={{ fontSize: 22 }}>Número de ticket:</h1>
+                  </li>
+                  <li className="me-2">
+                    Nº de orden asociada:
+                    {' '}
+                    {ticket.orderId}
+                  </li>
                 </ul>
               </li>
               <li>
@@ -133,12 +134,22 @@ const IssueDetail = () => {
             <hr className="my-4" />
             <div className="row">
               <div className="col-lg-6 pe-5">
-                <h2 style={{ fontSize: 22, fontWeight: 400 }}>{ticket.motivo}</h2>
-                <p>
-                  Fecha:
-                  {' '}
-                  {ticket.fechaCreacion}
-                </p>
+                <h2 className="display-font" style={{ fontSize: 18, fontWeight: 600 }}>{ticket.motivo}</h2>
+                <ul className="d-flex align-items-center pt-4">
+                  <li className="me-2">
+                    <img src={avatar} alt="Cuenta" width="33" />
+                  </li>
+                  <li className="me-2">{userActive}</li>
+                  <li className="me-2">
+                    <p className="m-0">
+                      <small style={{ color: '#666666' }}>
+                        Fecha:
+                        {' '}
+                        {ticket.fechaCreacion}
+                      </small>
+                    </p>
+                  </li>
+                </ul>
                 <p className="py-4">
                   {ticket.descTicket}
                 </p>
@@ -164,27 +175,22 @@ const IssueDetail = () => {
                           </a>
                         </li>
                       ))}
-                      {/* {srcImage && (
-                        <li>
-                          <img src={srcImage} alt="" />
-                        </li>
-                      )} */}
                     </ul>
                   </li>
                 </ul>
                 )}
               </div>
-              <div className="col-lg-6">
+              <div className={`col-lg-6 border-start ${!ticket.comentario ? 'd-flex align-items-center' : 'd-flex flex-column justify-content-center'}`}>
                 {ticket.comentario ? (
-                  <div className="resolutorBox">
+                  <div className="resolutorBox px-lg-5">
                     <p>
                       Comentario resolutor
                     </p>
-                    <ul className="card py-4 px-2" style={{ borderRadius: 15 }}>
+                    <ul className="card py-3 px-2" style={{ borderRadius: 15 }}>
                       <li>
                         <ul className="d-flex">
                           <li className="mx-3">
-                            <img src={avatar} alt="Cuenta" />
+                            <img src={avatarResolutor} alt="Respuesta" width="33" />
                           </li>
                         </ul>
                       </li>
@@ -193,9 +199,15 @@ const IssueDetail = () => {
                       </li>
                     </ul>
                   </div>
-                ) : null}
+                ) : (
+                  <p className="text-center w-100 display-font" style={{ color: '#cdcdcd', fontSize: 15 }}>
+                    ¡El resolutor ya tiene tu ticket en estudio!
+                    <br />
+                    por favor espera por su comentario
+                  </p>
+                )}
                 {ticket.status === 'Cerrado' && (
-                  <>
+                  <div className="px-lg-5">
                     <p>
                       ¿Estas conforme con la resolución de tu ticket?,
                       si no estas conforme puedes volver a crear un ticket de incidencia.
@@ -207,7 +219,7 @@ const IssueDetail = () => {
                         onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
                       />
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
             </div>
