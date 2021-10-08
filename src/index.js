@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ddInit from 'utils/dd';
+import { ToastContainer } from 'react-toastify';
 import reportWebVitals from './reportWebVitals';
 import { AuthKeyclockProvider } from './context/userKeyclockContext';
 import { AuthProvider } from './context/userContex';
@@ -12,6 +13,7 @@ ReactDOM.render(
   <AuthKeyclockProvider>
     <AuthProvider>
       <App />
+      <ToastContainer />
     </AuthProvider>
   </AuthKeyclockProvider>,
   document.getElementById('root'),

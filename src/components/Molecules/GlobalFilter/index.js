@@ -5,6 +5,7 @@ import Button from 'components/Atoms/Button';
 import zoom from 'assets/brand/zoom.svg';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
+import uploadArrow from 'assets/brand/uploadarrow.svg';
 import PropTypes from 'prop-types';
 
 const GlobalFilter = ({
@@ -62,8 +63,8 @@ const GlobalFilter = ({
               <li className="me-5">
                 <Button
                   text="Subir Órdenes"
-                  className="btn btn-secondary me-3 py-2"
-                  imgPrev={<img src={downloadArrow} alt="Actualizar Ordenes" width="13" />}
+                  className="btn btn-secondary me-3 py-3"
+                  imgPrev={<img src={uploadArrow} alt="Actualizar Ordenes" width="13" />}
                   onClick={handleClick}
                 />
               </li>

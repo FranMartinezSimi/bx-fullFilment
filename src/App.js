@@ -9,6 +9,7 @@ import UnLoggedUserApp from './UnLoggedUserApp';
 import ResolutorApp from './ResolutorApp';
 import AuthenticatedApp from './AuthenticatedApp';
 import UnauthenticatedApp from './UnAuthenticatedApp';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/main.scss';
 
 const App = () => {
