@@ -37,50 +37,49 @@ const IssueDetail = () => {
   const handleClick = (e, file) => {
     e.preventDefault();
     const refreshToken = window.localStorage.getItem('__refresh-token__');
-    const URL = process.env.REACT_APP_API_CLOUDFRONT;
+    // const URL = process.env.REACT_APP_API_CLOUDFRONT;
 
-    const headers = new Headers();
-    headers.append('Authorization', `Baarer ${refreshToken.replaceAll('"', '')}`);
-    headers.append('client_id', 'public-cli');
-    headers.append('realms', 'fulfillment');
-    headers.append('client_secret', '0');
-    headers.append('host_sso', 'desa.sso.bluex.cl');
-    // headers.append('nameImage', file.name);
+    // const headers = new Headers();
+    // headers.append('Authorization', `Baarer ${refreshToken.replaceAll('"', '')}`);
+    // headers.append('client_id', 'public-cli');
+    // headers.append('realms', 'fulfillment');
+    // headers.append('client_secret', '0');
+    // headers.append('host_sso', 'desa.sso.bluex.cl');
+    // // headers.append('nameImage', file.name);
 
-    const requestOptions = {
-      method: 'GET',
-      headers,
-      redirect: 'follow',
-    };
+    // const requestOptions = {
+    //   method: 'GET',
+    //   headers,
+    //   redirect: 'follow',
+    // };
 
-    fetch(`${URL}${file.name}`, requestOptions)
-      // .then((response) => response.text())
-      .then((source) => {
-        console.log(source);
-        // const el = document.createElement('a');
-        // el.setAttribute('href', source);
-        // el.setAttribute('download', file.name);
-        // document.body.appendChild(el);
-        // el.click();
-        // el.remove();
-      })
-      .catch((err) => console.error(err));
-
-    // clientFetch('ticket/v1/cloudfront/getImage', {
-    //   headers: {
-    //     apikey: process.env.REACT_APP_API_KEY_KONG,
-    //     nameImage: file.name,
-    //     host_sso: 'desa.sso.bluex.cl',
-    //     client_secret: '0',
-    //     realms: 'fulfillment',
-    //     client_id: 'client_id',
-    //     token: `${refreshToken.replaceAll('"', '')}`,
-    //   },
-    // })
-    //   .then((data) => {
-    //     console.log('success:', { data });
+    // fetch(`${URL}${file.name}`, requestOptions)
+    //   // .then((response) => response.text())
+    //   .then((source) => {
+    //     console.log(source);
+    //     // const el = document.createElement('a');
+    //     // el.setAttribute('href', source);
+    //     // el.setAttribute('download', file.name);
+    //     // document.body.appendChild(el);
+    //     // el.click();
+    //     // el.remove();
     //   })
-    //   .catch((err) => console.log('err', err));
+    //   .catch((err) => console.error(err));
+
+    clientFetch('ticket/v1/cloudfront/getImage', {
+      method: 'GET',
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+        client_id: 'client_id',
+        client_secret: '0',
+        host_sso: 'desa.sso.bluex.cl',
+        nameImage: file.name,
+        realms: 'fulfillment',
+        token: `${refreshToken.replaceAll('"', '')}`,
+      },
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log('err', err));
   };
 
   useEffect(() => {
