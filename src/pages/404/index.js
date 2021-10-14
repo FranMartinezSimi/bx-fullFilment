@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PageLayout from 'components/Templates/PageLayout';
 import Button from '../../components/Atoms/Button';

@@ -1,6 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
-
 import DatePiker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import PropTypes from 'prop-types';

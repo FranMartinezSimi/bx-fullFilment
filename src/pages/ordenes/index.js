@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
+import useNotify from 'hooks/useNotify';
 
 import PageLayout from 'components/Templates/PageLayout';
 import Alert from 'components/Atoms/AlertMessage';
@@ -10,9 +11,11 @@ import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reloadWhite.svg';
+import info from 'assets/brand/info-ico.svg';
 import Button from 'components/Atoms/Button';
 import FromToDownloader from 'components/Molecules/FromToDownloader';
 import FromTicket from 'components/Molecules/FormTicket';
+import TooltipIcon from 'components/Atoms/TooltipIcon';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
@@ -20,21 +23,19 @@ const Orders = () => {
   const [modalDate, setModalDate] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
   const [error, setError] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false);
   const [date, setDate] = useState(null);
   const [list, setList] = useState([]);
-  const [message, setMessage] = useState('');
   const [orderId, setOrderId] = useState('');
   const [orderNumber, setOrderNumber] = useState('');
   const [orderTracking, setOrderTracking] = useState('');
   const [unifyState, setUnifyState] = useState('');
   const [issue, setIssue] = useState('');
+  const [reloadedData, setReloadedData] = useState(false);
 
   const history = useHistory();
 
   const getData = () => {
     setError(false);
-    setMessage('');
     clientFetch('order/v1/orders/getOrdersList', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -68,17 +69,22 @@ const Orders = () => {
           month: monthNames[DATE.getMonth()],
           time: `${DATE.getHours()} : ${DATE.getMinutes() < 10 ? '0' : ''}${DATE.getMinutes()}`,
         });
-        setMessage('success');
+        if (reloadedData) {
+          useNotify('success', '¡Tus órdenes han sido actualizadas con éxito!');
+        }
       })
       .catch(() => {
         setError(true);
         setLoading(false);
-        setMessage('error');
+        if (reloadedData) {
+          useNotify('error', 'Ooopss! ¡No se logro actualizar!');
+        }
         setDate(null);
       });
   };
 
   const data = useMemo(() => list, [list]);
+
   const handleClickUpdateOrder = (e) => {
     e.preventDefault();
     history.push('/ordenes/subir-ordenes');
@@ -87,11 +93,10 @@ const Orders = () => {
   const handleClickUpdateList = (e) => {
     e.preventDefault();
     setLoading(true);
-    setIsUpdate(true);
-    getData();
+    setReloadedData(true);
     setTimeout(() => {
-      setIsUpdate(false);
-    }, 3000);
+      setReloadedData(false);
+    }, 0);
   };
 
   const handleClickOrderDeatil = (e, tableData) => {
@@ -197,58 +202,50 @@ const Orders = () => {
     component = <Spinner />;
   }
 
-  let messageComponent;
-  switch (message) {
-    case 'success':
-      messageComponent = <Alert className="" type="success" message="¡Tus órdenes han sido actualizadas con éxito!" />;
-      break;
-    case 'error':
-      messageComponent = (
-        <Alert className="mt-5" type="warning" message="Ooopss! ¡No se logro actualizar!" />
-      );
-      break;
-    default:
-      messageComponent = null;
-  }
-
   const updateComponent = (
-    <a href="#!" className="d-flex align-items-center" onClick={handleClickUpdateList}>
+    <a href="#!" className="d-flex align-items-center mb-5" onClick={handleClickUpdateList}>
       <Button
         text="Actualizar"
         className="btn btn-secondary me-3 py-2"
         imgPrev={<img src={reload} alt="Actualizar Ordenes" width="13" />}
       />
-      <div className="d-xl-flex align-items-center">
-        <span className="me-2" style={{ background: '#FF7E44', width: 2, height: 20 }} />
-        <span className="me-2">
-          <small>
-            {' '}
-            Última actualización
-          </small>
-        </span>
-        <span className="me-2">
-          <small>
-            {`${date?.day}, ${date?.month} ${date?.time}`}
-            {' '}
-            hr.
-          </small>
-        </span>
-      </div>
+      {date && (
+        <div className="d-xl-flex align-items-center">
+          <span className="me-2" style={{ background: '#FF7E44', width: 2, height: 20 }} />
+          <span className="me-2">
+            <small>
+              {' '}
+              Última actualización
+            </small>
+          </span>
+          <span className="me-2">
+            <small>
+              {`${date?.day}, ${date?.month} ${date?.time}`}
+              {' '}
+              hr.
+            </small>
+          </span>
+        </div>
+      )}
     </a>
   );
+
+  const infoComponent = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Te mostramos tus órdenes de los últimos 90 días" color="#BFEAFF" />;
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (reloadedData) {
+      getData();
+    }
+  }, [reloadedData]);
+
   return (
     <PageLayout title="Tus órdenes" description="Te mostramos tus órdenes de los últimos días">
-      <PageTitle title="Tus órdenes" />
+      <PageTitle title="Tus órdenes" icon={infoComponent} />
       {updateComponent}
-      <div style={{ height: 65 }}>
-        {isUpdate && (
-          messageComponent
-        )}
-      </div>
       {list.length && !loading && !error
         ? (
           <div className="mb-5">

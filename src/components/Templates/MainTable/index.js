@@ -1,15 +1,14 @@
-import React from 'react';
 import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
 import PropTypes from 'prop-types';
 import { useExportData } from 'react-table-plugins';
 import Papa from 'papaparse';
-import GlobalFilter from '../../Molecules/GlobalFilter';
-import Pagination from '../../Molecules/Pagination';
-import Sort from '../../../assets/brand/sort.svg';
-import SortUp from '../../../assets/brand/sortUp.svg';
-import SortDown from '../../../assets/brand/sortDown.svg';
+import GlobalFilter from 'components/Molecules/GlobalFilter';
+import Pagination from 'components/Molecules/Pagination';
+import Sort from 'assets/brand/sort.svg';
+import SortUp from 'assets/brand/sortUp.svg';
+import SortDown from 'assets/brand/sortDown.svg';
 import styles from './styles.module.scss';
 
 function getExportFileBlob({
