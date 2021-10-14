@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Back from '../../../assets/brand/back.svg';
 import styles from './styles.module.scss';

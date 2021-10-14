@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Card from 'components/Molecules/Card';
 import UploadCsv from 'components/Molecules/UploadCsv';
 import AlerMessage from 'components/Atoms/AlertMessage';

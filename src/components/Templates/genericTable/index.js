@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   useTable, useSortBy, usePagination, useFilters, useGlobalFilter,
 } from 'react-table';
