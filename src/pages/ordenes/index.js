@@ -11,9 +11,11 @@ import MainTable from 'components/Templates/MainTable';
 import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reloadWhite.svg';
+import info from 'assets/brand/info-ico.svg';
 import Button from 'components/Atoms/Button';
 import FromToDownloader from 'components/Molecules/FromToDownloader';
 import FromTicket from 'components/Molecules/FormTicket';
+import TooltipIcon from 'components/Atoms/TooltipIcon';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
@@ -228,6 +230,8 @@ const Orders = () => {
     </a>
   );
 
+  const infoComponent = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Te mostramos tus órdenes de los últimos 90 días" color="#BFEAFF" />;
+
   useEffect(() => {
     getData();
   }, []);
@@ -237,9 +241,10 @@ const Orders = () => {
       getData();
     }
   }, [reloadedData]);
+
   return (
     <PageLayout title="Tus órdenes" description="Te mostramos tus órdenes de los últimos días">
-      <PageTitle title="Tus órdenes" />
+      <PageTitle title="Tus órdenes" icon={infoComponent} />
       {updateComponent}
       {list.length && !loading && !error
         ? (
