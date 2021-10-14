@@ -70,15 +70,24 @@ const IssueDetail = () => {
       method: 'GET',
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
-        client_id: 'client_id',
+        client_id: 'public-cli',
         client_secret: '0',
         host_sso: 'desa.sso.bluex.cl',
-        nameImage: file.name,
+        name_image: file.name,
         realms: 'fulfillment',
         token: `${refreshToken.replaceAll('"', '')}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((response) => response.blob())
+      .then((source) => {
+        console.log(source);
+        const el = document.createElement('a');
+        el.setAttribute('href', source);
+        el.setAttribute('download', file.name);
+        document.body.appendChild(el);
+        el.click();
+        el.remove();
+      })
       .catch((err) => console.log('err', err));
   };
 
