@@ -44,7 +44,7 @@ const FromToDatePicker = () => {
     const starting = `${startDate.getDate()}-${startDate.getMonth() + 1}-${startDate.getFullYear()}`;
     const ending = `${endDate.getDate()}-${endDate.getMonth() + 1}-${endDate.getFullYear()}`;
 
-    clientFetch('order/v1/orders/getOrdersListDate', {
+    clientFetch('order/v1/orders/getOrdersDownload', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
