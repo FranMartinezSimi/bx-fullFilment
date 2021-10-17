@@ -26,7 +26,7 @@ const Dropzone = ({
     onDrop,
     accept: 'image/jpeg, image/png, application/pdf',
     multiple: false,
-    maxSize: 10,
+    maxSize: 2.5e+7,
     onDropRejected,
 
   });
