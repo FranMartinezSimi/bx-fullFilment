@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
+import { base64StringToBlob } from 'blob-util';
+import useNotify from 'hooks/useNotify';
 
 import PageLayout from 'components/Templates/PageLayout';
 import Card from 'components/Molecules/Card';
@@ -23,6 +25,7 @@ const IssueDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   const userData = JSON.parse(user);
   const userActive = userData.credential.user.name ? userData.credential.user.name : 'Cliente';
@@ -36,37 +39,10 @@ const IssueDetail = () => {
 
   const handleClick = (e, file) => {
     e.preventDefault();
+    setDownloading(true);
     const refreshToken = window.localStorage.getItem('__refresh-token__');
-    // const URL = process.env.REACT_APP_API_CLOUDFRONT;
 
-    // const headers = new Headers();
-    // headers.append('Authorization', `Baarer ${refreshToken.replaceAll('"', '')}`);
-    // headers.append('client_id', 'public-cli');
-    // headers.append('realms', 'fulfillment');
-    // headers.append('client_secret', '0');
-    // headers.append('host_sso', 'desa.sso.bluex.cl');
-    // // headers.append('nameImage', file.name);
-
-    // const requestOptions = {
-    //   method: 'GET',
-    //   headers,
-    //   redirect: 'follow',
-    // };
-
-    // fetch(`${URL}${file.name}`, requestOptions)
-    //   // .then((response) => response.text())
-    //   .then((source) => {
-    //     console.log(source);
-    //     // const el = document.createElement('a');
-    //     // el.setAttribute('href', source);
-    //     // el.setAttribute('download', file.name);
-    //     // document.body.appendChild(el);
-    //     // el.click();
-    //     // el.remove();
-    //   })
-    //   .catch((err) => console.error(err));
-
-    clientFetch('ticket/v1/cloudfront/getImage', {
+    clientFetch('order/v1/orders/getImagen', {
       method: 'GET',
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -78,17 +54,26 @@ const IssueDetail = () => {
         token: `${refreshToken.replaceAll('"', '')}`,
       },
     })
-      .then((response) => response.blob())
       .then((source) => {
-        console.log(source);
+        const contentType = source.content_type;
+        const b64Data = source.image;
+
+        const blob = base64StringToBlob(b64Data, contentType);
+
+        const blobUrl = URL.createObjectURL(blob);
+
         const el = document.createElement('a');
-        el.setAttribute('href', source);
+        el.setAttribute('href', blobUrl);
         el.setAttribute('download', file.name);
         document.body.appendChild(el);
         el.click();
         el.remove();
+        setDownloading(false);
       })
-      .catch((err) => console.log('err', err));
+      .catch((err) => {
+        console.log('err', err);
+        useNotify('error', '¡Se ha producido un error, intentalo de nuevo!');
+      });
   };
 
   useEffect(() => {
@@ -175,9 +160,11 @@ const IssueDetail = () => {
                                 <span className={styles.fileSize}>{`${file.size} KB`}</span>
                               </li>
                               <li>
-                                <button className={styles.closeButton} type="button">
-                                  <img src={dropZoneDownload} alt="Descargar" />
-                                </button>
+                                {downloading ? <Spinner width="15px" height="15px" /> : (
+                                  <button className={styles.closeButton} type="button">
+                                    <img src={dropZoneDownload} alt="Descargar" />
+                                  </button>
+                                )}
                               </li>
                             </ul>
                           </a>
