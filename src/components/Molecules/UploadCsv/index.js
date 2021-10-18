@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { CSVReader } from 'react-papaparse';
 import plus from 'assets/brand/plus.svg';
 import PropTypes from 'prop-types';

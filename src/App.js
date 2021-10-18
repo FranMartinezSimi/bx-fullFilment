@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { HelmetProvider } from 'react-helmet-async';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import jwt from 'jwt-decode';

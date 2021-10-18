@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import Home from 'assets/brand/home.svg';
