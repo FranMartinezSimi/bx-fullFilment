@@ -157,7 +157,7 @@ const ResolutorDetail = ({
               <li className="position-relative">
                 <div className="mt-3">
                   <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-2 fs-5`}>
-                    { form.status }
+                    {form.status}
                   </small>
                 </div>
               </li>
@@ -189,32 +189,32 @@ const ResolutorDetail = ({
             {form.descTicket}
           </p>
           {form.archivo !== undefined && form.archivo.length > 0 && (
-          <ul>
-            <li>
-              <p className="fs-5 mb-4 d-none">Archivos Adjuntos</p>
-              <ul>
-                {form.archivo.map((file) => (
-                  <li key={file._id} className={styles.fileItem}>
-                    <a href={file.uri} target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
-                      <ul className="d-flex justify-content-between align-items-center">
-                        <li>
-                          {`${file.name} `}
-                          <span className={styles.fileSize}>{`${file.size} KB`}</span>
-                        </li>
-                        <li>
-                          {downloading ? <Spinner width="15px" height="15px" /> : (
-                            <button className={styles.closeButton} type="button">
-                              <img src={dropZoneDownload} alt="Descargar" />
-                            </button>
-                          )}
-                        </li>
-                      </ul>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          </ul>
+            <ul>
+              <li>
+                <p className="fs-5 mb-4 d-none">Archivos Adjuntos</p>
+                <ul>
+                  {form.archivo.map((file) => (
+                    <li key={file._id} className={styles.fileItem}>
+                      <a href={file.uri} target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
+                        <ul className="d-flex justify-content-between align-items-center">
+                          <li>
+                            {`${file.name} `}
+                            <span className={styles.fileSize}>{`${file.size} KB`}</span>
+                          </li>
+                          <li>
+                            {downloading ? <Spinner width="15px" height="15px" /> : (
+                              <button className={styles.closeButton} type="button">
+                                <img src={dropZoneDownload} alt="Descargar" />
+                              </button>
+                            )}
+                          </li>
+                        </ul>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            </ul>
           )}
           <form className="py-5">
             <div className="form-group mb-2">

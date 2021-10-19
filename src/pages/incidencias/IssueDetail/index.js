@@ -147,32 +147,32 @@ const IssueDetail = () => {
                   {ticket.descTicket}
                 </p>
                 {ticket.archivo.length > 0 && (
-                <ul>
-                  <li>
-                    <p className="fs-5 mb-4">Archivos Adjuntos</p>
-                    <ul>
-                      {ticket.archivo.map((file) => (
-                        <li key={file._id} className={styles.fileItem}>
-                          <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
-                            <ul className="d-flex justify-content-between align-items-center">
-                              <li>
-                                {`${file.name} `}
-                                <span className={styles.fileSize}>{`${file.size} KB`}</span>
-                              </li>
-                              <li>
-                                {downloading ? <Spinner width="15px" height="15px" /> : (
-                                  <button className={styles.closeButton} type="button">
-                                    <img src={dropZoneDownload} alt="Descargar" />
-                                  </button>
-                                )}
-                              </li>
-                            </ul>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                </ul>
+                  <ul>
+                    <li>
+                      <p className="fs-5 mb-4">Archivos Adjuntos</p>
+                      <ul>
+                        {ticket.archivo.map((file) => (
+                          <li key={file._id} className={styles.fileItem}>
+                            <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
+                              <ul className="d-flex justify-content-between align-items-center">
+                                <li>
+                                  {`${file.name} `}
+                                  <span className={styles.fileSize}>{`${file.size} KB`}</span>
+                                </li>
+                                <li>
+                                  {downloading ? <Spinner width="15px" height="15px" /> : (
+                                    <button className={styles.closeButton} type="button">
+                                      <img src={dropZoneDownload} alt="Descargar" />
+                                    </button>
+                                  )}
+                                </li>
+                              </ul>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  </ul>
                 )}
               </div>
               <div className={`col-lg-6 border-start ${!ticket.comentario ? 'd-flex align-items-center' : 'd-flex flex-column justify-content-center'}`}>
