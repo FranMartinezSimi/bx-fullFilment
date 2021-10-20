@@ -46,7 +46,6 @@ const GlobalFilter = ({
       },
     })
       .then((data) => {
-        console.log(data);
         getExportFileBlob(data);
       })
       .catch(() => {
