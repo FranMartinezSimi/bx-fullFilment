@@ -181,7 +181,7 @@ const Home = () => {
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
       <div className="pt-5">
         <Card className="shadow mt-5">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row justify-content-between align-items-center">
               <PageTitle
                 className="col-8"
@@ -204,7 +204,7 @@ const Home = () => {
         className={`${styles.card} shadow my-5`}
         footer={componentOrders}
       >
-        <div className="container">
+        <div className="container-fluid">
           <div className="row align-items-stretch">
             <div className="col-lg-12">
               <h4 className="display-font">Estado de tus órdenes</h4>

@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
       <Sidebar activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar} />
       <div className="App flex-fill">
         <Header activeNavbar={activeNavbar} setActiveNavbar={setActiveNavbar} />
-        <main className="container content-wrapper px-5">
+        <main className="container-fluid content-wrapper px-5">
           <div className="row">
             <div className="col-12">
               { children }
