@@ -53,7 +53,7 @@ export default async function clientFetch(
   }
 
   const config = {
-    method: 'POST',
+    method: customConfig.method ? customConfig.method : 'POST',
     ...customConfig,
     headers: {
       ...headers,

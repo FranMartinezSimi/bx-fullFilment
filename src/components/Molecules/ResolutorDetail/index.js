@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import clientFetch from 'lib/client-fetch';
+import { base64StringToBlob } from 'blob-util';
+import useNotify from 'hooks/useNotify';
 
 import avatar from 'assets/brand/avatar.svg';
 import avatarResolutor from 'assets/brand/avatar-resolutor.svg';
@@ -7,7 +9,7 @@ import DropZone from 'components/Molecules/DropZone';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import Button from 'components/Atoms/Button';
 import Modal from 'components/Templates/Modal';
-
+import Spinner from 'components/Atoms/Spinner';
 import styles from './styles.module.scss';
 
 const ResolutorDetail = ({
@@ -20,6 +22,8 @@ const ResolutorDetail = ({
   const [error, setError] = useState({
     comentario: false,
   });
+  const [downloading, setDownloading] = useState(false);
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -81,6 +85,44 @@ const ResolutorDetail = ({
         setResponseError(true);
       });
   };
+  const handleClick = (e, file) => {
+    e.preventDefault();
+    setDownloading(true);
+    const refreshToken = window.localStorage.getItem('__refresh-token__');
+
+    clientFetch('order/v1/orders/getImagen', {
+      method: 'GET',
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+        client_id: 'public-cli',
+        client_secret: '0',
+        host_sso: 'desa.sso.bluex.cl',
+        name_image: file.name,
+        realms: 'fulfillment',
+        token: `${refreshToken.replaceAll('"', '')}`,
+      },
+    })
+      .then((source) => {
+        const contentType = source.content_type;
+        const b64Data = source.image;
+
+        const blob = base64StringToBlob(b64Data, contentType);
+
+        const blobUrl = URL.createObjectURL(blob);
+
+        const el = document.createElement('a');
+        el.setAttribute('href', blobUrl);
+        el.setAttribute('download', file.name);
+        document.body.appendChild(el);
+        el.click();
+        el.remove();
+        setDownloading(false);
+      })
+      .catch((err) => {
+        console.log('err', err);
+        useNotify('error', '¡Se ha producido un error, intentalo de nuevo!');
+      });
+  };
   useEffect(() => {
     setForm({
       _id: detailData._id,
@@ -115,7 +157,7 @@ const ResolutorDetail = ({
               <li className="position-relative">
                 <div className="mt-3">
                   <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-2 fs-5`}>
-                    { form.status }
+                    {form.status}
                   </small>
                 </div>
               </li>
@@ -147,30 +189,32 @@ const ResolutorDetail = ({
             {form.descTicket}
           </p>
           {form.archivo !== undefined && form.archivo.length > 0 && (
-          <ul>
-            <li>
-              <p className="fs-5 mb-4 d-none">Archivos Adjuntos</p>
-              <ul>
-                {form.archivo.map((file) => (
-                  <li key={file._id} className={styles.fileItem}>
-                    <a href={file.uri} target="_blank" rel="noreferrer" download onClick={(e) => e.preventDefault()}>
-                      <ul className="d-flex justify-content-between align-items-center">
-                        <li>
-                          {`${file.name} `}
-                          <span className={styles.fileSize}>{`${file.size} KB`}</span>
-                        </li>
-                        <li>
-                          <button className={styles.closeButton} type="button">
-                            <img src={dropZoneDownload} alt="Descargar" />
-                          </button>
-                        </li>
-                      </ul>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          </ul>
+            <ul>
+              <li>
+                <p className="fs-5 mb-4 d-none">Archivos Adjuntos</p>
+                <ul>
+                  {form.archivo.map((file) => (
+                    <li key={file._id} className={styles.fileItem}>
+                      <a href={file.uri} target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
+                        <ul className="d-flex justify-content-between align-items-center">
+                          <li>
+                            {`${file.name} `}
+                            <span className={styles.fileSize}>{`${file.size} KB`}</span>
+                          </li>
+                          <li>
+                            {downloading ? <Spinner width="15px" height="15px" /> : (
+                              <button className={styles.closeButton} type="button">
+                                <img src={dropZoneDownload} alt="Descargar" />
+                              </button>
+                            )}
+                          </li>
+                        </ul>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            </ul>
           )}
           <form className="py-5">
             <div className="form-group mb-2">

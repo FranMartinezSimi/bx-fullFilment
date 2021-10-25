@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
+import clientFetch from 'lib/client-fetch';
 
 import Button from 'components/Atoms/Button';
 import zoom from 'assets/brand/zoom.svg';
@@ -7,6 +8,8 @@ import arrowDown from 'assets/brand/arrow-down.svg';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
 import uploadArrow from 'assets/brand/uploadarrow.svg';
 import PropTypes from 'prop-types';
+import getExportFileBlob from 'helpers';
+import useNotify from 'hooks/useNotify';
 
 const GlobalFilter = ({
   // preGlobalFilteredRows,
@@ -15,7 +18,7 @@ const GlobalFilter = ({
   handleClick,
   handleClickInventory,
   update,
-  exportData,
+  // exportData,
   hadleClickDropDown,
 }) => {
   // const count = preGlobalFilteredRows.length;
@@ -29,6 +32,25 @@ const GlobalFilter = ({
   const handleClickDropDown = (e) => {
     e.preventDefault();
     setDropDown(!dropDown);
+  };
+
+  const handleClickDowload = (e) => {
+    e.preventDefault();
+    clientFetch('order/v1/orders/getOrdersDownload', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        dateInitial: '',
+        dateFin: '',
+      },
+    })
+      .then((data) => {
+        getExportFileBlob(data);
+      })
+      .catch(() => {
+        useNotify('error', 'Hubo un problema al procesar la descarga');
+      });
   };
 
   const checkUrl = (window.location.pathname === '/inventario');
@@ -98,7 +120,7 @@ const GlobalFilter = ({
                 style={{ width: 190, borderRadius: 15 }}
                 onBlur={() => setDropDown(false)}
               >
-                <a href="#!" className="d-block" onClick={(e) => { e.preventDefault(); exportData('csv', true); }}>
+                <a href="#!" className="d-block" onClick={handleClickDowload}>
                   <span>
                     Descargar todas
                   </span>
@@ -123,10 +145,10 @@ const GlobalFilter = ({
 };
 
 GlobalFilter.defaultProps = {
-  globalFilter: () => {},
-  setGlobalFilter: () => {},
-  handleClick: () => {},
-  hadleClickDropDown: () => {},
+  globalFilter: () => { },
+  setGlobalFilter: () => { },
+  handleClick: () => { },
+  hadleClickDropDown: () => { },
 };
 
 GlobalFilter.propTypes = {

@@ -7,10 +7,16 @@ const Dropzone = ({
   boxText, title, subTitle, setSelectedFiles, className, size, internalTitle, nonvalidate,
 }) => {
   const [files, setFiles] = useState([]);
+  const [maxSizeExceded, setmaxSizeExceded] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
+    setmaxSizeExceded(false);
     setFiles([...files, ...acceptedFiles]);
     setSelectedFiles([...files, ...acceptedFiles]);
+  }, [files]);
+
+  const onDropRejected = useCallback(() => {
+    setmaxSizeExceded(true);
   }, [files]);
 
   const {
@@ -20,6 +26,9 @@ const Dropzone = ({
     onDrop,
     accept: 'image/jpeg, image/png, application/pdf',
     multiple: false,
+    maxSize: 2.5e+7,
+    onDropRejected,
+
   });
 
   const removeFile = (file) => () => {
@@ -65,11 +74,11 @@ const Dropzone = ({
                     <li>
                       <p className="mb-0 mt-2">
                         <b>
-                          { internalTitle }
+                          {internalTitle}
                         </b>
                       </p>
                     </li>
-                  ) }
+                  )}
                   <li>
                     {size === 'small' ? (
                       <small style={{ fontSize: 10 }}>
@@ -113,6 +122,11 @@ const Dropzone = ({
             Eliminar todos
           </u>
         </a>
+      )}
+      {maxSizeExceded && (
+        <small className={styles.smallAlert}>
+          El archivo excede el máximo de 25 Megabits.
+        </small>
       )}
     </section>
   );

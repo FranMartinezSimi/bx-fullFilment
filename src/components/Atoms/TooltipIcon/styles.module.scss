@@ -1,0 +1,24 @@
+.tooltipContainer {
+  padding: 20px;
+  position: absolute;
+  top: -35px;
+  min-width: 250px;
+  &::before {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    position: absolute;
+    top: -20px;
+  }
+}
+
+.tooltipTriangle {
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent; 
+  border-right:10px solid blue;
+  position: absolute;
+  left: -10px;
+}

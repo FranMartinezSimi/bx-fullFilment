@@ -1,5 +1,3 @@
-import React from 'react';
-
 const UpdatingOrders = () => (
   <div className="container py-5 my-5">
     <div className="row justify-content-center">
