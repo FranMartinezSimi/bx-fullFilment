@@ -87,12 +87,13 @@ const Reposition = () => {
 
   const getDataByDate = (startDate, endDate) => {
     setLoading(true);
+    const transfromStartDate = `${startDate.getDate()}-${startDate.getMonth() + 1}-${startDate.getFullYear()}`;
     clientFetch('bff/v1/replenishment/findReplenishmentsDate', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
       body: {
-        startDate,
+        transfromStartDate,
         endDate,
         accountId,
       },
