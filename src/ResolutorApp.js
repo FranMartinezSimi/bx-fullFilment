@@ -6,7 +6,7 @@ import {
 import ErrorPage from 'pages/404';
 import Home from './pages/resolutor/home';
 import Issues from './pages/resolutor/incidencias';
-import Layout from './components/Templates/LayoutResolutor';
+import Layout from './components/Templates/Layout';
 import './styles/main.scss';
 
 const UnauthenticatedApp = () => (

@@ -43,6 +43,11 @@ const Home = () => {
         toolbar: {
           show: false,
         },
+        events: {
+          mounted: (charts) => {
+            charts.windowResizeHandler();
+          },
+        },
       },
       plotOptions: {
         bar: {
@@ -133,6 +138,11 @@ const Home = () => {
               stacked: true,
               toolbar: {
                 show: false,
+              },
+              events: {
+                mounted: (charts) => {
+                  charts.windowResizeHandler();
+                },
               },
             },
             plotOptions: {

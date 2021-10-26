@@ -49,6 +49,8 @@ h1, h2, h3, h4, h5 {
 }
 .content-wrapper {
   min-height: calc(100vh - 107px);
+  max-width: 100vw !important;
+  overflow-x: hidden;
 }
 
 .display-font {

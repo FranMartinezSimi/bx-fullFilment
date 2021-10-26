@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import { useAuth } from 'context/userContex';
+import jwt from 'jwt-decode';
 
 import Card from 'components/Molecules/Card';
 import alarm from 'assets/brand/alarm.svg';
@@ -17,18 +18,26 @@ import styles from './styles.module.scss';
 
 const urlLogin = process.env.REACT_APP_LOGOUT_URL;
 
-const Header = ({ activeNavbar, setActiveNavbar }) => {
+const Header = ({ className, activeNavbar, setActiveNavbar }) => {
   const history = useHistory();
-  const { setUserKeyclock } = useKeyclockAuth();
+  const { userKeyclock, setUserKeyclock } = useKeyclockAuth();
   const { user, setUser } = useAuth();
   const socket = useContext(SocketContext);
   const userData = JSON.parse(user);
-  const userActive1 = userData.credential.accountId;
-  const userActive = userData.credential.user.name ? userData.credential.user.name : 'no encontrado';
+  const userActive1 = userData ? userData.credential.accountId : 'Resolutor';
+  const userActive = userData ? userData.credential.user.name : 'no encontrado';
   const [rememberShipedge, setRememberShipedge] = useState(true);
   const [logOutCard, setLogOutCart] = useState(false);
   const [notifyCard, setNotifyCart] = useState(false);
   const [responseSocket, setResponseSocket] = useState([]);
+
+  let resolutor;
+  if (userKeyclock) {
+    const userKeyclockData = JSON.parse(userKeyclock);
+    const TOKEN = userKeyclockData.access_token;
+    const USER_DATA = jwt(TOKEN);
+    resolutor = USER_DATA.realm_access.roles.some((item) => item === 'fulfillment-resolutor');
+  }
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -96,7 +105,7 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
     });
   }, [socket, responseSocket]);
   return (
-    <header className={styles.header}>
+    <header className={`${className} ${styles.header}`}>
       <Card className={`${logOutCard ? '' : 'd-none'} ${styles.headerCard} shadow`} onMouseLeave={() => setLogOutCart(false)}>
         <ul className="text-center">
           <li>
@@ -106,23 +115,25 @@ const Header = ({ activeNavbar, setActiveNavbar }) => {
             <p className="mb-0">
               <b>Bienvenido</b>
             </p>
-            <p className="mb-0">{userActive}</p>
+            {!resolutor && <p className="mb-0">{userActive}</p>}
           </li>
-          <li className="my-3">
-            <div className="form-check">
-              <label className="form-check-label" htmlFor="flexCheckDefault">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value={rememberShipedge}
-                  checked={rememberShipedge}
-                  onChange={handleClickRemember}
-                  id="flexCheckDefault"
-                />
-                Recordar Shipedge User
-              </label>
-            </div>
-          </li>
+          {!resolutor && (
+            <li className="my-3">
+              <div className="form-check">
+                <label className="form-check-label" htmlFor="flexCheckDefault">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value={rememberShipedge}
+                    checked={rememberShipedge}
+                    onChange={handleClickRemember}
+                    id="flexCheckDefault"
+                  />
+                  Recordar Shipedge User
+                </label>
+              </div>
+            </li>
+          )}
           <li>
             <a href="!#" onClick={signOut}>
               <img src={exitSession} alt="exit" />

@@ -1201,6 +1201,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bx-design/react-icons@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@bx-design/react-icons/-/react-icons-0.3.2.tgz#c5e06a9b7bdc655095c754e28a54a014e294b459"
+  integrity sha512-+/d4QxqjCKT3j8f/9rxLH4obmJzWarYg42kTw1VhCwdI4Yo0szFYDs3GXxYj3dqUAEddyo1h7PZUl0mOxoYjwg==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz"

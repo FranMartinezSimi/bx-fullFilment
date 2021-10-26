@@ -1,13 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useKeyclockAuth } from 'context/userKeyclockContext';
+import jwt from 'jwt-decode';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import Home from 'assets/brand/home.svg';
 import Box from 'assets/brand/box.svg';
 import Tag from 'assets/brand/label.svg';
 import Todo from 'assets/brand/todo.svg';
+import { BxChevronRight, BxChevronLeft } from '@bx-design/react-icons';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
+const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
+  const { userKeyclock } = useKeyclockAuth();
+
+  let resolutor;
+  if (userKeyclock) {
+    const userKeyclockData = JSON.parse(userKeyclock);
+    const TOKEN = userKeyclockData.access_token;
+    const USER_DATA = jwt(TOKEN);
+    resolutor = USER_DATA.realm_access.roles.some((item) => item === 'fulfillment-resolutor');
+  }
   const primaryLinks = [
     {
       name: 'Dashboard',
@@ -20,6 +32,7 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
       img: Todo,
       active: true,
       route: '/ordenes',
+      childrenActive: false,
       children: [
         {
           name: 'Carga de Órdenes',
@@ -36,6 +49,7 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
       img: Box,
       active: true,
       route: '/inventario',
+      childrenActive: false,
       children: [
         {
           name: 'Listado de Inventario',
@@ -43,7 +57,6 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
         },
         {
           name: 'Listado de Reposición',
-          route: '/reposition',
         },
       ],
     },
@@ -54,80 +67,110 @@ const Sidebar = ({ activeNavbar, setActiveNavbar }) => {
       route: '/incidencias',
     },
   ];
-  const secondaryLinks = [
+  const resolutorLinks = [
     {
-      name: 'Setings',
-      img: './png/setting.png',
-      active: false,
+      name: 'Dashboard',
+      img: Home,
+      active: true,
+      route: '/',
     },
     {
-      name: 'Search',
-      img: './png/search.png',
-      active: false,
-    },
-    {
-      name: 'Help',
-      img: './png/help.png',
-      active: false,
+      name: 'Incidencias',
+      img: Tag,
+      active: true,
+      route: '/incidencias',
     },
   ];
+  let links;
+  if (!resolutor) {
+    links = primaryLinks;
+  } else {
+    links = resolutorLinks;
+  }
   const handleClick = (e) => {
     e.preventDefault();
     setActiveNavbar(!activeNavbar);
   };
+
+  const handleClickItem = (e, key) => {
+    e.preventDefault();
+    console.log('Key: ', key);
+  };
+  const handleHoverItem = (e, key) => {
+    e.preventDefault();
+    console.log('Key: ', key);
+  };
   return (
-    <nav className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose} shadow bg-white py-4 px-3 px-lg-4`}>
-      <a href="!#" onClick={handleClick} className={styles.navigationToggle} style={{ left: activeNavbar ? '185px' : '75px' }}>
-        <span className={styles.navigationToggleSymbol}>
-          {activeNavbar ? '<' : '>'}
-        </span>
-      </a>
-      <div className="mb-5">
-        <img src={LogoBlue} alt="Blue express" width="50" />
-      </div>
-      <ul className={`${styles.navigationContent} d-flex flex-column justify-content-between my-4`}>
-        <li>
-          <ul>
-            {primaryLinks.map((item) => (
-              <li className={`${item.active ? '' : 'd-none'} py-2 my-3`} key={item.name}>
-                <Link to={`${item.route}`}>
-                  <div className={`d-flex ${activeNavbar ? '' : 'justify-content-center align-items-center'}`}>
-                    <div className={`${styles.navigationItemImg} me-2`}>
-                      <img src={item.img} alt={item.name} width="20" />
-                    </div>
-                    <div className={`${styles.navigationItemText} ${activeNavbar ? styles.navigationItemTextOpen : ''}`}>
-                      <p className="mb-0"><b>{item.name}</b></p>
-                    </div>
-                  </div>
-                </Link>
-                {item.children?.length > 0 && (
-                  <ul className={`ps-5 ${activeNavbar ? styles.navigationSubItemTextOpen : styles.navigationSubItemTextColse}`}>
-                    {item.children.map((subItem) => (
-                      <li className="py-1" key={subItem.route}>
-                        <Link to={`${subItem.route}`}>
-                          {subItem.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
+    <aside className={`${className} shadow bg-white`}>
+      <nav className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose}`}>
+        <a href="!#" onClick={handleClick} className={styles.navigationToggle}>
+          <span className={styles.navigationToggleSymbol}>
+            {activeNavbar ? (
+              <BxChevronLeft
+                color="white"
+                size="14"
+              />
+            ) : (
+              <BxChevronRight
+                color="white"
+                size="14"
+              />
+            )}
+          </span>
+        </a>
+        <div>
+          <div className="text-center my-4 pb-4">
+            <Link to="/">
+              <img src={LogoBlue} alt="Blue express" width="62" />
+            </Link>
+          </div>
+          <ul className="d-flex flex-column align-items-center my-4">
+            <li>
+              <ul className={`${activeNavbar ? styles.innerMenu : ''} whole`}>
+                {links.map((item, key) => (
+                  <li className={`${item.active ? '' : 'd-none'} py-2 my-3`} key={item.name}>
+                    <a
+                      href="!#"
+                      className="itemLi"
+                      onClick={(e) => handleClickItem(e, key)}
+                      onMouseEnter={(e) => handleHoverItem(e, key)}
+                    >
+                      <div className={`d-flex ${activeNavbar ? 'w-100' : ''}`}>
+                        <div className={`${styles.navigationItemImg} me-2`}>
+                          <img src={item.img} alt={item.name} width="22" />
+                        </div>
+                        <div className={`${styles.navigationItemText} ${activeNavbar ? '' : 'd-none'}`}>
+                          <p className="ms-3 mt-1 mb-0 display-font" style={{ fontSize: 15 }}><b>{item.name}</b></p>
+                        </div>
+                        {activeNavbar && item.children?.length > 0 && (
+                          <div className="ms-auto">
+                            <BxChevronRight
+                              color="#ff7e44"
+                              size="16"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </a>
+                    {item.children?.length > 0 && (
+                      <ul className={`ps-5 ${activeNavbar ? styles.subListOpen : styles.subListColse}`}>
+                        {item.children.map((subItem) => (
+                          <li className="py-1" key={subItem.route}>
+                            <Link to={`${subItem.route}`}>
+                              {subItem.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </li>
           </ul>
-        </li>
-        {secondaryLinks.some((item) => (item.active)) && (
-          <li>
-            <ul>
-              {secondaryLinks.map((item) => (
-                <li className={`${activeNavbar ? '' : 'text-center'} py-2 my-2`} key={item.name}>
-                  <img src={item.img} alt={item.name} width="20" />
-                </li>
-              ))}
-            </ul>
-          </li>
-        )}
-      </ul>
-    </nav>
+        </div>
+      </nav>
+    </aside>
   );
 };
 

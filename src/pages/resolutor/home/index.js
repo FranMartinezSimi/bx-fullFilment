@@ -25,6 +25,11 @@ const homeResolutor = () => {
         zoom: {
           enabled: false,
         },
+        events: {
+          mounted: (charts) => {
+            charts.windowResizeHandler();
+          },
+        },
       },
       legend: {
         show: false,
@@ -89,6 +94,11 @@ const homeResolutor = () => {
               height: 350,
               zoom: {
                 enabled: false,
+              },
+              events: {
+                mounted: (charts) => {
+                  charts.windowResizeHandler();
+                },
               },
             },
             legend: {
