@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAsyncDebounce } from 'react-table';
-// import clientFetch from 'lib/client-fetch';
+import clientFetch from 'lib/client-fetch';
 
 import Button from 'components/Atoms/Button';
 import zoom from 'assets/brand/zoom.svg';
@@ -8,8 +8,8 @@ import arrowDown from 'assets/brand/arrow-down.svg';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
 import uploadArrow from 'assets/brand/uploadarrow.svg';
 import PropTypes from 'prop-types';
-// import getExportFileBlob from 'helpers';
-// import useNotify from 'hooks/useNotify';
+import getExportFileBlob from 'helpers';
+import useNotify from 'hooks/useNotify';
 
 const GlobalFilter = ({
   // preGlobalFilteredRows,
@@ -35,6 +35,30 @@ const GlobalFilter = ({
   };
 
   const checkUrl = (window.location.pathname === '/inventario');
+  const handleClickDowload = (e) => {
+    e.preventDefault();
+    if (!checkUrl) {
+      clientFetch('order/v1/orders/getOrdersDownload', {
+        headers: {
+          apikey: process.env.REACT_APP_API_KEY_KONG,
+        },
+        body: {
+          dateInitial: '',
+          dateFin: '',
+        },
+      })
+        .then((data) => {
+          console.log(data);
+          getExportFileBlob(data);
+        })
+        .catch(() => {
+          useNotify('error', 'Hubo un problema al procesar la descarga');
+        });
+    } else {
+      exportData('csv', true);
+    }
+  };
+
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-start">
@@ -101,7 +125,7 @@ const GlobalFilter = ({
                 style={{ width: 190, borderRadius: 15 }}
                 onBlur={() => setDropDown(false)}
               >
-                <a href="#!" className="d-block" onClick={(e) => { e.preventDefault(); exportData('csv', true); }}>
+                <a href="#!" className="d-block" onClick={handleClickDowload}>
                   <span>
                     Descargar todas
                   </span>
