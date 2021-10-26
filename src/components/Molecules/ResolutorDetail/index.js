@@ -96,9 +96,9 @@ const ResolutorDetail = ({
         apikey: process.env.REACT_APP_API_KEY_KONG,
         client_id: 'public-cli',
         client_secret: '0',
-        host_sso: 'desa.sso.bluex.cl',
+        host_sso: process.env.REACT_APP_HOST_SSO,
         name_image: file.name,
-        realms: 'fulfillment',
+        realms: process.env.REACT_APP_SERVICE_NAME,
         token: `${refreshToken.replaceAll('"', '')}`,
       },
     })
