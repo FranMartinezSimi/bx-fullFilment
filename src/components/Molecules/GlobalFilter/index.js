@@ -18,7 +18,7 @@ const GlobalFilter = ({
   handleClick,
   handleClickInventory,
   update,
-  // exportData,
+  exportData,
   hadleClickDropDown,
 }) => {
   // const count = preGlobalFilteredRows.length;
@@ -34,26 +34,31 @@ const GlobalFilter = ({
     setDropDown(!dropDown);
   };
 
+  const checkUrl = (window.location.pathname === '/inventario');
   const handleClickDowload = (e) => {
     e.preventDefault();
-    clientFetch('order/v1/orders/getOrdersDownload', {
-      headers: {
-        apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        dateInitial: '',
-        dateFin: '',
-      },
-    })
-      .then((data) => {
-        getExportFileBlob(data);
+    if (!checkUrl) {
+      clientFetch('order/v1/orders/getOrdersDownload', {
+        headers: {
+          apikey: process.env.REACT_APP_API_KEY_KONG,
+        },
+        body: {
+          dateInitial: '',
+          dateFin: '',
+        },
       })
-      .catch(() => {
-        useNotify('error', 'Hubo un problema al procesar la descarga');
-      });
+        .then((data) => {
+          console.log(data);
+          getExportFileBlob(data);
+        })
+        .catch(() => {
+          useNotify('error', 'Hubo un problema al procesar la descarga');
+        });
+    } else {
+      exportData('csv', true);
+    }
   };
 
-  const checkUrl = (window.location.pathname === '/inventario');
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-start">

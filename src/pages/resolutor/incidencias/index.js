@@ -82,6 +82,7 @@ const Incidencias = () => {
         startDate,
         endDate,
       },
+
     })
       .then((issues) => {
         setLoading(false);
