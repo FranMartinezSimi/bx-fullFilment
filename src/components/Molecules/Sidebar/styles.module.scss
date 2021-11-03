@@ -78,8 +78,27 @@
 .subList {
   &Open {
     display: block;
+    padding-left: 3rem !important;
+    margin-top: 10px;
   }
   &Close {
-    display: none;
+    position: absolute;
+    background: $white;
+    left: 100px;
+    margin-top: -30px;
+    min-width: 180px;
+    z-index: 2;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   }
+}
+
+.normalIcon {
+  transition: all .4s ease;
+}
+
+.rotateIcon {
+  transform: rotate(90deg);
+  transition: all .4s ease;
 }

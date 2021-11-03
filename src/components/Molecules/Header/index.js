@@ -80,7 +80,7 @@ const Header = ({ className, activeNavbar, setActiveNavbar }) => {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     const urlencoded = new FormData();
-    urlencoded.append('client_id', `${userData.credential.user.sub}&refresh_token=${REFRESH_TOKEN}`);
+    urlencoded.append('client_id', `${userData?.credential?.user.sub}&refresh_token=${REFRESH_TOKEN}`);
 
     const requestOptions = {
       method: 'POST',

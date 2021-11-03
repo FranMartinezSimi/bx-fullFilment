@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import jwt from 'jwt-decode';
 import LogoBlue from 'assets/brand/logoBlue.svg';
@@ -12,6 +13,7 @@ import styles from './styles.module.scss';
 
 const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
   const { userKeyclock } = useKeyclockAuth();
+  const history = useHistory();
 
   let resolutor;
   if (userKeyclock) {
@@ -57,6 +59,7 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
         },
         {
           name: 'Listado de Reposición',
+          route: '/reposition',
         },
       ],
     },
@@ -87,6 +90,9 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
   } else {
     links = resolutorLinks;
   }
+
+  const [currentLinks, setCurrentLinks] = useState(links);
+
   const handleClick = (e) => {
     e.preventDefault();
     setActiveNavbar(!activeNavbar);
@@ -94,15 +100,40 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
 
   const handleClickItem = (e, key) => {
     e.preventDefault();
-    console.log('Key: ', key);
+    const newArray = currentLinks;
+    if (activeNavbar) {
+      newArray[key] = {
+        ...newArray[key],
+        childrenActive: !newArray[key].childrenActive,
+      };
+      setCurrentLinks([...newArray]);
+    } else {
+      history.push(newArray[key].route);
+    }
   };
   const handleHoverItem = (e, key) => {
     e.preventDefault();
-    console.log('Key: ', key);
+    if (!activeNavbar) {
+      setCurrentLinks(links);
+      const newArray = links;
+      newArray[key] = {
+        ...newArray[key],
+        childrenActive: !newArray[key].childrenActive,
+      };
+      setCurrentLinks([...newArray]);
+    }
+  };
+  const handleLeaveItem = () => {
+    if (!activeNavbar) {
+      setCurrentLinks(links);
+    }
   };
   return (
     <aside className={`${className} shadow bg-white`}>
-      <nav className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose}`}>
+      <nav
+        className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose}`}
+        onMouseLeave={() => handleLeaveItem()}
+      >
         <a href="!#" onClick={handleClick} className={styles.navigationToggle}>
           <span className={styles.navigationToggleSymbol}>
             {activeNavbar ? (
@@ -127,8 +158,11 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           <ul className="d-flex flex-column align-items-center my-4">
             <li>
               <ul className={`${activeNavbar ? styles.innerMenu : ''} whole`}>
-                {links.map((item, key) => (
-                  <li className={`${item.active ? '' : 'd-none'} py-2 my-3`} key={item.name}>
+                {currentLinks.map((item, key) => (
+                  <li
+                    className={`${item.active ? '' : 'd-none'} py-2 my-3`}
+                    key={item.name}
+                  >
                     <a
                       href="!#"
                       className="itemLi"
@@ -140,10 +174,22 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
                           <img src={item.img} alt={item.name} width="22" />
                         </div>
                         <div className={`${styles.navigationItemText} ${activeNavbar ? '' : 'd-none'}`}>
-                          <p className="ms-3 mt-1 mb-0 display-font" style={{ fontSize: 15 }}><b>{item.name}</b></p>
+                          <p className="ms-3 mt-1 mb-0 display-font" style={{ fontSize: 15 }}>
+                            <b>
+                              {item.children?.length > 0 ? (
+                                <span>
+                                  {item.name}
+                                </span>
+                              ) : (
+                                <Link to={`${item.route}`}>
+                                  {item.name}
+                                </Link>
+                              )}
+                            </b>
+                          </p>
                         </div>
                         {activeNavbar && item.children?.length > 0 && (
-                          <div className="ms-auto">
+                          <div className={`ms-auto ${item.childrenActive ? styles.rotateIcon : styles.normalIcon}`}>
                             <BxChevronRight
                               color="#ff7e44"
                               size="16"
@@ -152,10 +198,10 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
                         )}
                       </div>
                     </a>
-                    {item.children?.length > 0 && (
-                      <ul className={`ps-5 ${activeNavbar ? styles.subListOpen : styles.subListColse}`}>
+                    {item.children?.length > 0 && item.childrenActive && (
+                      <ul className={`mb-2 ${activeNavbar ? styles.subListOpen : styles.subListClose}`}>
                         {item.children.map((subItem) => (
-                          <li className="py-1" key={subItem.route}>
+                          <li className="py-2" key={subItem.route}>
                             <Link to={`${subItem.route}`}>
                               {subItem.name}
                             </Link>
