@@ -81,17 +81,17 @@ const Home = () => {
 
   console.log(orderFetchError);
 
-  // const componentOrders = (
-  //   <a
-  //     href="#!"
-  //     style={{ color: '#2BB9FF' }}
-  //     onClick={(e) => handleInventory(e, '/ordenes')}
-  //   >
-  //     <p className="text-end me-2">
-  //       <small style={{ fontSize: '1.2em' }}>ir a órdenes &gt;</small>
-  //     </p>
-  //   </a>
-  // );
+  const componentOrders = (
+    <a
+      href="#!"
+      style={{ color: '#2BB9FF' }}
+      onClick={(e) => handleInventory(e, '/ordenes')}
+    >
+      <p className="text-end me-2">
+        <small style={{ fontSize: '1.2em' }}>ir a órdenes &gt;</small>
+      </p>
+    </a>
+  );
 
   const chart = () => {
     clientFetch('order/v1/orders/getDashboradOrders', {
@@ -217,7 +217,9 @@ const Home = () => {
             />
           </div>
           <div className="row">
-            <Card />
+            <Card
+              footer={componentOrders}
+            />
 
           </div>
         </div>
