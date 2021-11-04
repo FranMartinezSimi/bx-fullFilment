@@ -10,3 +10,8 @@
 @import "components/transitions";
 @import "components/inputs";
 @import "components/alerts";
+
+.greyTbody {
+  border-top: 1px solid #cdcdcd !important;
+  border-bottom: 1px solid #cdcdcd !important;
+}

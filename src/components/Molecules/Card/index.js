@@ -15,7 +15,11 @@ const Card = ({
   cardBackground,
   onMouseLeave,
 }) => (
-  <div className={`card py-4 px-3 ${className} ${styles.mainCard}`} style={{ borderRadius: '15px', border: 'none', backgroundImage: `url(${cardBackground})` }} onMouseLeave={onMouseLeave}>
+  <div
+    className={`card py-4 px-3 ${className} ${styles.mainCard}`}
+    style={{ borderRadius: '15px', border: 'none', backgroundImage: cardBackground ? `url(${cardBackground})` : null }}
+    onMouseLeave={onMouseLeave}
+  >
     {title
       ? (
         <ul className="d-flex w-100 justify-content-between">
