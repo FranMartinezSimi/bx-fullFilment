@@ -17,81 +17,35 @@ import shopping from 'assets/brand/shopping.png';
 import callendar from 'assets/brand/callendar.png';
 import Alert from 'assets/brand/alertRed.png';
 import closeX from 'assets/brand/closeX.svg';
+// import IconOrder1 from 'assets/brand/Icon-Order1.svg';
 import styles from './styles.module.scss';
 
 const Home = () => {
   const { user } = useAuth();
-  const [orderFetchError, setOrderFetchError] = useState(false);
   const [notify, setNotify] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  console.log(isLoading);
-  const [dataOrders, setDataOrders] = useState({
-    series: [
-      {
-        name: 'En camino',
-        data: [0],
-      },
-      {
-        name: 'Procesados',
-        data: [0],
-      },
-      {
-        name: 'Entregados',
-        data: [0],
-      },
-    ],
-    options: {
-      colors: ['#3363FF', '#FDCC60', '#FDA460'],
-      chart: {
-        id: 'basic-bar',
-        height: 350,
-        stacked: true,
-        toolbar: {
-          show: false,
-        },
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          borderRadius: 20,
-          columnWidth: '10%',
-        },
-      },
-      xaxis: {
-        categories: ['Cargando...'],
-      },
-      legend: {
-        position: 'top',
-      },
-      fill: {
-        opacity: 1,
-      },
-    },
-  });
-  console.log(dataOrders);
+  const [statisticsData] = useState([]);
   const history = useHistory();
   const userData = JSON.parse(user);
+  const [errorTotales, setErrorTotales] = useState(false);
   const userActive = userData.credential.user.name;
-
+  let componentTotales;
   const handleInventory = (e, path) => {
     e.preventDefault();
     history.push(path);
   };
   console.log(handleInventory);
 
-  console.log(orderFetchError);
-
-  const componentOrders = (
-    <a
-      href="#!"
-      style={{ color: '#2BB9FF' }}
-      onClick={(e) => handleInventory(e, '/ordenes')}
-    >
-      <p className="text-end me-2">
-        <small style={{ fontSize: '1.2em' }}>ir a órdenes &gt;</small>
-      </p>
-    </a>
-  );
+  // const componentOrders = (
+  //   <a
+  //     href="#!"
+  //     style={{ color: '#2BB9FF' }}
+  //     onClick={(e) => handleInventory(e, '/ordenes')}
+  //   >
+  //     <p className="text-end me-2">
+  //       <small style={{ fontSize: '1.2em' }}>ir a órdenes &gt;</small>
+  //     </p>
+  //   </a>
+  // );
 
   const chart = () => {
     clientFetch('order/v1/orders/getDashboradOrders', {
@@ -104,71 +58,36 @@ const Home = () => {
         status: 'all',
       },
     })
-      .then((data) => {
-        const items = data.orders_deliver.sort((a, b) => {
-          if (a.index < b.index) {
-            return 1;
-          }
-          if (a.index > b.index) {
-            return -1;
-          }
-          return 0;
-        });
-        const dates = items.map((item) => (item.date));
-        const send = items.map((item) => (item.enviado));
-        const process = items.map((item) => (item.procesado));
-        const delivered = items.map((item) => (item.entregado));
-
-        setIsLoading(false);
-        setDataOrders({
-          series: [
-            {
-              name: 'En camino',
-              data: send,
-            },
-            {
-              name: 'Procesados',
-              data: process,
-            },
-            {
-              name: 'Entregados',
-              data: delivered,
-            },
-          ],
-          options: {
-            colors: ['#3363FF', '#FDCC60', '#FDA460'],
-            chart: {
-              id: 'basic-bar',
-              height: 350,
-              stacked: true,
-              toolbar: {
-                show: false,
-              },
-            },
-            plotOptions: {
-              bar: {
-                horizontal: false,
-                columnWidth: '30%',
-              },
-            },
-            xaxis: {
-              categories: dates,
-            },
-            legend: {
-              position: 'top',
-            },
-            fill: {
-              opacity: 1,
-            },
-          },
-        });
+      .then((dashData) => {
+        console.log(dashData.orders_deliver);
+        //   const statistics = dashData.totales;
+        //   setTotalStatisticsData([
+        //     {
+        //       img: '/IconOrder1.svg',
+        //       number: statistics.abiertos,
+        //       state: 'Procesadas',
+        //     },
+        //     {
+        //       img: '/boxClosedIcon.png',
+        //       number: statistics.resueltos,
+        //       state: 'Entregadas',
+        //     },
+        //     {
+        //       img: '/boxInfoIcon.png',
+        //       number: statistics.total,
+        //       state: 'En Camino',
+        //     },
+        //   ]);
       })
-      .catch(() => {
-        setIsLoading(false);
-        setOrderFetchError(true);
+      .catch((err) => {
+        console.log(err);
+        setErrorTotales(true);
       });
   };
-
+  const handleClick = (e) => {
+    e.preventDefault();
+    history.push('/incidencias');
+  };
   useEffect(() => {
     chart();
   }, []);
@@ -183,19 +102,19 @@ const Home = () => {
   }, [socket, notify]);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
-      <div className="col-11">
-        <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{ marginTop: 50 }}>
+      <div className="col-1">
+        <div className={` ${styles.alert}`} role="alert">
           <div className="row">
-            <div className="col-1 d-flex justify-content-start">
-              <img src={Alert} alt="" style={{ tabSize: '14px' }} />
+            <div className="col-1 d-flex justify-content-start my-5">
+              <img src={Alert} alt="" className={`${styles.img}`} />
             </div>
-            <div className="col-2">
-              <h1 style={{ color: '#212121', fontFamily: 'lato', fontWeight: 'bold' }}>Comunicado</h1>
+            <div className="col-2 my-5">
+              <h1 className={`${styles.tAlert}`}>Comunicado</h1>
             </div>
-            <div className="col-8">
-              <p className="text-center" style={{ fontFamily: 'Lato', fontSize: '13px', style: 'normal' }}>{parrafoAlert}</p>
+            <div className="col-8 ">
+              <p className={`${styles.pAlert}`}>{parrafoAlert}</p>
             </div>
-            <div className="col-1 d-flex justify-content-end">
+            <div className="col-1 d-flex justify-content-end my-5">
               <a href="!#" data-testid="printed-username" className={`p-0 ${styles.close}`}>
                 <span aria-hidden="true" className="p-0">
                   <img src={closeX} alt="Cuenta" width="16" />
@@ -218,9 +137,40 @@ const Home = () => {
           </div>
           <div className="row">
             <Card
-              footer={componentOrders}
-            />
-
+              className={`shadow my-5 ${styles.analyticsOrders}`}
+            >
+              <h4 className="display-font mb-4" style={{ fontFamily: 'mont', fontSize: '22px', lineHeight: '26px' }}>Estados de tus ordenes</h4>
+              {statisticsData.length > 0 && !errorTotales ? (
+                <>
+                  <ul className="d-flex justify-content-around mb-2">
+                    {statisticsData.length > 0 && statisticsData.map((item) => (
+                      <li key={item.state}>
+                        <div className="item d-flex align-items-center">
+                          <div className="me-3">
+                            <img src={item.img} alt={item.state} />
+                          </div>
+                          <div className="pt-3">
+                            <h5 className="mb-0">{item.number}</h5>
+                            <p>
+                              <small>{item.state}</small>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href="#!"
+                    style={{ color: '#2BB9FF' }}
+                    onClick={handleClick}
+                  >
+                    <p className="text-end me-2 mb-0 pt-4">
+                      <small style={{ fontSize: '1.2em' }}>Ver listado de tickets &gt;</small>
+                    </p>
+                  </a>
+                </>
+              ) : componentTotales}
+            </Card>
           </div>
         </div>
         <div className="col-4">
@@ -230,15 +180,15 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="row" style={{ marginTop: 70 }}>
+      <div className="row my-5" style={{ marginTop: 1 }}>
         <div className="col-5">
-          <Card className="shadow my-5">
-            <div className="row ">
+          <Card className={`shadow my-5  ${setNotify.fileUp}`}>
+            <div className="row">
               <div className="col-4">
-                <img src={callendar} alt="download" width="150" style={{ position: 'relative', top: 2 }} />
+                <img src={callendar} alt="download" width="140" style={{ position: 'relative', top: 2 }} />
               </div>
               <div className="col-8">
-                <h2 style={{}}>Solicita tu programación de inventario</h2>
+                <h3 style={{}}>Solicita tu programación de inventario</h3>
                 <p style={{ position: 'relative', top: 2, fontSize: 17 }}>
                   Realiza la programación de la reposición de tu inventario
                 </p>
@@ -250,14 +200,14 @@ const Home = () => {
           </Card>
         </div>
         <div className="col-6">
-          <Card className="shadow my-5">
+          <Card className={`shadow my-5 ${setNotify.fileUp}`}>
             <div className="row align-items-md-stretch">
               <div className="col-4">
                 <img src={shopping} alt="download" width="150" style={{ position: 'relative', top: 2 }} />
               </div>
               <div className="col-8">
-                <h1 style={{ color: '#FF7E44' }}>¡Comencemos con tus ordenes!</h1>
-                <p style={{ position: 'relative', top: 2, fontSize: 17 }}>
+                <h5 style={{ color: '#FF7E44' }}>¡Comencemos con tus ordenes!</h5>
+                <p className={`${styles.pFileUp}`}>
                   sube tus archivos masivos de ordenes
                 </p>
                 <a href="#!" className="btn btn-secondary">
