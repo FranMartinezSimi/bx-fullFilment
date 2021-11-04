@@ -129,12 +129,12 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
     }
   };
   return (
-    <aside className={`${className} shadow bg-white`}>
+    <aside className={`${className} shadow bg-white  d-none d-lg-block`}>
       <nav
         className={`${styles.navigation} ${activeNavbar ? styles.navigationOpen : styles.navigationClose}`}
         onMouseLeave={() => handleLeaveItem()}
       >
-        <a href="!#" onClick={handleClick} className={styles.navigationToggle}>
+        <a href="!#" onClick={handleClick} className={`${styles.navigationToggle}`}>
           <span className={styles.navigationToggleSymbol}>
             {activeNavbar ? (
               <BxChevronLeft
@@ -150,7 +150,7 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           </span>
         </a>
         <div>
-          <div className="text-center my-4 pb-4">
+          <div className="text-center my-4 pb-4 d-none d-lg-block">
             <Link to="/">
               <img src={LogoBlue} alt="Blue express" width="62" />
             </Link>
