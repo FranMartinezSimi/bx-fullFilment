@@ -86,7 +86,7 @@ const Home = () => {
   };
   const handleClick = (e) => {
     e.preventDefault();
-    history.push('/incidencias');
+    history.push('/ordenes');
   };
   useEffect(() => {
     chart();
@@ -167,7 +167,7 @@ const Home = () => {
                         onClick={handleClick}
                       >
                         <p className="text-end me-2 mb-0">
-                          <small style={{ fontSize: '1em' }}>Ver listado de tickets &gt;</small>
+                          <small style={{ fontSize: '1em' }}>Ver listado de órdenes &gt;</small>
                         </p>
                       </a>
                     </li>
