@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
 import PageLayout from 'components/Templates/PageLayout';
@@ -9,38 +8,43 @@ import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 
 const homeResolutor = () => {
-  const history = useHistory();
-  const [statisticsData, setTotalStatisticsData] = useState([]);
+  const [statisticsData, setStatisticsData] = useState([]);
   const [legendData, setLegendData] = useState([]);
-  const [errorTotales, setErrorTotales] = useState(false);
   const [errorChart, setErrorChart] = useState(false);
-  const [data, setData] = useState({
-    series: [],
+  const [data, setData] = useState(null);
+  const [openChart, setOpenChart] = useState(null);
+  const [closeChart, setCloseChart] = useState(null);
+  const [ticketsResume, setTicketsResume] = useState(null);
+
+  const originalRadialChart = {
     options: {
-      colors: ['#FF7E44', '#3363FF', '#155C80', '#2294CC', '#7092FF', '#408D5C', '#2BB9FF'],
-      labels: ['Producto erróneo', 'Producto faltante.', 'Incluir carta', 'Detalle de envío', 'Despacho retrasado', 'Detener envío', 'Cambio de dirección'],
       chart: {
-        type: 'donut',
-        height: 350,
-        zoom: {
-          enabled: false,
+        type: 'radialBar',
+        events: {
+          mounted: (charts) => {
+            charts.windowResizeHandler();
+          },
         },
       },
-      legend: {
-        show: false,
+      plotOptions: {
+        radialBar: {
+          // hollow: {
+          //   size: '70%',
+          // },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            value: {
+              fontSize: '16px',
+              offsetY: 8,
+            },
+          },
+        },
       },
-      stroke: {
-        show: false,
-      },
+      labels: [''],
     },
-  });
-  let componentTotales;
-
-  if (errorTotales) {
-    componentTotales = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos para visualizar estaísticas..." />;
-  } else {
-    componentTotales = <Spinner />;
-  }
+  };
 
   let componentChart;
 
@@ -58,22 +62,12 @@ const homeResolutor = () => {
       .then((dashData) => {
         const statistics = dashData.totales;
         const originalLegend = dashData.chart;
-        setTotalStatisticsData([
-          {
-            img: '/boxOpenIcon.png',
-            number: statistics.abiertos,
-            state: 'Abiertos',
-          },
-          {
-            img: '/boxClosedIcon.png',
-            number: statistics.resueltos,
-            state: 'Resueltos',
-          },
-          {
-            img: '/boxInfoIcon.png',
-            number: statistics.total,
-            state: 'Total',
-          },
+        const { tickets } = dashData;
+        setTicketsResume(tickets);
+        setStatisticsData([
+          statistics.abiertos,
+          statistics.resueltos,
+          statistics.total,
         ]);
         if (dashData.chart.series.length === 0) {
           setErrorChart(true);
@@ -90,6 +84,11 @@ const homeResolutor = () => {
               zoom: {
                 enabled: false,
               },
+              events: {
+                mounted: (charts) => {
+                  charts.windowResizeHandler();
+                },
+              },
             },
             legend: {
               show: false,
@@ -98,6 +97,40 @@ const homeResolutor = () => {
               show: false,
             },
           },
+        });
+        const openNumber = (dashData.totales.abiertos * 100) / dashData.totales.total;
+        const closeNumber = (dashData.totales.resueltos * 100) / dashData.totales.total;
+        setOpenChart({
+          series: [openNumber.toFixed(0)],
+          ...originalRadialChart,
+          options: {
+            chart: {
+              type: 'radialBar',
+              events: {
+                mounted: (charts) => {
+                  charts.windowResizeHandler();
+                },
+              },
+            },
+            plotOptions: {
+              radialBar: {
+                dataLabels: {
+                  name: {
+                    show: false,
+                  },
+                  value: {
+                    fontSize: '16px',
+                    offsetY: 8,
+                    color: '#fff',
+                  },
+                },
+              },
+            },
+          },
+        });
+        setCloseChart({
+          series: [closeNumber.toFixed(0)],
+          ...originalRadialChart,
         });
         const legendFormated = originalLegend.label.map((value, index) => ({
           img: `/res-ico-${index}`,
@@ -108,101 +141,170 @@ const homeResolutor = () => {
       })
       .catch((err) => {
         console.log(err);
-        setErrorTotales(true);
         setErrorChart(true);
       });
-  };
-  const handleClick = (e) => {
-    e.preventDefault();
-    history.push('/incidencias');
   };
   useEffect(() => {
     chart();
   }, []);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
-      <div className="container">
-        <div className="row align-items-stretch">
-          <div className="col-lg-12 pt-5">
-            <Card
-              className="shadow my-5"
-            >
-              <h4 className="display-font mb-4">Estadísticas de incidencias</h4>
-              {statisticsData.length > 0 && !errorTotales ? (
-                <>
-                  <ul className="d-flex justify-content-around mb-2">
-                    {statisticsData.length > 0 && statisticsData.map((item) => (
-                      <li key={item.state}>
-                        <div className="item d-flex align-items-center">
-                          <div className="me-3">
-                            <img src={item.img} alt={item.state} />
-                          </div>
-                          <div className="pt-3">
-                            <h5 className="mb-0">{item.number}</h5>
-                            <p>
-                              <small>{item.state}</small>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="#!"
-                    style={{ color: '#2BB9FF' }}
-                    onClick={handleClick}
-                  >
-                    <p className="text-end me-2 mb-0 pt-4">
-                      <small style={{ fontSize: '1.2em' }}>Ver listado de tickets &gt;</small>
-                    </p>
-                  </a>
-                </>
-              ) : componentTotales}
-            </Card>
-            <Card
-              className="shadow my-5"
-            >
-              <h4 className="display-font">Visualización de motivos</h4>
-              {statisticsData.length > 0 && !errorChart ? (
-                <div className="row align-items-center">
-                  <div className="col-md-7">
+      <div className="row align-items-stretch">
+        <div className="col-md-9 pt-5">
+          <Card
+            className="shadow my-5"
+          >
+            <h4 className="display-font">Visualización de motivos</h4>
+            {statisticsData.length > 0 && !errorChart ? (
+              <div className="row align-items-center">
+                <div className="col-md-6">
+                  {data && (
                     <Chart
                       options={data.options}
                       series={data.series}
                       type="donut"
                       height={350}
                     />
-                  </div>
-                  <div className="col-md-5">
-                    <div className="pt-4 ps-5" style={{ borderRadius: 15, border: '1px solid #D6E0FF' }}>
-                      <p>Todos los motivos</p>
-                      <ul className="d-flex flex-row flex-wrap w-100">
-                        {legendData && legendData.map((item) => (
-                          <li key={item.name} className="w-50">
-                            <ul className="d-flex mb-2">
-                              <li className="pe-4">
-                                <img src={`${item.img}.png`} alt={item.name} />
-                              </li>
-                              <li className="m-0">
-                                <h4 style={{ fontSize: 21 }}>{item.value}</h4>
-                                <p className="m-0">
-                                  <small style={{ fontSize: 10 }}>
-                                    {item.name}
-                                  </small>
-                                </p>
-                              </li>
-                            </ul>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  )}
+                </div>
+                <div className="col-lg-6">
+                  <div className="pt-4 ps-4" style={{ borderRadius: 15, border: '1px solid #D6E0FF' }}>
+                    <p>Todos los motivos</p>
+                    <ul className="d-flex flex-row flex-wrap w-100">
+                      {legendData && legendData.map((item) => (
+                        <li key={item.name} className="w-50">
+                          <ul className="d-flex mb-2">
+                            <li className="pe-4">
+                              <img src={`${item.img}.png`} alt={item.name} />
+                            </li>
+                            <li className="m-0">
+                              <h4 style={{ fontSize: 21 }}>{item.value}</h4>
+                              <p className="m-0">
+                                <small style={{ fontSize: 10 }}>
+                                  {item.name}
+                                </small>
+                              </p>
+                            </li>
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-              ) : componentChart}
+              </div>
+            ) : componentChart}
+          </Card>
+        </div>
+        {statisticsData.length > 0 && !errorChart && (
+          <div className="col-md-3 pt-5">
+            <div className="bg-complementary-color text-white shadow py-2 mt-5" style={{ borderRadius: 15 }}>
+              {openChart && (
+                <Chart
+                  options={openChart.options}
+                  series={openChart.series}
+                  type="radialBar"
+                  height={120}
+                />
+              )}
+              <p className="text-center" style={{ fontSize: 15 }}>
+                Tickets
+                <br />
+                Abiertos
+              </p>
+              <p className="text-center mb-0" style={{ fontSize: 22 }}>
+                <b>
+                  {statisticsData[0]}
+                </b>
+              </p>
+            </div>
+            <div className="bg-white mt-4 shadow py-2" style={{ borderRadius: 15 }}>
+              {closeChart && (
+                <Chart
+                  options={closeChart.options}
+                  series={closeChart.series}
+                  type="radialBar"
+                  height={120}
+                />
+              )}
+              <p className="text-center display-font" style={{ fontSize: 15 }}>
+                Tickets
+                <br />
+                Cerrados
+              </p>
+              <p className="text-center display-font mb-0" style={{ fontSize: 22 }}>
+                <b>
+                  {statisticsData[1]}
+                </b>
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      {statisticsData.length > 0 && !errorChart && (
+        <div className="row mb-5">
+          <div className="col-12">
+            <Card className="shadow">
+              <p className="display-font">
+                <b>
+                  Tickets Recientes
+                </b>
+              </p>
+              <table className="table table-borderless">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <p className="fs-5 m-0 display-font">
+                        Order Id
+                      </p>
+                    </th>
+                    <th scope="col">
+                      <p className="fs-5 m-0 display-font">
+                        Motivo
+                      </p>
+                    </th>
+                    <th scope="col">
+                      <p className="fs-5 m-0 display-font">
+                        Cliente
+                      </p>
+                    </th>
+                    <th scope="col">
+                      <p className="fs-5 m-0 display-font">
+                        Comentario
+                      </p>
+                    </th>
+                  </tr>
+                </thead>
+                {ticketsResume && ticketsResume.map((item) => (
+                  <tbody>
+                    <tr className="greyTbody">
+                      <td>
+                        <p className="py-3 m-0">
+                          {item.orderId}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="py-3 m-0">
+                          {item.motivo}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="py-3 m-0">
+                          {item.empresa}
+                        </p>
+                      </td>
+                      <td>
+                        <p className="py-3 m-0">
+                          {item.comentario}
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
+              </table>
             </Card>
           </div>
         </div>
-      </div>
+      )}
     </PageLayout>
   );
 };

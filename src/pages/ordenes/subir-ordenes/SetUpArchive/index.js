@@ -34,9 +34,9 @@ const SetUpArchive = ({
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-6 px-xl-5">
           <h2 className="mb-5 display-font">Para subir tus órdenes debes:</h2>
           <ul className="d-flex mb-4">
             <li className="me-4">

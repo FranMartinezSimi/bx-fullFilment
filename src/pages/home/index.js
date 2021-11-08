@@ -8,18 +8,11 @@ import clientFetch from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
-// import ColumnChart from 'components/Atoms/ColumnChart';
-// import Alert from 'components/Atoms/AlertMessage';
-// import Spinner from 'components/Atoms/Spinner';
 import { SocketContext } from 'context/useContextSocketSeller';
-// import styles from './styles.module.scss';
 import shopping from 'assets/brand/shopping.png';
 import callendar from 'assets/brand/callendar.png';
 import Alert from 'assets/brand/alertRed.png';
 import closeX from 'assets/brand/closeX.svg';
-// import IconOrder1 from 'assets/brand/iconOrders1.svg';
-// import IconOrder2 from 'assets/brand/iconOrders2.svg';
-// import IconOrder3 from 'assets/brand/iconOrders3.svg';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -64,6 +57,10 @@ const Home = () => {
         const entregados = statistics[0].entregado + statistics[1].entregado
           + statistics[2].entregado;
 
+        console.log(statistics);
+        // for (const order of statistics.keys()) {
+        //   console.log(order.date);
+        // }
         setTotalStatisticsData([
           {
             img: '/boxIconRefresh.png',
@@ -161,7 +158,7 @@ const Home = () => {
 
                   <ul className="d-flex justify-content-between align-items-center pt-3 mb-0">
                     <li>
-                      <small>Actualizado hace 7 días</small>
+                      <p>Actualizado hace 7 días</p>
                     </li>
                     <li>
                       <a

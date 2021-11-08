@@ -136,23 +136,21 @@ const UploadOrders = () => {
   }, [dataToValidate]);
   return (
     <PageLayout title="Subir órdenes">
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-md-8">
-            <PageTitle title="Subir órdenes" />
-            <p className="d-none">(Puedes importar un archivo .csv separado por comas)</p>
-          </div>
-          <div className="col-md-4">
-            {errorList.length > 0 && errorScreen && (
-              <div className="text-end me-md-4">
-                <Button
-                  className="btn btn-complementary px-5"
-                  text="Cargar órdenes"
-                  onClick={handleClick}
-                />
-              </div>
-            )}
-          </div>
+      <div className="row align-items-center">
+        <div className="col-md-8">
+          <PageTitle title="Subir órdenes" />
+          <p className="d-none">(Puedes importar un archivo .csv separado por comas)</p>
+        </div>
+        <div className="col-md-4">
+          {errorList.length > 0 && errorScreen && (
+            <div className="text-end me-md-4">
+              <Button
+                className="btn btn-complementary px-5"
+                text="Cargar órdenes"
+                onClick={handleClick}
+              />
+            </div>
+          )}
         </div>
       </div>
       {!errorScreen && (
