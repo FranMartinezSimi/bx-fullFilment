@@ -13,3 +13,116 @@
 .errorMessage {
   background: #E5E5E5;
 }
+
+.close {
+  color: #aaaaaa;
+  font-size: 15px;
+  font-weight: bold;
+  background: none;
+  border: none;
+}
+
+.alert{
+border: 1px solid #E0C35C;
+box-sizing: border-box;
+border-radius: 10px;
+background: #FFF6D8;
+margin-top: 25px;
+margin-bottom: 25px;
+}
+
+.pAlert{
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 17px;
+display: flex;
+align-items: center;
+margin-top: 10px;
+
+}
+
+.tAlert{
+	font-family: Lato;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+display: flex;
+align-items: center;
+}
+
+.img{
+	position: static;
+width: 26px;
+height: 29px;
+left: calc(50% - 26px/2 - 522.5px);
+top: 13.5px;
+}
+
+.fileUp{
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+background: #FFFFFF;
+border-radius: 15px;
+height: 100%;
+}
+
+.analyticsOrders{
+top: 30.54%;
+background: #FFFFFF;
+border-radius: 15px;
+}
+
+h3{
+	font-family: Mont;
+font-size: 22px;
+line-height: 26px;
+display: flex;
+align-items: cente
+}
+
+p{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 145%
+}
+
+h5{
+	font-family: Mont;
+font-size: 26px;
+line-height: 30px;
+}
+
+
+
+.pFileUp{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 150%;
+}
+
+.cardTotalProm{
+	position: absolute;
+height: 389px;
+left: 12.97%;
+right: 32.89%;
+top: 192px;
+}
+
+.cardTotalOpFf{
+height: 389px;
+top: 192px;
+}
+
+.hei{
+	height:100%
+}
+
