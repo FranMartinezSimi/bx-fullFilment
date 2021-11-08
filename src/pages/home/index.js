@@ -51,7 +51,7 @@ const Home = () => {
       .then((dashData) => {
         const statistics = dashData.orders_deliver;
         const enviados = statistics[0].enviado + statistics[1].enviado
-          + statistics[2].enviado;
+          + statistics[2].enviado + statistics[2].enviado;
         const procesados = statistics[0].procesado + statistics[1].procesado
           + statistics[2].procesado;
         const entregados = statistics[0].entregado + statistics[1].entregado
@@ -64,18 +64,18 @@ const Home = () => {
         setTotalStatisticsData([
           {
             img: '/boxIconRefresh.png',
-            number: entregados,
-            state: 'Abiertos',
+            number: procesados,
+            state: 'Procesadas',
           },
           {
             img: '/boxIconCheck.png',
-            number: procesados,
-            state: 'Resueltos',
+            number: entregados,
+            state: 'Entregadas',
           },
           {
             img: '/boxIconTruck.png',
             number: enviados,
-            state: 'Total',
+            state: 'En Camino',
           },
         ]);
       })
@@ -133,7 +133,7 @@ const Home = () => {
               titleSize="50px"
             />
           </div>
-          <div className="row">
+          <div>
             <Card>
               <h4 className="display-font mb-4">Estados de tus ordenes</h4>
               {statisticsData.length > 0 && !errorTotales ? (
