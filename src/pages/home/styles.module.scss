@@ -26,19 +26,9 @@
 border: 1px solid #E0C35C;
 box-sizing: border-box;
 border-radius: 10px;
-display: flex;
-flex-direction: row;
-align-items: center;
-padding: 24px;
-width: 1119px;
-height: 56px;
-top: 96px;
 background: #FFF6D8;
-width: 1184px;
-height: 56px;
-left: 20px;
-top: 20px;
 margin-top: 25px;
+margin-bottom: 25px;
 }
 
 .pAlert{
@@ -49,7 +39,7 @@ font-size: 14px;
 line-height: 17px;
 display: flex;
 align-items: center;
-margin-top: 25px;
+margin-top: 10px;
 
 }
 
@@ -78,6 +68,7 @@ top: 0%;
 bottom: 0%;
 background: #FFFFFF;
 border-radius: 15px;
+height: 100%;
 }
 
 .analyticsOrders{
@@ -108,6 +99,8 @@ font-size: 26px;
 line-height: 30px;
 }
 
+
+
 .pFileUp{
 	font-family: Lato;
 font-style: normal;
@@ -115,3 +108,21 @@ font-weight: normal;
 font-size: 16px;
 line-height: 150%;
 }
+
+.cardTotalProm{
+	position: absolute;
+height: 389px;
+left: 12.97%;
+right: 32.89%;
+top: 192px;
+}
+
+.cardTotalOpFf{
+height: 389px;
+top: 192px;
+}
+
+.hei{
+	height:100%
+}
+
