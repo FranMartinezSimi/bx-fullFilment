@@ -11,8 +11,10 @@ import Card from 'components/Molecules/Card';
 import { SocketContext } from 'context/useContextSocketSeller';
 import shopping from 'assets/brand/shopping.png';
 import callendar from 'assets/brand/callendar.png';
-import Alert from 'assets/brand/alertRed.png';
-import closeX from 'assets/brand/closeX.svg';
+import Modal from 'components/Templates/Modal';
+import FormReplenishment from 'components/Molecules/FormReplenishment';
+// import Alert from 'assets/brand/alertRed.png';
+// import closeX from 'assets/brand/closeX.svg';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -20,6 +22,7 @@ const Home = () => {
   const [notify, setNotify] = useState(null);
   const [statisticsData, setTotalStatisticsData] = useState([]);
   const history = useHistory();
+  const [modalInventory, setModalInventory] = useState(false);
   const userData = JSON.parse(user);
   const [errorTotales, setErrorTotales] = useState(false);
   const userActive = userData.credential.user.name;
@@ -86,14 +89,23 @@ const Home = () => {
   };
   const handleClick = (e) => {
     e.preventDefault();
-    history.push('/incidencias');
+    history.push('/ordenes');
   };
+
+  const handleClickA = (e) => {
+    e.preventDefault();
+    history.push('/ordenes/subir-ordenes');
+  };
+
+  const handleClickInventory = (e) => {
+    e.preventDefault();
+    setModalInventory(true);
+  };
+
   useEffect(() => {
     chart();
   }, []);
   const socket = useContext(SocketContext);
-
-  const parrafoAlert = 'Debido a la alta demanda generada por Cyberday, les informamos que pueden existir retrasos en los envíos. Estamos reforzando nuestras acciones para entregarles el mejor servicio. Esperamos su comprensión. Y para cualquier consulta es';
 
   useEffect(() => {
     socket.on('client', (dataSocket) => {
@@ -102,7 +114,7 @@ const Home = () => {
   }, [socket, notify]);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
-      <div className={`container-fluid ${styles.alert}`} role="alert">
+      {/* <div className={`container-fluid ${styles.alert}`} role="alert">
         <div className="d-flex bd-highlight align-content-md-center">
           <div className="p-2 flex-fill bd-highlight d-flex align-content-center flex-wrap">
             <img src={Alert} alt="" className={`${styles.img}`} />
@@ -121,7 +133,7 @@ const Home = () => {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="row mb-5">
         <div className="col-8">
           <div className="row">
@@ -167,7 +179,7 @@ const Home = () => {
                         onClick={handleClick}
                       >
                         <p className="text-end me-2 mb-0">
-                          <small style={{ fontSize: '1em' }}>Ver listado de tickets &gt;</small>
+                          <small style={{ fontSize: '1em' }}>Ver listado de órdenes &gt;</small>
                         </p>
                       </a>
                     </li>
@@ -202,7 +214,7 @@ const Home = () => {
                     </p>
                   </div>
                   <div className="p-2 bd-highlight">
-                    <a href="#!" className="btn btn-secondary">
+                    <a href="#!" className="btn btn-secondary" onClick={handleClickA}>
                       Programar
                     </a>
                   </div>
@@ -228,7 +240,7 @@ const Home = () => {
                     </p>
                   </div>
                   <div className="p-2 bd-highlight">
-                    <a href="#!" className="btn btn-secondary">
+                    <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
                       Subir órdenes
                     </a>
                   </div>
@@ -238,6 +250,11 @@ const Home = () => {
           </Card>
         </div>
       </div>
+      <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
+        <FormReplenishment
+          setModalTicket={setModalInventory}
+        />
+      </Modal>
     </PageLayout>
   );
 };
