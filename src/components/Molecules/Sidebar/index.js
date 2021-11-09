@@ -44,6 +44,10 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           name: 'Listado de Órdenes',
           route: '/ordenes',
         },
+        {
+          name: 'Grafico de Órdenes',
+          route: '/ordenes/grafico',
+        },
       ],
     },
     {
