@@ -147,7 +147,7 @@ const Home = () => {
           </div>
           <div>
             <Card>
-              <h4 className="display-font mb-4">Estados de tus ordenes</h4>
+              <h4 className="display-font mb-4">Estados de tus órdenes</h4>
               {statisticsData.length > 0 && !errorTotales ? (
                 <>
                   <ul className="d-flex justify-content-around mb-2">
@@ -232,11 +232,11 @@ const Home = () => {
               <div className="flex-grow-1 ms-3">
                 <div className="d-flex flex-column bd-highlight mb-3">
                   <div className="p-2 bd-highlight">
-                    <h5 style={{ color: '#FF7E44' }}>¡Comencemos con tus ordenes!</h5>
+                    <h5 style={{ color: '#FF7E44' }}>¡Comencemos con tus órdenes!</h5>
                   </div>
                   <div className="p-2 bd-highlight">
                     <p className={`${styles.pFileUp}`}>
-                      sube tus archivos masivos de ordenes
+                      sube tus archivos masivos de órdenes
                     </p>
                   </div>
                   <div className="p-2 bd-highlight">
