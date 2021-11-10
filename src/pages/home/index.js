@@ -134,7 +134,7 @@ const Home = () => {
           </div>
         </div>
       </div> */}
-      <div className="row mb-5">
+      <div className="row mb-5 pt-5">
         <div className="col-8">
           <div className="row">
             <PageTitle
