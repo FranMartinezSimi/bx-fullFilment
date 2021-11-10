@@ -17,7 +17,7 @@ const SellerReport = () => {
   let componentChart;
 
   if (errorChart) {
-    componentChart = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos para crear visualizar motivos..." />;
+    componentChart = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos..." />;
   } else {
     componentChart = <Spinner />;
   }
@@ -52,6 +52,7 @@ const SellerReport = () => {
             chart: {
               type: 'bar',
               height: 350,
+              stacked: true,
               zoom: {
                 enabled: false,
               },
@@ -146,10 +147,10 @@ const SellerReport = () => {
       <PageTitle title="Reporte / Analisís de ordenes" />
       {statesChart && !errorChart ? (
         <>
-          <div className="row align-items-stretch">
-            <div className="col-md-9 pt-5">
+          <div className="row align-items-stretch mt-5">
+            <div className="col-md-9">
               <Card
-                className="shadow my-5"
+                className="shadow"
               >
                 <p className="display-font">
                   <b>
@@ -171,15 +172,14 @@ const SellerReport = () => {
               </Card>
             </div>
             {deliveredChart && (deliveredChart.series[0] > 0 || deliveredChart.series[1] > 0) && (
-              <div className="col-md-3 pt-5">
-                <div className="mt-4 py-2">
-                  <p className="text-center display-font mb-0 mt-2" style={{ fontSize: 16 }}>
-                    <b>
-                      Selecciona un período y comienza a ver
-                      las metrícas de tus operaciones actuales
-                    </b>
-                  </p>
-                  <Card className="mt-4 shadow">
+              <div className="col-md-3">
+                <>
+                  <Card className="shadow card-h-100">
+                    <p className="display-font">
+                      <b>
+                        Entregadas Vs Pendientes
+                      </b>
+                    </p>
                     <Chart
                       options={deliveredChart.options}
                       series={deliveredChart.series}
@@ -218,13 +218,13 @@ const SellerReport = () => {
                       </li>
                     </ul>
                   </Card>
-                </div>
+                </>
               </div>
             )}
           </div>
 
           {pendingChart && pendingChart.series[0].data.length > 0 && (
-            <div className="row mb-5">
+            <div className="row my-5">
               <div className="col-12">
                 <Card className="shadow">
                   <p className="display-font">
