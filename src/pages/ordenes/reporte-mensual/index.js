@@ -99,7 +99,7 @@ const SellerReport = () => {
               },
             },
             fill: {
-              colors: ['#FF7E44', '#27A6E5'],
+              colors: ['#27A6E5', '#FF7E44'],
             },
             legend: {
               show: false,
@@ -203,7 +203,7 @@ const SellerReport = () => {
                           />
                           <b className="ps-2" style={{ fontSize: 14 }}>Entregados</b>
                         </p>
-                        <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
+                        <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
                       </li>
                       <li className="w-50 border-left">
                         <p className="mb-0 text-center">
@@ -218,7 +218,7 @@ const SellerReport = () => {
                           />
                           <b className="ps-2" style={{ fontSize: 14 }}>Pendientes</b>
                         </p>
-                        <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
+                        <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
                       </li>
                     </ul>
                   </Card>
