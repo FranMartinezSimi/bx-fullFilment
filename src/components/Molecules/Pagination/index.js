@@ -13,7 +13,7 @@ const Pagination = ({
   pageSize,
   setPageSize,
 }) => (
-  <div className="container px-0">
+  <div className="container-fluid px-0">
     <div className="row justify-content-between align-items-center">
       <div className="col-md-6">
         <ul className="d-flex align-items-center">
