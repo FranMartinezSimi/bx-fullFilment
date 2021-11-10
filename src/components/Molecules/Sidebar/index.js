@@ -45,7 +45,7 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           route: '/ordenes',
         },
         {
-          name: 'Reporte de Mensual',
+          name: 'Reporte Mensual',
           route: '/ordenes/reporte-mensual',
         }, {
           name: 'Histórico de Órdenes',
