@@ -118,11 +118,6 @@ const homeResolutor = () => {
                   name: {
                     show: false,
                   },
-                  value: {
-                    fontSize: '16px',
-                    offsetY: 8,
-                    color: '#fff',
-                  },
                 },
               },
             },
