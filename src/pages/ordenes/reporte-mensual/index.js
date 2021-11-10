@@ -147,8 +147,8 @@ const SellerReport = () => {
     chart();
   }, []);
   return (
-    <PageLayout title="Reporte / Analisís de ordenes" description="Reporte / Analisís de ordenes">
-      <PageTitle title="Reporte / Analisís de ordenes" />
+    <PageLayout title="Reporte / Analisís de órdenes" description="Reporte / Analisís de órdenes">
+      <PageTitle title="Reporte / Analisís de órdenes" />
       {statesChart && !errorChart ? (
         <>
           <div className="row align-items-stretch mt-5">
