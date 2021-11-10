@@ -17,7 +17,7 @@ const SellerReport = () => {
   let componentChart;
 
   if (errorChart) {
-    componentChart = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos para crear visualizar motivos..." />;
+    componentChart = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos..." />;
   } else {
     componentChart = <Spinner />;
   }
@@ -52,6 +52,7 @@ const SellerReport = () => {
             chart: {
               type: 'bar',
               height: 350,
+              stacked: true,
               zoom: {
                 enabled: false,
               },
@@ -68,10 +69,14 @@ const SellerReport = () => {
               bar: {
                 borderRadius: 14,
                 horizontal: true,
+                dataLabels: {
+                  position: 'top',
+                },
               },
             },
             dataLabels: {
-              enabled: false,
+              enabled: true,
+              offsetX: -16,
             },
             xaxis: {
               categories: orderStatus,
@@ -94,7 +99,7 @@ const SellerReport = () => {
               },
             },
             fill: {
-              colors: ['#FF7E44', '#27A6E5'],
+              colors: ['#27A6E5', '#FF7E44'],
             },
             legend: {
               show: false,
@@ -142,14 +147,14 @@ const SellerReport = () => {
     chart();
   }, []);
   return (
-    <PageLayout title="Reporte / Analisís de ordenes" description="Reporte / Analisís de ordenes">
-      <PageTitle title="Reporte / Analisís de ordenes" />
+    <PageLayout title="Reporte / Analisís de órdenes" description="Reporte / Analisís de órdenes">
+      <PageTitle title="Reporte / Analisís de órdenes" />
       {statesChart && !errorChart ? (
         <>
-          <div className="row align-items-stretch">
-            <div className="col-md-9 pt-5">
+          <div className="row align-items-stretch mt-5">
+            <div className="col-md-9">
               <Card
-                className="shadow my-5"
+                className="shadow"
               >
                 <p className="display-font">
                   <b>
@@ -171,15 +176,14 @@ const SellerReport = () => {
               </Card>
             </div>
             {deliveredChart && (deliveredChart.series[0] > 0 || deliveredChart.series[1] > 0) && (
-              <div className="col-md-3 pt-5">
-                <div className="mt-4 py-2">
-                  <p className="text-center display-font mb-0 mt-2" style={{ fontSize: 16 }}>
-                    <b>
-                      Selecciona un período y comienza a ver
-                      las metrícas de tus operaciones actuales
-                    </b>
-                  </p>
-                  <Card className="mt-4 shadow">
+              <div className="col-md-3">
+                <>
+                  <Card className="shadow card-h-100">
+                    <p className="display-font">
+                      <b>
+                        Entregadas Vs Pendientes
+                      </b>
+                    </p>
                     <Chart
                       options={deliveredChart.options}
                       series={deliveredChart.series}
@@ -199,7 +203,7 @@ const SellerReport = () => {
                           />
                           <b className="ps-2" style={{ fontSize: 14 }}>Entregados</b>
                         </p>
-                        <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
+                        <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
                       </li>
                       <li className="w-50 border-left">
                         <p className="mb-0 text-center">
@@ -214,17 +218,17 @@ const SellerReport = () => {
                           />
                           <b className="ps-2" style={{ fontSize: 14 }}>Pendientes</b>
                         </p>
-                        <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
+                        <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
                       </li>
                     </ul>
                   </Card>
-                </div>
+                </>
               </div>
             )}
           </div>
 
           {pendingChart && pendingChart.series[0].data.length > 0 && (
-            <div className="row mb-5">
+            <div className="row my-5">
               <div className="col-12">
                 <Card className="shadow">
                   <p className="display-font">
