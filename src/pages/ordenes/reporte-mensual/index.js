@@ -69,10 +69,14 @@ const SellerReport = () => {
               bar: {
                 borderRadius: 14,
                 horizontal: true,
+                dataLabels: {
+                  position: 'top',
+                },
               },
             },
             dataLabels: {
-              enabled: false,
+              enabled: true,
+              offsetX: -16,
             },
             xaxis: {
               categories: orderStatus,
