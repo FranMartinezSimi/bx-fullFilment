@@ -167,8 +167,15 @@ const Grafico = () => {
             },
             plotOptions: {
               radialBar: {
-                hollow: {
-                  size: '70%',
+                dataLabels: {
+                  name: {
+                    show: false,
+                  },
+                  value: {
+                    fontSize: '30px',
+                    offsetY: 8,
+                    color: '#000000',
+                  },
                 },
               },
             },
@@ -198,7 +205,7 @@ const Grafico = () => {
       <div className="row my-5">
         <div className="col-lg-8">
           <Card>
-            <h4>Total de órdenes y promedio diario</h4>
+            <h4 className={` text-left mb-2 ${styles.titleCard}`}>Total de órdenes y promedio diario</h4>
             <Chart
               data={dataOrders}
               options={dataOrders.options}
