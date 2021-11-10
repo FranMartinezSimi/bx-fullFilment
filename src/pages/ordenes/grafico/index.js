@@ -12,6 +12,7 @@ const Grafico = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
   const userData = JSON.parse(user);
+  const [stateFromTo, setStateFromTo] = useState(null);
   const userActive = userData.credential.accountId;
   const [orderFetchError, setOrderFetchError] = useState(false);
   const [dataOrders1, setDataOrders1] = useState({
@@ -26,8 +27,19 @@ const Grafico = () => {
           hollow: {
             size: '70%',
           },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            total: {
+              show: true,
+              label: '',
+              formatter: (w) => (w.globals.initialSeries[0]),
+            },
+          },
         },
       },
+      stroke: { lineCap: 'round' },
       labels: [''],
     },
   });
@@ -88,11 +100,17 @@ const Grafico = () => {
     })
       .then((data) => {
         const items = data.orders;
+        const total = data.totalOrders;
         // const averages = items.map((item) => (item.average));
         const months = items.map((item) => (item.month)).reverse();
         const quantity = items.map((item) => (item.quantity)).reverse();
         const average = items.map((item) => (item.average)).reverse();
-        console.log(months);
+        const desde = `${months[0]} ${new Date().getFullYear()}`;
+        const hasta = `${months[3]} ${new Date().getFullYear()}`;
+
+        setStateFromTo({ from: desde, to: hasta });
+        console.log(hasta);
+        console.log(months[3]);
         console.log(average);
         console.log(quantity);
         setIsLoading(false);
@@ -111,8 +129,6 @@ const Grafico = () => {
           options: {
             colors: ['#3363FF', '#FDCC60', '#FDA460'],
             chart: {
-              id: 'basic-bar',
-              height: 350,
               stacked: true,
               toolbar: {
                 show: false,
@@ -143,11 +159,10 @@ const Grafico = () => {
           },
         });
         setDataOrders1({
-          series: [20],
+          series: [total],
           options: {
             colors: ['#7DD59D'],
             chart: {
-              height: 350,
               type: 'radialBar',
             },
             plotOptions: {
@@ -179,63 +194,62 @@ const Grafico = () => {
 
   return (
     <PageLayout title="Historico de órdenes">
-      <div className="row align-items-center">
-        <div className="col-md-8">
-          <PageTitle title="Historico de órdenes" />
-          <div className="row my-5">
-            <div className="col-8">
-              <Card>
-                <h4>Total de órdenes y promedio diario</h4>
-                <Chart
-                  data={dataOrders}
-                  options={dataOrders.options}
-                  series={dataOrders.series}
-                  type="line"
-                  height={350}
-                />
-              </Card>
+      <PageTitle title="Historico de órdenes" />
+      <div className="row my-5">
+        <div className="col-lg-8">
+          <Card>
+            <h4>Total de órdenes y promedio diario</h4>
+            <Chart
+              data={dataOrders}
+              options={dataOrders.options}
+              series={dataOrders.series}
+              height={350}
+            />
+          </Card>
+        </div>
+        <div className="col-lg-4">
+          <Card className={` text-center ${styles.cardTotal}`}>
+            <h4 className={` text-center ${styles.titleCard}`}>Total operación FF</h4>
+            <div className="align-items-center">
+              {!isLoading
+                ? (
+                  <div className="d-flex align-items-center flex-column bd-highlight mb-3">
+                    <Chart
+                      options={dataOrders1.options}
+                      series={dataOrders1.series}
+                      type="radialBar"
+                      height={300}
+                    />
+
+                  </div>
+                )
+                : component}
             </div>
-            <div className="col-4">
-              <Card>
-                <h4 className={` text-center ${styles.titleCard}`}>Total operación FF</h4>
-
-                {!isLoading
-                  ? (
-                    <div className="d-flex align-items-start flex-column bd-highlight mb-3">
-                      <Chart
-                        options={dataOrders1.options}
-                        series={dataOrders1.series}
-                        type="radialBar"
-                        height={350}
-                      />
+            <div>
+              <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
+              <div className="container">
+                <div className="container">
+                  <div className="row">
+                    <div className="col">
+                      <b>
+                        <p>{stateFromTo ? stateFromTo.from : ''}</p>
+                      </b>
                     </div>
-
-                  )
-                  : component}
-                <div>
-                  <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
-                  <div className="container">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col">
-                          <h5>Desde</h5>
-                        </div>
-                        <div className="col text-center">
-                          <b>-</b>
-
-                        </div>
-                        <div className="col">
-                          <h5>Hasta</h5>
-                        </div>
-                      </div>
+                    <div className="col text-center">
+                      <b>-</b>
+                    </div>
+                    <div className="col">
+                      <p>
+                        <b>{stateFromTo ? stateFromTo.to : ''}</b>
+                      </p>
                     </div>
                   </div>
-
                 </div>
+              </div>
 
-              </Card>
             </div>
-          </div>
+
+          </Card>
         </div>
       </div>
     </PageLayout>
