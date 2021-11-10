@@ -60,7 +60,7 @@ const Home = () => {
         const entregados = statistics[0].entregado + statistics[1].entregado
           + statistics[2].entregado;
 
-        console.log(statistics);
+        // console.log(statistics);
         // for (const order of statistics.keys()) {
         //   console.log(order.date);
         // }
