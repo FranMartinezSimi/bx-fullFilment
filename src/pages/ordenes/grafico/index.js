@@ -14,6 +14,23 @@ const Grafico = () => {
   const userData = JSON.parse(user);
   const userActive = userData.credential.accountId;
   const [orderFetchError, setOrderFetchError] = useState(false);
+  const [dataOrders1, setDataOrders1] = useState({
+    series: [''],
+    options: {
+      chart: {
+        height: 350,
+        type: 'radialBar',
+      },
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            size: '70%',
+          },
+        },
+      },
+      labels: [''],
+    },
+  });
   const [dataOrders, setDataOrders] = useState({
     series: [
       {
@@ -125,6 +142,24 @@ const Grafico = () => {
             },
           },
         });
+        setDataOrders1({
+          series: [20],
+          options: {
+            colors: ['#7DD59D'],
+            chart: {
+              height: 350,
+              type: 'radialBar',
+            },
+            plotOptions: {
+              radialBar: {
+                hollow: {
+                  size: '70%',
+                },
+              },
+            },
+
+          },
+        });
       })
       .catch(() => {
         setIsLoading(false);
@@ -162,16 +197,40 @@ const Grafico = () => {
             </div>
             <div className="col-4">
               <Card>
+                <h4 className={` text-center ${styles.titleCard}`}>Total operación FF</h4>
 
-                <h4>Total operación FF</h4>
-                {!orderFetchError && !isLoading
+                {!isLoading
                   ? (
-                    <h1>swsa</h1>
+                    <div className="d-flex align-items-start flex-column bd-highlight mb-3">
+                      <Chart
+                        options={dataOrders1.options}
+                        series={dataOrders1.series}
+                        type="radialBar"
+                        height={350}
+                      />
+                    </div>
+
                   )
                   : component}
+                <div>
+                  <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
+                  <div className="container">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col">
+                          <h5>Desde</h5>
+                        </div>
+                        <div className="col text-center">
+                          <b>-</b>
 
-                <div className={` align-items-center ${styles.titleCard}`}>
-                  Data
+                        </div>
+                        <div className="col">
+                          <h5>Hasta</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
               </Card>
