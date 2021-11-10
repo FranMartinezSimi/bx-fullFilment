@@ -214,7 +214,7 @@ const Home = () => {
                     </p>
                   </div>
                   <div className="p-2 bd-highlight">
-                    <a href="#!" className="btn btn-secondary" onClick={handleClickA}>
+                    <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
                       Programar
                     </a>
                   </div>
@@ -240,7 +240,7 @@ const Home = () => {
                     </p>
                   </div>
                   <div className="p-2 bd-highlight">
-                    <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
+                    <a href="#!" className="btn btn-secondary" onClick={handleClickA}>
                       Subir órdenes
                     </a>
                   </div>
