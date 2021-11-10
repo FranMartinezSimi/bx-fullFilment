@@ -14,6 +14,7 @@ import Issues from './pages/incidencias';
 import Reposition from './pages/reposition';
 import IssueDetail from './pages/incidencias/IssueDetail';
 import UpdateOrders from './pages/ordenes/subir-ordenes';
+import Grafico from './pages/ordenes/grafico';
 import SellerReport from './pages/ordenes/reporte-mensual';
 
 import './styles/main.scss';
@@ -59,6 +60,9 @@ const App = () => {
           </Route>
           <Route exact path="/ordenes/subir-ordenes">
             <UpdateOrders />
+          </Route>
+          <Route exact path="/ordenes/grafico">
+            <Grafico />
           </Route>
           <Route exact path="/ordenes/reporte-mensual">
             <SellerReport />
