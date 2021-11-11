@@ -52,13 +52,18 @@ const Home = () => {
       },
     })
       .then((dashData) => {
+        console.log(dashData);
         const statistics = dashData.orders_deliver;
-        const enviados = statistics[0].enviado + statistics[1].enviado
-          + statistics[2].enviado + statistics[2].enviado;
-        const procesados = statistics[0].procesado + statistics[1].procesado
-          + statistics[2].procesado;
-        const entregados = statistics[0].entregado + statistics[1].entregado
-          + statistics[2].entregado;
+        console.log('ENVIADO', statistics.map((item) => item.enviado).reduce((item, acc) => item + acc));
+        console.log('ENTREGADO', statistics.map((item) => item.entregado).reduce((item, acc) => item + acc));
+        console.log('PROCESADO', statistics.map((item) => item.procesado).reduce((item, acc) => item + acc));
+
+        const enviados = statistics.map((item) => item.enviado)
+          .reduce((item, acc) => item + acc);
+        const procesados = statistics.map((item) => item.procesado)
+          .reduce((item, acc) => item + acc);
+        const entregados = statistics.map((item) => item.entregado)
+          .reduce((item, acc) => item + acc);
 
         // console.log(statistics);
         // for (const order of statistics.keys()) {
