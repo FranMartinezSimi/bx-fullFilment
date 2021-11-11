@@ -201,13 +201,19 @@ const Grafico = () => {
       <div className="row my-5">
         <div className="col-lg-8">
           <Card>
-            <h4 className={` text-left mb-2 ${styles.titleCard}`}>Total de órdenes y promedio diario</h4>
-            <Chart
-              data={dataOrders}
-              options={dataOrders.options}
-              series={dataOrders.series}
-              height={350}
-            />
+            {!isLoading
+              ? (
+                <div>
+                  <h4 className={` text-left mb-2 ${styles.titleCard}`}>Total de órdenes y promedio diario</h4>
+                  <Chart
+                    data={dataOrders}
+                    options={dataOrders.options}
+                    series={dataOrders.series}
+                    height={350}
+                  />
+                </div>
+              )
+              : component}
           </Card>
         </div>
         <div className="col-lg-4">
