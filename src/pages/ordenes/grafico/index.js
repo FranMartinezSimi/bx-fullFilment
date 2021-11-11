@@ -109,10 +109,6 @@ const Grafico = () => {
         const hasta = `${months[3]} ${new Date().getFullYear()}`;
 
         setStateFromTo({ from: desde, to: hasta });
-        console.log(hasta);
-        console.log(months[3]);
-        console.log(average);
-        console.log(quantity);
         setIsLoading(false);
         setDataOrders({
           series: [
