@@ -52,12 +52,7 @@ const Home = () => {
       },
     })
       .then((dashData) => {
-        console.log(dashData);
         const statistics = dashData.orders_deliver;
-        console.log('ENVIADO', statistics.map((item) => item.enviado).reduce((item, acc) => item + acc));
-        console.log('ENTREGADO', statistics.map((item) => item.entregado).reduce((item, acc) => item + acc));
-        console.log('PROCESADO', statistics.map((item) => item.procesado).reduce((item, acc) => item + acc));
-
         const enviados = statistics.map((item) => item.enviado)
           .reduce((item, acc) => item + acc);
         const procesados = statistics.map((item) => item.procesado)
