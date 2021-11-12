@@ -294,7 +294,8 @@ const homeResolutor = () => {
                       </td>
                       <td>
                         <p className="py-3 m-0">
-                          {item.comentario}
+                          {item.comentario.substring(0, 140)}
+                          ...
                         </p>
                       </td>
                     </tr>
