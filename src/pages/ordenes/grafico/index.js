@@ -99,15 +99,17 @@ const Grafico = () => {
       },
     })
       .then((data) => {
-        const items = data.orders;
+        const items = data.orders.sort((a, b) => {
+          if (a.index > b.index) return 1;
+          if (a.index < b.index) return -1;
+          return 0;
+        });
         const total = data.totalOrders;
-        // const averages = items.map((item) => (item.average));
-        const months = items.map((item) => (item.month)).reverse();
-        const quantity = items.map((item) => (item.quantity)).reverse();
-        const average = items.map((item) => (item.average)).reverse();
+        const months = items.map((item) => (item.month));
+        const quantity = items.map((item) => (item.quantity));
+        const average = items.map((item) => (item.average));
         const desde = `${months[0]} ${new Date().getFullYear()}`;
         const hasta = `${months[3]} ${new Date().getFullYear()}`;
-
         setStateFromTo({ from: desde, to: hasta });
         setIsLoading(false);
         setDataOrders({
