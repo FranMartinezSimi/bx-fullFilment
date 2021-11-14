@@ -199,8 +199,8 @@ const Grafico = () => {
 
   return (
     <PageLayout title="Historico de órdenes">
-      <PageTitle title="Historico de órdenes" />
-      <div className="row my-5">
+      <div className="row m-5">
+        <PageTitle title="Historico de órdenes" />
         <div className="col-lg-8">
           <Card>
             {!isLoading
@@ -242,15 +242,15 @@ const Grafico = () => {
                 <div className="container">
                   <div className="row">
                     <div className="col">
-                      <b>
-                        <p>{stateFromTo ? stateFromTo.from : ''}</p>
+                      <b className="text-right">
+                        <p><b>{stateFromTo ? stateFromTo.from : ''}</b></p>
                       </b>
                     </div>
                     <div className="col text-center">
                       <b>-</b>
                     </div>
                     <div className="col">
-                      <p>
+                      <p className="text-left">
                         <b>{stateFromTo ? stateFromTo.to : ''}</b>
                       </p>
                     </div>

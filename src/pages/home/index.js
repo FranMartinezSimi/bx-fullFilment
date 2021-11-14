@@ -134,7 +134,7 @@ const Home = () => {
           </div>
         </div>
       </div> */}
-      <div className="row mb-5 pt-5">
+      <div className="row m-5">
         <div className="col-8">
           <div className="row">
             <PageTitle
@@ -147,7 +147,7 @@ const Home = () => {
           </div>
           <div>
             <Card>
-              <h4 className="display-font mb-4">Estados de tus órdenes</h4>
+              <h4 className="display-font m-4">Estados de tus órdenes</h4>
               {statisticsData.length > 0 && !errorTotales ? (
                 <>
                   <ul className="d-flex justify-content-around mb-2">
@@ -191,12 +191,12 @@ const Home = () => {
         </div>
         <div className="col-4">
           <div className="position-relative">
-            <img src="/fulfill1.png" alt="" width="250" style={{ position: 'relative', top: 75, left: '50px' }} />
+            <img src="/fulfill1.png" alt="" width="350" style={{ position: 'relative', top: 65, left: '70px' }} />
           </div>
         </div>
       </div>
 
-      <div className="row my-5">
+      <div className="row m-5">
         <div className="col-6">
           <Card>
             <div className="d-flex align-items-center">
