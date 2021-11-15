@@ -201,6 +201,7 @@ const Grafico = () => {
     <PageLayout title="Historico de órdenes">
       <div className="row m-5">
         <PageTitle title="Historico de órdenes" />
+
         <div className="col-lg-8">
           <Card>
             {!isLoading

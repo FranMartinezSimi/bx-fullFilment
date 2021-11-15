@@ -131,6 +131,31 @@ const homeResolutor = () => {
         setCloseChart({
           series: [closeNumber.toFixed(0)],
           ...originalRadialChart,
+          options: {
+            colors: ['#FF7E44'],
+            chart: {
+              type: 'radialBar',
+              events: {
+                mounted: (charts) => {
+                  charts.windowResizeHandler();
+                },
+              },
+            },
+            plotOptions: {
+              radialBar: {
+                dataLabels: {
+                  name: {
+                    show: false,
+                  },
+                  value: {
+                    fontSize: '16px',
+                    offsetY: 8,
+                    color: '#000000',
+                  },
+                },
+              },
+            },
+          },
         });
         const legendFormated = originalLegend.label.map((value, index) => ({
           img: `/res-ico-${index}`,
