@@ -252,22 +252,22 @@ const homeResolutor = () => {
               <table className="table table-borderless">
                 <thead>
                   <tr>
-                    <th scope="col">
+                    <th scope="col-5">
                       <p className="fs-5 m-0 display-font">
                         Order Id
                       </p>
                     </th>
-                    <th scope="col">
+                    <th scope="col-2">
                       <p className="fs-5 m-0 display-font">
                         Motivo
                       </p>
                     </th>
-                    <th scope="col">
+                    <th scope="col-2">
                       <p className="fs-5 m-0 display-font">
                         Cliente
                       </p>
                     </th>
-                    <th scope="col">
+                    <th scope="col-3">
                       <p className="fs-5 m-0 display-font">
                         Comentario
                       </p>

@@ -219,7 +219,7 @@ const Grafico = () => {
           </Card>
         </div>
         <div className="col-lg-4">
-          <Card className={` text-center ${styles.cardTotal}`}>
+          <Card>
             <h4 className={` text-center ${styles.titleCard}`}>Total operación FF</h4>
             <div className="align-items-center">
               {!isLoading
@@ -236,25 +236,22 @@ const Grafico = () => {
                 )
                 : component}
             </div>
-            <div>
-              <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
-              <div className="container">
-                <div className="container">
-                  <div className="row">
-                    <div className="col">
-                      <b className="text-right">
-                        <p><b>{stateFromTo ? stateFromTo.from : ''}</b></p>
-                      </b>
-                    </div>
-                    <div className="col text-center">
-                      <b>-</b>
-                    </div>
-                    <div className="col">
-                      <p className="text-left">
-                        <b>{stateFromTo ? stateFromTo.to : ''}</b>
-                      </p>
-                    </div>
+            <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
+
+            <div className="container">
+              <div className="d-flex justify-content-center">
+                <div className="p-2 col-example text-left">
+                  <div className="col">
+                    <b className="text-right">
+                      <p><b>{stateFromTo ? stateFromTo.from : ''}</b></p>
+                    </b>
                   </div>
+                </div>
+                <div className="p-2 col-example text-left"><b>-</b></div>
+                <div className="p-2 col-example text-left">
+                  <p className="text-left">
+                    <b>{stateFromTo ? stateFromTo.to : ''}</b>
+                  </p>
                 </div>
               </div>
 
