@@ -249,27 +249,27 @@ const homeResolutor = () => {
                   Tickets Recientes
                 </b>
               </p>
-              <table className="table table-borderless">
+              <table className="table align-middle table-borderless">
                 <thead>
                   <tr>
                     <th scope="col-5">
                       <p className="fs-5 m-0 display-font">
-                        Order Id
+                        <b> Order Id</b>
                       </p>
                     </th>
                     <th scope="col-2">
                       <p className="fs-5 m-0 display-font">
-                        Motivo
+                        <b>Motivo</b>
                       </p>
                     </th>
                     <th scope="col-2">
                       <p className="fs-5 m-0 display-font">
-                        Cliente
+                        <b>Cliente</b>
                       </p>
                     </th>
                     <th scope="col-3">
                       <p className="fs-5 m-0 display-font">
-                        Comentario
+                        <b>Comentario</b>
                       </p>
                     </th>
                   </tr>
