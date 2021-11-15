@@ -195,7 +195,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-
+      <br />
       <div className="row m-5">
         <div className="col-6">
           <Card>
