@@ -104,12 +104,15 @@ const Grafico = () => {
           if (a.index < b.index) return -1;
           return 0;
         });
+        console.log(data);
         const total = data.totalOrders;
         const months = items.map((item) => (item.month));
         const quantity = items.map((item) => (item.quantity));
         const average = items.map((item) => (item.average));
         const desde = `${months[0]} ${new Date().getFullYear()}`;
         const hasta = `${months[3]} ${new Date().getFullYear()}`;
+        console.log(months);
+        console.log(desde);
         setStateFromTo({ from: desde, to: hasta });
         setIsLoading(false);
         setDataOrders({

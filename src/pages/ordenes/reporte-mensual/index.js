@@ -29,21 +29,22 @@ const SellerReport = () => {
       },
     })
       .then((dashData) => {
+        const items = dashData.pendingOrders.sort((a, b) => {
+          if (a.index > b.index) return 1;
+          if (a.index < b.index) return -1;
+          return 0;
+        });
         const orderStatus = dashData.statusOrders.map((item) => item.status);
         const orderQuantity = dashData.statusOrders.map((item) => item.quantity);
 
         if (orderQuantity.length === 0) {
-          console.log('pasó');
           setErrorChart(true);
           return;
         }
 
         const dataDonut = Object.values(dashData.pendingDelivered);
-        console.log(dashData);
-
-        const pendingDate = dashData.pendingOrders.map((item) => item.day);
+        const pendingDate = items.map((item) => (item.day));
         const pendingQty = dashData.pendingOrders.map((item) => item.quantity);
-
         setStatesChart({
           series: [{
             data: orderQuantity,

@@ -72,13 +72,13 @@ const Home = () => {
           },
           {
             img: '/boxIconCheck.png',
-            number: entregados,
-            state: 'Entregadas',
+            number: enviados,
+            state: 'En Camino',
           },
           {
             img: '/boxIconTruck.png',
-            number: enviados,
-            state: 'En Camino',
+            number: entregados,
+            state: 'Entregadas',
           },
         ]);
       })
@@ -170,7 +170,7 @@ const Home = () => {
 
                   <ul className="d-flex justify-content-between align-items-center pt-3 mb-0">
                     <li>
-                      <p>Actualizado hace 7 días</p>
+                      <p>Últimos 7 días</p>
                     </li>
                     <li>
                       <a
