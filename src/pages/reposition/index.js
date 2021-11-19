@@ -54,10 +54,6 @@ const Reposition = () => {
       accessor: 'fecha',
     },
     {
-      Header: 'Hora',
-      accessor: '',
-    },
-    {
       Header: 'N° productos',
       accessor: 'numProducts',
     },
