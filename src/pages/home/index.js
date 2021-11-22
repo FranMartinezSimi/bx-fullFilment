@@ -53,12 +53,12 @@ const Home = () => {
     })
       .then((dashData) => {
         const statistics = dashData.orders_deliver;
-        const enviados = statistics[0].enviado + statistics[1].enviado
-          + statistics[2].enviado + statistics[2].enviado;
-        const procesados = statistics[0].procesado + statistics[1].procesado
-          + statistics[2].procesado;
-        const entregados = statistics[0].entregado + statistics[1].entregado
-          + statistics[2].entregado;
+        const enviados = statistics.map((item) => item.enviado)
+          .reduce((item, acc) => item + acc);
+        const procesados = statistics.map((item) => item.procesado)
+          .reduce((item, acc) => item + acc);
+        const entregados = statistics.map((item) => item.entregado)
+          .reduce((item, acc) => item + acc);
 
         // console.log(statistics);
         // for (const order of statistics.keys()) {
@@ -72,13 +72,13 @@ const Home = () => {
           },
           {
             img: '/boxIconCheck.png',
-            number: entregados,
-            state: 'Entregadas',
+            number: enviados,
+            state: 'En Camino',
           },
           {
             img: '/boxIconTruck.png',
-            number: enviados,
-            state: 'En Camino',
+            number: entregados,
+            state: 'Entregadas',
           },
         ]);
       })
@@ -134,7 +134,7 @@ const Home = () => {
           </div>
         </div>
       </div> */}
-      <div className="row mb-5 pt-5">
+      <div className="row m-5">
         <div className="col-8">
           <div className="row">
             <PageTitle
@@ -147,7 +147,7 @@ const Home = () => {
           </div>
           <div>
             <Card>
-              <h4 className="display-font mb-4">Estados de tus órdenes</h4>
+              <h4 className="display-font m-4">Estados de tus órdenes</h4>
               {statisticsData.length > 0 && !errorTotales ? (
                 <>
                   <ul className="d-flex justify-content-around mb-2">
@@ -170,7 +170,7 @@ const Home = () => {
 
                   <ul className="d-flex justify-content-between align-items-center pt-3 mb-0">
                     <li>
-                      <p>Actualizado hace 7 días</p>
+                      <p>Últimos 7 días</p>
                     </li>
                     <li>
                       <a
@@ -191,12 +191,12 @@ const Home = () => {
         </div>
         <div className="col-4">
           <div className="position-relative">
-            <img src="/fulfill1.png" alt="" width="250" style={{ position: 'relative', top: 75, left: '50px' }} />
+            <img src="/fulfill1.png" alt="" width="350" style={{ position: 'relative', top: 65, left: '70px' }} />
           </div>
         </div>
       </div>
-
-      <div className="row my-5">
+      <br />
+      <div className="row m-5">
         <div className="col-6">
           <Card>
             <div className="d-flex align-items-center">

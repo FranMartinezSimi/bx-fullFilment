@@ -131,6 +131,31 @@ const homeResolutor = () => {
         setCloseChart({
           series: [closeNumber.toFixed(0)],
           ...originalRadialChart,
+          options: {
+            colors: ['#FF7E44'],
+            chart: {
+              type: 'radialBar',
+              events: {
+                mounted: (charts) => {
+                  charts.windowResizeHandler();
+                },
+              },
+            },
+            plotOptions: {
+              radialBar: {
+                dataLabels: {
+                  name: {
+                    show: false,
+                  },
+                  value: {
+                    fontSize: '16px',
+                    offsetY: 8,
+                    color: '#000000',
+                  },
+                },
+              },
+            },
+          },
         });
         const legendFormated = originalLegend.label.map((value, index) => ({
           img: `/res-ico-${index}`,
@@ -249,27 +274,27 @@ const homeResolutor = () => {
                   Tickets Recientes
                 </b>
               </p>
-              <table className="table table-borderless">
+              <table className="table align-middle table-borderless">
                 <thead>
                   <tr>
-                    <th scope="col">
+                    <th scope="col-5">
                       <p className="fs-5 m-0 display-font">
-                        Order Id
+                        <b> Order Id</b>
                       </p>
                     </th>
-                    <th scope="col">
+                    <th scope="col-2">
                       <p className="fs-5 m-0 display-font">
-                        Motivo
+                        <b>Motivo</b>
                       </p>
                     </th>
-                    <th scope="col">
+                    <th scope="col-2">
                       <p className="fs-5 m-0 display-font">
-                        Cliente
+                        <b>Cliente</b>
                       </p>
                     </th>
-                    <th scope="col">
+                    <th scope="col-3">
                       <p className="fs-5 m-0 display-font">
-                        Comentario
+                        <b>Comentario</b>
                       </p>
                     </th>
                   </tr>
@@ -294,7 +319,8 @@ const homeResolutor = () => {
                       </td>
                       <td>
                         <p className="py-3 m-0">
-                          {item.comentario}
+                          {item.comentario.substring(0, 140)}
+                          ...
                         </p>
                       </td>
                     </tr>

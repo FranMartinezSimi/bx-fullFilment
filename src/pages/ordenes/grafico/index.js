@@ -99,20 +99,21 @@ const Grafico = () => {
       },
     })
       .then((data) => {
-        const items = data.orders;
+        const items = data.orders.sort((a, b) => {
+          if (a.index > b.index) return 1;
+          if (a.index < b.index) return -1;
+          return 0;
+        });
+        console.log(data);
         const total = data.totalOrders;
-        // const averages = items.map((item) => (item.average));
-        const months = items.map((item) => (item.month)).reverse();
-        const quantity = items.map((item) => (item.quantity)).reverse();
-        const average = items.map((item) => (item.average)).reverse();
+        const months = items.map((item) => (item.month));
+        const quantity = items.map((item) => (item.quantity));
+        const average = items.map((item) => (item.average));
         const desde = `${months[0]} ${new Date().getFullYear()}`;
         const hasta = `${months[3]} ${new Date().getFullYear()}`;
-
+        console.log(months);
+        console.log(desde);
         setStateFromTo({ from: desde, to: hasta });
-        console.log(hasta);
-        console.log(months[3]);
-        console.log(average);
-        console.log(quantity);
         setIsLoading(false);
         setDataOrders({
           series: [
@@ -201,21 +202,28 @@ const Grafico = () => {
 
   return (
     <PageLayout title="Historico de órdenes">
-      <PageTitle title="Historico de órdenes" />
-      <div className="row my-5">
+      <div className="row m-5">
+        <PageTitle title="Historico de órdenes" />
+
         <div className="col-lg-8">
           <Card>
-            <h4 className={` text-left mb-2 ${styles.titleCard}`}>Total de órdenes y promedio diario</h4>
-            <Chart
-              data={dataOrders}
-              options={dataOrders.options}
-              series={dataOrders.series}
-              height={350}
-            />
+            {!isLoading
+              ? (
+                <div>
+                  <h4 className={` text-left mb-2 ${styles.titleCard}`}>Total de órdenes y promedio diario</h4>
+                  <Chart
+                    data={dataOrders}
+                    options={dataOrders.options}
+                    series={dataOrders.series}
+                    height={350}
+                  />
+                </div>
+              )
+              : component}
           </Card>
         </div>
         <div className="col-lg-4">
-          <Card className={` text-center ${styles.cardTotal}`}>
+          <Card>
             <h4 className={` text-center ${styles.titleCard}`}>Total operación FF</h4>
             <div className="align-items-center">
               {!isLoading
@@ -232,25 +240,22 @@ const Grafico = () => {
                 )
                 : component}
             </div>
-            <div>
-              <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
-              <div className="container">
-                <div className="container">
-                  <div className="row">
-                    <div className="col">
-                      <b>
-                        <p>{stateFromTo ? stateFromTo.from : ''}</p>
-                      </b>
-                    </div>
-                    <div className="col text-center">
-                      <b>-</b>
-                    </div>
-                    <div className="col">
-                      <p>
-                        <b>{stateFromTo ? stateFromTo.to : ''}</b>
-                      </p>
-                    </div>
+            <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
+
+            <div className="container">
+              <div className="d-flex justify-content-center">
+                <div className="p-2 col-example text-left">
+                  <div className="col">
+                    <b className="text-right">
+                      <p><b>{stateFromTo ? stateFromTo.from : ''}</b></p>
+                    </b>
                   </div>
+                </div>
+                <div className="p-2 col-example text-left"><b>-</b></div>
+                <div className="p-2 col-example text-left">
+                  <p className="text-left">
+                    <b>{stateFromTo ? stateFromTo.to : ''}</b>
+                  </p>
                 </div>
               </div>
 
