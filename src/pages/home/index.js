@@ -53,31 +53,28 @@ const Home = () => {
     })
       .then((dashData) => {
         const statistics = dashData.orders_deliver;
-        const enviados = statistics.map((item) => item.enviado)
-          .reduce((item, acc) => item + acc);
-        const procesados = statistics.map((item) => item.procesado)
-          .reduce((item, acc) => item + acc);
-        const entregados = statistics.map((item) => item.entregado)
-          .reduce((item, acc) => item + acc);
+        console.log(statistics);
+        // const enviados = statistics.map((item) => item.enviado)
+        //   .reduce((item, acc) => item + acc);
+        // const procesados = statistics.map((item) => item.procesado)
+        //   .reduce((item, acc) => item + acc);
+        // const entregados = statistics.map((item) => item.entregado)
+        //   .reduce((item, acc) => item + acc);
 
-        // console.log(statistics);
-        // for (const order of statistics.keys()) {
-        //   console.log(order.date);
-        // }
         setTotalStatisticsData([
           {
             img: '/boxIconRefresh.png',
-            number: procesados,
+            number: statistics.procesado,
             state: 'Procesadas',
           },
           {
             img: '/boxIconCheck.png',
-            number: enviados,
+            number: statistics.enviado,
             state: 'En Camino',
           },
           {
             img: '/boxIconTruck.png',
-            number: entregados,
+            number: statistics.entregado,
             state: 'Entregadas',
           },
         ]);
