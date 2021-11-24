@@ -274,7 +274,7 @@ const homeResolutor = () => {
                   Tickets Recientes
                 </b>
               </p>
-              <table className="table align-middle table-borderless">
+              <table className="table align-middle table-borderless table-hover ">
                 <thead>
                   <tr>
                     <th scope="col-5">
