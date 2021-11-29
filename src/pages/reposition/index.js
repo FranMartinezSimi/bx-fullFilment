@@ -9,7 +9,8 @@ import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
 import ReplenishmentTable from 'components/Templates/ReplenishmentTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-import info from 'assets/brand/info.svg';
+// import info from 'assets/brand/info.svg';
+import styles from './styles.module.scss';
 
 const Reposition = () => {
   const { user } = useAuth();
@@ -17,18 +18,18 @@ const Reposition = () => {
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
-  const [activeData, setActiveData] = useState('');
+  const [sku] = useState('');
   const data = useMemo(() => list, [list]);
 
   const handleClickInventory = (e) => {
     e.preventDefault();
   };
 
-  const handleClickOrderDeatil = (e, tableData) => {
-    e.preventDefault();
-    setModal(true);
-    setActiveData(tableData.row.original.replenishmentId);
-  };
+  // const handleClickOrderDeatil = (e, tableData) => {
+  //   e.preventDefault();
+  //   setModal(true);
+  //   setSku(tableData.row.original.replenishmentId);
+  // };
 
   const columns = useMemo(() => [
     {
@@ -36,42 +37,62 @@ const Reposition = () => {
       accessor: 'replenishmentId',
     },
     {
-      Header: 'Estado',
-      accessor: 'estado',
-      Cell: ({ row }) => (
-        <small className={
-          `badge--${row.original.estado.replace(' ', '').toLowerCase()}
-          ${row.original.estado.toLowerCase() === 'exitoso' ? 'text-white' : ''}
-          px-4 py-1`
-        }
-        >
-          {row.original.estado}
-        </small>
-      ),
+      Header: 'N° productos',
+      accessor: 'numProducts',
     },
     {
       Header: 'Fecha',
       accessor: 'fecha',
     },
     {
-      Header: 'N° productos',
-      accessor: 'numProducts',
+      Header: 'Estado',
+      accessor: 'estado',
+      Cell: ({ row }) => {
+        let colorSelected;
+        switch (row.original.estado.replace(' ', '').toLowerCase()) {
+          case 'exitoso':
+            colorSelected = '#007F00';
+            break;
+          case 'entransito':
+            colorSelected = '#3363FF';
+            break;
+          default:
+            colorSelected = '#6E6893';
+        }
+        return (
+          <small
+            className={`badge--${row.original.estado.replace(' ', '').toLowerCase()} px-4 py-1 rounded-pill`}
+          >
+            <span
+              className={styles.small}
+              style={{
+                backgroundColor: colorSelected,
+              }}
+            />
+            {row.original.estado}
+          </small>
+        );
+      },
     },
     {
-      Header: 'Manifiesto',
-      accessor: 'ver',
-      isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => handleClickOrderDeatil(e, table)}
-          role="button"
-          className="d-block font-weight-bold font-weight-bold"
-        >
-          <img src={info} alt="Actualizar Ordenes" width="32" />
-        </a>
-      ),
+      Header: 'F. Entrega',
+      accessor: 'fechaEntrega',
     },
+    // {
+    //   Header: 'Manifiesto',
+    //   accessor: 'ver',
+    //   isVisible: true,
+    //   Cell: (table) => (
+    //     <a
+    //       href="#!"
+    //       onClick={(e) => handleClickOrderDeatil(e, table)}
+    //       role="button"
+    //       className="d-block font-weight-bold font-weight-bold"
+    //     >
+    //       <img src={info} alt="Actualizar Ordenes" width="32" />
+    //     </a>
+    //   ),
+    // },
   ], []);
 
   let component;
@@ -141,8 +162,8 @@ const Reposition = () => {
           />
         )
         : component}
-      <Modal title={`Detalle Reposicion  Id ${activeData}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
-        <ReplenishmentDetail activeData={activeData} />
+      <Modal title={`Detalle Reposicion  Id ${sku}`} showModal={modal} size="xl" onClick={(e) => { e.preventDefault(); setModal(false); }}>
+        <ReplenishmentDetail columns={columns} data={list} activeData={sku} />
       </Modal>
 
     </PageLayout>
