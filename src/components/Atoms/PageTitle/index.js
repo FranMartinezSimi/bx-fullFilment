@@ -16,7 +16,7 @@ const PageTitle = ({
         {icon && icon}
       </div>
       {subtitle
-          && <p style={{ fontSize: '16px' }} className={subtitleClassName}>{subtitle}</p>}
+        && <p style={{ fontSize: '16px', color: '#FF7E44' }} className={subtitleClassName}>{subtitle}</p>}
     </div>
   );
 };
