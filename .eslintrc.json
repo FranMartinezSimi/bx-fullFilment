@@ -7,7 +7,9 @@
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:prettier/recommended",
+        "prettier"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -31,7 +33,8 @@
         "no-console": "off",
         "no-nested-ternary": "off",
         "no-underscore-dangle": "off",
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "quotes": [2, "single", { "avoidEscape": true }],
     },
     "settings": {
       "import/resolver": {
