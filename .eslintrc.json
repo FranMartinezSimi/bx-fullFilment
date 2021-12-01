@@ -8,8 +8,7 @@
         "eslint:recommended",
         "plugin:react/recommended",
         "airbnb",
-        "plugin:prettier/recommended",
-        "prettier"
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -23,6 +22,7 @@
         "jest"
     ],
     "rules": {
+        "prettier/prettier": "warn",
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
         "react/jsx-filename-extension": [
