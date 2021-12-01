@@ -13,3 +13,60 @@
   background: none;
   border: none;
 }
+
+.formDetails{
+	display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: flex-start;
+padding: 10px;
+width: 100%;
+left: 25px;
+top: 272px;
+background: #FBFBFB;
+border: 0.6px solid #D6E0FF;
+box-sizing: border-box;
+border-radius: 16px;
+}
+
+.sma{
+width: 124px;
+height: 20px;
+left: 24px;
+top: 241px;
+
+/* Paragraph 1 app */
+
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 145%;
+/* or 20px */
+
+letter-spacing: 0.03em;
+
+/* Gris one */
+
+color: #333333;
+
+}
+
+.spanDetail{
+	position: static;
+width: 77px;
+height: 23px;
+left: 44px;
+top: 5px;
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 145%;
+letter-spacing: 0.03em;
+color: #212121;
+flex: none;
+order: 1;
+flex-grow: 0;
+margin: 0px 12px;
+}

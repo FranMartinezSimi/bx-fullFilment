@@ -143,7 +143,7 @@ const ResolutorDetail = ({
       {form !== null ? (
         <>
           <ul>
-            <li>
+            <li className="py-2">
               <h2>{form.motivo}</h2>
               <h4 style={{ fontSize: 15 }}>
                 <span>
@@ -156,7 +156,7 @@ const ResolutorDetail = ({
             {form.status !== undefined && (
               <li className="position-relative">
                 <div className="mt-3">
-                  <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-2 fs-5`}>
+                  <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-2 fs-5 text-white border`}>
                     {form.status}
                   </small>
                 </div>
@@ -168,24 +168,37 @@ const ResolutorDetail = ({
                   <img src={avatar} alt="Cuenta" width="30" />
                 </li>
                 <li className="me-4">
-                  <span>
-                    Cliente Id:
+                  <span className={`${styles.spanDetail}`}>
+                    Cliente:
                     {' '}
                     {form.clienteID}
                   </span>
                 </li>
-                <li>
-                  <span>
-                    <small>
-                      <b>Fecha de creación: </b>
-                      {form.fechaCreacion}
-                    </small>
-                  </span>
-                </li>
+              </ul>
+            </li>
+            <li>
+              <ul className="d-flex align-items-center mt-5">
+
+                <div className="container">
+                  <div className="row justify-content-start">
+                    <div className="col-4 p-0">
+                      <small className={`${styles.sma} text-start`}>
+                        <b>Fecha </b>
+                        {form.fechaCreacion}
+                      </small>
+                    </div>
+                    <div className="col-4">
+                      <small className={styles.sma}>
+                        <b>Hora </b>
+                        14:50
+                      </small>
+                    </div>
+                  </div>
+                </div>
               </ul>
             </li>
           </ul>
-          <p className="py-4">
+          <p className={`${styles.formDetails}`}>
             {form.descTicket}
           </p>
           {form.archivo !== undefined && form.archivo.length > 0 && (
@@ -216,11 +229,11 @@ const ResolutorDetail = ({
               </li>
             </ul>
           )}
-          <form className="py-5">
+          <form className="py-2">
             <div className="form-group mb-2">
               {!comment ? (
                 <label htmlFor="textArea" className="w-100">
-                  Comentario
+                  Respuesta del resolutor
                   <span className="text-danger"> *</span>
                   <textarea
                     className="form-control"
@@ -284,8 +297,8 @@ const ResolutorDetail = ({
               )}
               {!comment && (
                 <Button
-                  className="btn btn-secondary fs-5 px-3 py-3"
-                  text="Guardar comentario"
+                  className="btn btn-secondary fs-5 px-5 py-3 "
+                  text="Enviar"
                   submit
                   onClick={handleClickConfirm}
                 />
