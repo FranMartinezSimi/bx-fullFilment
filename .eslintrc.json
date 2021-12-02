@@ -46,7 +46,8 @@
             {
                 "avoidEscape": true
             }
-        ]
+        ],
+        "object-curly-newline": "off"
     },
     "settings": {
         "import/resolver": {

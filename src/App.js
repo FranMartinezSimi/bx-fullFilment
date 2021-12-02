@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import jwt from 'jwt-decode';
-import TagManager from 'react-gtm-module';
 
 import { useKeyclockAuth } from 'context/userKeyclockContext';
+import { setDataLayer } from 'utils/gtm';
 import { SocketContext, socket } from './context/useContextSocketSeller';
 import { useAuth } from './context/userContex';
 import UnLoggedUserApp from './UnLoggedUserApp';
@@ -17,30 +17,24 @@ import './styles/main.scss';
 const App = () => {
   const { userKeyclock } = useKeyclockAuth();
   const { user } = useAuth();
-  let resolutor;
-
-  if (userKeyclock) {
-    const userKeyclockData = JSON.parse(userKeyclock);
-    const TOKEN = userKeyclockData.access_token;
-    const USER_DATA = jwt(TOKEN);
-    resolutor = USER_DATA.realm_access.roles.some(
-      (item) => item === 'fulfillment-resolutor',
-    );
-  }
-
-  console.log(user);
+  const [resolutor, setResolutor] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      const userParsed = JSON.parse(user);
-      TagManager.initialize({
-        gtmId: 'GTM-TTM6TJQ',
-        dataLayer: {
-          userId: userParsed?.credential?.user?.email,
-        },
+    if (userKeyclock) {
+      const userKeyclockData = JSON.parse(userKeyclock);
+      const TOKEN = userKeyclockData.access_token;
+      const USER_DATA = jwt(TOKEN);
+      setResolutor(
+        USER_DATA.realm_access.roles.some(
+          (item) => item === 'fulfillment-resolutor',
+        ),
+      );
+
+      setDataLayer({
+        userId: USER_DATA?.preferred_username || '',
       });
     }
-  }, [user]);
+  }, [userKeyclock]);
 
   return (
     <HelmetProvider>
