@@ -23,6 +23,7 @@
     "react-datepicker": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.3.4",
+    "react-gtm-module": "^2.0.11",
     "react-helmet-async": "^1.0.9",
     "react-hook-form": "^7.9.0",
     "react-papaparse": "^3.14.0",
@@ -44,7 +45,8 @@
     "build:qa": "env-cmd -f .env.qa react-scripts build",
     "build:main": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext js,jsx,ts,tsx --max-warnings=0"
   },
   "eslintConfig": {
     "extends": [
@@ -69,8 +71,11 @@
     "env-cmd": "^10.1.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-react": "^7.24.0"
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.24.0",
+    "prettier": "^2.5.0"
   }
 }

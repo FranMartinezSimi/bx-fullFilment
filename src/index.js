@@ -1,12 +1,14 @@
 import ReactDOM from 'react-dom';
 import ddInit from 'utils/dd';
 import { ToastContainer } from 'react-toastify';
+import * as GTM from 'utils/gtm';
 import reportWebVitals from './reportWebVitals';
 import { AuthKeyclockProvider } from './context/userKeyclockContext';
 import { AuthProvider } from './context/userContex';
 import App from './App';
 
 ddInit();
+GTM.initialize();
 
 ReactDOM.render(
   <AuthKeyclockProvider>
