@@ -16,7 +16,7 @@ const Card = ({
   onMouseLeave,
 }) => (
   <div
-    className={`card py-4 px-3 ${className} ${styles.mainCard}`}
+    className={`card px-3 ${className} ${styles.mainCard}`}
     style={{ borderRadius: '15px', border: 'none', backgroundImage: cardBackground ? `url(${cardBackground})` : null }}
     onMouseLeave={onMouseLeave}
   >
@@ -24,26 +24,26 @@ const Card = ({
       ? (
         <ul className="d-flex w-100 justify-content-between">
           {back && (
-          <li>
-            <a href="#!" onClick={handleBack}>
-              <img src={Back} alt="volver" />
-            </a>
-          </li>
+            <li>
+              <a href="#!" onClick={handleBack}>
+                <img src={Back} alt="volver" />
+              </a>
+            </li>
           )}
           <li>
             {title && (
-            <h4>{title}</h4>
+              <h4>{title}</h4>
             )}
             {subtitle && (
-            <p>{subtitle}</p>
+              <p>{subtitle}</p>
             )}
           </li>
           {close && (
-          <li>
-            <a href="#!" onClick={handleClose}>
-              <span aria-hidden="true" className="p-0 pe-3" style={{ fontSize: '22px' }}>&times;</span>
-            </a>
-          </li>
+            <li>
+              <a href="#!" onClick={handleClose}>
+                <span aria-hidden="true" className="p-0 pe-3" style={{ fontSize: '22px' }}>&times;</span>
+              </a>
+            </li>
           )}
         </ul>
       )
@@ -61,10 +61,10 @@ Card.defaultProps = {
   subtitle: '',
   children: null,
   close: false,
-  handleClose: () => {},
+  handleClose: () => { },
   back: false,
-  handleBack: () => {},
-  onMouseLeave: () => {},
+  handleBack: () => { },
+  onMouseLeave: () => { },
   footer: null,
   cardBackground: '',
 };

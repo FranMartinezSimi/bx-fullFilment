@@ -9,11 +9,11 @@ import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import { SocketContext } from 'context/useContextSocketSeller';
-import inscribe from 'assets/brand/inscribe.svg';
+import inscribe from 'assets/brand/homeCard1.svg';
 import deliveredHands from 'assets/brand/delivered-hands.svg';
 import truckRoute from 'assets/brand/truck-route.svg';
 import reverseLogistics from 'assets/brand/reverse-logistics.svg';
-import callendar from 'assets/brand/callendar.png';
+import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 // import Alert from 'assets/brand/alertRed.png';
@@ -65,19 +65,19 @@ const Home = () => {
 
         setTotalStatisticsData([
           {
-            img: deliveredHands,
+            img: reverseLogistics,
+            state: 'Procesados',
             number: statistics.procesado,
-            state: 'Procesadas',
           },
           {
-            img: reverseLogistics,
+            img: deliveredHands,
             number: statistics.enviado,
-            state: 'En Camino',
+            state: 'Entregado',
           },
           {
             img: truckRoute,
             number: statistics.entregado,
-            state: 'Entregadas',
+            state: 'En Camino',
           },
         ]);
       })
@@ -126,7 +126,7 @@ const Home = () => {
               />
             </div>
             <div>
-              <Card className="shadow">
+              <Card className={styles.hei}>
                 {statisticsData.length > 0 && !errorTotales ? (
                   <>
                     <div className="d-flex bd-highlight">
@@ -148,10 +148,10 @@ const Home = () => {
                       </ul>
                     </div>
 
-                    <ul className="d-flex justify-content-around mb-2">
+                    <ul className="d-flex justify-content-around mb-2 p-0">
                       {statisticsData.length > 0 && statisticsData.map((item) => (
                         <div className={`${styles.indicadores} mb-3`}>
-                          <div className="card-body pb-3">
+                          <div className="card-body">
                             <div className="row mx-5 mt-3">
                               <div className="col my-2">
                                 <img src={item.img} alt={item.state} />
@@ -171,11 +171,9 @@ const Home = () => {
                             </div>
                           </div>
                         </div>
-
                       ))}
                     </ul>
-
-                    <ul className="d-flex justify-content-between align-items-center mb-0">
+                    <ul className="d-flex justify-content-bottom align-items-bottom m-0 p-0">
                       <li>
                         <p style={{ color: '#666666' }}>Últimos 7 días</p>
                       </li>
@@ -188,19 +186,18 @@ const Home = () => {
           </div>
           <div className="col-4">
             <div className="position-relative">
-              <img src="/inscribeempresa.png" alt="" width="310" style={{ position: 'relative', top: 130, left: 25 }} />
+              <img src="/inscribeempresa.png" alt="" width="310" style={{ position: 'relative', top: 87 }} />
             </div>
           </div>
         </div>
-        <br />
-        <div className="row mx-5 mt-0">
-          <div className="col-6 py-2">
+        <div className="row mx-5 m-0">
+          <div className="col-6 ">
             <Card className={styles.hei}>
               <div className="d-flex align-items-center">
                 <div className="flex-shrink-0">
-                  <img src={inscribe} alt="download" width="140" style={{ position: 'relative' }} />
+                  <img src={inscribe} alt="download" width="180" style={{ position: 'relative', bottom: 18 }} />
                 </div>
-                <div className="flex-grow-1 ms-3">
+                <div className="flex-grow-1 ms-3 pt-2">
                   <div className="d-flex flex-column bd-highlight mb-3 mt-1">
                     <div className="p-2 bd-highlight">
                       <h5 style={{ color: '#212121' }}>Órdenes de servicios</h5>
@@ -220,19 +217,19 @@ const Home = () => {
               </div>
             </Card>
           </div>
-          <div className="col-6 py-2">
+          <div className="col-6">
             <Card className={styles.hei}>
               <div className="d-flex align-items-center">
                 <div className="flex-shrink-0">
-                  <img src={callendar} alt="download" width="160" style={{ position: 'relative' }} />
+                  <img src={callendar} alt="download" width="160" style={{ position: 'relative', bottom: 20 }} />
                 </div>
-                <div className="flex-grow-1 ms-3">
+                <div className="flex-grow-1 ms-3 pt-2">
                   <div className="d-flex flex-column bd-highlight mb-3 mt-1">
                     <div className="p-2 bd-highlight">
                       <h5 style={{ color: '#212121' }}>Reposición de inventario</h5>
                     </div>
                     <div className="p-2 bd-highlight">
-                      <p style={{ position: 'relative', top: 2, fontSize: 20 }}>
+                      <p className={`${styles.pFileUp}`}>
                         Realiza la programación de la reposición de tu inventario
                       </p>
                     </div>
