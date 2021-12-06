@@ -72,7 +72,7 @@ const Dropzone = ({
                 <ul className="mb-0">
                   {internalTitle && (
                     <li>
-                      <p className="mb-0 mt-2">
+                      <p className={`mt-2 ${styles.adj}`}>
                         <b>
                           {internalTitle}
                         </b>
