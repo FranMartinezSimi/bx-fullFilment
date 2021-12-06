@@ -9,6 +9,8 @@ import UploadCsv from 'components/Molecules/UploadCsv';
 import plantilla from 'assets/plantilla.csv';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
+import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
+import styles from './styles.scss';
 
 const FormReplenishment = ({ setModalTicket }) => {
   const history = useHistory();
@@ -254,143 +256,300 @@ const FormReplenishment = ({ setModalTicket }) => {
       {
         !fetchError && !ticketCreated && (
           <>
-            <h6 className="display-font text-center font-bold mb-5" style={{ fontSize: 22 }}>
-              Programación de reposición
-              <br />
-              de productos
+            <h6
+              className="display-font text-center font-bold mb-0"
+              style={{
+                fontSize: 22,
+                fontFamily: 'mont',
+                color: '#212121',
+              }}
+            >
+              Reposición de inventario
             </h6>
-            <p className="px-md-5 display-font" style={{ fontSize: 15, fontWeight: 400 }}>Detalles de contacto</p>
-            <div className="px-md-5 mx-lg-2">
-              <form onSubmit={handleSubmit} className="row">
-                <div className="col-md-6 card">
-                  <div className="form-group mt-5 mb-4 px-5">
-                    <label htmlFor="sellerName" className="w-100">
-                      Nombre Seller
-                      <span className="text-danger"> *</span>
-                      <input
-                        type="text"
-                        className="form-control disabled"
-                        placeholder="Contacto"
-                        name="sellerName"
-                        id="sellerName"
-                        style={{ borderRadius: 16, border: '1px solid #1A6F99', minHeight: 40 }}
-                        disabled
-                        value={sellerData.nameSeller}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-group my-3 px-5">
-                    <label htmlFor="contactName" className="w-100">
-                      Nombre de contacto
-                      <span className="text-danger"> *</span>
-                      <input
-                        type="text"
-                        className="form-control disabled"
-                        placeholder="Carlos Brante"
-                        name="contactName"
-                        id="contactName"
-                        style={{ borderRadius: 16, border: '1px solid #1A6F99', minHeight: 40 }}
-                        disabled
-                        value={sellerData.nameContact}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-group my-3 px-5">
-                    <label htmlFor="contactPhone" className="w-100">
-                      Teléfono de contacto
-                      <span className="text-danger"> *</span>
-                      <input
-                        type="text"
-                        className="form-control disabled"
-                        placeholder="+56 9 4270092"
-                        name="contactPhone"
-                        style={{ borderRadius: 16, border: '1px solid #1A6F99', minHeight: 40 }}
-                        disabled
-                        value={sellerData.phoneContact}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-group mt-3 mb-5  px-5">
-                    <label htmlFor="contactEmail" className="w-100">
-                      Correo de contacto
-                      <span className="text-danger"> *</span>
-                      <input
-                        type="text"
-                        className="form-control disabled"
-                        placeholder="Nombre del Seller"
-                        name="contactEmail"
-                        style={{ borderRadius: 16, border: '1px solid #1A6F99', minHeight: 40 }}
-                        disabled
-                        value={sellerData.emailContact}
-                      />
-                    </label>
-                  </div>
-                  {error.contactEmail && (<span className="text-danger">No existen datos, por favor contáctanos</span>)}
-                </div>
-                <div className="col-md-6">
-                  <div className="form-group my-3 px-5">
-                    <p className="mb-2">
-                      Fecha de inicio
-                    </p>
-                    <DatePicker
-                      dateFormat="dd/MM/yyyy h:mm aa"
-                      showTimeSelect
-                      selected={startDate}
-                      onChange={(date) => handleDateChange(date)}
-                      // timeClassName={handleColor}
-                      customInput={<CustomInput />}
-                      minDate={Date.now()}
-                      filterDate={isWeekday}
-                      // filterTime={filterPassedTime}
-                      // locale="es-ES"
-                      timeIntervals={30}
-                      minTime={setHours(setMinutes(new Date(), 30), 8)}
-                      maxTime={setHours(setMinutes(new Date(), 30), 16)}
-                    />
-                  </div>
-                  <div className="form-group mb-3 mt-5 px-5">
-                    <p className="my-2">
-                      Adjunta tus facturas y/o Guía de despacho
-                    </p>
-                    <DropZone
-                      setSelectedFiles={setSelectedFiles}
-                      size="small"
-                      boxText="Arrastra tu archivo o selecciona desde tu computadora"
-                      internalTitle="Carga o arrastra archivos jpg - png o pdf"
-                      noValidation
-                    />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-center my-4" style={{ fontSize: 14 }}>Descarga la plantilla y luego súbelo en formato .csv</p>
-                    <a
-                      className="btn btn-complementary px-5"
-                      href={plantilla}
-                      download
+            <div className="p-5 pt-0 pb-0">
+              <form onSubmit={handleSubmit} className="container-fluid m-0 p-5 ">
+                <div className="row">
+                  <div className="col-sm-12 p-0">
+                    <h3
+                      className={`${styles.h2From}`}
                     >
-                      Descarga plantilla de Resposición de productos
-                    </a>
-                  </div>
-                  <div className="form-group my-3 px-5">
-                    <p className="mb-2">
-                      Planilla de Reposición
-                    </p>
-                    <UploadCsv
-                      size="small"
-                      title="Carga o arrastra el archivo .csv"
-                      setDataToValidate={setDataToValidate}
-                      setDataWhitErrors={setDataWhitErrors}
-                    />
-                    {dataWhitErrors.length > 0 && (
-                      <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
-                    )}
+                      Datos de Contacto
+                    </h3>
+                    <div className="row mb-3">
+                      <hr className="mx-0 " />
+                      <div className="col-6 col-sm-6 m-0 pe-5">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <label htmlFor="sellerName" className="w-100">
+                              <p className="mb-2">
+                                Nombre Seller
+                              </p>
+                              <input
+                                type="text"
+                                className="form-control disabled"
+                                placeholder="Contacto"
+                                name="sellerName"
+                                id="sellerName"
+                                style={{
+                                  borderRadius: 16,
+                                  border: '1px solid #1A6F99',
+                                  minHeight: 40,
+                                  backgroundColor: '#FFF',
+                                }}
+                                disabled
+                                value={sellerData.nameSeller}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6 col-sm-6 m-0 ps-5">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <label htmlFor="contactName" className="w-100">
+                              <p className="mb-2">
+                                Nombre de contacto
+                              </p>
+                              <input
+                                type="text"
+                                className="form-control disabled"
+                                placeholder="Carlos Brante"
+                                name="contactName"
+                                id="contactName"
+                                style={{
+                                  borderRadius: 16,
+                                  border: '1px solid #1A6F99',
+                                  minHeight: 40,
+                                  backgroundColor: '#FFF',
+                                }}
+                                disabled
+                                value={sellerData.nameContact}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-8 col-sm-6 m-0 pe-5">
+                        <div className="py-1 my-4 ">
+                          <div className="form-group">
+                            <label htmlFor="contactPhone" className="w-100">
+                              <p className="mb-2">
+                                Teléfono de contacto
+                                <span className="text-danger"> *</span>
+                              </p>
+                              <input
+                                type="text"
+                                className="form-control disabled"
+                                placeholder="+56 9 4270092"
+                                name="contactPhone"
+                                style={{
+                                  borderRadius: 16,
+                                  border: '1px solid #1A6F99',
+                                  minHeight: 40,
+                                  backgroundColor: '#FFF',
+                                }}
+                                disabled
+                                value={sellerData.phoneContact}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-4 col-sm-6 m-0 ps-5">
+                        <div className="py-1 my-4 ">
+                          <div className="form-group">
+                            <label htmlFor="contactEmail" className="w-100">
+                              <p className="mb-2">
+                                Correo de contacto
+                                <span className="text-danger"> *</span>
+                              </p>
+                              <input
+                                type="text"
+                                className="form-control disabled"
+                                placeholder="Nombre del Seller"
+                                name="contactEmail"
+                                style={{
+                                  borderRadius: 16,
+                                  border: '1px solid #1A6F99',
+                                  minHeight: 40,
+                                  backgroundColor: '#FFF',
+                                }}
+                                disabled
+                                value={sellerData.emailContact}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="col-12 text-center">
-                  <p className="text-center mt-5">
-                    <small>
-                      ( * ) Campo obligatorio
-                    </small>
-                  </p>
+                <div className="row">
+                  <div className="col-sm-12 p-0 mb-3 mt-2">
+                    <h3
+                      className={`${styles.h2From}`}
+                    >
+                      Programa la reposición de tu inventario
+                    </h3>
+                    <div className="row mb-2">
+                      <hr className="mx-0" />
+                      <div className="col-8 col-sm-6 m-0 pe-5">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <p className="mb-2">
+                              Fecha de inicio
+                            </p>
+                            <DatePicker
+                              dateFormat="dd/MM/yyyy h:mm aa"
+                              showTimeSelect
+                              selected={startDate}
+                              onChange={(date) => handleDateChange(date)}
+                              // timeClassName={handleColor}
+                              customInput={<CustomInput />}
+                              minDate={Date.now()}
+                              filterDate={isWeekday}
+                              // filterTime={filterPassedTime}
+                              // locale="es-ES"
+                              timeIntervals={30}
+                              minTime={setHours(setMinutes(new Date(), 30), 8)}
+                              maxTime={setHours(setMinutes(new Date(), 30), 16)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-4 col-sm-6 m-0 ps-5">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <p className="mb-2">
+                              Hora de tu Programación *
+                            </p>
+                            <DatePicker
+                              dateFormat="dd/MM/yyyy h:mm aa"
+                              showTimeSelect
+                              selected={startDate}
+                              onChange={(date) => handleDateChange(date)}
+                              // timeClassName={handleColor}
+                              customInput={<CustomInput />}
+                              minDate={Date.now()}
+                              filterDate={isWeekday}
+                              // filterTime={filterPassedTime}
+                              // locale="es-ES"
+                              timeIntervals={30}
+                              minTime={setHours(setMinutes(new Date(), 30), 8)}
+                              maxTime={setHours(setMinutes(new Date(), 30), 16)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <div className="col-sm-12 p-0">
+                    <h3
+                      className={`${styles.h2From}  pt-4`}
+                    >
+                      Carga tus archivos
+                    </h3>
+                    <div className="row ">
+                      <hr className="mx-" />
+                      <div className="col-8 col-sm-6 m-0 pe-5 pt-2">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <p className="w-20">
+                              Facturas y/o Guía de despacho
+                            </p>
+                            <DropZone
+                              setSelectedFiles={setSelectedFiles}
+                              size="small"
+                              internalTitle="Arrastra tu archivo o selecciona desde tu computadora en formato jpg - png o pdf"
+                              noValidation
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-4 col-sm-6 m-0 ps-5 pt-2">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <p className="w-20">
+                              Planilla de Reposición
+                            </p>
+                            <UploadCsv
+                              size="small"
+                              setDataToValidate={setDataToValidate}
+                              setDataWhitErrors={setDataWhitErrors}
+                            />
+                            {dataWhitErrors.length > 0 && (
+                              <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row mt-0">
+                      <div className="col-8 col-sm-6">
+                        <div className="py-0 ">
+                          <div className="form-group">
+                            <div className="p-0 ">
+                              <div className="d-grid gap-2 d-md-flex justify-content-md-start">
+
+                                <p className="text-center mt-2">
+                                  <small>
+                                    ( * ) Campo obligatorio
+                                  </small>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-4 col-sm-6">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <div className="p-0 ">
+                              <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <div className="py-3">
+                                  <a href={plantilla} className="btn btn-complementary me-3" download>
+                                    <img src={loadArrowOrange} alt="Download" width="16" />
+                                    <span className="ps-2"> Descarga plantilla de Resposición</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row mt-0">
+                      {error.contactEmail && (<span className="text-danger">No existen datos, por favor contáctanos</span>)}
+                      <div className="col-8 col-sm-6">
+                        <div className="py-1 ">
+                          <div className="form-group">
+                            <div className="p-3 ">
+                              <p className="text-center mt-2">
+                                <label className="form-check-label d-none" htmlFor="flexCheckDefault">
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="flexCheckDefault"
+                                    name="flexCheckDefault"
+                                  />
+                                  <span className="ps-3">
+                                    Acepta los
+                                    <a href="!#"> términos y condiciones </a>
+                                    de recepción
+                                  </span>
+                                </label>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {error.contactEmail && (<span className="text-danger">No existen datos, por favor contáctanos</span>)}
+                <div className="col-12 text-center p-0">
                   <ul className="d-flex align-items-center justify-content-between">
                     <li className="me-5">
                       <label className="form-check-label d-none" htmlFor="flexCheckDefault">
@@ -408,13 +567,18 @@ const FormReplenishment = ({ setModalTicket }) => {
                       </label>
                     </li>
                     <li className="ms-5">
-                      <Button
-                        className={`btn btn-secondary ${btnDisabled ? 'disabled' : ''} fs-5 px-5`}
-                        text="Si, Crear"
-                        submit
-                        loading={loading}
-                        disabled={btnDisabled}
-                      />
+                      <div className="p-0 bd-highlight d-flex justify-content-end">
+                        <a
+                          href="#!"
+                          className="btn btn-secondary "
+                          style={{ fontSize: 17 }}
+                          submit
+                          loading={loading}
+                          disabled={btnDisabled}
+                        >
+                          Programar
+                        </a>
+                      </div>
                     </li>
                   </ul>
                 </div>
