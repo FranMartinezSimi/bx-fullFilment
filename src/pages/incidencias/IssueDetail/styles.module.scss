@@ -30,3 +30,47 @@ border: 0.6px solid #D6E0FF;
 box-sizing: border-box;
 border-radius: 16px;
 }
+
+.respResolutorP{
+height: 20px;
+left: 248px;
+top: 212px;
+
+/* Paragraph 1 app */
+
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 145%;
+/* or 20px */
+
+letter-spacing: 0.03em;
+
+/* Gris mistery */
+
+color: #212121;
+}
+
+
+.btnForm{
+width: 176px;
+height: 48px;
+border-radius: 16px;
+background: #FF7E44;
+border-radius: 16px;
+}
+
+.btnT{
+
+/* button normal app */
+
+font-family: Lato;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 22px;
+align-items: center;
+text-align: center;
+color: #FFFFFF;
+}
