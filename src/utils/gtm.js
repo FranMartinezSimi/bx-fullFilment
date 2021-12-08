@@ -6,7 +6,12 @@ export const initialize = () => {
   });
 };
 
-export const setDataLayer = ({ userId, userProject, page, dataLayerName }) => {
+export const setDataLayer = ({
+  userId,
+  userProject,
+  page,
+  dataLayerName,
+}) => {
   TagManager.dataLayer({
     dataLayer: {
       userId,
