@@ -396,6 +396,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                       <div className="col-8 col-sm-6 m-0 pe-5">
                         <div className="py-1 ">
                           <div className="form-group">
+
                             <p className="mb-2">
                               Fecha de inicio
                             </p>
@@ -424,7 +425,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                               Hora de tu Programación *
                             </p>
                             <DatePicker
-                              dateFormat=" h:mm aa"
+                              dateFormat="h:mm aa"
                               showTimeSelect
                               selected={startDate}
                               onChange={(date) => handleDateChange(date)}
