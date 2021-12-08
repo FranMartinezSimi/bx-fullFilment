@@ -36,7 +36,6 @@ const SellerReport = () => {
         });
         const orderStatus = dashData.statusOrders.map((item) => item.status);
         const orderQuantity = dashData.statusOrders.map((item) => item.quantity);
-
         if (orderQuantity.length === 0) {
           setErrorChart(true);
           return;

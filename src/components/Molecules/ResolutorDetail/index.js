@@ -324,23 +324,24 @@ const ResolutorDetail = ({
               </div>
             ) : (
               <div className="px-4 text-center">
-                <img src="/coment-arlert.png" alt="aleta" />
-                <h4 style={{ fontSize: 22 }} className="display-font pt-4">
-                  ¿Estas seguro que quieres
-                  <br />
-                  enviar el comentario?
+                <img style={{ width: 102, height: 113 }} src="/errorgloboalert.png" alt="aleta" />
+                <h4 style={{ fontSize: 22, fontFamily: 'mont' }} className="display-font pt-4">
+                  Confirmación
                 </h4>
-                <p style={{ fontSize: 16 }} className="py-4">
-                  Una vez comentado el ticket su estado cambiara a Cerrado.
+                <p style={{ fontSize: 16 }} className="py-2">
+                  Si envias el comentario a cliente,
+                  automaticamente el ticket cambiara de estado ha
+                  resuelto, dando por finalizado el ticket.
+                  ¿Estas seguro que quieres enviar el comentario?
                 </p>
                 <Button
                   className="btn btn-complementary fs-5 px-5 mb-5 me-4"
-                  text="No"
+                  text="Cancelar"
                   onClick={handleClickRegret}
                 />
                 <Button
                   className="btn btn-secondary fs-5 px-5 mb-5"
-                  text="Si, Acepto"
+                  text="Aceptar"
                   loading={loading}
                   onClick={handleSubmit}
                 />

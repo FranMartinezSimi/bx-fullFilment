@@ -223,9 +223,9 @@ const Grafico = () => {
   return (
     <PageLayout title="Historico de órdenes">
       <div className="row m-5">
-        <PageTitle title="Historico de órdenes" icon={infoComponentHistorical} />
+        <PageTitle title="Historico de órdenes" icon={infoComponentHistorical} className="mb-3" />
 
-        <div className={` ${styles.cardpromFF} col-lg-8`}>
+        <div className={` ${styles.cardpromFF} col-lg-8 `}>
           {!isLoading
             ? (
               <div className="p-0 m-0">
@@ -239,7 +239,7 @@ const Grafico = () => {
             )
             : component}
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 ">
           <Card className={`pt-3 ${styles.cardpromFF}`}>
             <div className="d-flex justify-content-center">
               <div className="text-center">
