@@ -424,7 +424,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                               Hora de tu Programación *
                             </p>
                             <DatePicker
-                              dateFormat="dd/MM/yyyy h:mm aa"
+                              dateFormat=" h:mm aa"
                               showTimeSelect
                               selected={startDate}
                               onChange={(date) => handleDateChange(date)}
