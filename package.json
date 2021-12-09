@@ -34,6 +34,7 @@
     "react-toastify": "^8.0.3",
     "react-transition-group": "^4.4.1",
     "socket.io-client": "^4.2.0",
+    "ssas-app-core": "^1.4.2",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
