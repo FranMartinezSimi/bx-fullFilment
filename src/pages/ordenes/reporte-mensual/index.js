@@ -3,10 +3,10 @@ import clientFetch from 'lib/client-fetch';
 
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
-import Card from 'components/Molecules/Card';
 import Chart from 'react-apexcharts';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
+import styles from './styles.module.scss';
 
 const SellerReport = () => {
   const [errorChart, setErrorChart] = useState(false);
@@ -36,7 +36,6 @@ const SellerReport = () => {
         });
         const orderStatus = dashData.statusOrders.map((item) => item.status);
         const orderQuantity = dashData.statusOrders.map((item) => item.quantity);
-
         if (orderQuantity.length === 0) {
           setErrorChart(true);
           return;
@@ -45,6 +44,7 @@ const SellerReport = () => {
         const dataDonut = Object.values(dashData.pendingDelivered);
         const pendingDate = items.map((item) => (item.day));
         const pendingQty = dashData.pendingOrders.map((item) => item.quantity);
+        console.log([dataDonut]);
         setStatesChart({
           series: [{
             data: orderQuantity,
@@ -64,11 +64,11 @@ const SellerReport = () => {
               },
             },
             fill: {
-              colors: ['#40C0FF'],
+              colors: ['#FF7E44'],
             },
             plotOptions: {
               bar: {
-                borderRadius: 14,
+                borderRadius: 0,
                 horizontal: true,
                 dataLabels: {
                   position: 'top',
@@ -82,6 +82,20 @@ const SellerReport = () => {
             xaxis: {
               categories: orderStatus,
             },
+            title: {
+              text: 'Estado de las órdenes',
+              align: 'left',
+              margin: 10,
+              offsetX: 23,
+              offsetY: 15,
+              floating: false,
+              style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                fontFamily: 'mont',
+                color: '#263238',
+              },
+            },
           },
         });
 
@@ -89,7 +103,7 @@ const SellerReport = () => {
           series: dataDonut,
           options: {
             chart: {
-              height: 450,
+              height: 0,
               zoom: {
                 enabled: false,
               },
@@ -100,10 +114,17 @@ const SellerReport = () => {
               },
             },
             fill: {
-              colors: ['#27A6E5', '#FF7E44'],
+              colors: ['#7DD59D', '#FE6767'],
             },
             legend: {
               show: false,
+              position: 'bottom',
+              fontSize: '10px',
+              labels: {
+                colors: '#7DD59D',
+                useSeriesColors: false,
+              },
+
             },
           },
         });
@@ -130,11 +151,25 @@ const SellerReport = () => {
               bar: {
                 horizontal: false,
                 columnWidth: '20%',
-                borderRadius: 20,
+                borderRadius: 0,
               },
             },
             xaxis: {
               categories: pendingDate,
+            },
+            title: {
+              text: 'Órdenes pendientes por Fecha',
+              align: 'left',
+              margin: 10,
+              offsetX: 23,
+              offsetY: 15,
+              floating: false,
+              style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                fontFamily: 'mont',
+                color: '#263238',
+              },
             },
           },
         });
@@ -153,34 +188,25 @@ const SellerReport = () => {
       {statesChart && !errorChart ? (
         <>
           <div className="row align-items-stretch mt-5">
-            <div className="col-md-9">
-              <Card
-                className="shadow"
-              >
-                <p className="display-font">
-                  <b>
-                    Estado de las órdenes
-                  </b>
-                </p>
-                <div className="row align-items-center">
-                  <div className="col-md-12">
-                    {statesChart && (
-                      <Chart
-                        options={statesChart.options}
-                        series={statesChart.series}
-                        type="bar"
-                        height={350}
-                      />
-                    )}
-                  </div>
+            <div className={`col-md-9 ${styles.orderStatus} `}>
+              <div className="row align-items-center">
+                <div className="col-md-12">
+                  {statesChart && (
+                    <Chart
+                      options={statesChart.options}
+                      series={statesChart.series}
+                      type="bar"
+                      height={350}
+                    />
+                  )}
                 </div>
-              </Card>
+              </div>
             </div>
             {deliveredChart && (deliveredChart.series[0] > 0 || deliveredChart.series[1] > 0) && (
               <div className="col-md-3">
                 <>
-                  <Card className="shadow card-h-100">
-                    <p className="display-font">
+                  <div className={`${styles.orderStatus}`}>
+                    <p className="display-font pt-4 text-center">
                       <b>
                         Entregadas Vs Pendientes
                       </b>
@@ -190,60 +216,61 @@ const SellerReport = () => {
                       series={deliveredChart.series}
                       type="pie"
                     />
-                    <ul className="border-top d-flex justify-content-between w-100 pt-5">
-                      <li className="w-50">
-                        <p className="mb-0 text-center">
-                          <span
-                            style={{
-                              width: 15,
-                              height: 15,
-                              background: '#FF7E44',
-                              display: 'inline-block',
-                              borderRadius: '5rem',
-                            }}
-                          />
-                          <b className="ps-2" style={{ fontSize: 14 }}>Entregados</b>
-                        </p>
-                        <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
-                      </li>
-                      <li className="w-50 border-left">
-                        <p className="mb-0 text-center">
-                          <span
-                            style={{
-                              width: 15,
-                              height: 15,
-                              background: '#27A6E5',
-                              display: 'inline-block',
-                              borderRadius: '5rem',
-                            }}
-                          />
-                          <b className="ps-2" style={{ fontSize: 14 }}>Pendientes</b>
-                        </p>
-                        <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
-                      </li>
+                    <ul className="border-top">
+                      <div className="container-fluid">
+                        <div className="row pt-0">
+                          <div className="col-sm-6 pt-2 ">
+                            <p className="mb-0 text-center">
+                              <span
+                                style={{
+                                  width: 15,
+                                  height: 15,
+                                  background: '#7DD59D',
+                                  display: 'inline-block',
+                                  borderRadius: '5rem',
+                                }}
+                              />
+                              <b className="ps-2" style={{ fontSize: 14 }}>Entregadas</b>
+                            </p>
+                            <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
+                          </div>
+                          <div className="col-sm-6 pt-2 ">
+                            <li className="">
+                              <p className="mb-0 text-center">
+                                <span
+                                  style={{
+                                    width: 15,
+                                    height: 15,
+                                    background: '#FE6767',
+                                    display: 'inline-block',
+                                    borderRadius: '5rem',
+                                  }}
+                                />
+                                <b className="ps-2" style={{ fontSize: 14 }}>Pendientes</b>
+                              </p>
+                              <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
+                            </li>
+                          </div>
+                        </div>
+                      </div>
                     </ul>
-                  </Card>
+
+                  </div>
                 </>
               </div>
             )}
           </div>
 
           {pendingChart && pendingChart.series[0].data.length > 0 && (
-            <div className="row my-5">
-              <div className="col-12">
-                <Card className="shadow">
-                  <p className="display-font">
-                    <b>
-                      Órdenes pendientes por Fecha
-                    </b>
-                  </p>
-                  <Chart
-                    options={pendingChart.options}
-                    series={pendingChart.series}
-                    type="bar"
-                    height={350}
-                  />
-                </Card>
+            <div className={`row my-5 ${styles.cardPendingDate}`}>
+              <div className="col-12 p-4">
+
+                <Chart
+                  options={pendingChart.options}
+                  series={pendingChart.series}
+                  type="bar"
+                  height={350}
+                />
               </div>
             </div>
           )}

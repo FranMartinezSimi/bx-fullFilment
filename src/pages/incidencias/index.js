@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from 'context/userContex';
 import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
-
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 import MainTable from 'components/Templates/MainTable';

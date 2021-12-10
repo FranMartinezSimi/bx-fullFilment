@@ -35,9 +35,9 @@ const UploadCsv = ({
   const styleSmall = {
     dropArea: {
       borderColor: '#3363FF',
-      borderRadius: 0,
+      borderRadius: 10,
       background: '#FBFBFB',
-      padding: 8,
+      padding: 11,
     },
     dropAreaActive: {
       borderColor: '#0d6efd',
@@ -118,11 +118,11 @@ const UploadCsv = ({
             <li>
               <p className="mb-0 mt-2">
                 <b>
-                  { title }
+                  {title}
                 </b>
               </p>
             </li>
-          ) }
+          )}
           <li>
             {size === 'small' ? (
               <small style={{ fontSize: 10 }}>
@@ -141,9 +141,9 @@ const UploadCsv = ({
 };
 
 UploadCsv.defaultProps = {
-  setDataToValidate: () => {},
-  setDataToUpload: () => {},
-  setDataWhitErrors: () => {},
+  setDataToValidate: () => { },
+  setDataToUpload: () => { },
+  setDataWhitErrors: () => { },
   title: '',
   size: '',
 };

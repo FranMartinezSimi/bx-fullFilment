@@ -9,8 +9,11 @@ import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import { SocketContext } from 'context/useContextSocketSeller';
-import shopping from 'assets/brand/shopping.png';
-import callendar from 'assets/brand/callendar.png';
+import inscribe from 'assets/brand/homeCard1.svg';
+import deliveredHands from 'assets/brand/delivered-hands.svg';
+import truckRoute from 'assets/brand/truck-route.svg';
+import reverseLogistics from 'assets/brand/reverse-logistics.svg';
+import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 // import Alert from 'assets/brand/alertRed.png';
@@ -62,19 +65,19 @@ const Home = () => {
 
         setTotalStatisticsData([
           {
-            img: '/boxIconRefresh.png',
+            img: reverseLogistics,
+            state: 'Procesados',
             number: statistics.procesado,
-            state: 'Procesadas',
           },
           {
-            img: '/boxIconCheck.png',
+            img: deliveredHands,
             number: statistics.enviado,
-            state: 'En Camino',
+            state: 'Entregado',
           },
           {
-            img: '/boxIconTruck.png',
+            img: truckRoute,
             number: statistics.entregado,
-            state: 'Entregadas',
+            state: 'En Camino',
           },
         ]);
       })
@@ -110,147 +113,144 @@ const Home = () => {
   }, [socket, notify]);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
-      {/* <div className={`container-fluid ${styles.alert}`} role="alert">
-        <div className="d-flex bd-highlight align-content-md-center">
-          <div className="p-2 flex-fill bd-highlight d-flex align-content-center flex-wrap">
-            <img src={Alert} alt="" className={`${styles.img}`} />
-          </div>
-          <div className="p-2 flex-fill bd-highlight  d-flex align-content-center flex-wrap">
-            <h1 className={`${styles.tAlert}`}>Comunicado</h1>
-          </div>
-          <div className="p-1 flex-fill bd-highlight d-flex align-content-center flex-wrap">
-            <p className={`${styles.pAlert}`}>{parrafoAlert}</p>
-          </div>
-          <div className="p-2 flex-fill bd-highlight d-flex align-content-center flex-wrap">
-            <a href="!#" data-testid="printed-username" className={`p-0 ${styles.close}`}>
-              <span aria-hidden="true" className="p-0">
-                <img src={closeX} alt="Cuenta" width="16" />
-              </span>
-            </a>
-          </div>
-        </div>
-      </div> */}
-      <div className="row m-5">
-        <div className="col-8">
-          <div className="row">
-            <PageTitle
-              className="row"
-              subtitle={userActive}
-              subtitleClassName="display-font fw-bold fs-3"
-              title="Bienvenido a Blue360"
-              titleSize="50px"
-            />
-          </div>
-          <div>
-            <Card>
-              <h4 className="display-font m-4">Estados de tus órdenes</h4>
-              {statisticsData.length > 0 && !errorTotales ? (
-                <>
-                  <ul className="d-flex justify-content-around mb-2">
-                    {statisticsData.length > 0 && statisticsData.map((item) => (
-                      <li key={item.state}>
-                        <div className="item d-flex align-items-center">
-                          <div className="me-3">
-                            <img src={item.img} alt={item.state} />
-                          </div>
-                          <div className="pt-3">
-                            <h5 className="mb-0">{item.number}</h5>
-                            <p>
-                              <small>{item.state}</small>
+      <div style={{ width: '100%' }}>
+        <div className="row m-5">
+          <div className="col-8">
+            <div className="row">
+              <PageTitle
+                className="row"
+                subtitle={`${userActive}`}
+                subtitleClassName="display-font fw-bold fs-3"
+                title="Bienvenido a Blue360"
+                titleSize="50px"
+              />
+            </div>
+            <div>
+              <Card className={styles.hei}>
+                {statisticsData.length > 0 && !errorTotales ? (
+                  <>
+                    <div className="d-flex bd-highlight">
+                      <div className="p-2 flex-grow-1 bd-highlight">
+                        <h4 className="display-font m-1" style={{ fontFamily: 'Lato', fontSize: '22px' }}>Estado de tus órdenes</h4>
+                      </div>
+                      <ul className="d-flex justify-content-end align-items-center pt-3 mb-3">
+                        <li>
+                          <a
+                            href="#!"
+                            style={{ color: '#2BB9FF' }}
+                            onClick={handleClick}
+                          >
+                            <p className="text-end me-2 mb-0">
+                              <small style={{ top: 50 }}>Ver listado de órdenes &gt;</small>
                             </p>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <ul className="d-flex justify-content-around mb-2 p-0">
+                      {statisticsData.length > 0 && statisticsData.map((item) => (
+                        <div className={`${styles.indicadores} mb-3`}>
+                          <div className="card-body">
+                            <div className="row mx-5 mt-3">
+                              <div className="col my-2">
+                                <img src={item.img} alt={item.state} />
+                              </div>
+                              <div className="col">
+                                <div className="pt-3">
+                                  <h5 className={`${styles.numInd}mb-0`}>{item.number}</h5>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <small>
+                                <p className={`${styles.statusInd}`}>
+                                  {item.state}
+                                </p>
+                              </small>
+                            </div>
                           </div>
                         </div>
+                      ))}
+                    </ul>
+                    <ul className="d-flex justify-content-bottom align-items-bottom m-0 p-0">
+                      <li>
+                        <p style={{ color: '#666666' }}>Últimos 7 días</p>
                       </li>
-                    ))}
-                  </ul>
 
-                  <ul className="d-flex justify-content-between align-items-center pt-3 mb-0">
-                    <li>
-                      <p>Últimos 7 días</p>
-                    </li>
-                    <li>
-                      <a
-                        href="#!"
-                        style={{ color: '#2BB9FF' }}
-                        onClick={handleClick}
-                      >
-                        <p className="text-end me-2 mb-0">
-                          <small style={{ fontSize: '1em' }}>Ver listado de órdenes &gt;</small>
-                        </p>
+                    </ul>
+                  </>
+                ) : componentTotales}
+              </Card>
+            </div>
+          </div>
+          <div className="col-4">
+            <div className="position-relative">
+              <img src="/inscribeempresa.png" alt="" width="310" style={{ position: 'relative', top: 87 }} />
+            </div>
+          </div>
+        </div>
+        <div className="row mx-5 m-0">
+          <div className="col-6 ">
+            <Card className={styles.hei}>
+              <div className="d-flex align-items-center">
+                <div className="flex-shrink-0">
+                  <img src={inscribe} alt="download" width="180" style={{ position: 'relative', bottom: 18 }} />
+                </div>
+                <div className="flex-grow-1 ms-3 pt-2">
+                  <div className="d-flex flex-column bd-highlight mb-3 mt-1">
+                    <div className="p-2 bd-highlight">
+                      <h5 style={{ color: '#212121' }}>Órdenes de servicios</h5>
+                    </div>
+                    <div className="p-2 bd-highlight">
+                      <p className={`${styles.pFileUp}`}>
+                        Sube tus archivos masivos de órdenes de servicio
+                      </p>
+                    </div>
+                    <div className="p-2 bd-highlight d-flex justify-content-end">
+                      <a href="#!" className="btn btn-secondary " onClick={handleClickA} style={{ fontSize: 17 }}>
+                        Subir órdenes
                       </a>
-                    </li>
-                  </ul>
-                </>
-              ) : componentTotales}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </Card>
           </div>
-        </div>
-        <div className="col-4">
-          <div className="position-relative">
-            <img src="/fulfill1.png" alt="" width="350" style={{ position: 'relative', top: 65, left: '70px' }} />
+          <div className="col-6">
+            <Card className={styles.hei}>
+              <div className="d-flex align-items-center">
+                <div className="flex-shrink-0">
+                  <img src={callendar} alt="download" width="160" style={{ position: 'relative', bottom: 20 }} />
+                </div>
+                <div className="flex-grow-1 ms-3 pt-2">
+                  <div className="d-flex flex-column bd-highlight mb-3 mt-1">
+                    <div className="p-2 bd-highlight">
+                      <h5 style={{ color: '#212121' }}>Reposición de inventario</h5>
+                    </div>
+                    <div className="p-2 bd-highlight">
+                      <p className={`${styles.pFileUp}`}>
+                        Realiza la programación de la reposición de tu inventario
+                      </p>
+                    </div>
+                    <div className="p-2 bd-highlight d-flex justify-content-end">
+                      <a href="#!" className="btn btn-secondary " onClick={handleClickInventory} style={{ fontSize: 17 }}>
+                        Programar
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
+
         </div>
+        <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
+          <FormReplenishment
+            setModalTicket={setModalInventory}
+          />
+        </Modal>
       </div>
-      <br />
-      <div className="row m-5">
-        <div className="col-6">
-          <Card>
-            <div className="d-flex align-items-center">
-              <div className="flex-shrink-0">
-                <img src={callendar} alt="download" width="140" style={{ position: 'relative', top: 2 }} />
-              </div>
-              <div className="flex-grow-1 ms-3">
-                <div className="d-flex flex-column bd-highlight mb-3">
-                  <div className="p-2 bd-highlight">
-                    <h3 style={{}}>Solicita tu programación de inventario</h3>
-                  </div>
-                  <div className="p-2 bd-highlight">
-                    <p style={{ position: 'relative', top: 2, fontSize: 17 }}>
-                      Realiza la programación de la reposición de tu inventario
-                    </p>
-                  </div>
-                  <div className="p-2 bd-highlight">
-                    <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
-                      Programar
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-        <div className="col-6">
-          <Card className={styles.hei}>
-            <div className="d-flex align-items-center">
-              <div className="flex-shrink-0">
-                <img src={shopping} alt="download" width="160" style={{ position: 'relative', top: 2 }} />
-              </div>
-              <div className="flex-grow-1 ms-3">
-                <div className="d-flex flex-column bd-highlight mb-3">
-                  <div className="p-2 bd-highlight">
-                    <h5 style={{ color: '#FF7E44' }}>¡Comencemos con tus órdenes!</h5>
-                  </div>
-                  <div className="p-2 bd-highlight">
-                    <p className={`${styles.pFileUp}`}>
-                      sube tus archivos masivos de órdenes
-                    </p>
-                  </div>
-                  <div className="p-2 bd-highlight">
-                    <a href="#!" className="btn btn-secondary" onClick={handleClickA}>
-                      Subir órdenes
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </div>
-      <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
-        <FormReplenishment
-          setModalTicket={setModalInventory}
-        />
-      </Modal>
     </PageLayout>
   );
 };

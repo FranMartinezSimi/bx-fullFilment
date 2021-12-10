@@ -10,10 +10,10 @@ import Card from 'components/Molecules/Card';
 import Modal from 'components/Templates/Modal';
 import Spinner from 'components/Atoms/Spinner';
 import Alert from 'components/Atoms/AlertMessage';
-import Button from 'components/Atoms/Button';
+// import Button from 'components/Atoms/Button';
 import FromTicket from 'components/Molecules/FormTicket';
 import avatar from 'assets/brand/avatar.svg';
-import avatarResolutor from 'assets/brand/avatar-resolutor.svg';
+import chatRobotina from 'assets/brand/chatRobotina.svg';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import styles from './styles.module.scss';
 
@@ -97,19 +97,35 @@ const IssueDetail = () => {
   }, []);
   return (
     <PageLayout title={`Ticket ${title}`}>
-      <Card className="px-5 mt-3 shadow">
+      <Card className="px-5 mt-3 shadow mb-5">
         {ticket != null && !loading ? (
           <>
-            <ul className="d-flex justify-content-between align-items-center" style={{ fontSize: 14 }}>
+            <ul className="d-flex justify-content-between align-items-center px-5 ps-0 pe-2" style={{ fontSize: 14 }}>
               <li>
                 <ul className="d-flex flex-column">
-                  <li>
-                    <h1 className="display-font" style={{ fontSize: 22 }}>Número de ticket:</h1>
-                  </li>
-                  <li className="me-2">
-                    Nº de orden asociada:
-                    {' '}
-                    {ticket.orderId}
+                  {/* <li>
+                    <h1 className="display-font mt-1 mb-0"
+                     style={{ fontSize: 22 }}>Número de ticket:</h1>
+                  </li> */}
+                  <li className={`p-4 ps-0 ${styles.respResolutorP} me-2 mb-4 px-2`}>
+                    <h1
+                      className="display-font mt-1 mb-0"
+                      style={{ fontSize: 22 }}
+                    >
+                      Nº de orden asociada:
+                      {' '}
+                      <b
+                        style={{
+                          fontSize: 22,
+                          fontFamily: 'mont',
+                          color: '#212121',
+                          lineHeigh: 30,
+                        }}
+                      >
+                        {ticket.orderId}
+                      </b>
+                    </h1>
+
                   </li>
                 </ul>
               </li>
@@ -124,98 +140,145 @@ const IssueDetail = () => {
                 </ul>
               </li>
             </ul>
-            <hr className="my-4" />
             <div className="row">
-              <div className="col-lg-6 pe-5">
-                <h2 className="display-font" style={{ fontSize: 18, fontWeight: 600 }}>{ticket.motivo}</h2>
-                <ul className="d-flex align-items-center pt-4">
-                  <li className="me-2">
-                    <img src={avatar} alt="Cuenta" width="33" />
-                  </li>
-                  <li className="me-2">{userActive}</li>
-                  <li className="me-2">
-                    <p className="m-0">
-                      <small style={{ color: '#666666' }}>
-                        Fecha:
-                        {' '}
-                        {ticket.fechaCreacion}
-                      </small>
-                    </p>
-                  </li>
-                </ul>
-                <p className="py-4">
-                  {ticket.descTicket}
-                </p>
-                {ticket.archivo.length > 0 && (
-                  <ul>
-                    <li>
-                      <p className="fs-5 mb-4">Archivos Adjuntos</p>
-                      <ul>
-                        {ticket.archivo.map((file) => (
-                          <li key={file._id} className={styles.fileItem}>
-                            <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
-                              <ul className="d-flex justify-content-between align-items-center">
-                                <li>
-                                  {`${file.name} `}
-                                  <span className={styles.fileSize}>{`${file.size} KB`}</span>
-                                </li>
-                                <li>
-                                  {downloading ? <Spinner width="15px" height="15px" /> : (
-                                    <button className={styles.closeButton} type="button">
-                                      <img src={dropZoneDownload} alt="Descargar" />
-                                    </button>
-                                  )}
-                                </li>
-                              </ul>
-                            </a>
-                          </li>
-                        ))}
+              <div className="container">
+                <div className="row border-top pt-2 ms-2">
+                  <div className=" col">
+                    <div className="col-lg-12 pe-5">
+                      <h2 className="display-font mt-2" style={{ fontSize: 18, fontWeight: 600 }}>{ticket.motivo}</h2>
+                      <ul className="d-flex align-items-center pt-4">
+                        <li className="me-2">
+                          <img src={avatar} alt="Cuenta" width="33" />
+                        </li>
+                        <li className={`me-2 ${styles.respResolutorP}`}>{userActive}</li>
                       </ul>
-                    </li>
-                  </ul>
-                )}
-              </div>
-              <div className={`col-lg-6 border-start ${!ticket.comentario ? 'd-flex align-items-center' : 'd-flex flex-column justify-content-center'}`}>
-                {ticket.comentario ? (
-                  <div className="resolutorBox px-lg-5">
-                    <p>
-                      Comentario resolutor
-                    </p>
-                    <ul className="card py-3 px-2" style={{ borderRadius: 15 }}>
-                      <li>
-                        <ul className="d-flex">
-                          <li className="mx-3">
-                            <img src={avatarResolutor} alt="Respuesta" width="33" />
+                      <div className="row mb-4">
+                        <div className="col-3">
+                          <p className="m-0">
+                            <small style={{ color: '#666666' }}>
+                              Fecha:
+                              {' '}
+                              {ticket.fechaCreacion}
+                            </small>
+                          </p>
+                        </div>
+                        <div className="col-6">
+                          <p className="m-0">
+                            <small style={{ color: '#666666' }}>
+                              Hora:
+                              {' '}
+                              {ticket.hora}
+                            </small>
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className={`p-4 ${styles.respResolutor}`}>
+                        {ticket.descTicket}
+                      </p>
+                      {ticket.archivo.length > 0 && (
+                        <ul>
+                          <li>
+                            <p className="fs-5 mb-4">Archivo Adjunto</p>
+                            <ul>
+                              {ticket.archivo.map((file) => (
+                                <li key={file._id} className={styles.fileItem}>
+                                  <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
+                                    <ul className="d-flex justify-content-between align-items-center">
+                                      <li>
+                                        {`${file.name} `}
+                                        <span className={styles.fileSize}>{`${file.size} KB`}</span>
+                                      </li>
+                                      <li>
+                                        {downloading ? <Spinner width="15px" height="15px" /> : (
+                                          <button className={styles.closeButton} type="button">
+                                            <img src={dropZoneDownload} alt="Descargar" />
+                                          </button>
+                                        )}
+                                      </li>
+                                    </ul>
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
                           </li>
                         </ul>
-                      </li>
-                      <li className="px-4 pt-4">
-                        <p>{ticket.comentario}</p>
-                      </li>
-                    </ul>
-                  </div>
-                ) : (
-                  <p className="text-center w-100 display-font" style={{ color: '#cdcdcd', fontSize: 15 }}>
-                    ¡El resolutor ya tiene tu ticket en estudio!
-                    <br />
-                    por favor espera por su comentario
-                  </p>
-                )}
-                {ticket.status === 'Cerrado' && (
-                  <div className="px-lg-5">
-                    <p>
-                      ¿Estas conforme con la resolución de tu ticket?,
-                      si no estas conforme puedes volver a crear un ticket de incidencia.
-                    </p>
-                    <div className="text-end">
-                      <Button
-                        className="btn btn-secondary px-4"
-                        text="Crear Ticket"
-                        onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
-                      />
+                      )}
                     </div>
                   </div>
-                )}
+                  <div className="border-start col pt-2 px-0 ps-5">
+                    <div className={`col-lg-12 ${!ticket.comentario ? 'd-flex align-items-center' : 'd-flex flex-column justify-content-center'}`}>
+                      {ticket.comentario ? (
+                        <div className="resolutorBox">
+                          <h2 className="display-font" style={{ fontSize: 18, fontWeight: 600 }}>
+                            Respuesta
+                          </h2>
+                          <ul className="d-flex align-items-center pt-4">
+                            <li className="me-2">
+                              <img src={chatRobotina} alt="Cuenta" width="33" />
+                            </li>
+
+                            <li className={`me-2 ${styles.respResolutorP}`}>{userActive}</li>
+                          </ul>
+                          <div className="row mb-4">
+                            <div className="col-3">
+                              <p className="m-0">
+                                <small style={{ color: '#666666' }}>
+                                  Fecha:
+                                  {' '}
+                                  {ticket.fechaCreacion}
+                                </small>
+                              </p>
+                            </div>
+                            <div className="col-6">
+                              <p className="m-0">
+                                <small style={{ color: '#666666' }}>
+                                  Hora:
+                                  {' '}
+                                  {ticket.hora}
+                                </small>
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <p className={`p-4 ${styles.respResolutor}`}>
+                              {ticket.descTicket}
+                            </p>
+                          </div>
+
+                        </div>
+                      ) : (
+                        <p className="text-center w-100 display-font" style={{ color: '#cdcdcd', fontSize: 15 }}>
+                          ¡El resolutor ya tiene tu ticket en estudio!
+                          <br />
+                          por favor espera por su comentario
+                        </p>
+                      )}
+                      {ticket.status === 'Cerrado' && (
+                        <div className="px-lg-">
+                          <p className="text-start">
+                            <b>
+                              Si no estas de acuerdo con la respuesta,
+                              puedes volver a ingresar un nuevo ticket
+                            </b>
+                          </p>
+                          <div className="p-0 bd-highlight d-flex justify-content-end ms-5">
+                            <a
+                              href="#!"
+                              className="btn btn-secondary "
+                              style={{ fontSize: 17 }}
+                              onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
+                              loading={loading}
+                            >
+                              Crear Ticket
+                            </a>
+                          </div>
+
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>

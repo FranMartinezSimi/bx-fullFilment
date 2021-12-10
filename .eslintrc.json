@@ -22,8 +22,16 @@
     ],
     "rules": {
         "react/react-in-jsx-scope": "off",
-        "react/jsx-props-no-spreading" : "off",
-        "react/jsx-filename-extension": [1,{"extensions": [".js",".jsx"]}],
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
         // "no-unused-vars": "warn",
         // "react/prop-types": "warn",
         "no-param-reassign": 0,
@@ -31,13 +39,24 @@
         "no-console": "off",
         "no-nested-ternary": "off",
         "no-underscore-dangle": "off",
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "quotes": [
+            2,
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "object-curly-newline": "off"
     },
     "settings": {
-      "import/resolver": {
-        "node": {
-          "moduleDirectory": ["node_modules", "src/"]
+        "import/resolver": {
+            "node": {
+                "moduleDirectory": [
+                    "node_modules",
+                    "src/"
+                ]
+            }
         }
-      }
     }
 }

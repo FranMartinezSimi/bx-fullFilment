@@ -6,13 +6,14 @@ import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import Alert from 'components/Atoms/AlertMessage';
+import info from 'assets/brand/info-ico.svg';
+import TooltipIcon from 'components/Atoms/TooltipIcon';
 import styles from './styles.module.scss';
 
 const Grafico = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
   const userData = JSON.parse(user);
-  const [stateFromTo, setStateFromTo] = useState(null);
   const userActive = userData.credential.accountId;
   const [orderFetchError, setOrderFetchError] = useState(false);
   const [dataOrders1, setDataOrders1] = useState({
@@ -109,11 +110,6 @@ const Grafico = () => {
         const months = items.map((item) => (item.month));
         const quantity = items.map((item) => (item.quantity));
         const average = items.map((item) => (item.average));
-        const desde = `${months[0]} ${new Date().getFullYear()}`;
-        const hasta = `${months[3]} ${new Date().getFullYear()}`;
-        console.log(months);
-        console.log(desde);
-        setStateFromTo({ from: desde, to: hasta });
         setIsLoading(false);
         setDataOrders({
           series: [
@@ -128,7 +124,7 @@ const Grafico = () => {
             },
           ],
           options: {
-            colors: ['#3363FF', '#FDCC60', '#FDA460'],
+            colors: ['#7DD59D', '#4773FF', '#FDA460'],
             chart: {
               stacked: true,
               toolbar: {
@@ -138,7 +134,8 @@ const Grafico = () => {
             plotOptions: {
               bar: {
                 horizontal: false,
-                columnWidth: '30%',
+                columnWidth: '15%',
+                borderRadius: 0,
               },
             },
             labels: [
@@ -157,12 +154,26 @@ const Grafico = () => {
               enabled: true,
               enabledOnSeries: [1],
             },
+            title: {
+              text: 'Total de órdenes y promedio diario',
+              align: 'left',
+              margin: 10,
+              offsetX: 23,
+              offsetY: 15,
+              floating: false,
+              style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                fontFamily: 'mont',
+                color: '#263238',
+              },
+            },
           },
         });
         setDataOrders1({
           series: [total],
           options: {
-            colors: ['#7DD59D'],
+            colors: ['#4773FF'],
             chart: {
               type: 'radialBar',
             },
@@ -177,6 +188,11 @@ const Grafico = () => {
                     offsetY: 8,
                     color: '#000000',
                   },
+                },
+                hollow: {
+                  size: '55%',
+                  margin: 5,
+                  background: 'transparent',
                 },
               },
             },
@@ -196,6 +212,10 @@ const Grafico = () => {
   } else {
     component = null;
   }
+
+  const infoComponent = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Total de órdenes de los últimos 6 meses." color="#BFEAFF" />;
+  const infoComponentHistorical = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Te mostramos la operación de órdenes de los últimos 6 meses.." color="#BFEAFF" />;
+
   useEffect(() => {
     chart();
   }, []);
@@ -203,28 +223,35 @@ const Grafico = () => {
   return (
     <PageLayout title="Historico de órdenes">
       <div className="row m-5">
-        <PageTitle title="Historico de órdenes" />
+        <PageTitle title="Historico de órdenes" icon={infoComponentHistorical} className="mb-3" />
 
-        <div className="col-lg-8">
-          <Card>
-            {!isLoading
-              ? (
-                <div>
-                  <h4 className={` text-left mb-2 ${styles.titleCard}`}>Total de órdenes y promedio diario</h4>
-                  <Chart
-                    data={dataOrders}
-                    options={dataOrders.options}
-                    series={dataOrders.series}
-                    height={350}
-                  />
-                </div>
-              )
-              : component}
-          </Card>
+        <div className={` ${styles.cardpromFF} col-lg-8 `}>
+          {!isLoading
+            ? (
+              <div className="p-0 m-0">
+                <Chart
+                  data={dataOrders}
+                  options={dataOrders.options}
+                  series={dataOrders.series}
+                  height={350}
+                />
+              </div>
+            )
+            : component}
         </div>
-        <div className="col-lg-4">
-          <Card>
-            <h4 className={` text-center ${styles.titleCard}`}>Total operación FF</h4>
+        <div className="col-lg-4 ">
+          <Card className={`pt-3 ${styles.cardpromFF}`}>
+            <div className="d-flex justify-content-center">
+              <div className="text-center">
+                <h1
+                  style={{ fontFamily: 'mont', fontSize: 18, alignItems: 'center' }}
+                >
+                  Total órdenes Operación FF
+                </h1>
+
+              </div>
+              <PageTitle icon={infoComponent} />
+            </div>
             <div className="align-items-center">
               {!isLoading
                 ? (
@@ -240,27 +267,6 @@ const Grafico = () => {
                 )
                 : component}
             </div>
-            <h4 className={` text-center ${styles.titleCard}`}>Data</h4>
-
-            <div className="container">
-              <div className="d-flex justify-content-center">
-                <div className="p-2 col-example text-left">
-                  <div className="col">
-                    <b className="text-right">
-                      <p><b>{stateFromTo ? stateFromTo.from : ''}</b></p>
-                    </b>
-                  </div>
-                </div>
-                <div className="p-2 col-example text-left"><b>-</b></div>
-                <div className="p-2 col-example text-left">
-                  <p className="text-left">
-                    <b>{stateFromTo ? stateFromTo.to : ''}</b>
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
           </Card>
         </div>
       </div>
