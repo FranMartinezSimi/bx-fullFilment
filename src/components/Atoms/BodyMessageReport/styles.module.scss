@@ -1,0 +1,80 @@
+.width {
+  max-width: 450px;
+}
+
+.card1{
+height: 389px;
+right: 32.89%;
+top: 192px;
+    width: 100%;
+
+background: #FFFFFF;
+/* Sombra app 5 */
+
+border-radius: 0px;
+}
+
+.card2{
+height: 389px;
+left: 68.52%;
+right: 5%;
+top: 192px;
+background: #FFFFFF;
+/* Sombra app 5 */
+background: transparent;
+border-radius: 15px;
+}
+
+.card2 p{
+width: 232px;
+height: 92px;
+left: 936px;
+top: 357px;
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 145%;
+text-align: center;
+letter-spacing: 0.03em;
+color: #666666;
+}
+
+.card1 p{
+
+
+/* Paragraph 3 app */
+
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+/* or 23px */
+
+letter-spacing: 0.03em;
+
+/* Gris mistery */
+
+color: #666666;
+}
+
+
+.orderStatus{
+padding: 10px;
+background: #FFFFFF;
+/* Sombra app 5 */
+
+box-shadow: 0px 6px 14px -6px rgba(24, 39, 75, 0.12), 0px 10px 32px -4px rgba(24, 39, 75, 0.1);
+border-radius: 15px;
+
+}
+
+.cardPendingDate{
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+background: #FFFFFF;
+border-radius: 15px;
+}
+

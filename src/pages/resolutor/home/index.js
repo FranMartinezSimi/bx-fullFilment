@@ -60,6 +60,7 @@ const homeResolutor = () => {
       },
     })
       .then((dashData) => {
+        console.log(dashData.chart.series);
         const statistics = dashData.totales;
         const originalLegend = dashData.chart;
         const { tickets } = dashData;
@@ -73,6 +74,7 @@ const homeResolutor = () => {
           setErrorChart(true);
           return;
         }
+        console.log(dashData.chart);
         setData({
           series: dashData.chart.series,
           options: {
