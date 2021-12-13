@@ -213,7 +213,7 @@ const Grafico = () => {
   }
 
   const infoComponent = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Total de órdenes de los últimos 6 meses." color="#BFEAFF" />;
-  const infoComponentHistorical = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Te mostramos la operación de órdenes de los últimos 6 meses.." color="#BFEAFF" />;
+  const infoComponentHistorical = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Te mostramos la operación de órdenes de los últimos 6 meses." color="#BFEAFF" />;
 
   useEffect(() => {
     chart();

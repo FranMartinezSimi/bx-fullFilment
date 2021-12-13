@@ -329,10 +329,9 @@ const ResolutorDetail = ({
                   Confirmación
                 </h4>
                 <p style={{ fontSize: 16 }} className="py-2">
-                  Si envias el comentario a cliente,
-                  automaticamente el ticket cambiara de estado ha
-                  resuelto, dando por finalizado el ticket.
-                  ¿Estas seguro que quieres enviar el comentario?
+                  Al presionar aceptar, el ticket cambiará
+                  de estado ha cerrado, finalizando el proceso de
+                  resolución de este. ¿Deseas enviar el comentario?
                 </p>
                 <Button
                   className="btn btn-complementary fs-5 px-5 mb-5 me-4"

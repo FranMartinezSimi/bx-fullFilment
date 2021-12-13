@@ -218,7 +218,7 @@ const IssueDetail = () => {
                               <img src={chatRobotina} alt="Cuenta" width="33" />
                             </li>
 
-                            <li className={`me-2 ${styles.respResolutorP}`}>{userActive}</li>
+                            <li className={`me-2 ${styles.respResolutorP}`}>{ticket.empresa}</li>
                           </ul>
                           <div className="row mb-4">
                             <div className="col-3">
