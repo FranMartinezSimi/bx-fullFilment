@@ -4,7 +4,7 @@ import clientFetch from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Chart from 'react-apexcharts';
-import Alert from 'components/Atoms/AlertMessage';
+import BodyMessage from 'components/Atoms/BodyMessageReport';
 import Spinner from 'components/Atoms/Spinner';
 import styles from './styles.module.scss';
 
@@ -17,7 +17,7 @@ const SellerReport = () => {
   let componentChart;
 
   if (errorChart) {
-    componentChart = <Alert className="mt-5" type="warning" message="Ooopss! no se encontraron datos..." />;
+    componentChart = <BodyMessage className="mt-5" />;
   } else {
     componentChart = <Spinner />;
   }
@@ -42,11 +42,17 @@ const SellerReport = () => {
         }
 
         const dataDonut = Object.values(dashData.pendingDelivered);
+        console.log(dataDonut);
+        const status = ['Entregado', 'Pendiente'];
+        const pieData = { label: status, series: dataDonut };
+        console.log(status);
+        console.log('PIE', pieData.label);
+
         const pendingDate = items.map((item) => (item.day));
         const pendingQty = dashData.pendingOrders.map((item) => item.quantity);
-        console.log([dataDonut]);
         setStatesChart({
           series: [{
+            name: 'órdenes',
             data: orderQuantity,
           }],
           options: {
@@ -100,8 +106,9 @@ const SellerReport = () => {
         });
 
         setDeliveredChart({
-          series: dataDonut,
+          series: dataDonut.reverse(),
           options: {
+            labels: pieData.label.reverse(),
             chart: {
               height: 0,
               zoom: {
@@ -114,7 +121,7 @@ const SellerReport = () => {
               },
             },
             fill: {
-              colors: ['#7DD59D', '#FE6767'],
+              colors: ['#FE6767', '#7DD59D'],
             },
             legend: {
               show: false,
@@ -131,6 +138,7 @@ const SellerReport = () => {
 
         setPendingChart({
           series: [{
+            name: 'Órdenes',
             data: pendingQty,
           }],
           options: {

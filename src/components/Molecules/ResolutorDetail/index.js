@@ -324,7 +324,7 @@ const ResolutorDetail = ({
               </div>
             ) : (
               <div className="px-4 text-center">
-                <img style={{ width: 102, height: 113 }} src="/errorgloboalert.png" alt="aleta" />
+                <img style={{ width: 102, height: 95 }} src="/errorgloboalert.png" alt="aleta" />
                 <h4 style={{ fontSize: 22, fontFamily: 'mont' }} className="display-font pt-4">
                   Confirmación
                 </h4>
