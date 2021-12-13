@@ -226,23 +226,15 @@ const IssueDetail = () => {
                                 <small style={{ color: '#666666' }}>
                                   Fecha:
                                   {' '}
-                                  {ticket.fechaCreacion}
+                                  {ticket.fechaCierre}
                                 </small>
                               </p>
                             </div>
-                            <div className="col-6">
-                              <p className="m-0">
-                                <small style={{ color: '#666666' }}>
-                                  Hora:
-                                  {' '}
-                                  {ticket.hora}
-                                </small>
-                              </p>
-                            </div>
+
                           </div>
                           <div>
                             <p className={`p-4 ${styles.respResolutor}`}>
-                              {ticket.descTicket}
+                              {ticket.comentario}
                             </p>
                           </div>
 

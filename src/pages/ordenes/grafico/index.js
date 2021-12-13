@@ -5,7 +5,7 @@ import Chart from 'react-apexcharts';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
-import Alert from 'components/Atoms/AlertMessage';
+import BodyMesage from 'components/Atoms/BodyMessage';
 import info from 'assets/brand/info-ico.svg';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
 import styles from './styles.module.scss';
@@ -49,16 +49,16 @@ const Grafico = () => {
       {
         name: 'Ordenes',
         type: 'column',
-        data: [0],
+        data: [''],
       },
       {
         name: 'Promedio Ordenes',
         type: 'line',
-        data: [0],
+        data: [''],
       },
     ],
     options: {
-      colors: ['#3363FF', '#FDCC60', '#FDA460'],
+      colors: ['#7DD59D', '#4773FF', '#FDA460'],
       chart: {
         id: 'basic-bar',
         height: 350,
@@ -112,16 +112,15 @@ const Grafico = () => {
         const average = items.map((item) => (item.average));
         setIsLoading(false);
         setDataOrders({
-          series: [
-            {
-              name: 'Ordenes',
-              data: quantity,
-              type: 'column',
-            },
-            {
-              name: 'Promedio Ordenes',
-              data: average,
-            },
+          series: [{
+            name: 'Ordenes',
+            data: quantity,
+            type: 'column',
+          },
+          {
+            name: 'Promedio Ordenes',
+            data: average,
+          },
           ],
           options: {
             colors: ['#7DD59D', '#4773FF', '#FDA460'],
@@ -208,7 +207,7 @@ const Grafico = () => {
   let component;
 
   if (orderFetchError) {
-    component = <Alert className="mt-5" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />;
+    component = <BodyMesage className="mt-5" />;
   } else {
     component = null;
   }
@@ -224,10 +223,9 @@ const Grafico = () => {
     <PageLayout title="Historico de órdenes">
       <div className="row m-5">
         <PageTitle title="Historico de órdenes" icon={infoComponentHistorical} className="mb-3" />
-
-        <div className={` ${styles.cardpromFF} col-lg-8 `}>
-          {!isLoading
-            ? (
+        {dataOrders1 && !orderFetchError ? (
+          <>
+            <div className={` ${styles.cardpromFF} col-lg-8 `}>
               <div className="p-0 m-0">
                 <Chart
                   data={dataOrders}
@@ -236,39 +234,40 @@ const Grafico = () => {
                   height={350}
                 />
               </div>
-            )
-            : component}
-        </div>
-        <div className="col-lg-4 ">
-          <Card className={`pt-3 ${styles.cardpromFF}`}>
-            <div className="d-flex justify-content-center">
-              <div className="text-center">
-                <h1
-                  style={{ fontFamily: 'mont', fontSize: 18, alignItems: 'center' }}
-                >
-                  Total órdenes Operación FF
-                </h1>
-
-              </div>
-              <PageTitle icon={infoComponent} />
             </div>
-            <div className="align-items-center">
-              {!isLoading
-                ? (
-                  <div className="d-flex align-items-center flex-column bd-highlight mb-3">
-                    <Chart
-                      options={dataOrders1.options}
-                      series={dataOrders1.series}
-                      type="radialBar"
-                      height={300}
-                    />
+            <div className="col-lg-4 ">
+              <Card className={`pt-3 ${styles.cardpromFF}`}>
+                <div className="d-flex justify-content-center">
+                  <div className="text-center">
+                    <h1
+                      style={{ fontFamily: 'mont', fontSize: 18, alignItems: 'center' }}
+                    >
+                      Total órdenes Operación FF
+                    </h1>
 
                   </div>
-                )
-                : component}
+                  <PageTitle icon={infoComponent} />
+                </div>
+                <div className="align-items-center">
+                  {!isLoading
+                    ? (
+                      <div className="d-flex align-items-center flex-column bd-highlight mb-3">
+                        <Chart
+                          options={dataOrders1.options}
+                          series={dataOrders1.series}
+                          type="radialBar"
+                          height={300}
+                        />
+
+                      </div>
+                    )
+                    : component}
+                </div>
+              </Card>
             </div>
-          </Card>
-        </div>
+          </>
+        ) : component}
+
       </div>
     </PageLayout>
 

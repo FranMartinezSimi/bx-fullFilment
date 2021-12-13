@@ -9,7 +9,7 @@ import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
 import ReplenishmentTable from 'components/Templates/ReplenishmentTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-// import info from 'assets/brand/info.svg';
+import info from 'assets/brand/info.svg';
 import styles from './styles.module.scss';
 
 const Reposition = () => {
@@ -18,18 +18,18 @@ const Reposition = () => {
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
-  const [sku] = useState('');
+  const [sku, setSku] = useState('');
   const data = useMemo(() => list, [list]);
 
   const handleClickInventory = (e) => {
     e.preventDefault();
   };
 
-  // const handleClickOrderDeatil = (e, tableData) => {
-  //   e.preventDefault();
-  //   setModal(true);
-  //   setSku(tableData.row.original.replenishmentId);
-  // };
+  const handleClickOrderDeatil = (e, tableData) => {
+    e.preventDefault();
+    setModal(true);
+    setSku(tableData.row.original.replenishmentId);
+  };
 
   const columns = useMemo(() => [
     {
@@ -78,21 +78,21 @@ const Reposition = () => {
       Header: 'F. Entrega',
       accessor: 'fechaEntrega',
     },
-    // {
-    //   Header: 'Manifiesto',
-    //   accessor: 'ver',
-    //   isVisible: true,
-    //   Cell: (table) => (
-    //     <a
-    //       href="#!"
-    //       onClick={(e) => handleClickOrderDeatil(e, table)}
-    //       role="button"
-    //       className="d-block font-weight-bold font-weight-bold"
-    //     >
-    //       <img src={info} alt="Actualizar Ordenes" width="32" />
-    //     </a>
-    //   ),
-    // },
+    {
+      Header: 'Manifiesto',
+      accessor: 'ver',
+      isVisible: true,
+      Cell: (table) => (
+        <a
+          href="#!"
+          onClick={(e) => handleClickOrderDeatil(e, table)}
+          role="button"
+          className="d-block font-weight-bold font-weight-bold"
+        >
+          <img src={info} alt="Actualizar Ordenes" width="32" />
+        </a>
+      ),
+    },
   ], []);
 
   let component;
