@@ -42,12 +42,8 @@ const SellerReport = () => {
         }
 
         const dataDonut = Object.values(dashData.pendingDelivered);
-        console.log(dataDonut);
         const status = ['Entregado', 'Pendiente'];
         const pieData = { label: status, series: dataDonut };
-        console.log(status);
-        console.log('PIE', pieData.label);
-
         const pendingDate = items.map((item) => (item.day));
         const pendingQty = dashData.pendingOrders.map((item) => item.quantity);
         setStatesChart({
