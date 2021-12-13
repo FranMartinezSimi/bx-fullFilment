@@ -242,7 +242,7 @@ const IssueDetail = () => {
                           </div>
                           <div>
                             <p className={`p-4 ${styles.respResolutor}`}>
-                              {ticket.descTicket}
+                              {ticket.comentario}
                             </p>
                           </div>
 
