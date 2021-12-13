@@ -223,10 +223,9 @@ const Grafico = () => {
     <PageLayout title="Historico de órdenes">
       <div className="row m-5">
         <PageTitle title="Historico de órdenes" icon={infoComponentHistorical} className="mb-3" />
-
-        <div className={` ${styles.cardpromFF} col-lg-8 `}>
-          {!isLoading
-            ? (
+        {dataOrders1 && !orderFetchError ? (
+          <>
+            <div className={` ${styles.cardpromFF} col-lg-8 `}>
               <div className="p-0 m-0">
                 <Chart
                   data={dataOrders}
@@ -235,39 +234,40 @@ const Grafico = () => {
                   height={350}
                 />
               </div>
-            )
-            : component}
-        </div>
-        <div className="col-lg-4 ">
-          <Card className={`pt-3 ${styles.cardpromFF}`}>
-            <div className="d-flex justify-content-center">
-              <div className="text-center">
-                <h1
-                  style={{ fontFamily: 'mont', fontSize: 18, alignItems: 'center' }}
-                >
-                  Total órdenes Operación FF
-                </h1>
-
-              </div>
-              <PageTitle icon={infoComponent} />
             </div>
-            <div className="align-items-center">
-              {!isLoading
-                ? (
-                  <div className="d-flex align-items-center flex-column bd-highlight mb-3">
-                    <Chart
-                      options={dataOrders1.options}
-                      series={dataOrders1.series}
-                      type="radialBar"
-                      height={300}
-                    />
+            <div className="col-lg-4 ">
+              <Card className={`pt-3 ${styles.cardpromFF}`}>
+                <div className="d-flex justify-content-center">
+                  <div className="text-center">
+                    <h1
+                      style={{ fontFamily: 'mont', fontSize: 18, alignItems: 'center' }}
+                    >
+                      Total órdenes Operación FF
+                    </h1>
 
                   </div>
-                )
-                : component}
+                  <PageTitle icon={infoComponent} />
+                </div>
+                <div className="align-items-center">
+                  {!isLoading
+                    ? (
+                      <div className="d-flex align-items-center flex-column bd-highlight mb-3">
+                        <Chart
+                          options={dataOrders1.options}
+                          series={dataOrders1.series}
+                          type="radialBar"
+                          height={300}
+                        />
+
+                      </div>
+                    )
+                    : component}
+                </div>
+              </Card>
             </div>
-          </Card>
-        </div>
+          </>
+        ) : component}
+
       </div>
     </PageLayout>
 
