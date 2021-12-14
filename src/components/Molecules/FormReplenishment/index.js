@@ -569,16 +569,13 @@ const FormReplenishment = ({ setModalTicket }) => {
                     </li>
                     <li className="ms-5">
                       <div className="p-0 bd-highlight d-flex justify-content-end">
-                        <a
-                          href="#!"
-                          className="btn btn-secondary "
-                          style={{ fontSize: 17 }}
+                        <Button
+                          className={`btn btn-secondary ${btnDisabled ? 'disabled' : ''} fs-5 px-5`}
+                          text="Programar"
                           submit
                           loading={loading}
                           disabled={btnDisabled}
-                        >
-                          Programar
-                        </a>
+                        />
                       </div>
                     </li>
                   </ul>

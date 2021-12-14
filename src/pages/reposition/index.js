@@ -61,7 +61,7 @@ const Reposition = () => {
         }
         return (
           <small
-            className={`badge--${row.original.estado.replace(' ', '').toLowerCase()} px-4 py-1 rounded-pill border`}
+            className={`badge--${row.original.estado.replace(' ', '').toLowerCase()} px-4 py-1 rounded-pill`}
           >
             <span
               className={styles.small}
