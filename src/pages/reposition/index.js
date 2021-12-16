@@ -18,7 +18,7 @@ const Reposition = () => {
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
-  const [sku, setSku] = useState('');
+  const [manifest, setManifest] = useState('');
   const data = useMemo(() => list, [list]);
 
   const handleClickInventory = (e) => {
@@ -28,7 +28,7 @@ const Reposition = () => {
   const handleClickOrderDeatil = (e, tableData) => {
     e.preventDefault();
     setModal(true);
-    setSku(tableData.row.original.replenishmentId);
+    setManifest(tableData.row.original.manifest);
   };
 
   const columns = useMemo(() => [
@@ -49,27 +49,43 @@ const Reposition = () => {
       accessor: 'estado',
       Cell: ({ row }) => {
         let colorSelected;
-        switch (row.original.estado.replace(' ', '').toLowerCase()) {
-          case 'exitoso':
+        let texto = '';
+        switch (row.original.estado) {
+          case 'Ingresado':
             colorSelected = '#007F00';
+            texto = 'Ingresado';
             break;
-          case 'entransito':
+          case 'En Transito':
             colorSelected = '#3363FF';
+            texto = 'En Transito';
+            break;
+          case 'Recibido':
+            colorSelected = '#3363FF';
+            texto = 'Recibido';
+            break;
+          case '':
+            colorSelected = '#007F00';
+            texto = 'Ingresado';
             break;
           default:
-            colorSelected = '#6E6893';
+            colorSelected = '#007F00';
+            texto = 'Ingresado';
         }
         return (
           <small
-            className={`badge--${row.original.estado.replace(' ', '').toLowerCase()} px-4 py-1 rounded-pill`}
+            className={`badge--${texto.replace(' ', '').toLowerCase()}  px-4 py-1 border rounded-pill`}
           >
             <span
               className={styles.small}
               style={{
                 backgroundColor: colorSelected,
+                height: 10,
+                display: 'inline-block',
+                borderRadius: '5rem',
+                marginRight: 5,
               }}
             />
-            {row.original.estado}
+            {texto}
           </small>
         );
       },
@@ -132,13 +148,14 @@ const Reposition = () => {
     clientFetch('bff/v1/replenishment/findReplenishments', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
-
       },
       body: {
         accountId,
       },
     })
       .then((issues) => {
+        console.log('ISUES', issues.manifest);
+
         setLoading(false);
         setList(issues);
       })
@@ -162,8 +179,8 @@ const Reposition = () => {
           />
         )
         : component}
-      <Modal title={`Detalle Reposicion  Id ${sku}`} showModal={modal} size="xl" onClick={(e) => { e.preventDefault(); setModal(false); }}>
-        <ReplenishmentDetail columns={columns} data={list} activeData={sku} />
+      <Modal showModal={modal} size="lg" onClick={(e) => { e.preventDefault(); setModal(false); }}>
+        <ReplenishmentDetail columns={columns} data={list} activeData={manifest} />
       </Modal>
 
     </PageLayout>
