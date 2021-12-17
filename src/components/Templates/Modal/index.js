@@ -18,7 +18,7 @@ const Modal = ({
           <div>
             <h5 className={`${styles.modalTitle} display-font mb-1`}>{title}</h5>
             {subtitle && (
-            <p className={`${styles.modalSubtitle}`}>{subtitle}</p>
+              <p className={`${styles.modalSubtitle}`}>{subtitle}</p>
             )}
           </div>
           <a href="!#" data-testid="printed-username" className={`p-0 ${styles.close}`} onClick={onClick}>
@@ -27,7 +27,7 @@ const Modal = ({
             </span>
           </a>
         </div>
-        <div className="modal-body p-0 px-3">
+        <div className="modal-body p-0 px-0">
           {children}
         </div>
       </div>

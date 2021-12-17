@@ -10,7 +10,7 @@ const TooltipIcon = ({ icon, text, color }) => {
   return (
     <>
       <span
-        className="mb-3 me-3"
+        className="mb-3 me-1 ms-0"
         onMouseEnter={() => setShowContent(true)}
         onMouseLeave={() => setShowContent(false)}
       >
