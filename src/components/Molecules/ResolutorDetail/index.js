@@ -134,6 +134,7 @@ const ResolutorDetail = ({
       status: detailData.status,
       fechaCreacion: detailData.fechaCreacion,
       fechaCierre: detailData.fechaCierre,
+      hora: detailData.hora,
       comentario: detailData.comentario,
       numTicket: detailData.numTicket,
     });
@@ -190,7 +191,7 @@ const ResolutorDetail = ({
                     <div className="col-4">
                       <small className={styles.sma}>
                         <b>Hora </b>
-                        14:50
+                        {form.hora}
                       </small>
                     </div>
                   </div>
