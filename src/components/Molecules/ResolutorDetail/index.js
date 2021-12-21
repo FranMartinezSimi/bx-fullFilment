@@ -331,7 +331,7 @@ const ResolutorDetail = ({
                 </h4>
                 <p style={{ fontSize: 16 }} className="py-2">
                   Al presionar aceptar, el ticket cambiará
-                  de estado ha cerrado, finalizando el proceso de
+                  de estado a cerrado, finalizando el proceso de
                   resolución de este. ¿Deseas enviar el comentario?
                 </p>
                 <Button
