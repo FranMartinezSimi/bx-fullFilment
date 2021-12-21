@@ -17,7 +17,7 @@ import chatRobotina from 'assets/brand/chatRobotina.svg';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import styles from './styles.module.scss';
 
-const IssueDetail = () => {
+const IssueDetail = (incident) => {
   const { user } = useAuth();
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
@@ -26,7 +26,7 @@ const IssueDetail = () => {
   const [error, setError] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
   const [downloading, setDownloading] = useState(false);
-
+  console.log(incident);
   const userData = JSON.parse(user);
   const userActive = userData.credential.user.name ? userData.credential.user.name : 'Cliente';
 
