@@ -1,7 +1,6 @@
 import {
   useState, useEffect, useContext,
 } from 'react';
-
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
@@ -16,6 +15,7 @@ import reverseLogistics from 'assets/brand/reverse-logistics.svg';
 import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
+import HomeMessage from 'components/Atoms/messageHome';
 // import Alert from 'assets/brand/alertRed.png';
 // import closeX from 'assets/brand/closeX.svg';
 import styles from './styles.module.scss';
@@ -30,6 +30,12 @@ const Home = () => {
   const [errorTotales, setErrorTotales] = useState(false);
   const userActive = userData.credential.user.name;
   let componentTotales;
+
+  if (setErrorTotales) {
+    componentTotales = <HomeMessage />;
+  } else {
+    componentTotales = null;
+  }
 
   // const componentOrders = (
   //   <a
