@@ -102,7 +102,7 @@ const SellerReport = () => {
         });
 
         setDeliveredChart({
-          series: dataDonut.reverse(),
+          series: dataDonut,
           options: {
             labels: pieData.label.reverse(),
             chart: {

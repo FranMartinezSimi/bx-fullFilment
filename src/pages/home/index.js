@@ -73,11 +73,11 @@ const Home = () => {
           {
             img: reverseLogistics,
             state: 'Procesados',
-            number: statistics.procesado,
+            number: statistics.enviado,
           },
           {
             img: deliveredHands,
-            number: statistics.enviado,
+            number: statistics.procesado,
             state: 'Entregado',
           },
           {
