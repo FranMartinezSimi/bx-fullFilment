@@ -16,6 +16,7 @@ import IssueDetail from './pages/incidencias/IssueDetail';
 import UpdateOrders from './pages/ordenes/subir-ordenes';
 import Grafico from './pages/ordenes/grafico';
 import SellerReport from './pages/ordenes/reporte-mensual';
+import MonthsOfInventory from './pages/monthsOfInventory';
 
 import './styles/main.scss';
 
@@ -57,6 +58,9 @@ const App = () => {
           </Route>
           <Route path="/reposition">
             <Reposition />
+          </Route>
+          <Route path="/meses-de-inventario">
+            <MonthsOfInventory />
           </Route>
           <Route exact path="/ordenes/subir-ordenes">
             <UpdateOrders />
