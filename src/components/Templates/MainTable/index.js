@@ -33,6 +33,7 @@ function MainTable({
   update,
   noFilters,
   noButtons,
+  buttonChildren,
 }) {
   const {
     getTableProps,
@@ -95,6 +96,7 @@ function MainTable({
         getExportFileBlob={getExportFileBlob}
         exportData={exportData}
         noButtons={noButtons}
+        buttonChildren={buttonChildren}
       />
       )}
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>

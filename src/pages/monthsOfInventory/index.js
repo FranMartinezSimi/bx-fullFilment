@@ -6,6 +6,8 @@ import PageLayout from 'components/Templates/PageLayout';
 import Spinner from 'components/Atoms/Spinner';
 import Alert from 'components/Atoms/AlertMessage';
 import MainTable from 'components/Templates/MainTable';
+import downloadArrow from 'assets/brand/downloadarrow.svg';
+import getExportFileBlob from 'helpers';
 
 const MonthsOfInventory = () => {
   const [listMonthsOfInventory, setList] = useState([]);
@@ -42,6 +44,10 @@ const MonthsOfInventory = () => {
     [],
   );
 
+  const handleDownloadCsv = () => {
+    getExportFileBlob(listMonthsOfInventory, 'Meses de inventario.csv');
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -76,7 +82,39 @@ const MonthsOfInventory = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <MainTable columns={columns} data={listMonthsOfInventory} noButtons />
+        <MainTable
+          columns={columns}
+          data={listMonthsOfInventory}
+          buttonChildren={(
+            <div className="col-md-6">
+              <ul className="d-flex justify-content-md-end align-items-center">
+                <li>
+                  <a
+                    href="#!"
+                    onClick={handleDownloadCsv}
+                    className="position-relative"
+                  >
+                    <ul
+                      className="d-flex align-items-center bg-white px-4"
+                      style={{
+                        border: '1px solid #155C80',
+                        height: '40px',
+                        borderRadius: 16,
+                      }}
+                    >
+                      <li>
+                        <img src={downloadArrow} alt="download" width="14" />
+                      </li>
+                      <li className="mx-2">
+                        <span>Descargar</span>
+                      </li>
+                    </ul>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
+        />
       )}
     </PageLayout>
   );

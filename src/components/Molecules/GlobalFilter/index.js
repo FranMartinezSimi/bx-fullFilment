@@ -21,6 +21,7 @@ const GlobalFilter = ({
   exportData,
   hadleClickDropDown,
   noButtons,
+  buttonChildren,
 }) => {
   // const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
@@ -90,7 +91,8 @@ const GlobalFilter = ({
             <li className="d-none d-md-block">{update && update}</li>
           </ul>
         </div>
-        {!noButtons && (
+        {buttonChildren}
+        {!buttonChildren && !noButtons && (
           <div className="col-md-6">
             <ul className="d-flex justify-content-md-end align-items-center">
               {!checkUrl ? (
@@ -186,6 +188,7 @@ GlobalFilter.defaultProps = {
   handleClick: () => {},
   hadleClickDropDown: () => {},
   noButtons: false,
+  buttonChildren: null,
 };
 
 GlobalFilter.propTypes = {
@@ -194,6 +197,7 @@ GlobalFilter.propTypes = {
   handleClick: PropTypes.func,
   hadleClickDropDown: PropTypes.func,
   noButtons: PropTypes.bool,
+  buttonChildren: PropTypes.node,
 };
 
 export default GlobalFilter;
