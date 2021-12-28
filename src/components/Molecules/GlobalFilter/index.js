@@ -20,6 +20,8 @@ const GlobalFilter = ({
   update,
   exportData,
   hadleClickDropDown,
+  noButtons,
+  buttonChildren,
 }) => {
   // const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
@@ -34,7 +36,7 @@ const GlobalFilter = ({
     setDropDown(!dropDown);
   };
 
-  const checkUrl = (window.location.pathname === '/inventario');
+  const checkUrl = window.location.pathname === '/inventario';
   const handleClickDowload = (e) => {
     e.preventDefault();
     if (!checkUrl) {
@@ -68,92 +70,125 @@ const GlobalFilter = ({
               <input
                 value={value || ''}
                 className="form-control px-4"
-                style={{ borderRadius: '50rem', border: '1px solid #1A6F99', minWidth: '200px' }}
+                style={{
+                  borderRadius: '50rem',
+                  border: '1px solid #1A6F99',
+                  minWidth: '200px',
+                }}
                 onChange={(e) => {
                   setValue(e.target.value);
                   onChange(e.target.value);
                 }}
                 placeholder="Búsqueda"
               />
-              <span className="position-absolute" style={{ top: '5px', right: '8px' }}>
+              <span
+                className="position-absolute"
+                style={{ top: '5px', right: '8px' }}
+              >
                 <img src={zoom} alt="Show" width="16" />
               </span>
             </li>
-            <li className="d-none d-md-block">
-              {update && update}
-            </li>
+            <li className="d-none d-md-block">{update && update}</li>
           </ul>
         </div>
-        <div className="col-md-6">
-          <ul className="d-flex justify-content-md-end align-items-center">
-            {!checkUrl ? (
-              <li className="me-5">
-                <Button
-                  text="Subir Órdenes"
-                  className="btn btn-secondary me-3 py-3"
-                  imgPrev={<img src={uploadArrow} alt="Actualizar Ordenes" width="13" />}
-                  onClick={handleClick}
-                />
-              </li>
-            ) : (
-              <li className="me-5">
-                <a href="#!" className="btn btn-secondary" onClick={handleClickInventory}>
-                  Programar Reposición
-                </a>
-              </li>
-            )}
-            <li>
-              <a href="#!" onClick={handleClickDropDown} className="position-relative">
-                <ul className="d-flex align-items-center bg-white px-4" style={{ border: '1px solid #155C80', height: '40px', borderRadius: 16 }}>
-                  <li>
-                    <img src={downloadArrow} alt="download" width="14" />
-                  </li>
-                  <li className="mx-2">
-                    <span>
-                      Descargar
-                      {' '}
-                      {!checkUrl ? 'órdenes' : 'inventario'}
-                    </span>
-                  </li>
-                  <li>
-                    <img src={arrowDown} alt="Show" width="12" />
-                  </li>
-                </ul>
-              </a>
-              <div
-                className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
-                style={{ width: 190, borderRadius: 15 }}
-                onBlur={() => setDropDown(false)}
-              >
-                <a href="#!" className="d-block" onClick={handleClickDowload}>
-                  <span>
-                    Descargar todas
-                  </span>
-                </a>
-                {!checkUrl && (
-                  <>
-                    <hr />
-                    <a href="#!" className="d-block" onClick={hadleClickDropDown}>
+        {buttonChildren}
+        {!buttonChildren && !noButtons && (
+          <div className="col-md-6">
+            <ul className="d-flex justify-content-md-end align-items-center">
+              {!checkUrl ? (
+                <li className="me-5">
+                  <Button
+                    text="Subir Órdenes"
+                    className="btn btn-secondary me-3 py-3"
+                    imgPrev={(
+                      <img
+                        src={uploadArrow}
+                        alt="Actualizar Ordenes"
+                        width="13"
+                      />
+                    )}
+                    onClick={handleClick}
+                  />
+                </li>
+              ) : (
+                <li className="me-5">
+                  <a
+                    href="#!"
+                    className="btn btn-secondary"
+                    onClick={handleClickInventory}
+                  >
+                    Programar Reposición
+                  </a>
+                </li>
+              )}
+              <li>
+                <a
+                  href="#!"
+                  onClick={handleClickDropDown}
+                  className="position-relative"
+                >
+                  <ul
+                    className="d-flex align-items-center bg-white px-4"
+                    style={{
+                      border: '1px solid #155C80',
+                      height: '40px',
+                      borderRadius: 16,
+                    }}
+                  >
+                    <li>
+                      <img src={downloadArrow} alt="download" width="14" />
+                    </li>
+                    <li className="mx-2">
                       <span>
-                        Descargar por fecha
+                        Descargar
+                        {' '}
+                        {!checkUrl ? 'órdenes' : 'inventario'}
                       </span>
-                    </a>
-                  </>
-                )}
-              </div>
-            </li>
-          </ul>
-        </div>
+                    </li>
+                    <li>
+                      <img src={arrowDown} alt="Show" width="12" />
+                    </li>
+                  </ul>
+                </a>
+                <div
+                  className={`${
+                    dropDown ? '' : 'd-none'
+                  } bg-white shadow position-absolute p-4`}
+                  style={{ width: 190, borderRadius: 15 }}
+                  onBlur={() => setDropDown(false)}
+                >
+                  <a href="#!" className="d-block" onClick={handleClickDowload}>
+                    <span>Descargar todas</span>
+                  </a>
+                  {!checkUrl && (
+                    <>
+                      <hr />
+                      <a
+                        href="#!"
+                        className="d-block"
+                        onClick={hadleClickDropDown}
+                      >
+                        <span>Descargar por fecha</span>
+                      </a>
+                    </>
+                  )}
+                </div>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 GlobalFilter.defaultProps = {
-  globalFilter: () => { },
-  setGlobalFilter: () => { },
-  handleClick: () => { },
-  hadleClickDropDown: () => { },
+  globalFilter: () => {},
+  setGlobalFilter: () => {},
+  handleClick: () => {},
+  hadleClickDropDown: () => {},
+  noButtons: false,
+  buttonChildren: null,
 };
 
 GlobalFilter.propTypes = {
@@ -161,6 +196,8 @@ GlobalFilter.propTypes = {
   setGlobalFilter: PropTypes.func,
   handleClick: PropTypes.func,
   hadleClickDropDown: PropTypes.func,
+  noButtons: PropTypes.bool,
+  buttonChildren: PropTypes.node,
 };
 
 export default GlobalFilter;

@@ -32,6 +32,8 @@ function MainTable({
   hadleClickDropDown,
   update,
   noFilters,
+  noButtons,
+  buttonChildren,
 }) {
   const {
     getTableProps,
@@ -93,6 +95,8 @@ function MainTable({
         update={update}
         getExportFileBlob={getExportFileBlob}
         exportData={exportData}
+        noButtons={noButtons}
+        buttonChildren={buttonChildren}
       />
       )}
       <div className={`${styles.tableWrapper} table-responsive bg-white mt-4 mb-5`} style={{ overflowY: 'hidden' }}>
@@ -145,7 +149,7 @@ function MainTable({
               </>
             ) : (
               <tr>
-                <td>
+                <td colSpan={columns.length}>
                   <p>No se encontraron datos</p>
                 </td>
               </tr>

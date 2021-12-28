@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.2",
+    "@types/react-pdf": "^5.0.9",
     "env-cmd": "^10.1.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
