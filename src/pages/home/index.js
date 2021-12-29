@@ -62,6 +62,7 @@ const Home = () => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#666666',
+    width: '100%',
   };
   const orderTop = {
     fontFamily: 'Lato',
@@ -73,6 +74,7 @@ const Home = () => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#666666',
+    width: '100px',
   };
   const stockTop = {
     fontFamily: 'Lato',
@@ -84,6 +86,7 @@ const Home = () => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#666666',
+    width: '100px',
   };
   const detalleCardTop = {
     top: 50,
@@ -308,54 +311,63 @@ const Home = () => {
                 </div>
               </div>
 
-              <div
-                className="container pe-0"
-                style={{ height: '140px' }}
-              >
-                <div className="row border-bottom" style={{ backgroundColor: '#F6F6F6', width: '100%', paddingTop: '10px', paddingBottom: '8px' }}>
-                  <div className="col-1">
-                    <></>
-                  </div>
-                  <div
-                    className="col-6"
-                    style={descTop}
-                  >
-                    Descripción
-                  </div>
-                  <div
-                    className="col-2"
-                    style={orderTop}
-                  >
-                    Órdenes
-                  </div>
-                  <div
-                    className="col-3 justify-content-center"
-                    style={stockTop}
-                  >
-                    Stock
-                  </div>
-                </div>
-                <div
-                  style={{
-                    overflowY: 'scroll',
-                    overflowX: 'hidden',
-                  }}
+              <table className={`${styles.table}`}>
+                <thead
+                  style={{ background: '#F6F6F6' }}
                 >
-                  <div className="row border-bottom " data-bs-spy="scroll" style={{ width: '100%' }}>
-                    {list.length > 0 && list.map((item, index) => (
-                      <RowProduct
-                        index={index + 1}
-                        descripcion={item.name}
-                        sku={item.sku}
-                        ordenes={item.total_orders}
-                        stock={item.stock}
-                      />
-                    ))}
+                  <tr>
+                    <th className="col-1">
+                      <></>
+                    </th>
+                    <th className="col-6">
+                      <div
+                        style={descTop}
+                      >
+                        Descripción
+                      </div>
+                    </th>
+                    <th className="col-2">
+                      <div
+                        style={orderTop}
+                      >
+                        Órdenes
+                      </div>
+                    </th>
+                    <th className="col-2">
+                      <div
+                        style={stockTop}
+                      >
+                        Stock
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {list.length > 0 && list.map((item, index) => (
+                    // <tr>
+                    //   <th scope="row">{index + 1}</th>
+                    //   <td>
+                    //     <div>
+                    //       {item.name}
+                    //     </div>
+                    //     <div>
+                    //       {`SKU: ${item.sku}`}
+                    //     </div>
+                    //   </td>
+                    //   <td>{item.total_orders}</td>
+                    //   <td>{item.stock}</td>
+                    // </tr>
 
-                  </div>
-                </div>
-
-              </div>
+                    <RowProduct
+                      index={index + 1}
+                      descripcion={item.name}
+                      sku={item.sku}
+                      ordenes={item.total_orders}
+                      stock={item.stock}
+                    />
+                  ))}
+                </tbody>
+              </table>
               <ul className="d-flex justify-content-end m-0 pe-3">
                 <li>
                   <small

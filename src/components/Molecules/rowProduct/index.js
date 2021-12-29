@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+// import styles from './styles.module.scss';
 
 const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
   let component;
@@ -40,18 +41,15 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
   };
   const StockDataTop = {
     fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
     fontSize: '12px',
     lineHeight: '158%',
-    display: 'flex',
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#333333',
     width: '80px',
   };
   const numTop = {
-    width: '25px',
+    width: '30px',
     fontFamily: 'mont',
     fontSize: '22px',
     lineHeight: '26px',
@@ -63,7 +61,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     <>
 
       {component}
-      <div
+      {/* <div
         className="col-2 ps-4 mt-2"
         style={numTop}
       >
@@ -101,7 +99,41 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
         style={StockDataTop}
       >
         {stock}
-      </div>
+      </div> */}
+      <tr className="border-bottom">
+        <th
+          className="col-1 text-center ps-2"
+          scope="row"
+          style={numTop}
+        >
+          {index}
+        </th>
+        <td className="col-6 ps-2">
+          <div
+            style={descDataTop}
+          >
+            {descripcion}
+          </div>
+          <div
+            style={skuDataTop}
+
+          >
+            {`SKU: ${sku}`}
+          </div>
+        </td>
+        <td
+          className="col-2"
+          style={orderDataTop}
+        >
+          {ordenes}
+        </td>
+        <td
+          className="col-2"
+          style={StockDataTop}
+        >
+          {stock}
+        </td>
+      </tr>
     </>
   );
 };
