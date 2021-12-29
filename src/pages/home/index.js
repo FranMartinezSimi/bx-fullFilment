@@ -309,7 +309,7 @@ const Home = () => {
               </div>
 
               <div
-                className="container"
+                className="container pe-0"
                 style={{ height: '140px' }}
               >
                 <div className="row border-bottom" style={{ backgroundColor: '#F6F6F6', width: '100%', paddingTop: '10px', paddingBottom: '8px' }}>
