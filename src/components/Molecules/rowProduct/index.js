@@ -98,7 +98,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
           {ordenes}
         </div>
         <div
-          className="col-3 pt-1 ps-5 ms-1 justify-content-center"
+          className="col-sm-3 pt-1 ps-4 ms-1 justify-content-center"
           style={StockDataTop}
         >
           {stock}
