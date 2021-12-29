@@ -48,7 +48,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#333333',
-    width: '70px',
+    width: '80px',
   };
   const numTop = {
     width: '25px',
@@ -65,15 +65,15 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
       {component}
       <div className="row border-bottom" data-bs-spy="scroll" style={{ width: '100%' }}>
         <div
-          className="col-1 ps-4 mt-2"
+          className="col-2 ps-4 mt-2"
           style={numTop}
         >
           {index}
         </div>
-        <div className="col-7 ps-4 ms-1">
+        <div className="col-7 ms-1">
           <div className="row">
             <div className="d-flex flex-column bd-highlight mb-1 ps-1">
-              <div className=" bd-highlight py-0 m-0 ">
+              <div className=" bd-highlight py-0 ms-3 ">
                 <p
                   className="pb-0 mb-0"
                   style={descDataTop}
@@ -82,7 +82,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
                 </p>
               </div>
               <div
-                className=" py-0 ps-1"
+                className=" py-0 ps-3"
                 style={skuDataTop}
               >
                 {`SKU ${sku}`}
@@ -92,13 +92,13 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
 
         </div>
         <div
-          className="col-3 ps-2"
+          className="col-2 ps-2"
           style={orderDataTop}
         >
           {ordenes}
         </div>
         <div
-          className="col-1 ms-3  justify-content-end"
+          className="col-2 col-sm-2  justify-content-end"
           style={StockDataTop}
         >
           {stock}
