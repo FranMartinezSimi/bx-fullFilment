@@ -92,13 +92,13 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
 
         </div>
         <div
-          className="col-2 ps-4"
+          className="col-3 ps-2"
           style={orderDataTop}
         >
           {ordenes}
         </div>
         <div
-          className="col-2 pt-1  justify-content-end"
+          className="col-1 ms-3  justify-content-end"
           style={StockDataTop}
         >
           {stock}
