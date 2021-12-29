@@ -13,7 +13,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#333333',
-    width: '120px',
+    width: '100%',
     padding: '1px',
   };
   const skuDataTop = {
