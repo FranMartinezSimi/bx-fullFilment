@@ -63,7 +63,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     <>
 
       {component}
-      <div className="row border-bottom mt-1" data-bs-spy="scroll" style={{ width: '100%' }}>
+      <div className="row border-bottom" data-bs-spy="scroll" style={{ width: '100%' }}>
         <div
           className="col-1 ps-4 mt-2"
           style={numTop}
@@ -72,7 +72,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
         </div>
         <div className="col-7 ps-4 ms-1">
           <div className="row">
-            <div className="d-flex flex-column bd-highlight mb-3 ps-1">
+            <div className="d-flex flex-column bd-highlight mb-1 ps-1">
               <div className=" bd-highlight py-0 m-0 ">
                 <p
                   className="pb-0 mb-0"

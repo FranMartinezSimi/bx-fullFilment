@@ -285,7 +285,7 @@ const Home = () => {
                 borderRadius: '15px',
                 background: '#FFFFFF',
                 width: '91%',
-                height: '240px',
+                height: '260px',
                 padding: '10px',
               }}
             >
@@ -335,8 +335,13 @@ const Home = () => {
                     Stock
                   </div>
                 </div>
-                <div style={{ overflowY: 'scroll', overflowX: 'hidden' }}>
-                  <div className="row border-bottom mt-1" data-bs-spy="scroll" style={{ width: '100%' }}>
+                <div
+                  style={{
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                  }}
+                >
+                  <div className="row border-bottom " data-bs-spy="scroll" style={{ width: '100%' }}>
                     {list.length > 0 && list.map((item, index) => (
                       <RowProduct
                         index={index + 1}
