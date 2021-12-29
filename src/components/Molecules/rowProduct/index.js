@@ -63,46 +63,44 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     <>
 
       {component}
-      <div className="row border-bottom" data-bs-spy="scroll" style={{ width: '100%' }}>
-        <div
-          className="col-2 ps-4 mt-2"
-          style={numTop}
-        >
-          {index}
-        </div>
-        <div className="col-7 ms-1">
-          <div className="row">
-            <div className="d-flex flex-column bd-highlight mb-1 ps-1">
-              <div className=" bd-highlight py-0 ms-3 ">
-                <p
-                  className="pb-0 mb-0"
-                  style={descDataTop}
-                >
-                  {descripcion}
-                </p>
-              </div>
-              <div
-                className=" py-0 ps-3"
-                style={skuDataTop}
+      <div
+        className="col-2 ps-4 mt-2"
+        style={numTop}
+      >
+        {index}
+      </div>
+      <div className="col-7 ms-1">
+        <div className="row">
+          <div className="d-flex flex-column bd-highlight mb-1 ps-1">
+            <div className=" bd-highlight py-0 ms-3 ">
+              <p
+                className="pb-0 mb-0"
+                style={descDataTop}
               >
-                {`SKU ${sku}`}
-              </div>
+                {descripcion}
+              </p>
+            </div>
+            <div
+              className=" py-0 ps-3"
+              style={skuDataTop}
+            >
+              {`SKU ${sku}`}
             </div>
           </div>
+        </div>
 
-        </div>
-        <div
-          className="col-2 ps-2"
-          style={orderDataTop}
-        >
-          {ordenes}
-        </div>
-        <div
-          className="col-2 col-sm-2  justify-content-end"
-          style={StockDataTop}
-        >
-          {stock}
-        </div>
+      </div>
+      <div
+        className="col-2 ps-2"
+        style={orderDataTop}
+      >
+        {ordenes}
+      </div>
+      <div
+        className="col-2 col-sm-2 ms-2 justify-content-center"
+        style={StockDataTop}
+      >
+        {stock}
       </div>
     </>
   );
