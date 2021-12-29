@@ -285,7 +285,7 @@ const Home = () => {
                 borderRadius: '15px',
                 background: '#FFFFFF',
                 width: '91%',
-                height: '260px',
+                height: '240px',
                 padding: '10px',
               }}
             >
