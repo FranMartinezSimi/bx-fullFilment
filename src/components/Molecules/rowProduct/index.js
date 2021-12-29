@@ -36,7 +36,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#333333',
-    width: '70px',
+    width: '50px',
   };
   const StockDataTop = {
     fontFamily: 'Lato',
@@ -70,9 +70,9 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
         >
           {index}
         </div>
-        <div className="col-6 ps-4 ms-1">
+        <div className="col-7 ps-4 ms-1">
           <div className="row">
-            <div className="d-flex flex-column bd-highlight mb-3 ps-2">
+            <div className="d-flex flex-column bd-highlight mb-3 ps-1">
               <div className=" bd-highlight py-0 m-0 ">
                 <p
                   className="pb-0 mb-0"
@@ -92,13 +92,13 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
 
         </div>
         <div
-          className="col-2 ps-4 ms-4"
+          className="col-2 ps-4"
           style={orderDataTop}
         >
           {ordenes}
         </div>
         <div
-          className="col-sm-3 pt-1  justify-content-end"
+          className="col-2 pt-1  justify-content-end"
           style={StockDataTop}
         >
           {stock}
