@@ -51,7 +51,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     width: '70px',
   };
   const numTop = {
-    width: '30px',
+    width: '25px',
     fontFamily: 'mont',
     fontSize: '22px',
     lineHeight: '26px',
@@ -98,7 +98,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
           {ordenes}
         </div>
         <div
-          className="col-sm-3 pt-1 ps-4 ms-1 justify-content-center"
+          className="col-sm-3 pt-1  justify-content-end"
           style={StockDataTop}
         >
           {stock}

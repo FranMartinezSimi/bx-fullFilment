@@ -166,7 +166,8 @@ color: #808080;
 
 *::-webkit-scrollbar {
   background-color: transparent;
-  width: 14px;
+  width: 10px;
+	height: 5px;
 }
 /* background of the scrollbar except button or resizer */
 *::-webkit-scrollbar-track {
@@ -177,7 +178,7 @@ color: #808080;
   background-color: #3363FF;
   border-radius: 16px;
   border: 4px solid #3363FF;
-  height: 80px;
+  height: 50px;
 }
 /* set button(top and bottom of the scrollbar) */
 *::-webkit-scrollbar-button {
