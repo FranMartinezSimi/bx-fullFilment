@@ -109,13 +109,15 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
         >
           {index}
         </th>
-        <td className="col-6 py-1">
+        <td className="col-6 pt-2 pb-1">
           <div
+            className="p-0 m-0"
             style={descDataTop}
           >
             {descripcion}
           </div>
           <div
+            className="p-0 m-0"
             style={skuDataTop}
 
           >
@@ -123,13 +125,13 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
           </div>
         </td>
         <td
-          className="col-2 py-2 ps-5"
+          className="col-2 pt-2 pb-2 ps-5"
           style={orderDataTop}
         >
           {ordenes}
         </td>
         <td
-          className="col-2 py-2"
+          className="col-1 pt-1 pb-2 ps-1"
           style={StockDataTop}
         >
           {stock}
