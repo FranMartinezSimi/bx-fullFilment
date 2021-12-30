@@ -1,45 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import styles from './styles.module.scss';
 
 const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
   let component;
-  const descDataTop = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '12px',
-    lineHeight: '158%',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.03em',
-    color: '#333333',
-    width: '100%',
-    padding: '1px',
 
-  };
-  const skuDataTop = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '10px',
-    lineHeight: '12px',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#333333',
-  };
-  const orderDataTop = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '12px',
-    lineHeight: '158%',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.03em',
-    color: '#333333',
-    width: '100px',
-  };
   // const StockDataTop = {
   //   fontFamily: 'Lato',
   //   fontSize: '12px',
@@ -115,37 +79,23 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
         <td className="col-6 pt-1">
           <div
             className="p-0 m-0"
-            style={descDataTop}
           >
-            {descripcion}
+            {descripcion.substring(0, 31)}
           </div>
           <div
             className="p-0 m-0"
-            style={skuDataTop}
-
           >
             {`SKU: ${sku}`}
           </div>
         </td>
         <td
-          className="col-3 ps-5 pt-2 pb-1"
-          style={orderDataTop}
+          className="col-2 ps-4 pt-2 pb-1"
         >
           {ordenes}
         </td>
         <td
-          className="col-1 pt-2"
-          style={{
-            height: '20px',
-            paddingBottom: '20px',
-            fontFamily: 'Lato',
-            fontSize: '11px',
-            lineHeight: '158%',
-            alignItems: 'center',
-            letterSpacing: '0.03em',
-            color: '#333333',
-            width: '60px',
-          }}
+          className="col-2 pt-2 "
+
         >
           {stock}
         </td>

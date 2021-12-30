@@ -301,8 +301,10 @@ const homeResolutor = () => {
                     </th>
                   </tr>
                 </thead>
-                {ticketsResume && ticketsResume.map((item) => (
-                  <tbody>
+                <tbody
+                  style={{ display: 'block' }}
+                >
+                  {ticketsResume && ticketsResume.map((item) => (
                     <tr className="greyTbody">
                       <td>
                         <p className="py-3 m-0">
@@ -326,8 +328,9 @@ const homeResolutor = () => {
                         </p>
                       </td>
                     </tr>
-                  </tbody>
-                ))}
+                  ))}
+                </tbody>
+
               </table>
             </Card>
           </div>

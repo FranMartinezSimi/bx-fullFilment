@@ -16,7 +16,7 @@ import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 import HomeMessage from 'components/Atoms/messageHome';
-import RowProduct from 'components/Molecules/rowProduct';
+import ProductTopTable from 'components/Templates/ProductTopTable';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -52,43 +52,6 @@ const Home = () => {
     lineHeight: '45px',
     color: '#666666',
   };
-  const descTop = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: '12px',
-    lineHeight: '158%',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.03em',
-    color: '#666666',
-    width: '100%',
-  };
-  const orderTop = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: '12px',
-    lineHeight: '158%',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.03em',
-    color: '#666666',
-    width: '100px',
-  };
-  const stockTop = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: '12px',
-    lineHeight: '158%',
-    display: 'flex',
-    alignItems: 'center',
-    letterSpacing: '0.03em',
-    color: '#666666',
-    width: '50px',
-  };
-  // const
   const detalleCardTop = {
     color: '#2BB9FF',
     fontSize: 12,
@@ -311,65 +274,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <table className={`${styles.table}`}>
-                <thead
-                  style={{ background: '#F6F6F6' }}
-                >
-                  <tr>
-                    <th className="col-1">
-                      <></>
-                    </th>
-                    <th className="col-6">
-                      <div
-                        style={descTop}
-                      >
-                        Descripción
-                      </div>
-                    </th>
-                    <th className="col-2">
-                      <div
-                        style={orderTop}
-                      >
-                        Órdenes
-                      </div>
-                    </th>
-                    <th className="col-2">
-                      <div
-                        style={stockTop}
-                      >
-                        Stock
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  style={{ paddingTop: '5px' }}
-                >
-                  {list.length > 0 && list.map((item, index) => (
-                    // <tr>
-                    //   <th scope="row">{index + 1}</th>
-                    //   <td>
-                    //     <div>
-                    //       {item.name}
-                    //     </div>
-                    //     <div>
-                    //       {`SKU: ${item.sku}`}
-                    //     </div>
-                    //   </td>
-                    //   <td>{item.total_orders}</td>
-                    //   <td>{item.stock}</td>
-                    // </tr>
-
-                    <RowProduct
-                      index={index + 1}
-                      descripcion={item.name}
-                      sku={item.sku}
-                      ordenes={item.total_orders}
-                      stock={item.stock}
-                    />
-                  ))}
-                </tbody>
-              </table>
+              <ProductTopTable data={list} />
               <div
                 className="container"
               >

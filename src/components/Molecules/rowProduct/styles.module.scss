@@ -1,16 +1,21 @@
-table {
-    width: 95%;
+.table {
+    width: 100%;
     display:block;
 }
-thead {
+.thead {
     display: inline-block;
     width: 100%;
     height: 30px;
 }
-tbody {
+.tbody{
     height: 100px;
     display: inline-block;
     width: 100%;
     overflow: auto;
+		display: flex;
+}
+
+.tbody > tr {
+	display: flex;
 }
 
