@@ -40,15 +40,15 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     color: '#333333',
     width: '100px',
   };
-  const StockDataTop = {
-    fontFamily: 'Lato',
-    fontSize: '12px',
-    lineHeight: '158%',
-    alignItems: 'center',
-    letterSpacing: '0.03em',
-    color: '#333333',
-    width: '60px',
-  };
+  // const StockDataTop = {
+  //   fontFamily: 'Lato',
+  //   fontSize: '12px',
+  //   lineHeight: '158%',
+  //   alignItems: 'center',
+  //   letterSpacing: '0.03em',
+  //   color: '#333333',
+  //   width: '60px',
+  // };
   const numTop = {
     width: '30px',
     fontFamily: 'mont',
@@ -101,7 +101,10 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
       >
         {stock}
       </div> */}
-      <tr className="border-bottom pb-2">
+      <tr
+        style={{ height: '30px' }}
+        className="border-bottom"
+      >
         <th
           className="col-1 ps-3"
           scope="row"
@@ -109,7 +112,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
         >
           {index}
         </th>
-        <td className="col-6 pt-2 pb-1">
+        <td className="col-6 pt-1">
           <div
             className="p-0 m-0"
             style={descDataTop}
@@ -125,14 +128,24 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
           </div>
         </td>
         <td
-          className="col-2 pt-2 pb-2 ps-5"
+          className="col-3 ps-5 pt-2 pb-1"
           style={orderDataTop}
         >
           {ordenes}
         </td>
         <td
-          className="col-1 pt-1 pb-2 ps-1"
-          style={StockDataTop}
+          className="col-1 pt-2"
+          style={{
+            height: '20px',
+            paddingBottom: '20px',
+            fontFamily: 'Lato',
+            fontSize: '11px',
+            lineHeight: '158%',
+            alignItems: 'center',
+            letterSpacing: '0.03em',
+            color: '#333333',
+            width: '60px',
+          }}
         >
           {stock}
         </td>

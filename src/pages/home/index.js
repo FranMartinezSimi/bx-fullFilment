@@ -341,7 +341,9 @@ const Home = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody
+                  style={{ paddingTop: '5px' }}
+                >
                   {list.length > 0 && list.map((item, index) => (
                     // <tr>
                     //   <th scope="row">{index + 1}</th>
