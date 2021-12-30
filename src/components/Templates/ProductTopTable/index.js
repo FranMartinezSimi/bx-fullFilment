@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 const ProductTopTable = ({ data }) => (
   <div className={styles.table}>
     <div className={`${styles.thead} pt-2`}>
-      <div className={styles.th}>
+      <div className={styles.space}>
         <h6>{ }</h6>
       </div>
       <div className={styles.th}>Descripción</div>
@@ -17,7 +17,7 @@ const ProductTopTable = ({ data }) => (
           <div
             className={styles.num}
           >
-            <h6 style={{ fontFamily: 'mont', fontSize: '22px', fontWeight: 'bold' }}>{index + 1}</h6>
+            <h6 style={{ fontFamily: 'mont', fontSize: '22px', fontWeight: 'bold', background: '#1E81B' }}>{index + 1}</h6>
           </div>
           <div className={styles.td}>
             <div>
@@ -29,11 +29,13 @@ const ProductTopTable = ({ data }) => (
               </div>
             </div>
           </div>
-          <div className={`${styles.td} ms-1`}>
+          <div className={`${styles.td} ms-3`}>
             {item.total_orders}
           </div>
           <div className={`${styles.td} `}>
-            {item.stock}
+            <div className={styles.stock}>
+              {item.stock}
+            </div>
           </div>
         </div>
       ))}

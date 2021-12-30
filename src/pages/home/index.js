@@ -273,8 +273,10 @@ const Home = () => {
                   Últimos 7 días
                 </div>
               </div>
+              <div style={{ width: '90%', marginLeft: '25px' }}>
+                <ProductTopTable data={list} />
 
-              <ProductTopTable data={list} />
+              </div>
               <div
                 className="container"
               >
