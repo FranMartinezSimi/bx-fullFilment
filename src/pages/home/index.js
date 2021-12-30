@@ -16,7 +16,7 @@ import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 import HomeMessage from 'components/Atoms/messageHome';
-import RowProduct from 'components/Molecules/RowProduct';
+import RowProduct from 'components/Molecules/rowProduct';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -88,6 +88,7 @@ const Home = () => {
     color: '#666666',
     width: '50px',
   };
+  // const
   const detalleCardTop = {
     color: '#2BB9FF',
     fontSize: 12,
