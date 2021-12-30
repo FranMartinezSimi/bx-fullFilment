@@ -16,7 +16,7 @@ import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 import HomeMessage from 'components/Atoms/messageHome';
-import RowProduct from 'components/Molecules/rowProduct';
+import RowProduct from 'components/Molecules/RowProduct';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -86,10 +86,9 @@ const Home = () => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#666666',
-    width: '100px',
+    width: '50px',
   };
   const detalleCardTop = {
-    top: 50,
     color: '#2BB9FF',
     fontSize: 12,
     fontFamily: 'lato',
@@ -288,7 +287,7 @@ const Home = () => {
                 borderRadius: '15px',
                 background: '#FFFFFF',
                 width: '91%',
-                height: '240px',
+                height: '260px',
                 padding: '10px',
               }}
             >
@@ -368,16 +367,25 @@ const Home = () => {
                   ))}
                 </tbody>
               </table>
-              <ul className="d-flex justify-content-end m-0 pe-3">
-                <li>
-                  <small
-                    style={detalleCardTop}
-                  >
-                    Ver detalle &gt;
-                  </small>
-                </li>
+              <div
+                className="container"
+              >
+                <div className="row" style={{ height: '40px' }}>
+                  <div className="col align-self-end">
+                    <div
+                      className="d-flex justify-content-end m-0 pe-3"
+                    >
+                      <small
+                        className="mb-2"
+                        style={detalleCardTop}
+                      >
+                        Ver detalle &gt;
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              </ul>
             </div>
           </div>
         </div>

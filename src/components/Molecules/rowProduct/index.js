@@ -16,6 +16,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     color: '#333333',
     width: '100%',
     padding: '1px',
+
   };
   const skuDataTop = {
     fontFamily: 'Lato',
@@ -37,7 +38,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#333333',
-    width: '50px',
+    width: '100px',
   };
   const StockDataTop = {
     fontFamily: 'Lato',
@@ -46,7 +47,7 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
     alignItems: 'center',
     letterSpacing: '0.03em',
     color: '#333333',
-    width: '80px',
+    width: '60px',
   };
   const numTop = {
     width: '30px',
@@ -100,15 +101,15 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
       >
         {stock}
       </div> */}
-      <tr className="border-bottom">
+      <tr className="border-bottom pb-2">
         <th
-          className="col-1 text-center ps-2"
+          className="col-1 ps-3"
           scope="row"
           style={numTop}
         >
           {index}
         </th>
-        <td className="col-6 ps-2">
+        <td className="col-6 py-1">
           <div
             style={descDataTop}
           >
@@ -122,13 +123,13 @@ const RowProduct = ({ index, descripcion, sku, ordenes, stock }) => {
           </div>
         </td>
         <td
-          className="col-2"
+          className="col-2 py-2 ps-5"
           style={orderDataTop}
         >
           {ordenes}
         </td>
         <td
-          className="col-2"
+          className="col-2 py-2"
           style={StockDataTop}
         >
           {stock}
