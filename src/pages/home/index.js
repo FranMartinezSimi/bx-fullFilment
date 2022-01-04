@@ -222,9 +222,14 @@ const Home = () => {
                       ))}
                     </ul>
                     <ul className="d-flex justify-content-end m-0 p-0">
-                      <li>
-                        <small
-                          style={{
+
+                      <a
+                        href="#!"
+                        style={{ color: '#2BB9FF' }}
+                        onClick={handleClick}
+                      >
+                        <p className="text-end me-2 mb-0 pt-2">
+                          <small style={{
                             top: 50,
                             color: '#2BB9FF',
                             fontSize: 12,
@@ -233,10 +238,11 @@ const Home = () => {
                             fontStyle: 'normal',
                             lineHeight: '158%',
                           }}
-                        >
-                          Ver todas las órdenes &gt;
-                        </small>
-                      </li>
+                          >
+                            Ver todas las órdenes &gt;
+                          </small>
+                        </p>
+                      </a>
 
                     </ul>
                   </>
@@ -285,12 +291,21 @@ const Home = () => {
                     <div
                       className="d-flex justify-content-end m-0 pe-3"
                     >
-                      <small
-                        className="mb-2"
-                        style={detalleCardTop}
+                      <a
+                        href="#!"
+                        style={{ color: '#2BB9FF' }}
+                        onClick={handleClick}
                       >
-                        Ver detalle &gt;
-                      </small>
+                        <p className="text-end me-2 mb-0 pt-2">
+                          <small
+                            className="mb-2"
+                            style={detalleCardTop}
+                          >
+                            Ver detalle &gt;
+                          </small>
+                        </p>
+                      </a>
+
                     </div>
                   </div>
                 </div>
