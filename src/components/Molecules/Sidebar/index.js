@@ -69,6 +69,10 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           name: 'Listado de Reposición',
           route: '/reposition',
         },
+        {
+          name: 'Meses de Inventario',
+          route: '/meses-de-inventario',
+        },
       ],
     },
     {
