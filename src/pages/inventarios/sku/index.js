@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import clientFetch from 'lib/client-fetch';
 import { useAuth } from 'context/userContex';
-import FromTicket from 'components/Molecules/FormTicket';
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
 import info from 'assets/brand/info-ico.svg';
+import SkuDetail from 'components/Molecules/SkuDetail';
 import plantilla from 'assets/plantilla.csv';
 import Modal from 'components/Templates/Modal';
 import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
@@ -15,8 +15,9 @@ import styles from './styles.module.scss';
 
 const Sku = () => {
   const { user } = useAuth();
-  const [modalTicket, setModalTicket] = useState(false);
-  const [setModal] = useState(false);
+  const [setModalTicket] = useState(false);
+  const [dataWhitErrors, setDataWhitErrors] = useState([]);
+  const [modal, setModal] = useState(false);
   const [setSelectedFiles] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const userData = JSON.parse(user);
@@ -26,11 +27,11 @@ const Sku = () => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
+
     });
   };
   useEffect(() => {
   }, []);
-
   const infoAdd = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Ingresa todos los datos solicitados para crear un nuevo SKU" color="#BFEAFF" />;
 
   const infoImport = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Descarga la plantilla y completa los campos solicitados para crear nuevos SKU de forma masiva " color="#BFEAFF" />;
@@ -46,6 +47,11 @@ const Sku = () => {
       [value]: '',
     }), {}));
   };
+  const handleClickOrderDeatil = (e) => {
+    e.preventDefault();
+    setModal(true);
+  };
+
   const handleSubmit = () => {
     const objeto = {
       sku: form.sku,
@@ -56,22 +62,33 @@ const Sku = () => {
       peso: form.peso,
     };
     const formObj = JSON.stringify(objeto);
-    clientFetch('inventory/v1/services/addProducts', {
-      headers: {
-        apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        formObj,
-      },
-    })
-      .then(() => {
-        handleClear();
-        setModal(false);
-        setModalTicket(true);
+    const { sku, descripcion, largo } = objeto;
+    console.log(sku);
+    if (sku.length === 0) {
+      console.log('sin campos');
+    } else if (descripcion.length === 0) {
+      console.log('sin campos des');
+    } else if (largo === '') {
+      console.log('sin campos dimensiones');
+    } else {
+      clientFetch('inventory/v1/services/addProducts', {
+        headers: {
+          apikey: process.env.REACT_APP_API_KEY_KONG,
+        },
+        body: {
+          formObj,
+        },
       })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then(() => {
+          handleClear();
+          setModal(true);
+          setModalTicket(true);
+          handleClickOrderDeatil();
+        })
+        .catch((e) => {
+          console.log(e);
+        }); setDataWhitErrors([]);
+    }
   };
 
   const handleSearch = () => {
@@ -103,10 +120,6 @@ const Sku = () => {
         setDisabled(true);
       });
   };
-
-  useEffect(() => {
-    setDisabled(false);
-  }, [form]);
 
   return (
     <PageLayout title="Nuevos Productos">
@@ -187,6 +200,7 @@ const Sku = () => {
                                 value={form.largo}
                                 onChange={handleChange}
                                 disabled={disabled}
+                                min={0}
                               />
                             </div>
                           </div>
@@ -210,6 +224,7 @@ const Sku = () => {
                                 onChange={handleChange}
                                 disabled={disabled}
                                 autoComplete="off"
+                                min={0}
                               />
                             </div>
                           </div>
@@ -233,7 +248,11 @@ const Sku = () => {
                                 onChange={handleChange}
                                 disabled={disabled}
                                 autoComplete="off"
+                                min={0}
                               />
+                              {dataWhitErrors.length > 0 && (
+                                <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -256,6 +275,7 @@ const Sku = () => {
                                 onChange={handleChange}
                                 disabled={disabled}
                                 autoComplete="off"
+                                min={0}
 
                               />
                             </div>
@@ -356,7 +376,6 @@ const Sku = () => {
                         <Button
                           className="btn btn-secondary fs-5 px-5 me-0"
                           text="Agregar"
-                        // onClick={handleSearch}
                         />
                       </div>
                     </div>
@@ -367,12 +386,16 @@ const Sku = () => {
           </div>
         </div>
       </div>
-      <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
-        <FromTicket
-          setModalTicket={setModalTicket}
+      <Modal
+        showModal={modal}
+        size="xl"
+      >
+        <SkuDetail onClick={(e) => {
+          e.preventDefault();
+          setModal(false);
+        }}
         />
       </Modal>
-
     </PageLayout>
   );
 };
