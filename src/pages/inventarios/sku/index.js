@@ -52,33 +52,31 @@ const Sku = () => {
   const handleSubmit = () => {
     const objeto = {
       sku: form.sku,
-      descripcion: form.descripcion,
-      length: form.largo,
-      width: form.ancho,
-      height: form.alto,
-      weight: form.peso,
+      description: form.descripcion,
+      length: Number(form.largo),
+      width: Number(form.ancho),
+      height: Number(form.alto),
+      weight: Number(form.peso),
+      cost: 0,
+      retail: 0,
     };
     const objeto1 = [''];
     objeto1.push(objeto);
     console.log(objeto1[1]);
-    const { sku, descripcion, largo } = objeto;
+    const { sku } = objeto;
     console.log(sku);
     if (sku.length === 0) {
       console.log('sin campos');
-    } else if (descripcion.length === 0) {
-      console.log('sin campos des');
-    } else if (largo === '') {
-      console.log('sin campos dimensiones');
     } else {
       clientFetch('inventory/v1/services/addProducts', {
         headers: {
           apikey: process.env.REACT_APP_API_KEY_KONG,
         },
         body: {
-          products: objeto1[1],
           warehouse: 'bx1',
           account_id: accountId,
           key,
+          products: [objeto],
         },
       })
         .then(() => {
