@@ -83,7 +83,14 @@ const GlobalFilter = ({
               />
               <span
                 className="position-absolute"
-                style={{ top: '5px', right: '8px' }}
+                style={{
+                  top: '25%',
+                  bottom: '25%',
+                  right: '10px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
               >
                 <img src={zoom} alt="Show" width="16" />
               </span>
@@ -151,9 +158,7 @@ const GlobalFilter = ({
                   </ul>
                 </a>
                 <div
-                  className={`${
-                    dropDown ? '' : 'd-none'
-                  } bg-white shadow position-absolute p-4`}
+                  className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
                   style={{ width: 190, borderRadius: 15 }}
                   onBlur={() => setDropDown(false)}
                 >
@@ -183,10 +188,10 @@ const GlobalFilter = ({
 };
 
 GlobalFilter.defaultProps = {
-  globalFilter: () => {},
-  setGlobalFilter: () => {},
-  handleClick: () => {},
-  hadleClickDropDown: () => {},
+  globalFilter: () => { },
+  setGlobalFilter: () => { },
+  handleClick: () => { },
+  hadleClickDropDown: () => { },
   noButtons: false,
   buttonChildren: null,
 };

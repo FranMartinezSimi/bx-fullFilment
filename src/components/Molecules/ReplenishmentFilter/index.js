@@ -69,7 +69,17 @@ const GlobalFilter = ({
                 }}
                 placeholder={`Buscar en ${count} resultados`}
               />
-              <span className="position-absolute" style={{ top: '5px', right: '8px' }}>
+              <span
+                className="position-absolute"
+                style={{
+                  top: '25%',
+                  bottom: '25%',
+                  right: '10px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <img src={zoom} alt="Show" width="16" />
               </span>
             </li>
