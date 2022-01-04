@@ -6,10 +6,10 @@ import PageTitle from 'components/Atoms/PageTitle';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
 import info from 'assets/brand/info-ico.svg';
 import SkuDetail from 'components/Molecules/SkuDetail';
-import plantilla from 'assets/plantilla.csv';
+// import plantilla from 'assets/plantilla.csv';
 import Modal from 'components/Templates/Modal';
-import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
-import DropZone from 'components/Molecules/DropZone';
+// import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
+// import DropZone from 'components/Molecules/DropZone';
 import Button from 'components/Atoms/Button';
 import styles from './styles.module.scss';
 
@@ -18,7 +18,7 @@ const Sku = () => {
   const [setModalTicket] = useState(false);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
   const [modal, setModal] = useState(false);
-  const [setSelectedFiles] = useState([]);
+  // const [setSelectedFiles] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const userData = JSON.parse(user);
   const { accountId, key } = userData.credential;
@@ -33,9 +33,6 @@ const Sku = () => {
   useEffect(() => {
   }, []);
   const infoAdd = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Ingresa todos los datos solicitados para crear un nuevo SKU" color="#BFEAFF" />;
-
-  const infoImport = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Descarga la plantilla y completa los campos solicitados para crear nuevos SKU de forma masiva " color="#BFEAFF" />;
-
   const handleClear = () => {
     const keys = Object.keys(form);
     console.log(keys.reduce((acum, value) => ({
@@ -56,12 +53,14 @@ const Sku = () => {
     const objeto = {
       sku: form.sku,
       descripcion: form.descripcion,
-      largo: form.largo,
-      ancho: form.ancho,
-      alto: form.alto,
-      peso: form.peso,
+      length: form.largo,
+      width: form.ancho,
+      height: form.alto,
+      weight: form.peso,
     };
-    const formObj = JSON.stringify(objeto);
+    const objeto1 = [''];
+    objeto1.push(objeto);
+    console.log(objeto1[1]);
     const { sku, descripcion, largo } = objeto;
     console.log(sku);
     if (sku.length === 0) {
@@ -76,7 +75,10 @@ const Sku = () => {
           apikey: process.env.REACT_APP_API_KEY_KONG,
         },
         body: {
-          formObj,
+          products: objeto1[1],
+          warehouse: 'bx1',
+          account_id: accountId,
+          key,
         },
       })
         .then(() => {
@@ -305,7 +307,7 @@ const Sku = () => {
             </div>
           </div>
         </div>
-        <div className={styles.col2}>
+        {/* <div className={styles.col2}>
           <div className="d-flex bd-highlight mb-3">
             <div className="p-2 bd-highlight">
               <PageTitle
@@ -331,7 +333,8 @@ const Sku = () => {
                           <DropZone
                             setSelectedFiles={setSelectedFiles}
                             size="medium"
-                            internalTitle="Arrastra tu archivo o selecciona desde tu computadora en formato Csv y Excel"
+                            internalTitle="Arrastra tu archivo o selecciona
+                             desde tu computadora en formato Csv y Excel"
                             noValidation
                           />
                         </div>
@@ -384,7 +387,7 @@ const Sku = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <Modal
         showModal={modal}

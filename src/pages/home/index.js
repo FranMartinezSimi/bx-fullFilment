@@ -129,6 +129,11 @@ const Home = () => {
     history.push('/ordenes');
   };
 
+  const handleClickMeses = (e) => {
+    e.preventDefault();
+    history.push('/meses-de-inventario');
+  };
+
   const handleClickA = (e) => {
     e.preventDefault();
     history.push('/ordenes/subir-ordenes');
@@ -294,7 +299,7 @@ const Home = () => {
                       <a
                         href="#!"
                         style={{ color: '#2BB9FF' }}
-                        onClick={handleClick}
+                        onClick={handleClickMeses}
                       >
                         <p className="text-end me-2 mb-0 pt-2">
                           <small
