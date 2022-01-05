@@ -9,15 +9,14 @@ import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import { SocketContext } from 'context/useContextSocketSeller';
 import inscribe from 'assets/brand/homeCard1.svg';
-import deliveredHands from 'assets/brand/delivered-hands.svg';
-import truckRoute from 'assets/brand/truck-route.svg';
-import reverseLogistics from 'assets/brand/reverse-logistics.svg';
+import deliveredHands from 'assets/brand/delivered-hands-green.svg';
+import truckRoute from 'assets/brand/truck-route-orange.svg';
+import reverseLogistics from 'assets/brand/reverse-logistics-cyan.svg';
 import callendar from 'assets/brand/homeCard2.svg';
 import Modal from 'components/Templates/Modal';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 import HomeMessage from 'components/Atoms/messageHome';
-// import Alert from 'assets/brand/alertRed.png';
-// import closeX from 'assets/brand/closeX.svg';
+import ProductTopTable from 'components/Templates/ProductTopTable';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -28,27 +27,64 @@ const Home = () => {
   const [modalInventory, setModalInventory] = useState(false);
   const userData = JSON.parse(user);
   const [errorTotales, setErrorTotales] = useState(false);
+  const [list, setList] = useState([]);
   const userActive = userData.credential.user.name;
+  const { accountId } = userData.credential.accountId;
   let componentTotales;
 
+  const cardMostRequest = {
+    width: '500px',
+    height: '26px',
+    fontSize: '22px',
+    lineHeight: '26px',
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    fontFamily: 'lato',
+    color: '#212121',
+    marginTop: '18px',
+  };
+  const seventDays = {
+    fontFamily: 'Lato',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '10px',
+    marginTop: '8px',
+    lineHeight: '45px',
+    color: '#666666',
+  };
+  const detalleCardTop = {
+    color: '#2BB9FF',
+    fontSize: 12,
+    fontFamily: 'lato',
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    lineHeight: '158%',
+  };
   if (setErrorTotales) {
     componentTotales = <HomeMessage />;
   } else {
     componentTotales = null;
   }
 
-  // const componentOrders = (
-  //   <a
-  //     href="#!"
-  //     style={{ color: '#2BB9FF' }}
-  //     onClick={(e) => handleInventory(e, '/ordenes')}
-  //   >
-  //     <p className="text-end me-2">
-  //       <small style={{ fontSize: '1.2em' }}>ir a órdenes &gt;</small>
-  //     </p>
-  //   </a>
-  // );
-
+  useEffect(() => {
+    (async () => {
+      try {
+        const monthsOfInventoryResponse = await clientFetch(
+          'bff/v1/inventory/getMostRequestedProducts?lastDaysInNumber=90&productQuantityLimit=12',
+          {
+            headers: {
+              apikey: process.env.REACT_APP_API_KEY_KONG,
+              accountId,
+            },
+            method: 'GET',
+          },
+        );
+        setList(monthsOfInventoryResponse);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
   const chart = () => {
     clientFetch('order/v1/orders/getDashboradOrders', {
       headers: {
@@ -62,28 +98,24 @@ const Home = () => {
     })
       .then((dashData) => {
         const statistics = dashData.orders_deliver;
-        // const enviados = statistics.map((item) => item.enviado)
-        //   .reduce((item, acc) => item + acc);
-        // const procesados = statistics.map((item) => item.procesado)
-        //   .reduce((item, acc) => item + acc);
-        // const entregados = statistics.map((item) => item.entregado)
-        //   .reduce((item, acc) => item + acc);
-
         setTotalStatisticsData([
           {
             img: reverseLogistics,
             state: 'Procesados',
             number: statistics.enviado,
+            bg: '#27A6E5',
           },
           {
             img: deliveredHands,
             number: statistics.procesado,
             state: 'Entregado',
+            bg: '#408D5C',
           },
           {
             img: truckRoute,
             number: statistics.entregado,
             state: 'En Camino',
+            bg: '#E5713D',
           },
         ]);
       })
@@ -95,6 +127,11 @@ const Home = () => {
   const handleClick = (e) => {
     e.preventDefault();
     history.push('/ordenes');
+  };
+
+  const handleClickMeses = (e) => {
+    e.preventDefault();
+    history.push('/meses-de-inventario');
   };
 
   const handleClickA = (e) => {
@@ -122,7 +159,7 @@ const Home = () => {
       <div style={{ width: '100%' }}>
         <div className="row m-5">
           <div className="col-8">
-            <div className="row">
+            <div className="row m-0">
               <PageTitle
                 className="row"
                 subtitle={`${userActive}`}
@@ -147,7 +184,7 @@ const Home = () => {
                             onClick={handleClick}
                           >
                             <p className="text-end me-2 mb-0">
-                              <small style={{ top: 50 }}>Ver listado de órdenes &gt;</small>
+                              <p style={{ color: '#666666' }}>Últimos 7 días</p>
                             </p>
                           </a>
                         </li>
@@ -156,21 +193,31 @@ const Home = () => {
 
                     <ul className="d-flex justify-content-around mb-2 p-0">
                       {statisticsData.length > 0 && statisticsData.map((item) => (
+
                         <div className={`${styles.indicadores} mb-3`}>
                           <div className="card-body">
                             <div className="row mx-5 mt-3">
-                              <div className="col my-2">
+                              <div className="col mt-3 ms-1">
                                 <img src={item.img} alt={item.state} />
                               </div>
                               <div className="col">
                                 <div className="pt-3">
-                                  <h5 className={`${styles.numInd}mb-0`}>{item.number}</h5>
+                                  <h5 style={{ fontSize: '26px', fontFamily: 'mont', lineHeight: '30px', textAlign: 'right', top: '24px', width: '41px', right: '47px', color: item.bg }}>{item.number}</h5>
                                 </div>
                               </div>
                             </div>
                             <div className="row">
                               <small>
-                                <p className={`${styles.statusInd}`}>
+                                <p
+                                  style={{
+                                    fontFamily: 'mont',
+                                    fontSize: '15px',
+                                    lineHeight: '109.9%',
+                                    textAlign: 'center',
+                                    fontWeight: 'bold',
+                                    color: item.bg,
+                                  }}
+                                >
                                   {item.state}
                                 </p>
                               </small>
@@ -179,10 +226,28 @@ const Home = () => {
                         </div>
                       ))}
                     </ul>
-                    <ul className="d-flex justify-content-bottom align-items-bottom m-0 p-0">
-                      <li>
-                        <p style={{ color: '#666666' }}>Últimos 7 días</p>
-                      </li>
+                    <ul className="d-flex justify-content-end m-0 p-0">
+
+                      <a
+                        href="#!"
+                        style={{ color: '#2BB9FF' }}
+                        onClick={handleClick}
+                      >
+                        <p className="text-end me-2 mb-0 pt-2">
+                          <small style={{
+                            top: 50,
+                            color: '#2BB9FF',
+                            fontSize: 12,
+                            fontFamily: 'lato',
+                            fontWeight: 'bold',
+                            fontStyle: 'normal',
+                            lineHeight: '158%',
+                          }}
+                          >
+                            Ver todas las órdenes &gt;
+                          </small>
+                        </p>
+                      </a>
 
                     </ul>
                   </>
@@ -190,9 +255,67 @@ const Home = () => {
               </Card>
             </div>
           </div>
-          <div className="col-4">
-            <div className="position-relative">
-              <img src="/inscribeempresa.png" alt="" width="310" style={{ position: 'relative', top: 87 }} />
+          <div className="col-4 row align-items-end ps-0">
+            <div
+              className={`${styles.shadow}`}
+              style={{
+                borderRadius: '15px',
+                background: '#FFFFFF',
+                width: '91%',
+                height: '260px',
+                padding: '10px',
+              }}
+            >
+              <div className="row">
+                <div className="col-8">
+                  <h1
+                    className=" ps-2 mb-3"
+                    style={
+                      cardMostRequest
+                    }
+                  >
+                    Productos más solicitados
+                  </h1>
+                </div>
+                <div
+                  className="col-4 text-end pe-4"
+                  style={seventDays}
+                >
+                  Últimos 7 días
+                </div>
+              </div>
+              <div style={{ width: '90%', marginLeft: '25px' }}>
+                <ProductTopTable data={list} />
+
+              </div>
+              <div
+                className="container"
+              >
+                <div className="row" style={{ height: '40px' }}>
+                  <div className="col align-self-end">
+                    <div
+                      className="d-flex justify-content-end m-0 pe-3"
+                    >
+                      <a
+                        href="#!"
+                        style={{ color: '#2BB9FF' }}
+                        onClick={handleClickMeses}
+                      >
+                        <p className="text-end me-2 mb-0 pt-2">
+                          <small
+                            className="mb-2"
+                            style={detalleCardTop}
+                          >
+                            Ver detalle &gt;
+                          </small>
+                        </p>
+                      </a>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

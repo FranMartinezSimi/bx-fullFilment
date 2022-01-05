@@ -45,11 +45,8 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           route: '/ordenes',
         },
         {
-          name: 'Reporte Mensual',
+          name: 'Reporte de Mensual',
           route: '/ordenes/reporte-mensual',
-        }, {
-          name: 'Histórico de Órdenes',
-          route: '/ordenes/grafico',
         },
       ],
     },
@@ -60,6 +57,10 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
       route: '/inventario',
       childrenActive: false,
       children: [
+        {
+          name: 'Crear Sku',
+          route: '/inventario/sku',
+        },
         {
           name: 'Listado de Inventario',
           route: '/inventario',

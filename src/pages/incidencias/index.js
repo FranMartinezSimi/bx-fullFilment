@@ -87,7 +87,6 @@ const Incidencias = () => {
       },
     })
       .then((issues) => {
-        console.log(issues[0].orderId);
         setLoading(false);
         setList(issues);
       })

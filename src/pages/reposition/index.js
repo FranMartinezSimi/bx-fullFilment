@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
-import Modal from 'components/Templates/Modal';
 
+import Modal from 'components/Templates/Modal';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
@@ -31,90 +31,101 @@ const Reposition = () => {
     setManifest(tableData.row.original.manifest);
   };
 
-  const columns = useMemo(() => [
-    {
-      Header: 'ID de carga ',
-      accessor: 'replenishmentId',
-    },
-    {
-      Header: 'N° productos',
-      accessor: 'numProducts',
-    },
-    {
-      Header: 'Fecha',
-      accessor: 'fecha',
-    },
-    {
-      Header: 'Estado',
-      accessor: 'estado',
-      Cell: ({ row }) => {
-        let colorSelected;
-        let texto = '';
-        switch (row.original.estado) {
-          case 'Ingresado':
-            colorSelected = '#007F00';
-            texto = 'Ingresado';
-            break;
-          case 'En Transito':
-            colorSelected = '#3363FF';
-            texto = 'En Transito';
-            break;
-          case 'Recibido':
-            colorSelected = '#3363FF';
-            texto = 'Recibido';
-            break;
-          case '':
-            colorSelected = '#007F00';
-            texto = 'Ingresado';
-            break;
-          default:
-            colorSelected = '#007F00';
-            texto = 'Ingresado';
-        }
-        return (
-          <small
-            className={`badge--${texto.replace(' ', '').toLowerCase()}  px-4 py-1 border rounded-pill`}
-          >
-            <span
-              className={styles.small}
-              style={{
-                backgroundColor: colorSelected,
-                height: 10,
-                display: 'inline-block',
-                borderRadius: '5rem',
-                marginRight: 5,
-              }}
-            />
-            {texto}
-          </small>
-        );
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'ID de carga ',
+        accessor: 'replenishmentId',
       },
-    },
-    {
-      Header: 'F. Entrega',
-      accessor: 'fechaEntrega',
-    },
-    {
-      Header: 'Manifiesto',
-      accessor: 'ver',
-      isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => handleClickOrderDeatil(e, table)}
-          role="button"
-          className="d-block font-weight-bold font-weight-bold"
-        >
-          <img src={info} alt="Actualizar Ordenes" width="32" />
-        </a>
-      ),
-    },
-  ], []);
+      {
+        Header: 'N° productos',
+        accessor: 'numProducts',
+      },
+      {
+        Header: 'Fecha',
+        accessor: 'fecha',
+      },
+      {
+        Header: 'Estado',
+        accessor: 'estado',
+        Cell: ({ row }) => {
+          let colorSelected;
+          let texto = '';
+          switch (row.original.estado) {
+            case 'Ingresado':
+              colorSelected = '#007F00';
+              texto = 'Ingresado';
+              break;
+            case 'En Transito':
+              colorSelected = '#3363FF';
+              texto = 'En Transito';
+              break;
+            case 'Recibido':
+              colorSelected = '#3363FF';
+              texto = 'Recibido';
+              break;
+            case '':
+              colorSelected = '#007F00';
+              texto = 'Ingresado';
+              break;
+            default:
+              colorSelected = '#007F00';
+              texto = 'Ingresado';
+          }
+          return (
+            <small
+              className={`badge--${texto
+                .replace(' ', '')
+                .toLowerCase()}  px-4 py-1 border rounded-pill`}
+            >
+              <span
+                className={styles.small}
+                style={{
+                  backgroundColor: colorSelected,
+                  height: 10,
+                  display: 'inline-block',
+                  borderRadius: '5rem',
+                  marginRight: 5,
+                }}
+              />
+              {texto}
+            </small>
+          );
+        },
+      },
+      {
+        Header: 'F. Entrega',
+        accessor: 'fechaEntrega',
+      },
+      {
+        Header: 'Manifiesto',
+        accessor: 'ver',
+        isVisible: true,
+        Cell: (table) => (
+          <a
+            href="#!"
+            onClick={(e) => handleClickOrderDeatil(e, table)}
+            role="button"
+            className="d-block font-weight-bold font-weight-bold"
+          >
+            <img src={info} alt="Actualizar Ordenes" width="32" />
+          </a>
+        ),
+      },
+    ],
+    [],
+  );
 
   let component;
 
   if (error) {
-    component = <Alert className="mt-5" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />;
+    component = (
+      <Alert
+        className="mt-5"
+        type="warning"
+        message="Ooopss! Ocurrió un error, intentalo más tarde..."
+      />
+    );
   } else {
     component = <Spinner />;
   }
@@ -154,8 +165,6 @@ const Reposition = () => {
       },
     })
       .then((issues) => {
-        console.log('ISUES', issues.manifest);
-
         setLoading(false);
         setList(issues);
       })
@@ -166,25 +175,36 @@ const Reposition = () => {
   }, []);
   return (
     <PageLayout title="Reposiciones">
-      <PageTitle title="Listado reposición de inventario" subtitle="Te mostramos el estado de las cargas de tu reposición" />
+      <PageTitle
+        title="Listado reposición de inventario"
+        subtitle="Te mostramos el estado de las cargas de tu reposición"
+      />
 
-      {list && !loading
-        ? (
-          <ReplenishmentTable
-            columns={columns}
-            data={data}
-            getDataByDate={getDataByDate}
-            handleClickInventory={handleClickInventory}
-
-          />
-        )
-        : component}
-      <Modal showModal={modal} size="lg" onClick={(e) => { e.preventDefault(); setModal(false); }}>
-        <ReplenishmentDetail columns={columns} data={list} activeData={manifest} />
+      {list && !loading ? (
+        <ReplenishmentTable
+          columns={columns}
+          data={data}
+          getDataByDate={getDataByDate}
+          handleClickInventory={handleClickInventory}
+        />
+      ) : (
+        component
+      )}
+      <Modal
+        showModal={modal}
+        size="xl"
+        onClick={(e) => {
+          e.preventDefault();
+          setModal(false);
+        }}
+      >
+        <ReplenishmentDetail
+          columns={columns}
+          data={list}
+          activeData={manifest}
+        />
       </Modal>
-
     </PageLayout>
-
   );
 };
 
