@@ -1,9 +1,8 @@
 import { useAuth } from 'context/userContex';
 
-import {
-  BrowserRouter as Router, Switch, Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ErrorPage from 'pages/404';
+import CreateReposition from 'pages/reposition/create';
 import Layout from './components/Templates/Layout';
 import Home from './pages/home';
 import Orders from './pages/ordenes';
@@ -31,17 +30,15 @@ const App = () => {
     <Router>
       <Layout>
         <Switch>
-          {userActive
-            ? (
-              <Route exact path="/">
-                <Home />
-              </Route>
-            )
-            : (
-              <Route exact path="/">
-                <Onboarding />
-              </Route>
-            )}
+          {userActive ? (
+            <Route exact path="/">
+              <Home />
+            </Route>
+          ) : (
+            <Route exact path="/">
+              <Onboarding />
+            </Route>
+          )}
           <Route exact path="/ordenes">
             <Orders />
           </Route>
@@ -60,8 +57,14 @@ const App = () => {
           <Route path="/incidencia/:id">
             <IssueDetail />
           </Route>
-          <Route path="/reposition">
+          <Route exact path="/reposition">
             <Reposition />
+          </Route>
+          <Route exact path="/reposition/create">
+            <CreateReposition />
+          </Route>
+          <Route path="/reposition/create">
+            <CreateReposition />
           </Route>
           <Route path="/meses-de-inventario">
             <MonthsOfInventory />
