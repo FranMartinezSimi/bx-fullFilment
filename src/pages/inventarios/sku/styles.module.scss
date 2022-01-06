@@ -3,11 +3,6 @@
   display: column;
 }
 
-// body {
-//   margin: 0;
-//   padding: 0;
-// }
-
 #container {
   width: 960px;
   margin: 0 auto;
@@ -63,65 +58,6 @@ h2 {
 
   color: #212121;
 }
-
-// p {
-//   position: static;
-//   left: 0%;
-//   right: 42.38%;
-//   top: 12.31%;
-//   bottom: 73.85%;
-
-//   /* Paragraph 1 app */
-
-//   font-family: Lato;
-//   font-style: normal;
-//   font-weight: normal;
-//   font-size: 14px;
-//   line-height: 145%;
-//   /* or 20px */
-
-//   display: flex;
-//   align-items: center;
-//   letter-spacing: 0.03em;
-
-//   /* Black total */
-
-//   color: #212121;
-
-//   /* Inside Auto Layout */
-
-//   flex: none;
-//   order: 0;
-//   flex-grow: 0;
-//   margin: 8px 0px;
-// }
-
-// input{
-// 	display: flex;
-// flex-direction: row;
-// align-items: center;
-// padding: 10px;
-
-// position: static;
-// width: 190px;
-// height: 40px;
-// left: 0px;
-// top: 25px;
-
-// /* Light sea */
-
-// border: 0.6px solid #114A66;
-// box-sizing: border-box;
-// border-radius: 16px;
-
-// /* Inside Auto Layout */
-
-// flex: none;
-// order: 1;
-// align-self: stretch;
-// flex-grow: 0;
-// margin: 8px 0px;
-// }
 
 .input {
   display: flex;

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import clientFetch from 'lib/client-fetch';
+import { useHistory } from 'react-router-dom';
 
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
@@ -19,9 +20,9 @@ const Inventory = () => {
   const [inventoryId, setInventoryId] = useState('');
   const [skuId, setSkuId] = useState('');
   const [error, setError] = useState(false);
-  const { setProductsToReposition } = useInventory();
+  const { setProductsToReposition, productsToReposition } = useInventory();
+  const { push } = useHistory();
 
-  const data = useMemo(() => list, [list]);
   const handleClickInventoryDetail = (e, tableData) => {
     e.preventDefault();
     setInventoryId(tableData.row.original.product_id);
@@ -89,10 +90,19 @@ const Inventory = () => {
     component = <Spinner />;
   }
 
-  const handleClickInventory = (e) => {
-    e.preventDefault();
-    setModalInventory(true);
-  };
+  const handleClickInventory = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      if (productsToReposition.length) {
+        push('/reposition/create');
+        return;
+      }
+
+      setModalInventory(true);
+    },
+    [productsToReposition],
+  );
 
   useEffect(() => {
     clientFetch('bff/v1/inventory/getProductsList', {
@@ -123,7 +133,7 @@ const Inventory = () => {
           selectableRow
           onChangeSelection={setProductsToReposition}
           columns={columns}
-          data={data}
+          data={list}
           handleClickInventory={handleClickInventory}
         />
       ) : (
