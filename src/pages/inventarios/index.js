@@ -9,6 +9,7 @@ import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
+import { useInventory } from 'context/useInventory';
 
 const Inventory = () => {
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ const Inventory = () => {
   const [inventoryId, setInventoryId] = useState('');
   const [skuId, setSkuId] = useState('');
   const [error, setError] = useState(false);
+  const { setProductsToReposition } = useInventory();
 
   const data = useMemo(() => list, [list]);
   const handleClickInventoryDetail = (e, tableData) => {
@@ -27,53 +29,62 @@ const Inventory = () => {
 
     setModal(true);
   };
-  const columns = useMemo(() => [
-    {
-      Header: 'SKU/UPC',
-      accessor: 'sku',
-    },
-    {
-      Header: 'Descripción',
-      accessor: 'description',
-    },
-    {
-      Header: 'En Bodega',
-      accessor: 'quantity_in_warehouse',
-    },
-    {
-      Header: 'Disponible',
-      accessor: 'quantity_available',
-    },
-    {
-      Header: 'Dañado',
-      accessor: 'quantity_hurt',
-    },
-    {
-      Header: 'Reservado',
-      accessor: '0',
-    },
-    {
-      accessor: 'ver',
-      isVisible: true,
-      Cell: (table) => (
-        <a
-          href="#!"
-          onClick={(e) => handleClickInventoryDetail(e, table)}
-          role="button"
-          className="font-weight-bold font-weight-bold"
-        >
-          <small className="d-block text-complementary-color">
-            Ver Más &gt;
-          </small>
-        </a>
-      ),
-    },
-  ], []);
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'SKU/UPC',
+        accessor: 'sku',
+      },
+      {
+        Header: 'Descripción',
+        accessor: 'description',
+      },
+      {
+        Header: 'En Bodega',
+        accessor: 'quantity_in_warehouse',
+      },
+      {
+        Header: 'Disponible',
+        accessor: 'quantity_available',
+      },
+      {
+        Header: 'Dañado',
+        accessor: 'quantity_hurt',
+      },
+      {
+        Header: 'Reservado',
+        accessor: '0',
+      },
+      {
+        accessor: 'ver',
+        isVisible: true,
+        Cell: (table) => (
+          <a
+            href="#!"
+            onClick={(e) => handleClickInventoryDetail(e, table)}
+            role="button"
+            className="font-weight-bold font-weight-bold"
+          >
+            <small className="d-block text-complementary-color">
+              Ver Más &gt;
+            </small>
+          </a>
+        ),
+      },
+    ],
+    [],
+  );
 
   let component;
 
   if (error) {
-    component = <Alert className="mt-5" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />;
+    component = (
+      <Alert
+        className="mt-5"
+        type="warning"
+        message="Ooopss! Ocurrió un error, intentalo más tarde..."
+      />
+    );
   } else {
     component = <Spinner />;
   }
@@ -103,25 +114,41 @@ const Inventory = () => {
         setLoading(false);
       });
   }, []);
+
   return (
     <PageLayout title="Tu inventario">
       <PageTitle title="Tu inventario" className="mb-5" />
-      {list.length && !loading
-        ? (
-          <MainTable
-            columns={columns}
-            data={data}
-            handleClickInventory={handleClickInventory}
-          />
-        )
-        : component}
-      <Modal title={`Detalle SKU ${skuId}`} subtitle={`ID de producto ${inventoryId}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
+      {list.length && !loading ? (
+        <MainTable
+          selectableRow
+          onChangeSelection={setProductsToReposition}
+          columns={columns}
+          data={data}
+          handleClickInventory={handleClickInventory}
+        />
+      ) : (
+        component
+      )}
+      <Modal
+        title={`Detalle SKU ${skuId}`}
+        subtitle={`ID de producto ${inventoryId}`}
+        showModal={modal}
+        onClick={(e) => {
+          e.preventDefault();
+          setModal(false);
+        }}
+      >
         <InventoryDetail id={inventoryId} />
       </Modal>
-      <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
-        <FormReplenishment
-          setModalTicket={setModalInventory}
-        />
+      <Modal
+        showModal={modalInventory}
+        size="xl"
+        onClick={(e) => {
+          e.preventDefault();
+          setModalInventory(false);
+        }}
+      >
+        <FormReplenishment setModalTicket={setModalInventory} />
       </Modal>
     </PageLayout>
   );
