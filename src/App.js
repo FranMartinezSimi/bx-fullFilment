@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import jwt from 'jwt-decode';
 
-import { useKeyclockAuth } from 'context/userKeyclockContext';
 import { setDataLayer } from 'utils/gtm';
+import { useKeyclockAuth } from 'context/userKeyclockContext';
 import { SocketContext, socket } from './context/useContextSocketSeller';
 import { useAuth } from './context/userContex';
+import { InventoryProvider } from './context/useInventory';
+
 import UnLoggedUserApp from './UnLoggedUserApp';
 import ResolutorApp from './ResolutorApp';
 import AuthenticatedApp from './AuthenticatedApp';
@@ -47,7 +49,9 @@ const App = () => {
       {userKeyclock && !resolutor && !user && <UnauthenticatedApp />}
       {userKeyclock && !resolutor && user && (
         <SocketContext.Provider value={socket}>
-          <AuthenticatedApp />
+          <InventoryProvider>
+            <AuthenticatedApp />
+          </InventoryProvider>
         </SocketContext.Provider>
       )}
     </HelmetProvider>
