@@ -23,12 +23,21 @@ const Sku = () => {
   const userData = JSON.parse(user);
   const { accountId, key } = userData.credential;
   const [form, setForm] = useState({});
+  const [error, setError] = useState({
+    sku: false,
+    descripcion: false,
+  });
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
-
     });
+    if (e.target.name === 'sku') {
+      setError((state) => ({
+        ...state,
+        [e.target.name]: false,
+      }));
+    }
   };
   useEffect(() => {
   }, []);
@@ -50,6 +59,22 @@ const Sku = () => {
   };
 
   const handleSubmit = () => {
+    if (form.sku === '') {
+      setError((state) => ({
+        ...state,
+        sku: true,
+      }));
+    }
+    if (form.descripcion === '') {
+      setError((state) => ({
+        ...state,
+        descripcion: true,
+      }));
+    }
+
+    if (form.sku?.trim().length < 1 || form.descripcion?.trim().length < 1) {
+      return;
+    }
     const objeto = {
       sku: form.sku,
       description: form.descripcion,
@@ -111,6 +136,7 @@ const Sku = () => {
         console.log(res);
         if (res && res.flag) {
           setDisabled(true);
+          setError(true);
         } else {
           setDisabled(false);
         }
@@ -156,6 +182,7 @@ const Sku = () => {
                                 onKeyUp={(event) => handleSearch(event)}
                               // autoComplete="off"
                               />
+
                             </div>
                           </div>
                         </div>
@@ -179,6 +206,7 @@ const Sku = () => {
                                 disabled={disabled}
                                 autoComplete="off"
                               />
+                              {error.descripition && (<span className="text-danger">Debes completar este campo para continuar</span>)}
                             </div>
                           </div>
                         </div>
@@ -198,6 +226,7 @@ const Sku = () => {
                                 placeholder="1"
                                 name="largo"
                                 value={form.largo}
+                                className={styles.input}
                                 onChange={handleChange}
                                 disabled={disabled}
                                 min={0}
@@ -219,6 +248,7 @@ const Sku = () => {
                               <input
                                 type="number"
                                 placeholder="1"
+                                className={styles.input}
                                 name="ancho"
                                 value={form.ancho}
                                 onChange={handleChange}
@@ -246,6 +276,7 @@ const Sku = () => {
                                 name="alto"
                                 value={form.alto}
                                 onChange={handleChange}
+                                className={styles.input}
                                 disabled={disabled}
                                 autoComplete="off"
                                 min={0}
@@ -274,6 +305,7 @@ const Sku = () => {
                                 value={form.peso}
                                 onChange={handleChange}
                                 disabled={disabled}
+                                className={styles.input}
                                 autoComplete="off"
                                 min={0}
 
