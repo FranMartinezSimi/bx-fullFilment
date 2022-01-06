@@ -14,6 +14,10 @@ background: #FFFFFF;
 border-radius: 0px;
 }
 
+.card1 > p{
+  
+}
+
 .card2{
 height: 389px;
 left: 68.52%;
@@ -76,5 +80,20 @@ top: 0%;
 bottom: 0%;
 background: #FFFFFF;
 border-radius: 15px;
+}
+
+.msjeErr{
+width: 650px;
+margin-left: 180px;
+padding-top: 110px;
+height: 23px;
+top: 430px;
+font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 145%;
+letter-spacing: 0.03em;
+color: #666666;
 }
 
