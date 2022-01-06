@@ -182,7 +182,7 @@ const Sku = () => {
                                 onKeyUp={(event) => handleSearch(event)}
                               // autoComplete="off"
                               />
-
+                              {error.sku && (<span className="text-danger">Debes completar este campo para continuar</span>)}
                             </div>
                           </div>
                         </div>
@@ -206,7 +206,7 @@ const Sku = () => {
                                 disabled={disabled}
                                 autoComplete="off"
                               />
-                              {error.descripition && (<span className="text-danger">Debes completar este campo para continuar</span>)}
+                              {error.descripcion && (<span className="text-danger">Debes completar este campo para continuar</span>)}
                             </div>
                           </div>
                         </div>
@@ -226,9 +226,9 @@ const Sku = () => {
                                 placeholder="1"
                                 name="largo"
                                 value={form.largo}
-                                className={styles.input}
                                 onChange={handleChange}
                                 disabled={disabled}
+                                className={styles.input}
                                 min={0}
                               />
                             </div>
@@ -248,11 +248,11 @@ const Sku = () => {
                               <input
                                 type="number"
                                 placeholder="1"
-                                className={styles.input}
                                 name="ancho"
                                 value={form.ancho}
                                 onChange={handleChange}
                                 disabled={disabled}
+                                className={styles.input}
                                 autoComplete="off"
                                 min={0}
                               />
@@ -276,8 +276,8 @@ const Sku = () => {
                                 name="alto"
                                 value={form.alto}
                                 onChange={handleChange}
-                                className={styles.input}
                                 disabled={disabled}
+                                className={styles.input}
                                 autoComplete="off"
                                 min={0}
                               />
