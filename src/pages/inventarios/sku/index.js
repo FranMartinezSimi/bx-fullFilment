@@ -43,6 +43,7 @@ const Sku = () => {
   }, []);
   const infoAdd = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Ingresa todos los datos solicitados para crear un nuevo SKU" color="#BFEAFF" />;
   const handleClear = () => {
+    setError({ sku: false });
     const keys = Object.keys(form);
     console.log(keys.reduce((acum, value) => ({
       ...acum,
@@ -53,6 +54,7 @@ const Sku = () => {
       [value]: '',
     }), {}));
   };
+
   const handleClickOrderDeatil = (e) => {
     e.preventDefault();
     setModal(true);
@@ -87,9 +89,7 @@ const Sku = () => {
     };
     const objeto1 = [''];
     objeto1.push(objeto);
-    console.log(objeto1[1]);
     const { sku } = objeto;
-    console.log(sku);
     if (sku.length === 0) {
       console.log('sin campos');
     } else {
@@ -105,13 +105,14 @@ const Sku = () => {
         },
       })
         .then(() => {
-          handleClear();
           setModal(true);
           setModalTicket(true);
           handleClickOrderDeatil();
+          handleClear();
         })
         .catch((e) => {
           console.log(e);
+          setError({ sku: true });
         }); setDataWhitErrors([]);
     }
   };
@@ -133,12 +134,11 @@ const Sku = () => {
       },
     })
       .then((res) => {
-        console.log(res);
-        if (res && res.flag) {
-          setDisabled(true);
-          setError(true);
-        } else {
+        if (res && !res.flag) {
           setDisabled(false);
+        } else {
+          setDisabled(true);
+          setError({ sku: true });
         }
       })
       .catch((e) => {
@@ -180,9 +180,9 @@ const Sku = () => {
                                 value={form.sku}
                                 onChange={handleChange}
                                 onKeyUp={(event) => handleSearch(event)}
-                              // autoComplete="off"
+                                autoComplete="off"
                               />
-                              {error.sku && (<span className="text-danger">Debes completar este campo para continuar</span>)}
+                              {error.sku && (<span className="text-danger">SKU ya existe, ingresa un código valido</span>)}
                             </div>
                           </div>
                         </div>
@@ -224,11 +224,11 @@ const Sku = () => {
                               <input
                                 type="number"
                                 placeholder="1"
+                                className={styles.input}
                                 name="largo"
                                 value={form.largo}
                                 onChange={handleChange}
                                 disabled={disabled}
-                                className={styles.input}
                                 min={0}
                               />
                             </div>
@@ -250,9 +250,9 @@ const Sku = () => {
                                 placeholder="1"
                                 name="ancho"
                                 value={form.ancho}
+                                className={styles.input}
                                 onChange={handleChange}
                                 disabled={disabled}
-                                className={styles.input}
                                 autoComplete="off"
                                 min={0}
                               />
@@ -304,8 +304,8 @@ const Sku = () => {
                                 name="peso"
                                 value={form.peso}
                                 onChange={handleChange}
-                                disabled={disabled}
                                 className={styles.input}
+                                disabled={disabled}
                                 autoComplete="off"
                                 min={0}
 
