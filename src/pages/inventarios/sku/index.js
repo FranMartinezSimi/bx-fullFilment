@@ -45,7 +45,7 @@ const Sku = () => {
   const handleClear = () => {
     setError({ sku: false });
     const keys = Object.keys(form);
-    console.log(keys.reduce((acum, value) => ({
+    (keys.reduce((acum, value) => ({
       ...acum,
       [value]: '',
     }), {}));
@@ -141,8 +141,7 @@ const Sku = () => {
           setError({ sku: true });
         }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
         setDisabled(true);
       });
   };
