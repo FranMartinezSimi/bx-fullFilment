@@ -25,7 +25,7 @@ const MonthsOfInventory = () => {
         accessor: 'description',
       },
       {
-        Header: 'En Bodega',
+        Header: 'Inventario',
         accessor: 'stock',
       },
       {
@@ -33,7 +33,7 @@ const MonthsOfInventory = () => {
         accessor: 'total_orders',
       },
       {
-        Header: 'Inventario',
+        Header: 'Meses de Inventario',
         accessor: (row) => (row.turnover === -1
           ? '∞'
           : row.turnover === 0
