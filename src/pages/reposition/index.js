@@ -57,6 +57,7 @@ const Reposition = () => {
               texto = 'Ingresado';
               break;
             case 'En Transito':
+            case '':
               colorSelected = '#3363FF';
               texto = 'En Transito';
               break;
@@ -64,13 +65,9 @@ const Reposition = () => {
               colorSelected = '#3363FF';
               texto = 'Recibido';
               break;
-            case '':
-              colorSelected = '#007F00';
-              texto = 'Ingresado';
-              break;
             default:
-              colorSelected = '#007F00';
-              texto = 'Ingresado';
+              colorSelected = '#3363FF';
+              texto = 'En Transito';
           }
           return (
             <small
