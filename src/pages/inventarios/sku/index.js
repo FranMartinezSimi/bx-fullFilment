@@ -169,7 +169,6 @@ const Sku = () => {
                             <div className="">
                               <p
                                 className="mb-1 ms-1"
-                                style={{ color: '#A4A4A4' }}
                               >
                                 SKU
                               </p>
@@ -193,7 +192,6 @@ const Sku = () => {
                             <div className="">
                               <p
                                 className="mb-1 ms-1"
-                                style={{ color: '#A4A4A4' }}
 
                               >
                                 Descripción
@@ -218,7 +216,6 @@ const Sku = () => {
                             <div className="">
                               <p
                                 className="mb-1 ms-1"
-                                style={{ color: '#A4A4A4' }}
 
                               >
                                 Largo cm
@@ -243,7 +240,6 @@ const Sku = () => {
                             <div className="">
                               <p
                                 className="mb-1 ms-1"
-                                style={{ color: '#A4A4A4' }}
 
                               >
                                 Ancho cm
@@ -269,7 +265,6 @@ const Sku = () => {
                             <div className="">
                               <p
                                 className="mb-1 ms-1"
-                                style={{ color: '#A4A4A4' }}
 
                               >
                                 Alto cm
@@ -298,7 +293,6 @@ const Sku = () => {
                             <div className="">
                               <p
                                 className="mb-1 ms-1"
-                                style={{ color: '#A4A4A4' }}
 
                               >
                                 Peso Kg
