@@ -109,3 +109,18 @@ h2 {
 .h {
   height: 440px;
 }
+
+.btnSecondary{
+  display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+width: 149px;
+height: 48px;
+left: 491px;
+top: 662px;
+color: white;
+/* Naranjo full */
+background: #E5713D;
+border-radius: 10px;
+}
