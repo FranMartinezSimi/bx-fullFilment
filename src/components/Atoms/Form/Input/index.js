@@ -1,2 +1,2 @@
-/* eslint-disable import/prefer-default-export */
-export { default as InputText } from './InputText';
+export { default as InputText } from './Text';
+export { default as InputDate } from './Date';

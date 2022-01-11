@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
 
-import styles from './InputText.module.scss';
+import styles from './text.module.scss';
 
-const InputText = ({
+const InputText = forwardRef(({
   className,
   id,
   disabled,
@@ -12,7 +12,8 @@ const InputText = ({
   onChangeText,
   placeholder,
   readOnly,
-}) => {
+  onClick,
+}, ref) => {
   const onChangeHandle = useCallback((event) => {
     if (onChangeText) {
       onChangeText(event.target.value);
@@ -21,6 +22,7 @@ const InputText = ({
 
   return (
     <input
+      ref={ref}
       type="text"
       className={cs('form-control', {
         [styles.disabled]: readOnly || disabled,
@@ -32,10 +34,11 @@ const InputText = ({
       value={value}
       onChange={onChangeHandle}
       placeholder={placeholder}
-      // readOnly={readOnly}
+      readOnly={readOnly}
+      onClick={onClick}
     />
   );
-};
+});
 
 InputText.defaultProps = {
   className: undefined,
@@ -43,6 +46,7 @@ InputText.defaultProps = {
   disabled: false,
   value: undefined,
   onChangeText: undefined,
+  onClick: undefined,
   placeholder: undefined,
   readOnly: false,
 };
@@ -53,6 +57,7 @@ InputText.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.string,
   onChangeText: PropTypes.func,
+  onClick: PropTypes.func,
   placeholder: PropTypes.string,
   readOnly: PropTypes.bool,
 };
