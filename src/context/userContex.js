@@ -38,6 +38,10 @@ const AuthProvider = (props) => {
   useEffect(() => {
     if (!user) return;
 
+    const activeSession = localStorage.getItem('bxBusinessActiveSession');
+
+    if (!activeSession) return;
+
     const userData = JSON.parse(user);
 
     clientFetch('bff/v1/contact/findContact', {
