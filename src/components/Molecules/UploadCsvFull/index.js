@@ -1,8 +1,8 @@
 import { CSVReader } from 'react-papaparse';
-import plus from 'assets/brand/plus.svg';
+import plus from 'assets/brand/add.svg';
 import PropTypes from 'prop-types';
 
-const UploadCsv = ({
+const UploadCsvFull = ({
   setDataToValidate, setDataToUpload, setDataWhitErrors, size, title,
 }) => {
   const handleOnDrop = (data) => {
@@ -69,7 +69,7 @@ const UploadCsv = ({
   const styleXl = {
     dropArea: {
       borderColor: '#3363FF',
-      borderRadius: 0,
+      borderRadius: 10,
       background: '#FBFBFB',
     },
     dropAreaActive: {
@@ -113,7 +113,9 @@ const UploadCsv = ({
     >
       <span className={`${size === 'small' ? 'd-flex align-items-center' : ''}`}>
         <div className={`${size === 'small' ? 'me-3' : 'my-3'}`}>
-          <img src={plus} alt="Ordenes" width={`${size === 'small' ? '30' : '50'}`} />
+          <div className="d-flex justify-content-center">
+            <img src={plus} alt="Ordenes" width={`${size === 'small' ? '30' : '50'}`} />
+          </div>
         </div>
         <ul className="mb-0">
           {title && (
@@ -127,12 +129,18 @@ const UploadCsv = ({
           )}
           <li>
             {size === 'small' ? (
-              <small style={{ fontSize: 10 }}>
-                Arrastra tu archivo o selecciona desde tu computadora
-              </small>
+              <div className="d-flex justify-content-center">
+                <small style={{ fontSize: 10 }}>
+                  <p style={{ background: 'red' }}>
+                    Arrastra tu archivo o selecciona desde tu computadora
+                    en formato Csv y Excel.
+                  </p>
+                </small>
+              </div>
             ) : (
-              <p>
+              <p style={{ color: '#333333', textAlign: 'center' }}>
                 Arrastra tu archivo o selecciona desde tu computadora
+                en formato Csv y Excel.
               </p>
             )}
           </li>
@@ -143,7 +151,7 @@ const UploadCsv = ({
   );
 };
 
-UploadCsv.defaultProps = {
+UploadCsvFull.defaultProps = {
   setDataToValidate: () => { },
   setDataToUpload: () => { },
   setDataWhitErrors: () => { },
@@ -151,11 +159,11 @@ UploadCsv.defaultProps = {
   size: '',
 };
 
-UploadCsv.propTypes = {
+UploadCsvFull.propTypes = {
   setDataToValidate: PropTypes.func,
   setDataToUpload: PropTypes.func,
   setDataWhitErrors: PropTypes.func,
   title: PropTypes.string,
   size: PropTypes.string,
 };
-export default UploadCsv;
+export default UploadCsvFull;

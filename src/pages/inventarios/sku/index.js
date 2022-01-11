@@ -9,7 +9,7 @@ import SkuDetail from 'components/Molecules/SkuDetail';
 import plantilla from 'assets/plantilla.csv';
 import Modal from 'components/Templates/Modal';
 import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
-import UploadCsv from 'components/Molecules/UploadCsv';
+import UploadCsvFull from 'components/Molecules/UploadCsvFull';
 import Button from 'components/Atoms/Button';
 import styles from './styles.module.scss';
 
@@ -28,6 +28,7 @@ const Sku = () => {
     sku: false,
     descripcion: false,
   });
+  const [errorFull, setErrorFull] = useState(false);
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -180,8 +181,34 @@ const Sku = () => {
     // }
   };
 
-  const handleAllSubmit = (e) => {
-    console.log(e);
+  const handleAllSubmit = () => {
+    const obj = JSON.parse(localStorage.getItem('dates'));
+    console.log('AQUÍ', obj);
+    clientFetch('inventory/v1/services/addProducts', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        warehouse: 'bx1',
+        account_id: accountId,
+        key,
+        products: obj,
+      },
+    })
+      .then(() => {
+        setModal(true);
+        setModalTicket(true);
+        handleClickOrderDeatil();
+        handleClear();
+        localStorage.setItem('dates', ' ');
+      })
+      .catch((e) => {
+        console.log(e);
+        setErrorFull(true);
+        setTimeout(() => {
+          setErrorFull(false);
+        }, 3000);
+      });
   };
 
   const handleSearch = () => {
@@ -216,7 +243,6 @@ const Sku = () => {
   return (
     <PageLayout title="Nuevos Productos">
       <PageTitle title="Nuevos Productos" />
-
       <div id="container">
         <div className={styles.col1}>
           <div className="d-flex bd-highlight mb-3">
@@ -380,7 +406,7 @@ const Sku = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="row justify-content-end pt-4">
+                      <div className={`row justify-content-end ${styles.divBtn} mb-2 pb-3 pe-2`}>
                         <div className="col-4">
                           <Button
                             className="btn btn-complementary fs-5 px-5"
@@ -406,14 +432,14 @@ const Sku = () => {
         <div className={styles.col2}>
           <div className="d-flex bd-highlight mb-3">
             <div className="p-2 bd-highlight">
-              {!error.sku && (
+              {!errorFull && (
                 <PageTitle
                   title="Importar SKU"
                   className={`${styles.h1} mb-3`}
                   icon={infoImport}
                 />
               )}
-              {error.sku && (
+              {errorFull && (
                 <div
                   className="alert alert-warning alert-dismissible fade show"
                   role="alert"
@@ -446,13 +472,11 @@ const Sku = () => {
                       <div className="col-12">
                         <div className="p-3 pt-0 pb-0">
                           <div className="col-12">
-                            <UploadCsv
-                              size="small"
+                            <UploadCsvFull
+                              size="medium"
                               setDataToValidate={setDataToValidate}
                               setDataWhitErrors={setDataWhitErrors}
                             />
-                            <input type="file" multiple={false} onChange={handleAllSubmit} />
-
                             {dataWhitErrors.length > 0 && (
                               <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
                             )}
@@ -490,7 +514,7 @@ const Sku = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="row justify-content-end pt-4">
+                      <div className={`row justify-content-end ${styles.divBtn}`}>
                         <div className="col-4">
                           { }
                         </div>
