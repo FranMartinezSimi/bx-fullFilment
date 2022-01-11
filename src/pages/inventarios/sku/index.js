@@ -373,9 +373,7 @@ const Sku = () => {
                                 autoComplete="off"
                                 min={0}
                               />
-                              {dataWhitErrors.length > 0 && (
-                                <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
-                              )}
+
                             </div>
                           </div>
                         </div>
@@ -478,7 +476,7 @@ const Sku = () => {
                               setDataWhitErrors={setDataWhitErrors}
                             />
                             {dataWhitErrors.length > 0 && (
-                              <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
+                              <p className="text-danger">Archivo contiene campos vacíos, verifica los datos y carga nuevamente </p>
                             )}
                           </div>
                         </div>
