@@ -6,10 +6,10 @@ import PageTitle from 'components/Atoms/PageTitle';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
 import info from 'assets/brand/info-ico.svg';
 import SkuDetail from 'components/Molecules/SkuDetail';
-// import plantilla from 'assets/plantilla.csv';
+import plantilla from 'assets/plantilla.csv';
 import Modal from 'components/Templates/Modal';
-// import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
-// import DropZone from 'components/Molecules/DropZone';
+import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
+import UploadCsvFull from 'components/Molecules/UploadCsvFull';
 import Button from 'components/Atoms/Button';
 import styles from './styles.module.scss';
 
@@ -18,7 +18,8 @@ const Sku = () => {
   const [setModalTicket] = useState(false);
   const [dataWhitErrors, setDataWhitErrors] = useState([]);
   const [modal, setModal] = useState(false);
-  // const [setSelectedFiles] = useState([]);
+  const [dataToValidate, setDataToValidate] = useState([]);
+  const [btnDisabled, setBtnDisabled] = useState(true);
   const [disabled, setDisabled] = useState(true);
   const userData = JSON.parse(user);
   const { accountId, key } = userData.credential;
@@ -27,6 +28,7 @@ const Sku = () => {
     sku: false,
     descripcion: false,
   });
+  const [errorFull, setErrorFull] = useState(false);
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -39,9 +41,71 @@ const Sku = () => {
       }));
     }
   };
+  const validateData = () => {
+    setBtnDisabled(true);
+
+    let itemsWhitErrors = [];
+    let count = 0;
+
+    const DATA_TO_VALIDATE = dataToValidate.map((item, k) => {
+      let errors = [];
+      const itemData = Object.keys(item);
+      itemData.map((property) => {
+        if (item[property].length === 0) {
+          errors = [...errors, property];
+          count = 1;
+        }
+
+        return property;
+      });
+      if (errors.length) {
+        itemsWhitErrors = [
+          ...itemsWhitErrors,
+          {
+            ...item,
+            key: k,
+            errors,
+          },
+        ];
+      } else {
+        itemsWhitErrors = [
+          ...itemsWhitErrors,
+          {
+            ...item,
+            key: k,
+          },
+        ];
+      }
+      return item;
+    });
+
+    if (count > 0) {
+      setDataWhitErrors(itemsWhitErrors);
+    }
+
+    if (count === 0 && dataToValidate.length) {
+      const dataToSendFormat = DATA_TO_VALIDATE.map((item) => ({
+        sku: item.SKU,
+        qty: item.CANTIDAD,
+        desciption: item.DESCRIPCION,
+        // weight: item.PESO,
+      }));
+      setDataWhitErrors([]);
+      setForm({
+        ...form,
+        data: {
+          ...form.data,
+          items: dataToSendFormat,
+        },
+      });
+      setBtnDisabled(false);
+    }
+  };
   useEffect(() => {
-  }, []);
+    validateData();
+  }, [dataToValidate]);
   const infoAdd = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Ingresa todos los datos solicitados para crear un nuevo SKU" color="#BFEAFF" />;
+  const infoImport = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Descarga la plantilla y completa los campos solicitados para crear nuevos SKU de forma masiva " color="#BFEAFF" />;
   const handleClear = () => {
     setError({ sku: false });
     const keys = Object.keys(form);
@@ -89,32 +153,62 @@ const Sku = () => {
     };
     const objeto1 = [''];
     objeto1.push(objeto);
-    const { sku } = objeto;
-    if (sku.length === 0) {
-      console.log('sin campos');
-    } else {
-      clientFetch('inventory/v1/services/addProducts', {
-        headers: {
-          apikey: process.env.REACT_APP_API_KEY_KONG,
-        },
-        body: {
-          warehouse: 'bx1',
-          account_id: accountId,
-          key,
-          products: [objeto],
-        },
+    // const { sku } = objeto;
+    // if (sku.length === 0) {
+    //   console.log('sin campos');
+    // } else {
+    clientFetch('inventory/v1/services/addProducts', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        warehouse: 'bx1',
+        account_id: accountId,
+        key,
+        products: [objeto],
+      },
+    })
+      .then(() => {
+        setModal(true);
+        setModalTicket(true);
+        handleClickOrderDeatil();
+        handleClear();
       })
-        .then(() => {
-          setModal(true);
-          setModalTicket(true);
-          handleClickOrderDeatil();
-          handleClear();
-        })
-        .catch((e) => {
-          console.log(e);
-          setError({ sku: true });
-        }); setDataWhitErrors([]);
-    }
+      .catch((e) => {
+        console.log(e);
+        setError({ sku: true });
+      }); setDataWhitErrors([]);
+    // }
+  };
+
+  const handleAllSubmit = () => {
+    const obj = JSON.parse(localStorage.getItem('dates'));
+    console.log('AQUÍ', obj);
+    clientFetch('inventory/v1/services/addProducts', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        warehouse: 'bx1',
+        account_id: accountId,
+        key,
+        products: obj,
+      },
+    })
+      .then(() => {
+        setModal(true);
+        setModalTicket(true);
+        handleClickOrderDeatil();
+        handleClear();
+        localStorage.setItem('dates', ' ');
+      })
+      .catch((e) => {
+        console.log(e);
+        setErrorFull(true);
+        setTimeout(() => {
+          setErrorFull(false);
+        }, 3000);
+      });
   };
 
   const handleSearch = () => {
@@ -149,7 +243,6 @@ const Sku = () => {
   return (
     <PageLayout title="Nuevos Productos">
       <PageTitle title="Nuevos Productos" />
-
       <div id="container">
         <div className={styles.col1}>
           <div className="d-flex bd-highlight mb-3">
@@ -313,7 +406,7 @@ const Sku = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="row justify-content-end pt-4">
+                      <div className={`row justify-content-end ${styles.divBtn} mb-2 pb-3 pe-2`}>
                         <div className="col-4">
                           <Button
                             className="btn btn-complementary fs-5 px-5"
@@ -336,87 +429,111 @@ const Sku = () => {
             </div>
           </div>
         </div>
-        {/* <div className={styles.col2}>
+        <div className={styles.col2}>
           <div className="d-flex bd-highlight mb-3">
             <div className="p-2 bd-highlight">
-              <PageTitle
-                title="Importar SKU"
-                className={`${styles.h1} mb-3`}
-                icon={infoImport}
-              />
+              {!errorFull && (
+                <PageTitle
+                  title="Importar SKU"
+                  className={`${styles.h1} mb-3`}
+                  icon={infoImport}
+                />
+              )}
+              {errorFull && (
+                <div
+                  className="alert alert-warning alert-dismissible fade show"
+                  role="alert"
+                  style={{ background: '#FFE9E9', borderColor: 'red', color: 'red' }}
+                >
+                  <span className="text-danger font-weight-bold">
+                    <p
+                      className="font-weight-bold p-0 m-0 text-center"
+                      style={{ fontWeight: 'bold' }}
+                    >
+                      Algo salió mal, verifica el formato de tu archivo
+                    </p>
+                  </span>
+                  <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
+                </div>
+              )}
               <div className="row g-0">
                 <div className="container">
-                  <div className={`${styles.h} row g-2`}>
-                    <div className="col-12">
-                      <div className="p-3 pt-0 pb-0">
-                        <div className="col-12">
-                          <div className="pt-4 pb-4">
-                            <h2>Carga el archivo de los sku</h2>
+                  <form onSubmit={handleAllSubmit} className="App">
+                    <div className={`${styles.h} row g-2`}>
+                      <div className="col-12">
+                        <div className="p-3 pt-0 pb-0">
+                          <div className="col-12">
+                            <div className="pt-4 pb-4">
+                              <h2>Carga el archivo de los sku</h2>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-12">
-                      <div className="p-3 pt-0 pb-0">
-                        <div className="col-12">
-                          <DropZone
-                            setSelectedFiles={setSelectedFiles}
-                            size="medium"
-                            internalTitle="Arrastra tu archivo o selecciona
-                             desde tu computadora en formato Csv y Excel"
-                            noValidation
+                      <div className="col-12">
+                        <div className="p-3 pt-0 pb-0">
+                          <div className="col-12">
+                            <UploadCsvFull
+                              size="medium"
+                              setDataToValidate={setDataToValidate}
+                              setDataWhitErrors={setDataWhitErrors}
+                            />
+                            {dataWhitErrors.length > 0 && (
+                              <p className="text-danger">Tu archivo tiene campos vacíos, llénalos para continuar...</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="p-3 pt-0 pb-0">
+                          <div className="col-12">
+                            <a href={plantilla} className="btn btn-complementary w-26 me-3" download>
+                              <img src={loadArrowOrange} alt="Download" width="16" />
+                              <span className="ps-2"> Descarga plantilla</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="p-3 pt-0 pb-0">
+                          <div className="col-12">
+                            { }
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="p-3 pt-0 pb-0">
+                          <div className="col-12">
+                            { }
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="p-3 pt-0 pb-0">
+                          <div className="col-12">
+                            { }
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`row justify-content-end ${styles.divBtn}`}>
+                        <div className="col-4">
+                          { }
+                        </div>
+                        <div className="col-4">
+                          <Button
+                            className="btn btn-secondary fs-5 px-5 me-0"
+                            text="Agregar"
+                            disabled={btnDisabled}
+                            onClick={handleAllSubmit}
                           />
                         </div>
                       </div>
                     </div>
-                    <div className="col-6">
-                      <div className="p-3 pt-0 pb-0">
-                        <div className="col-12">
-                          <a href={plantilla} className="btn btn-complementary w-26 me-3" download>
-                            <img src={loadArrowOrange} alt="Download" width="16" />
-                            <span className="ps-2"> Descarga plantilla</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="p-3 pt-0 pb-0">
-                        <div className="col-12">
-                          { }
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="p-3 pt-0 pb-0">
-                        <div className="col-12">
-                          { }
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="p-3 pt-0 pb-0">
-                        <div className="col-12">
-                          { }
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row justify-content-end pt-4">
-                      <div className="col-4">
-                        { }
-                      </div>
-                      <div className="col-4">
-                        <Button
-                          className="btn btn-secondary fs-5 px-5 me-0"
-                          text="Agregar"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <Modal
         showModal={modal}
