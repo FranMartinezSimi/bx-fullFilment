@@ -462,7 +462,7 @@ const Sku = () => {
                         <div className="p-3 pt-0 pb-0">
                           <div className="col-12">
                             <div className="pt-4 pb-4">
-                              <h2>Carga el archivo de los sku</h2>
+                              <h2 style={{ fontSize: '18px', fontFamily: '21px', textAlign: 'center', color: 'black', lineHeight: '21px' }}>Carga masiva SKU</h2>
                             </div>
                           </div>
                         </div>
