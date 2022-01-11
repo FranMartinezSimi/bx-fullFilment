@@ -1,13 +1,33 @@
-import React, {
-  createContext, useState, useEffect, useContext,
-} from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import clientFetch from 'lib/client-fetch';
 
-const AuthContext = createContext({});
+const AuthContext = createContext({
+  user: null,
+  userParsed: null,
+  seller: {
+    emailContact: '',
+    nameContact: '',
+    nameSeller: '',
+    phoneContact: '',
+  },
+  setUser: () => {},
+});
 
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState({
+    userParsed: null,
+    seller: {
+      emailContact: '',
+      nameContact: '',
+      nameSeller: '',
+      phoneContact: '',
+    },
+  });
 
-  const bxBusinessActiveFulfillment = localStorage.getItem('bxBusinessActiveFulfillment');
+  const bxBusinessActiveFulfillment = localStorage.getItem(
+    'bxBusinessActiveFulfillment',
+  );
 
   useEffect(() => {
     if (bxBusinessActiveFulfillment) {
@@ -15,7 +35,27 @@ const AuthProvider = (props) => {
     }
   }, [bxBusinessActiveFulfillment]);
 
-  return <AuthContext.Provider value={{ user, setUser }} {...props} />;
+  useEffect(() => {
+    if (!user) return;
+
+    const userData = JSON.parse(user);
+
+    clientFetch('bff/v1/contact/findContact', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        accountId: userData.credential.accountId,
+      },
+    }).then((sellerResponse) => {
+      setAuth({
+        userParsed: userData,
+        seller: sellerResponse,
+      });
+    });
+  }, [user]);
+
+  return <AuthContext.Provider value={{ user, setUser, ...auth }} {...props} />;
 };
 
 const useAuth = () => {

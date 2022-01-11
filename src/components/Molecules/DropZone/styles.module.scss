@@ -5,12 +5,12 @@
   align-items: center;
   border-width: 2px;
   border-radius: 2px;
-  border-color: #3363FF;
-	border-radius: 10px;
+  border-color: #3363ff;
+  border-radius: 10px;
   border-style: dashed;
   background-color: #fafafa;
   outline: none;
-  transition: border .24s ease-in-out;
+  transition: border 0.24s ease-in-out;
   cursor: pointer;
   &Small {
     padding: 5px;
@@ -37,7 +37,7 @@
   font-size: 10px;
 }
 .fileSize {
-  color: #3363FF;
+  color: #3363ff;
 }
 
 .closeButton {
@@ -45,24 +45,21 @@
   border: none;
 }
 
-.smallAlert{
-	color: red;
-	font-size: 12px;;
+.smallAlert {
+  color: red;
+  font-size: 12px;
 }
 
-.adj{
-width: 239px;
-height: 26px;
-left: 842px;
-top: 457px;
+.adj {
+  width: 178px;
+  left: calc(50% - 178px / 2 - 134.5px);
 
-font-family: Lato;
-font-style: normal;
-font-weight: 300;
-font-size: 10px;
-line-height: 12px;
-text-align: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 12px;
+  align-items: center;
 
-color: #333333;
-
+  color: #333333;
 }

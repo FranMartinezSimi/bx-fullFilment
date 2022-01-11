@@ -7,6 +7,7 @@
   &-control {
     border-radius: 16px;
     padding: 6px 10px;
+    border: 1px solid rgb(26, 111, 153);
     &:focus {
       border:  1px solid $grey;
       box-shadow: none;

@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.1.9",
     "apexcharts": "^3.26.3",
     "blob-util": "^2.0.2",
+    "classnames": "^2.3.1",
     "date-fns": "^2.23.0",
     "jotai": "^0.16.0",
     "jwt-decode": "^3.1.2",
