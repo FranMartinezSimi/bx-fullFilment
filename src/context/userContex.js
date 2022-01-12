@@ -37,6 +37,8 @@ const AuthProvider = (props) => {
   }, []);
 
   useEffect(() => {
+    if (!user) return;
+
     if (!activeSession) {
       const session = localStorage.getItem('bxBusinessActiveSession');
       setActiveSession(JSON.parse(session));
