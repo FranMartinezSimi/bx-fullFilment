@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
+import { useAuth } from 'context/userContex';
 import jwt from 'jwt-decode';
 import useNotify from 'hooks/useNotify';
 import LogoBlue from 'assets/brand/logoBlue.svg';
@@ -14,6 +15,7 @@ const urlLogin = process.env.REACT_APP_AUTH_URL;
 
 const LogIn = () => {
   const { setUserKeyclock } = useKeyclockAuth();
+  const { setActiveSession } = useAuth();
   const [passwordShown, setPasswordShown] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
@@ -83,6 +85,7 @@ const LogIn = () => {
           localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
 
           setUserKeyclock(bxBusinessActiveSession);
+          setActiveSession(result);
           setLoading(false);
 
           return result;
