@@ -11,10 +11,13 @@ const AuthContext = createContext({
     phoneContact: '',
   },
   setUser: () => {},
+  setActiveSession: () => {},
+  activeSession: null,
 });
 
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [activeSession, setActiveSession] = useState(null);
   const [auth, setAuth] = useState({
     userParsed: null,
     seller: {
@@ -25,22 +28,20 @@ const AuthProvider = (props) => {
     },
   });
 
-  const bxBusinessActiveFulfillment = localStorage.getItem(
-    'bxBusinessActiveFulfillment',
-  );
+  useEffect(() => {
+    const userStorage = localStorage.getItem('bxBusinessActiveFulfillment');
+
+    if (!userStorage) return;
+
+    setUser(userStorage);
+  }, []);
 
   useEffect(() => {
-    if (bxBusinessActiveFulfillment) {
-      setUser(bxBusinessActiveFulfillment);
+    if (!activeSession) {
+      const session = localStorage.getItem('bxBusinessActiveSession');
+      setActiveSession(JSON.parse(session));
+      return;
     }
-  }, [bxBusinessActiveFulfillment]);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const activeSession = localStorage.getItem('bxBusinessActiveSession');
-
-    if (!activeSession) return;
 
     const userData = JSON.parse(user);
 
@@ -57,9 +58,20 @@ const AuthProvider = (props) => {
         seller: sellerResponse,
       });
     });
-  }, [user]);
+  }, [activeSession, user]);
 
-  return <AuthContext.Provider value={{ user, setUser, ...auth }} {...props} />;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        setActiveSession,
+        activeSession,
+        ...auth,
+      }}
+      {...props}
+    />
+  );
 };
 
 const useAuth = () => {
