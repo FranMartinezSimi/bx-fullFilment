@@ -5,18 +5,29 @@ const InventoryContext = createContext({
   setProductsToReposition: () => {},
   updateQuantities: () => {},
   quantitiesBySku: {},
+  removeSku: () => {},
 });
 
 const InventoryProvider = ({ children }) => {
   const [productsToReposition, setProductsToReposition] = useState([]);
   const [quantitiesBySku, setQuantitiesBySku] = useState({});
 
-  const updateQuantities = useCallback((sku, quantity) => {
-    setQuantitiesBySku((prevState) => ({
-      ...prevState,
-      [sku]: quantity,
-    }));
-  }, [quantitiesBySku]);
+  const updateQuantities = useCallback(
+    (sku, quantity) => {
+      setQuantitiesBySku((prevState) => ({
+        ...prevState,
+        [sku]: quantity,
+      }));
+    },
+    [quantitiesBySku],
+  );
+
+  const removeSku = useCallback(
+    (sku) => {
+      setProductsToReposition((prevState) => prevState.filter((product) => product.sku !== sku));
+    },
+    [],
+  );
 
   return (
     <InventoryContext.Provider
@@ -25,6 +36,7 @@ const InventoryProvider = ({ children }) => {
         setProductsToReposition,
         updateQuantities,
         quantitiesBySku,
+        removeSku,
       }}
     >
       {children}

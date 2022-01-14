@@ -24,7 +24,7 @@ const Pagination = ({
                 onChange={(e) => {
                   setPageSize(Number(e.target.value));
                 }}
-                className="form-select ps-4"
+                className="form-select ps-4 shadow"
                 style={{
                   border: 'none',
                   boxShadow: '0px 2px 4px -2px rgba(24, 39, 75, 0.12), 0px 4px 4px -2px rgba(24, 39, 75, 0.08)',
