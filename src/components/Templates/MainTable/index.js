@@ -1,15 +1,22 @@
-import { useEffect, useRef, forwardRef } from 'react';
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   useTable,
   useSortBy,
   usePagination,
   useFilters,
   useGlobalFilter,
-  useRowSelect,
 } from 'react-table';
 import PropTypes from 'prop-types';
 import { useExportData } from 'react-table-plugins';
 import Papa from 'papaparse';
+import Omit from 'lodash/omit';
 
 import GlobalFilter from 'components/Molecules/GlobalFilter';
 import Pagination from 'components/Molecules/Pagination';
@@ -60,6 +67,28 @@ function MainTable({
   selectableRow,
   onChangeSelection,
 }) {
+  const [rowsSelected, setRowsSelected] = useState({});
+  const [allSelected, setAllSelected] = useState(false);
+
+  const isIndeterminate = useMemo(() => {
+    if (allSelected) return false;
+
+    return Boolean(Object.keys(rowsSelected).length);
+  }, [rowsSelected, allSelected]);
+
+  const toggleSelected = useCallback((id, row) => {
+    setRowsSelected((selected) => {
+      if (selected[id]) {
+        return Omit(selected, id);
+      }
+
+      return {
+        ...selected,
+        [id]: row,
+      };
+    });
+  }, []);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -79,7 +108,7 @@ function MainTable({
     setPageSize,
     exportData,
     state: { pageIndex, pageSize },
-    selectedFlatRows,
+    flatRows,
   } = useTable(
     {
       columns,
@@ -92,56 +121,13 @@ function MainTable({
     useSortBy,
     usePagination,
     useExportData,
-    useRowSelect,
-    (hooks) => {
-      hooks.visibleColumns.push((visibleColumns) => {
-        if (!selectableRow) {
-          return visibleColumns;
-        }
-
-        return [
-          {
-            id: 'selection',
-            canSort: false,
-            disableSortBy: true,
-            Header: ({
-              getToggleAllPageRowsSelectedProps,
-              toggleAllRowsSelected,
-            }) => {
-              const {
-                checked,
-                indeterminate,
-                style,
-                title,
-              } = getToggleAllPageRowsSelectedProps();
-
-              return (
-                <IndeterminateCheckbox
-                  checked={checked}
-                  indeterminate={indeterminate}
-                  style={style}
-                  title={title}
-                  onClick={() => toggleAllRowsSelected()}
-                />
-              );
-            },
-            Cell: ({ row }) => (
-              <div>
-                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-              </div>
-            ),
-          },
-          ...visibleColumns,
-        ];
-      });
-    },
   );
 
   useEffect(() => {
     if (!selectableRow || !onChangeSelection) return;
 
-    onChangeSelection(selectedFlatRows.map((flatRow) => flatRow.original));
-  }, [selectableRow, selectedFlatRows]);
+    onChangeSelection(Object.keys(rowsSelected).map((id) => rowsSelected[id]));
+  }, [isIndeterminate, allSelected, rowsSelected, onChangeSelection]);
 
   return (
     <div>
@@ -188,15 +174,40 @@ function MainTable({
                 {...headerGroup.getHeaderGroupProps()}
                 className={styles.tableRowHeader}
               >
-                {headerGroup.headers.map((column, indexColumn) => (
+                {selectableRow && (
+                  <th className={`display-font ${styles.tableTh}`}>
+                    <IndeterminateCheckbox
+                      checked={allSelected}
+                      indeterminate={isIndeterminate}
+                      onClick={() => {
+                        if (isIndeterminate || !allSelected) {
+                          setAllSelected(true);
+                          setRowsSelected(
+                            flatRows.reduce(
+                              (acum, row) => ({
+                                ...acum,
+                                [row.id]: row.values,
+                              }),
+                              {},
+                            ),
+                          );
+
+                          return;
+                        }
+
+                        setAllSelected(false);
+                        setRowsSelected({});
+                      }}
+                    />
+                  </th>
+                )}
+                {headerGroup.headers.map((column) => (
                   <th
                     className={`display-font ${styles.tableTh}`}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
                     {column.render('Header')}
-                    {indexColumn === 0 && selectableRow ? (
-                      ''
-                    ) : !column.isSorted ? (
+                    {!column.isSorted ? (
                       <span className={styles.symbol}>
                         <img src={Sort} alt="sort" className="ms-2" width="8" />
                       </span>
@@ -234,6 +245,15 @@ function MainTable({
                   prepareRow(row);
                   return (
                     <tr style={{ whiteSpace: 'nowrap' }} {...row.getRowProps()}>
+                      {selectableRow && (
+                        <td>
+                          <IndeterminateCheckbox
+                            checked={Boolean(rowsSelected[row.id])}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => toggleSelected(row.id, row.values)}
+                          />
+                        </td>
+                      )}
                       {row.cells.map((cell) => (
                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                       ))}
@@ -243,7 +263,7 @@ function MainTable({
               </>
             ) : (
               <tr>
-                <td colSpan={columns.length}>
+                <td colSpan={columns.length + (selectableRow ? 1 : 0)}>
                   <p>No se encontraron datos</p>
                 </td>
               </tr>
