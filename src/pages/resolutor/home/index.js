@@ -223,14 +223,14 @@ const homeResolutor = () => {
           </Card>
         </div>
         {statisticsData.length > 0 && !errorChart && (
-          <div className="col-md-3 pt-5">
+          <div className="col-md-3 py-5">
             <div className="bg-complementary-color text-white shadow py-2 mt-5" style={{ borderRadius: 15 }}>
               {openChart && (
                 <Chart
                   options={openChart.options}
                   series={openChart.series}
                   type="radialBar"
-                  height={120}
+                  height={110}
                 />
               )}
               <p className="text-center" style={{ fontSize: 15 }}>
@@ -250,7 +250,7 @@ const homeResolutor = () => {
                   options={closeChart.options}
                   series={closeChart.series}
                   type="radialBar"
-                  height={120}
+                  height={100}
                 />
               )}
               <p className="text-center display-font" style={{ fontSize: 15 }}>
@@ -269,71 +269,67 @@ const homeResolutor = () => {
       </div>
       {statisticsData.length > 0 && !errorChart && (
         <div className="row mb-5">
-          <div className="col-12">
-            <Card className="shadow">
-              <p className="display-font">
-                <b>
-                  Tickets Recientes
-                </b>
-              </p>
-              <table className="table align-middle table-borderless table-hover ">
-                <thead>
-                  <tr>
-                    <th scope="col-5">
-                      <p className="fs-5 m-0 display-font">
-                        <b> Order Id</b>
+          <Card className="shadow">
+            <p className="display-font">
+              <b>
+                Tickets Recientes
+              </b>
+            </p>
+            <table className="table align-middle table-borderless table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col-5">
+                    <p className="fs-5 m-0 display-font">
+                      <b> Order Id</b>
+                    </p>
+                  </th>
+                  <th scope="col-2">
+                    <p className="fs-5 m-0 display-font">
+                      <b>Motivo</b>
+                    </p>
+                  </th>
+                  <th scope="col-2">
+                    <p className="fs-5 m-0 display-font">
+                      <b>Cliente</b>
+                    </p>
+                  </th>
+                  <th scope="col-3">
+                    <p className="fs-5 m-0 display-font">
+                      <b>Comentario</b>
+                    </p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {ticketsResume && ticketsResume.map((item) => (
+                  <tr className="greyTbody">
+                    <td>
+                      <p className="py-3 m-0">
+                        {item.orderId}
                       </p>
-                    </th>
-                    <th scope="col-2">
-                      <p className="fs-5 m-0 display-font">
-                        <b>Motivo</b>
+                    </td>
+                    <td>
+                      <p className="py-3 m-0">
+                        {item.motivo}
                       </p>
-                    </th>
-                    <th scope="col-2">
-                      <p className="fs-5 m-0 display-font">
-                        <b>Cliente</b>
+                    </td>
+                    <td>
+                      <p className="py-3 m-0">
+                        {item.empresa}
                       </p>
-                    </th>
-                    <th scope="col-3">
-                      <p className="fs-5 m-0 display-font">
-                        <b>Comentario</b>
+                    </td>
+                    <td>
+                      <p className="py-3 m-0">
+                        {item.comentario.substring(0, 140)}
+                        ...
                       </p>
-                    </th>
+                    </td>
                   </tr>
-                </thead>
-                <tbody
-                  style={{ display: 'block' }}
-                >
-                  {ticketsResume && ticketsResume.map((item) => (
-                    <tr className="greyTbody">
-                      <td>
-                        <p className="py-3 m-0">
-                          {item.orderId}
-                        </p>
-                      </td>
-                      <td>
-                        <p className="py-3 m-0">
-                          {item.motivo}
-                        </p>
-                      </td>
-                      <td>
-                        <p className="py-3 m-0">
-                          {item.empresa}
-                        </p>
-                      </td>
-                      <td>
-                        <p className="py-3 m-0">
-                          {item.comentario.substring(0, 140)}
-                          ...
-                        </p>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                ))}
+              </tbody>
 
-              </table>
-            </Card>
-          </div>
+            </table>
+          </Card>
         </div>
       )}
     </PageLayout>
