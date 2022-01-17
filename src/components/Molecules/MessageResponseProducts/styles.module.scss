@@ -1,0 +1,79 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+.gridItem {
+  border: 2px solid rgba(0, 0, 0, 0);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.gridItem2 {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-top:0px;
+  border-bottom: 0px;
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+
+
+#inner {  
+  border: 1px solid none;
+}
+
+#outer {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
+.title{
+
+
+/* H5 app */
+
+font-family: Mont;
+font-size: 26px;
+line-height: 30px;
+
+color: #000000;
+}
+
+.status{
+
+font-family: Mont;
+font-size: 22px;
+line-height: 26px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+}
+.subtitle{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 145%;
+/* or 23px */
+
+text-align: center;
+letter-spacing: 0.03em;
+
+color: #000000;
+}
+
+.textIndicator{
+
+font-family: Mont;
+font-size: 15px;
+line-height: 109.9%;
+/* or 16px */
+color: #000000;
+}

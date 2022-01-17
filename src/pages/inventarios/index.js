@@ -124,6 +124,11 @@ const Inventory = () => {
         setLoading(false);
       });
   }, []);
+  if (error) {
+    component = <h1>Un Error ql</h1>;
+  } else {
+    component = <h1>Cargando</h1>;
+  }
 
   return (
     <PageLayout title="Tu inventario">
