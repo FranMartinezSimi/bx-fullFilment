@@ -125,7 +125,7 @@ const Inventory = () => {
       });
   }, []);
   if (error) {
-    component = <h1>Un Error ql</h1>;
+    component = <h1>Cargando</h1>;
   } else {
     component = <h1>Cargando</h1>;
   }

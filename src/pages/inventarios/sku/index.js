@@ -25,6 +25,7 @@ const Sku = () => {
   const userData = JSON.parse(user);
   const { accountId, key } = userData.credential;
   const [form, setForm] = useState({});
+  const [products, setProducts] = useState({});
   const [error, setError] = useState({
     sku: false,
     descripcion: false,
@@ -163,10 +164,6 @@ const Sku = () => {
     };
     const objeto1 = [''];
     objeto1.push(objeto);
-    // const { sku } = objeto;
-    // if (sku.length === 0) {
-    //   console.log('sin campos');
-    // } else {
     clientFetch('inventory/v1/services/addProducts', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -191,7 +188,6 @@ const Sku = () => {
     // }
   };
   const handleAllSubmit = () => {
-    const obj = JSON.parse(localStorage.getItem('dates'));
     clientFetch('inventory/v1/services/addProducts', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -200,7 +196,7 @@ const Sku = () => {
         warehouse: 'bx1',
         account_id: accountId,
         key,
-        products: obj,
+        products,
       },
     })
       .then((res) => {
@@ -209,7 +205,7 @@ const Sku = () => {
         console.log(resp[1].result);
         const { created, errors } = resp[1].result;
         console.log(created.length);
-        console.log(errors.length);
+        console.log('Errors', errors.length);
         if (created.length > 0 && errors.length === 0) {
           setResponse({
             img: 'bgsuccess',
@@ -237,7 +233,6 @@ const Sku = () => {
         setModalTicket(true);
         handleClickOrderDeatil();
         handleClear();
-        localStorage.removeItem('dates');
       })
       .catch((e) => {
         console.log(e);
@@ -279,7 +274,7 @@ const Sku = () => {
     component = (
       <MessageResponseProducts
         procesado={response.procesado}
-        fallidos={response.errors}
+        fallidos={response.fallidos}
         agregados={response.procesado}
         estado={response.estado}
         comentario={response.comentario}
@@ -518,6 +513,7 @@ const Sku = () => {
                                   size="medium"
                                   setDataToValidate={setDataToValidate}
                                   setDataWhitErrors={setDataWhitErrors}
+                                  onChange={setProducts}
                                 />
                                 {dataWhitErrors.length > 0 && (
                                   <p className="text-danger">Archivo contiene campos vacíos, verifica los datos y carga nuevamente </p>

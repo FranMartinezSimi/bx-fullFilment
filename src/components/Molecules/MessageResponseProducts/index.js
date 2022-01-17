@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comentario, img }) => {
   let component;
   const [show, setShow] = useState(false);
+  const history = useHistory();
 
   const handleshow = () => {
     if (!show) {
@@ -12,6 +14,10 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
     } else {
       setShow(false);
     }
+  };
+  const handleClickGoInventory = (e) => {
+    e.preventDefault();
+    history.push('/inventario');
   };
   return (
     <>
@@ -105,7 +111,7 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
             <div id={styles.outer}>
               <div id={styles.inner}>
                 <div className="p-2 bd-highlight d-flex justify-content-end">
-                  <a href="#!" className="btn btn-secondary " onClick={handleshow} style={{ fontSize: 17 }}>
+                  <a href="#!" className="btn btn-secondary " onClick={handleClickGoInventory} style={{ fontSize: 17 }}>
                     Aceptar
                   </a>
                 </div>
