@@ -1,6 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
-
-import clientFetch from 'lib/client-fetch';
+import { useState, useMemo, useCallback } from 'react';
 
 import MainTable from 'components/Templates/MainTable';
 import { InputQuantity } from 'components/Atoms/Form/Input';
@@ -8,16 +6,14 @@ import Modal from 'components/Templates/Modal';
 import { useInventory } from 'context/useInventory';
 
 const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
-  const [inventory, setInventory] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [, setLoading] = useState(true);
-  const [, setError] = useState(false);
   const {
     updateQuantities,
     quantitiesBySku,
     productsToReposition,
     productsToRepositionKeyedBySku,
     addSku,
+    inventory,
   } = useInventory();
 
   const columns = [
@@ -46,29 +42,6 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
       accessor: 'quantity_in_warehouse',
     },
   ];
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await clientFetch('bff/v1/inventory/getProductsList', {
-          headers: {
-            apikey: process.env.REACT_APP_API_KEY_KONG,
-          },
-          body: {
-            page: 1,
-            warehouse: 'bx1',
-            status: 'all',
-          },
-        });
-
-        setInventory(response.products);
-      } catch (e) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
 
   const inventoryFiltered = useMemo(() => {
     if (!productsToReposition.length) {

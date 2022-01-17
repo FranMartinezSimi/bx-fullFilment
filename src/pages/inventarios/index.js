@@ -1,7 +1,5 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import clientFetch from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
@@ -14,14 +12,17 @@ import FormReplenishment from 'components/Molecules/FormReplenishment';
 import { useInventory } from 'context/useInventory';
 
 const Inventory = () => {
-  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [modalInventory, setModalInventory] = useState(false);
-  const [list, setList] = useState([]);
   const [inventoryId, setInventoryId] = useState('');
   const [skuId, setSkuId] = useState('');
-  const [error, setError] = useState(false);
-  const { setProductsToReposition, productsToReposition } = useInventory();
+  const {
+    setProductsToReposition,
+    productsToReposition,
+    inventory,
+    isGetInventory,
+    errorGetInventory,
+  } = useInventory();
   const { push } = useHistory();
 
   const handleClickInventoryDetail = (e, tableData) => {
@@ -80,7 +81,7 @@ const Inventory = () => {
 
   let component;
 
-  if (error) {
+  if (errorGetInventory) {
     component = (
       <Alert
         className="mt-5"
@@ -106,27 +107,7 @@ const Inventory = () => {
     [productsToReposition],
   );
 
-  useEffect(() => {
-    clientFetch('bff/v1/inventory/getProductsList', {
-      headers: {
-        apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        page: 1,
-        warehouse: 'bx1',
-        status: 'all',
-      },
-    })
-      .then((products) => {
-        setLoading(false);
-        setList(products.products);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
-  }, []);
-  if (error) {
+  if (errorGetInventory) {
     component = <h1>Cargando</h1>;
   } else {
     component = <h1>Cargando</h1>;
@@ -135,12 +116,12 @@ const Inventory = () => {
   return (
     <PageLayout title="Tu inventario">
       <PageTitle title="Tu inventario" className="mb-5" />
-      {list.length && !loading ? (
+      {inventory.length && !isGetInventory ? (
         <MainTable
           selectableRow
           onChangeSelection={setProductsToReposition}
           columns={columns}
-          data={list}
+          data={inventory}
           handleClickInventory={handleClickInventory}
         />
       ) : (

@@ -1,6 +1,9 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { setHours, setMinutes } from 'date-fns';
 import cs from 'classnames';
+import { useHistory } from 'react-router-dom';
+
+import clientFetch from 'lib/client-fetch';
 
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
@@ -14,6 +17,7 @@ import DialogModal from 'components/Templates/DialogModal';
 import plus from 'assets/brand/newPlus.svg';
 import trash from 'assets/brand/trash.svg';
 import InventoryRepositionModal from 'components/Templates/InventoryRepositionModal';
+import AlertModal from 'components/Templates/AlertModal';
 
 import { useAuth } from 'context/userContex';
 import { useInventory } from 'context/useInventory';
@@ -22,14 +26,21 @@ import styles from './create.module.scss';
 
 const CreateReposition = () => {
   const [date, setDate] = useState(null);
-  const [, setFiles] = useState([]);
-  const { seller } = useAuth();
+  const [selectedFiles, setFiles] = useState([]);
+  const { seller, userParsed } = useAuth();
   const { productsToReposition, updateQuantities, removeSku, quantitiesBySku } = useInventory();
   const [deleteModal, setDeleteModal] = useState({
     sku: null,
     isShow: false,
   });
   const [showSkuModal, setShowSkuModal] = useState(false);
+  const [submitInventory, setSubmitInventory] = useState({
+    loading: false,
+    error: false,
+    message: '',
+    success: false,
+  });
+  const { replace } = useHistory();
 
   const showDeleteModal = useCallback(
     (sku) => () => {
@@ -98,6 +109,89 @@ const CreateReposition = () => {
   const toggleSkuModal = useCallback(() => {
     setShowSkuModal((prevState) => !prevState);
   }, []);
+
+  const submitInventoryHandle = async () => {
+    try {
+      setSubmitInventory((prev) => ({ ...prev, loading: true }));
+
+      if (!date) {
+        setSubmitInventory({
+          error: true,
+          message:
+            'Selecciona fecha y hora en que deseas programar tu reposición.',
+        });
+
+        return;
+      }
+
+      const { accountId, warehouse, key } = userParsed.credential;
+
+      let errorQty = false;
+
+      const itemsToReposition = productsToReposition.map((product) => {
+        const qty = quantitiesBySku[product.sku] || 0;
+
+        if (!qty) {
+          errorQty = true;
+        }
+
+        return {
+          sku: product.sku,
+          qty,
+          desciption: product.description,
+        };
+      });
+
+      if (errorQty) {
+        setSubmitInventory({
+          error: true,
+          message: 'Valida que los SKU no se encuentren con cantidad 0.',
+        });
+
+        return;
+      }
+
+      const formdata = new FormData();
+      formdata.append('archivo', selectedFiles[0]);
+      formdata.append('schedule', date);
+      formdata.append('receptionDate', null);
+      formdata.append('accountId', accountId);
+      formdata.append(
+        'data',
+        JSON.stringify({
+          expected_delivery_date: date,
+          warehouse,
+          key,
+          supplier_name: seller.nameSeller,
+          items: itemsToReposition,
+        }),
+      );
+
+      await clientFetch(
+        'bff/v1/replenishment/addReplenishment',
+        {
+          headers: {
+            apikey: process.env.REACT_APP_API_KEY_KONG,
+          },
+          body: formdata,
+        },
+        { withFile: true },
+      );
+
+      setSubmitInventory({
+        success: true,
+        message:
+          'Se ha agendado exitosamente la reposición de inventario, visualiza su estado en la lista de reposiciones.',
+      });
+    } catch (e) {
+      setSubmitInventory({
+        error: true,
+        message: 'Ha ocurrido un error inesperado, Inténtelo más tarde',
+      });
+    } finally {
+      setSubmitInventory((prev) => ({ ...prev, loading: false }));
+    }
+  };
 
   return (
     <PageLayout title="Reposición de Inventario">
@@ -220,6 +314,23 @@ const CreateReposition = () => {
             />
           </div>
         </div>
+        <div className="row px-4 mb-4 d-flex justify-content-end">
+          <div className="col-6 d-flex justify-content-end">
+            <button
+              type="button"
+              onClick={!submitInventory.loading ? submitInventoryHandle : null}
+              className="btn btn-secondary"
+              style={{ width: 190 }}
+              disabled={submitInventory.loading}
+            >
+              {!submitInventory.loading ? (
+                'Programar'
+              ) : (
+                'Cargando...'
+              )}
+            </button>
+          </div>
+        </div>
       </Card>
       <DialogModal
         showModal={deleteModal.isShow}
@@ -231,13 +342,26 @@ const CreateReposition = () => {
           {' '}
           <b>
             SKU
-            {' '}
             {deleteModal.sku}
           </b>
           ?
         </p>
       </DialogModal>
-      <InventoryRepositionModal showModal={showSkuModal} onCloseModal={toggleSkuModal} />
+      <InventoryRepositionModal
+        showModal={showSkuModal}
+        onCloseModal={toggleSkuModal}
+      />
+      <AlertModal
+        showModal={submitInventory.error}
+        message={submitInventory.message}
+        onClose={() => setSubmitInventory((prev) => ({ ...prev, error: false }))}
+      />
+      <AlertModal
+        image={<img alt="alert" src="/bgsuccess.png" width={102} height={98} />}
+        showModal={submitInventory.success}
+        message={submitInventory.message}
+        onClose={() => replace('/reposition')}
+      />
     </PageLayout>
   );
 };
