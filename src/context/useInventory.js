@@ -1,16 +1,43 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useCallback } from 'react';
 
 const InventoryContext = createContext({
   productsToReposition: [],
   setProductsToReposition: () => {},
+  updateQuantities: () => {},
+  quantitiesBySku: {},
+  removeSku: () => {},
 });
 
 const InventoryProvider = ({ children }) => {
   const [productsToReposition, setProductsToReposition] = useState([]);
+  const [quantitiesBySku, setQuantitiesBySku] = useState({});
+
+  const updateQuantities = useCallback(
+    (sku, quantity) => {
+      setQuantitiesBySku((prevState) => ({
+        ...prevState,
+        [sku]: quantity,
+      }));
+    },
+    [quantitiesBySku],
+  );
+
+  const removeSku = useCallback(
+    (sku) => {
+      setProductsToReposition((prevState) => prevState.filter((product) => product.sku !== sku));
+    },
+    [],
+  );
 
   return (
     <InventoryContext.Provider
-      value={{ productsToReposition, setProductsToReposition }}
+      value={{
+        productsToReposition,
+        setProductsToReposition,
+        updateQuantities,
+        quantitiesBySku,
+        removeSku,
+      }}
     >
       {children}
     </InventoryContext.Provider>

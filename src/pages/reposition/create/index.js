@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { setHours, setMinutes } from 'date-fns';
+import cs from 'classnames';
 
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
@@ -7,14 +8,91 @@ import Card from 'components/Molecules/Card';
 import InputWithLabel from 'components/Molecules/Form/InputWithLabel';
 import InputDateWithLabel from 'components/Molecules/Form/InputDateWithLabel';
 import DropZone from 'components/Molecules/DropZone';
+import MainTable from 'components/Templates/MainTable';
+import { InputQuantity } from 'components/Atoms/Form/Input';
+import DialogModal from 'components/Templates/DialogModal';
+import plus from 'assets/brand/newPlus.svg';
+import trash from 'assets/brand/trash.svg';
+
 import { useAuth } from 'context/userContex';
+import { useInventory } from 'context/useInventory';
+
+import styles from './create.module.scss';
 
 const CreateReposition = () => {
   const [date, setDate] = useState(null);
   const [, setFiles] = useState([]);
   const { seller } = useAuth();
+  const { productsToReposition, updateQuantities, removeSku } = useInventory();
+  const [deleteModal, setDeleteModal] = useState({
+    sku: null,
+    isShow: false,
+  });
+
+  const quantityHandle = (inventory, value) => {
+    updateQuantities(inventory, value);
+  };
+
+  const showDeleteModal = useCallback(
+    (sku) => () => {
+      setDeleteModal({
+        sku,
+        isShow: true,
+      });
+    },
+    [],
+  );
+
+  const hideDeleteModal = useCallback(
+    () => setDeleteModal({ sku: null, isShow: false }),
+    [],
+  );
+
+  const onDeleteSkuHandle = useCallback(() => {
+    removeSku(deleteModal.sku);
+    hideDeleteModal();
+  }, [deleteModal]);
 
   const minDate = useMemo(() => new Date(), []);
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'SKU',
+        accessor: 'sku',
+      },
+      {
+        Header: 'Descripción',
+        accessor: 'description',
+      },
+      {
+        Header: 'Cantidad',
+        id: 'quantity',
+        Cell: ({ row }) => (
+          <InputQuantity
+            onChange={(value) => quantityHandle(row.values.sku, value)}
+            min={0}
+            className="mt-1"
+          />
+        ),
+      },
+      {
+        Header: 'Acciones',
+        id: 'actions',
+        Cell: ({ row }) => (
+          <div className="d-flex justify-content-center align-items-center">
+            <button
+              type="button"
+              className={cs(styles.roundedButtom, styles.delete)}
+              onClick={showDeleteModal(row.values.sku)}
+            >
+              <img src={trash} alt="trash" width={13} height={13} />
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [],
+  );
 
   return (
     <PageLayout title="Reposición de Inventario">
@@ -114,7 +192,45 @@ const CreateReposition = () => {
             </div>
           </div>
         </div>
+        <div className="row px-4 my-4 d-flex justify-content-center">
+          <div className="col-12 mb-5">
+            <p className="subtitle">Productos seleccionados</p>
+          </div>
+          <div className="col-8">
+            <MainTable
+              columns={columns}
+              data={productsToReposition}
+              noButtons
+              buttonChildren={(
+                <div className="col-6 d-flex justify-content-end align-items-center">
+                  <button
+                    type="button"
+                    className={cs(styles.roundedButtom, styles.add)}
+                  >
+                    <img src={plus} alt="Ordenes" width={17} height={17} />
+                  </button>
+                </div>
+              )}
+            />
+          </div>
+        </div>
       </Card>
+      <DialogModal
+        showModal={deleteModal.isShow}
+        onAccept={onDeleteSkuHandle}
+        onCancel={hideDeleteModal}
+      >
+        <p>
+          ¿Estás seguro que deseas eliminar el
+          {' '}
+          <b>
+            SKU
+            {' '}
+            {deleteModal.sku}
+          </b>
+          ?
+        </p>
+      </DialogModal>
     </PageLayout>
   );
 };

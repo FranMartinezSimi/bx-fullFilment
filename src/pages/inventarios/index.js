@@ -148,20 +148,14 @@ const Inventory = () => {
         title={`Detalle SKU ${skuId}`}
         subtitle={`ID de producto ${inventoryId}`}
         showModal={modal}
-        onClick={(e) => {
-          e.preventDefault();
-          setModal(false);
-        }}
+        onClick={() => setModal(false)}
       >
         <InventoryDetail id={inventoryId} />
       </Modal>
       <Modal
         showModal={modalInventory}
         size="xl"
-        onClick={(e) => {
-          e.preventDefault();
-          setModalInventory(false);
-        }}
+        onClick={() => setModalInventory(false)}
       >
         <FormReplenishment setModalTicket={setModalInventory} />
       </Modal>

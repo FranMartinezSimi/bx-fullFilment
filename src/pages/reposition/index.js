@@ -190,10 +190,7 @@ const Reposition = () => {
       <Modal
         showModal={modal}
         size="xl"
-        onClick={(e) => {
-          e.preventDefault();
-          setModal(false);
-        }}
+        onClick={() => setModal(false)}
       >
         <ReplenishmentDetail
           columns={columns}
