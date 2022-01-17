@@ -273,7 +273,7 @@ const IssueDetail = () => {
                 </div>
               </div>
             </div>
-            <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
+            <Modal showModal={modalTicket} size="lg" onClick={() => setModalTicket(false)}>
               <FromTicket
                 orderId={ticket.orderId}
                 setModalTicket={setModalTicket}

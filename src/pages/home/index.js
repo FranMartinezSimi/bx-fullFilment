@@ -374,7 +374,7 @@ const Home = () => {
           </div>
 
         </div>
-        <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
+        <Modal showModal={modalInventory} size="xl" onClick={() => setModalInventory(false)}>
           <FormReplenishment
             setModalTicket={setModalInventory}
           />
