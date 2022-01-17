@@ -3,7 +3,7 @@ import plus from 'assets/brand/add.svg';
 import PropTypes from 'prop-types';
 
 const UploadCsvFull = ({
-  setDataToValidate, setDataToUpload, setDataWhitErrors, size, title,
+  setDataToValidate, setDataToUpload, setDataWhitErrors, size, title, onChange,
 }) => {
   const handleOnDrop = (data) => {
     const dataWhitErrors = data.some((item) => item.errors.length > 0);
@@ -20,7 +20,7 @@ const UploadCsvFull = ({
     const formatData = data.map((item) => item.data);
     setDataToValidate(formatData);
     console.log(formatData);
-    localStorage.setItem('dates', JSON.stringify(formatData));
+    onChange(formatData);
   };
 
   const handleOnError = (err) => {

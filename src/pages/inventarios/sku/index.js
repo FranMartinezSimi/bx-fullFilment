@@ -10,6 +10,7 @@ import plantilla from 'assets/plantilla.csv';
 import Modal from 'components/Templates/Modal';
 import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
 import UploadCsvFull from 'components/Molecules/UploadCsvFull';
+import MessageResponseProducts from 'components/Molecules/MessageResponseProducts';
 import Button from 'components/Atoms/Button';
 import styles from './styles.module.scss';
 
@@ -24,11 +25,13 @@ const Sku = () => {
   const userData = JSON.parse(user);
   const { accountId, key } = userData.credential;
   const [form, setForm] = useState({});
+  const [products, setProducts] = useState({});
   const [error, setError] = useState({
     sku: false,
     descripcion: false,
   });
   const [errorFull, setErrorFull] = useState(false);
+  const [show, setShow] = useState(true);
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -101,9 +104,17 @@ const Sku = () => {
       setBtnDisabled(false);
     }
   };
+  const [response, setResponse] = useState({
+    img: '',
+    estado: 'estado',
+    procesado: '0',
+    fallidos: '0',
+  });
+  let component;
   useEffect(() => {
     validateData();
   }, [dataToValidate]);
+
   const infoAdd = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Ingresa todos los datos solicitados para crear un nuevo SKU" color="#BFEAFF" />;
   const infoImport = <TooltipIcon icon={<img src={info} alt="Info" width="18" />} text="Descarga la plantilla y completa los campos solicitados para crear nuevos SKU de forma masiva " color="#BFEAFF" />;
   const handleClear = () => {
@@ -153,10 +164,6 @@ const Sku = () => {
     };
     const objeto1 = [''];
     objeto1.push(objeto);
-    // const { sku } = objeto;
-    // if (sku.length === 0) {
-    //   console.log('sin campos');
-    // } else {
     clientFetch('inventory/v1/services/addProducts', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -180,10 +187,7 @@ const Sku = () => {
       }); setDataWhitErrors([]);
     // }
   };
-
   const handleAllSubmit = () => {
-    const obj = JSON.parse(localStorage.getItem('dates'));
-    console.log('AQUÍ', obj);
     clientFetch('inventory/v1/services/addProducts', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -192,21 +196,48 @@ const Sku = () => {
         warehouse: 'bx1',
         account_id: accountId,
         key,
-        products: obj,
+        products,
       },
     })
-      .then(() => {
-        setModal(true);
+      .then((res) => {
+        const resp = Object.entries(['']);
+        resp.push(res);
+        console.log(resp[1].result);
+        const { created, errors } = resp[1].result;
+        console.log(created.length);
+        console.log('Errors', errors.length);
+        if (created.length > 0 && errors.length === 0) {
+          setResponse({
+            img: 'bgsuccess',
+            estado: 'Completado',
+            comentario: 'Tus productos han sido cargados exitosamente',
+            procesado: created.length,
+            fallidos: errors.length,
+          });
+        } else if (created.length > 0 && errors.length > 0) {
+          setResponse({
+            img: 'bgincomplete',
+            estado: 'incompleto',
+            comentario: 'Se ha realizado una carga parcial de tus productos. Puedes revisar los SKU cargados exitosamente y volver a cargar los fallidos.',
+            procesado: created.length,
+            fallidos: errors.length,
+          });
+        } else if (created.length === errors.length) {
+          setResponse({
+            estado: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
+            procesado: created.length,
+            fallidos: errors.length,
+          });
+        }
+        setShow(false);
         setModalTicket(true);
         handleClickOrderDeatil();
         handleClear();
-        localStorage.setItem('dates', ' ');
       })
       .catch((e) => {
         console.log(e);
-        setErrorFull(true);
         setTimeout(() => {
-          setErrorFull(false);
+          setErrorFull(true);
         }, 3000);
       });
   };
@@ -239,311 +270,323 @@ const Sku = () => {
         setDisabled(true);
       });
   };
+  if (!show) {
+    component = (
+      <MessageResponseProducts
+        procesado={response.procesado}
+        fallidos={response.fallidos}
+        agregados={response.procesado}
+        estado={response.estado}
+        comentario={response.comentario}
+        img={response.img}
+      />
+    );
+  }
 
   return (
-    <PageLayout title="Nuevos Productos">
-      <PageTitle title="Nuevos Productos" />
-      <div id="container">
-        <div className={styles.col1}>
-          <div className="d-flex bd-highlight mb-3">
-            <div className="p-2 bd-highlight">
-              <PageTitle
-                title="Agregar Sku"
-                className={`${styles.h1} mb-3`}
-                icon={infoAdd}
-              />
-              <div className="row g-0">
-                <div className="container">
-                  <form onSubmit={handleSubmit} className="App">
-                    <div className="row g-2">
-                      <div className="col-12">
-                        <div className="p-3 pt-0 pb-0">
+    <>
+      <PageLayout title="Nuevos Productos">
+        <PageTitle title="Nuevos Productos" />
+        {show ? (
+          <div id="container">
+            <div className={styles.col1}>
+              <div className="d-flex bd-highlight mb-3">
+                <div className="p-2 bd-highlight">
+                  <PageTitle
+                    title="Agregar Sku"
+                    className={`${styles.h1} mb-3`}
+                    icon={infoAdd}
+                  />
+                  <div className="row g-0">
+                    <div className="container">
+                      <form onSubmit={handleSubmit} className="App">
+                        <div className="row g-2">
                           <div className="col-12">
-                            <div className="">
-                              <p
-                                className="mb-1 ms-1"
-                              >
-                                SKU
-                              </p>
-                              <input
-                                className={styles.input}
-                                placeholder="Codigo SKU"
-                                name="sku"
-                                value={form.sku}
-                                onChange={handleChange}
-                                onKeyUp={(event) => handleSearch(event)}
-                                autoComplete="off"
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="">
+                                  <p
+                                    className="mb-1 ms-1"
+                                  >
+                                    SKU
+                                  </p>
+                                  <input
+                                    className={styles.input}
+                                    placeholder="Codigo SKU"
+                                    name="sku"
+                                    value={form.sku}
+                                    onChange={handleChange}
+                                    onKeyUp={(event) => handleSearch(event)}
+                                    autoComplete="off"
+                                  />
+                                  {error.sku && (<span className="text-danger">SKU ya existe, ingresa un código valido</span>)}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-12">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="">
+                                  <p
+                                    className="mb-1 ms-1"
+                                  >
+                                    Descripción
+                                  </p>
+                                  <input
+                                    className={styles.input}
+                                    placeholder="Ingresa la descripción del producto"
+                                    name="descripcion"
+                                    value={form.descripcion}
+                                    onChange={handleChange}
+                                    disabled={disabled}
+                                    autoComplete="off"
+                                  />
+                                  {error.descripcion && (<span className="text-danger">Debes completar este campo para continuar</span>)}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="">
+                                  <p
+                                    className="mb-1 ms-1"
+                                  >
+                                    Largo cm
+                                  </p>
+                                  <input
+                                    type="number"
+                                    placeholder="1"
+                                    className={styles.input}
+                                    name="largo"
+                                    value={form.largo}
+                                    onChange={handleChange}
+                                    disabled={disabled}
+                                    min={0}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="">
+                                  <p
+                                    className="mb-1 ms-1"
+                                  >
+                                    Ancho cm
+                                  </p>
+                                  <input
+                                    type="number"
+                                    placeholder="1"
+                                    name="ancho"
+                                    value={form.ancho}
+                                    className={styles.input}
+                                    onChange={handleChange}
+                                    disabled={disabled}
+                                    autoComplete="off"
+                                    min={0}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="">
+                                  <p
+                                    className="mb-1 ms-1"
+                                  >
+                                    Alto cm
+                                  </p>
+                                  <input
+                                    type="number"
+                                    placeholder="1"
+                                    name="alto"
+                                    value={form.alto}
+                                    onChange={handleChange}
+                                    disabled={disabled}
+                                    className={styles.input}
+                                    autoComplete="off"
+                                    min={0}
+                                  />
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="">
+                                  <p
+                                    className="mb-1 ms-1"
+                                  >
+                                    Peso Kg
+                                  </p>
+                                  <input
+                                    type="number"
+                                    placeholder="1"
+                                    name="peso"
+                                    value={form.peso}
+                                    onChange={handleChange}
+                                    className={styles.input}
+                                    disabled={disabled}
+                                    autoComplete="off"
+                                    min={0}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className={`row justify-content-end ${styles.divBtn} mb-2 pb-3 pe-2`}>
+                            <div className="col-4">
+                              <Button
+                                className="btn btn-complementary fs-5 px-5"
+                                text="Borrar"
+                                onClick={handleClear}
                               />
-                              {error.sku && (<span className="text-danger">SKU ya existe, ingresa un código valido</span>)}
+                            </div>
+                            <div className="col-4">
+                              <Button
+                                className={`btn ${styles.btnSecondary} ${disabled ? 'disabled' : ''} fs-5 px-5`}
+                                text="Agregar"
+                                onClick={handleSubmit}
+                              />
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <div className="">
-                              <p
-                                className="mb-1 ms-1"
-
-                              >
-                                Descripción
-                              </p>
-                              <input
-                                className={styles.input}
-                                placeholder="Ingresa la descripción del producto"
-                                name="descripcion"
-                                value={form.descripcion}
-                                onChange={handleChange}
-                                disabled={disabled}
-                                autoComplete="off"
-                              />
-                              {error.descripcion && (<span className="text-danger">Debes completar este campo para continuar</span>)}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <div className="">
-                              <p
-                                className="mb-1 ms-1"
-
-                              >
-                                Largo cm
-                              </p>
-                              <input
-                                type="number"
-                                placeholder="1"
-                                className={styles.input}
-                                name="largo"
-                                value={form.largo}
-                                onChange={handleChange}
-                                disabled={disabled}
-                                min={0}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <div className="">
-                              <p
-                                className="mb-1 ms-1"
-
-                              >
-                                Ancho cm
-                              </p>
-                              <input
-                                type="number"
-                                placeholder="1"
-                                name="ancho"
-                                value={form.ancho}
-                                className={styles.input}
-                                onChange={handleChange}
-                                disabled={disabled}
-                                autoComplete="off"
-                                min={0}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <div className="">
-                              <p
-                                className="mb-1 ms-1"
-
-                              >
-                                Alto cm
-                              </p>
-                              <input
-                                type="number"
-                                placeholder="1"
-                                name="alto"
-                                value={form.alto}
-                                onChange={handleChange}
-                                disabled={disabled}
-                                className={styles.input}
-                                autoComplete="off"
-                                min={0}
-                              />
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <div className="">
-                              <p
-                                className="mb-1 ms-1"
-
-                              >
-                                Peso Kg
-                              </p>
-                              <input
-                                type="number"
-                                placeholder="1"
-                                name="peso"
-                                value={form.peso}
-                                onChange={handleChange}
-                                className={styles.input}
-                                disabled={disabled}
-                                autoComplete="off"
-                                min={0}
-
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className={`row justify-content-end ${styles.divBtn} mb-2 pb-3 pe-2`}>
-                        <div className="col-4">
-                          <Button
-                            className="btn btn-complementary fs-5 px-5"
-                            text="Borrar"
-                            onClick={handleClear}
-                          />
-                        </div>
-                        <div className="col-4">
-                          <Button
-                            className={`btn ${styles.btnSecondary} ${disabled ? 'disabled' : ''} fs-5 px-5`}
-                            text="Agregar"
-                            onClick={handleSubmit}
-                          />
-                        </div>
-                      </div>
+                      </form>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className={styles.col2}>
-          <div className="d-flex bd-highlight mb-3">
-            <div className="p-2 bd-highlight">
-              {!errorFull && (
-                <PageTitle
-                  title="Importar SKU"
-                  className={`${styles.h1} mb-3`}
-                  icon={infoImport}
-                />
-              )}
-              {errorFull && (
-                <div
-                  className="alert alert-warning alert-dismissible fade show"
-                  role="alert"
-                  style={{ background: '#FFE9E9', borderColor: 'red', color: 'red' }}
-                >
-                  <span className="text-danger font-weight-bold">
-                    <p
-                      className="font-weight-bold p-0 m-0 text-center"
-                      style={{ fontWeight: 'bold' }}
+            <div className={styles.col2}>
+              <div className="d-flex bd-highlight mb-3">
+                <div className="p-2 bd-highlight">
+                  {!errorFull && (
+                    <PageTitle
+                      title="Importar SKU"
+                      className={`${styles.h1} mb-3`}
+                      icon={infoImport}
+                    />
+                  )}
+                  {errorFull && (
+                    <div
+                      className="alert alert-warning alert-dismissible fade show"
+                      role="alert"
+                      style={{ background: '#FFE9E9', borderColor: 'red', color: 'red' }}
                     >
-                      Algo salió mal, verifica el formato de tu archivo
-                    </p>
-                  </span>
-                  <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
-                </div>
-              )}
-              <div className="row g-0">
-                <div className="container">
-                  <form onSubmit={handleAllSubmit} className="App">
-                    <div className={`${styles.h} row g-2`}>
-                      <div className="col-12">
-                        <div className="p-3 pt-0 pb-0">
+                      <span className="text-danger font-weight-bold">
+                        <p
+                          className="font-weight-bold p-0 m-0 text-center"
+                          style={{ fontWeight: 'bold' }}
+                        >
+                          Algo salió mal, verifica el formato de tu archivo
+                        </p>
+                      </span>
+                      <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
+                    </div>
+                  )}
+                  <div className="row g-0">
+                    <div className="container">
+                      <form onSubmit={handleAllSubmit} className="App">
+                        <div className={`${styles.h} row g-2`}>
                           <div className="col-12">
-                            <div className="pt-4 pb-4">
-                              <h2 style={{ fontSize: '18px', fontFamily: '21px', textAlign: 'center', color: 'black', lineHeight: '21px' }}>Carga masiva SKU</h2>
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <div className="pt-4 pb-4">
+                                  <h2 style={{ fontSize: '18px', fontFamily: '21px', textAlign: 'center', color: 'black', lineHeight: '21px' }}>Carga masiva SKU</h2>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-12">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <UploadCsvFull
+                                  size="medium"
+                                  setDataToValidate={setDataToValidate}
+                                  setDataWhitErrors={setDataWhitErrors}
+                                  onChange={setProducts}
+                                />
+                                {dataWhitErrors.length > 0 && (
+                                  <p className="text-danger">Archivo contiene campos vacíos, verifica los datos y carga nuevamente </p>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                <a href={plantilla} className="btn btn-complementary w-26 me-3" download>
+                                  <img src={loadArrowOrange} alt="Download" width="16" />
+                                  <span className="ps-2"> Descarga plantilla</span>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                { }
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                { }
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="p-3 pt-0 pb-0">
+                              <div className="col-12">
+                                { }
+                              </div>
+                            </div>
+                          </div>
+                          <div className={`row justify-content-end ${styles.divBtn}`}>
+                            <div className="col-4">
+                              { }
+                            </div>
+                            <div className="col-4">
+                              <Button
+                                className="btn btn-secondary fs-5 px-5 me-0"
+                                text="Agregar"
+                                disabled={btnDisabled}
+                                onClick={handleAllSubmit}
+                              />
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <UploadCsvFull
-                              size="medium"
-                              setDataToValidate={setDataToValidate}
-                              setDataWhitErrors={setDataWhitErrors}
-                            />
-                            {dataWhitErrors.length > 0 && (
-                              <p className="text-danger">Archivo contiene campos vacíos, verifica los datos y carga nuevamente </p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            <a href={plantilla} className="btn btn-complementary w-26 me-3" download>
-                              <img src={loadArrowOrange} alt="Download" width="16" />
-                              <span className="ps-2"> Descarga plantilla</span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            { }
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            { }
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="p-3 pt-0 pb-0">
-                          <div className="col-12">
-                            { }
-                          </div>
-                        </div>
-                      </div>
-                      <div className={`row justify-content-end ${styles.divBtn}`}>
-                        <div className="col-4">
-                          { }
-                        </div>
-                        <div className="col-4">
-                          <Button
-                            className="btn btn-secondary fs-5 px-5 me-0"
-                            text="Agregar"
-                            disabled={btnDisabled}
-                            onClick={handleAllSubmit}
-                          />
-                        </div>
-                      </div>
+                      </form>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <Modal
-        showModal={modal}
-        size="xl"
-      >
-        <SkuDetail onClick={(e) => {
-          e.preventDefault();
-          setModal(false);
-        }}
-        />
-      </Modal>
-    </PageLayout>
+        ) : component}
+
+        <Modal
+          showModal={modal}
+          size="xl"
+        >
+          <SkuDetail onClick={(e) => {
+            e.preventDefault();
+            setModal(false);
+          }}
+          />
+        </Modal>
+      </PageLayout>
+    </>
   );
 };
 
