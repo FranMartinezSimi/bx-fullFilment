@@ -485,12 +485,12 @@ const Sku = () => {
                       <span className="text-danger font-weight-bold">
                         <p
                           className="font-weight-bold p-0 m-0 text-center"
-                          style={{ fontWeight: 'bold' }}
+                          style={{ fontWeight: 'bold', fontSize: '15px' }}
                         >
                           Algo salió mal, verifica el formato de tu archivo
                         </p>
                       </span>
-                      <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
+                      <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={() => setErrorFull(false)} />
                     </div>
                   )}
                   <div className="row g-0">
