@@ -524,7 +524,7 @@ const Sku = () => {
                           <div className="col-6">
                             <div className="p-3 pt-0 pb-0">
                               <div className="col-12">
-                                <a href={plantilla} className="btn btn-complementary w-26 me-3" download>
+                                <a href={plantilla} className={`btn btn-complementary ${styles.btndownload}`} download>
                                   <img src={loadArrowOrange} alt="Download" width="16" />
                                   <span className="ps-2"> Descarga plantilla</span>
                                 </a>
