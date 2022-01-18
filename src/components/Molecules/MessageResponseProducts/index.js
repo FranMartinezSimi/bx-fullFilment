@@ -57,30 +57,13 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, img }
               </div>
             </div>
           </div>
-          {/* <div className="d-flex justify-content-center">
-            <div className="p-2 bd-highlight">
-              <div>
-                <p className={styles.subtitle}>
-                  {comentario}
-                  <a
-                    style={{ color: '#FF7A00' }}
-                    href="#!"
-                    onClick={handleshow}
-                  >
-                    Ver Detalle
-                  </a>
-
-                </p>
-              </div>
-            </div>
-          </div> */}
 
           <div className={styles.gridContainer}>
             <div className={styles.gridItem}>
               <div className={styles.textIndicator}>
                 Procesados
               </div>
-              <div>{procesado + fallidos}</div>
+              <div>{procesado}</div>
             </div>
             <div
               className={styles.gridItem2}
