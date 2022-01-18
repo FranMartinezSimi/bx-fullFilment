@@ -1,6 +1,7 @@
 import { CSVReader } from 'react-papaparse';
 import plus from 'assets/brand/add.svg';
 import PropTypes from 'prop-types';
+import styles from './styles.module.scss';
 
 const UploadCsvFull = ({
   setDataToValidate, setDataToUpload, setDataWhitErrors, size, title, onChange,
@@ -138,7 +139,7 @@ const UploadCsvFull = ({
                 </small>
               </div>
             ) : (
-              <p style={{ color: '#333333', textAlign: 'center' }}>
+              <p className={styles.pFile}>
                 Arrastra tu archivo o selecciona desde tu computadora
                 en formato Csv y Excel.
               </p>
