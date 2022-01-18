@@ -202,10 +202,7 @@ const Sku = () => {
       .then((res) => {
         const resp = Object.entries(['']);
         resp.push(res);
-        console.log(resp[1].result);
         const { created, errors } = resp[1].result;
-        console.log(created.length);
-        console.log('Errors', errors.length);
         if (created.length > 0 && errors.length === 0) {
           setResponse({
             img: 'bgsuccess',
@@ -238,10 +235,9 @@ const Sku = () => {
       })
       .catch((e) => {
         console.log(e);
-        // setTimeout(() => {
-        //   setErrorFull(true);
-        // }, 3000);
-        console.log(response);
+        setTimeout(() => {
+          setErrorFull(true);
+        }, 3000);
       });
   };
 
