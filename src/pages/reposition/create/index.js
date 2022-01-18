@@ -13,6 +13,7 @@ import { InputQuantity } from 'components/Atoms/Form/Input';
 import DialogModal from 'components/Templates/DialogModal';
 import plus from 'assets/brand/newPlus.svg';
 import trash from 'assets/brand/trash.svg';
+import InventoryRepositionModal from 'components/Templates/InventoryRepositionModal';
 
 import { useAuth } from 'context/userContex';
 import { useInventory } from 'context/useInventory';
@@ -23,15 +24,12 @@ const CreateReposition = () => {
   const [date, setDate] = useState(null);
   const [, setFiles] = useState([]);
   const { seller } = useAuth();
-  const { productsToReposition, updateQuantities, removeSku } = useInventory();
+  const { productsToReposition, updateQuantities, removeSku, quantitiesBySku } = useInventory();
   const [deleteModal, setDeleteModal] = useState({
     sku: null,
     isShow: false,
   });
-
-  const quantityHandle = (inventory, value) => {
-    updateQuantities(inventory, value);
-  };
+  const [showSkuModal, setShowSkuModal] = useState(false);
 
   const showDeleteModal = useCallback(
     (sku) => () => {
@@ -69,9 +67,12 @@ const CreateReposition = () => {
         id: 'quantity',
         Cell: ({ row }) => (
           <InputQuantity
-            onChange={(value) => quantityHandle(row.values.sku, value)}
+            onChange={(value) => {
+              updateQuantities(row.values.sku, value);
+            }}
             min={0}
             className="mt-1"
+            value={quantitiesBySku[row.values.sku] || 0}
           />
         ),
       },
@@ -91,8 +92,12 @@ const CreateReposition = () => {
         ),
       },
     ],
-    [],
+    [quantitiesBySku],
   );
+
+  const toggleSkuModal = useCallback(() => {
+    setShowSkuModal((prevState) => !prevState);
+  }, []);
 
   return (
     <PageLayout title="Reposición de Inventario">
@@ -206,6 +211,7 @@ const CreateReposition = () => {
                   <button
                     type="button"
                     className={cs(styles.roundedButtom, styles.add)}
+                    onClick={toggleSkuModal}
                   >
                     <img src={plus} alt="Ordenes" width={17} height={17} />
                   </button>
@@ -231,6 +237,7 @@ const CreateReposition = () => {
           ?
         </p>
       </DialogModal>
+      <InventoryRepositionModal showModal={showSkuModal} onCloseModal={toggleSkuModal} />
     </PageLayout>
   );
 };

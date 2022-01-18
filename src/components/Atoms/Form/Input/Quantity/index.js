@@ -4,8 +4,8 @@ import cs from 'classnames';
 
 import styles from './quantity.module.scss';
 
-const Quantity = ({ onChange, min, max, className }) => {
-  const [quantity, setQuantity] = useState(0);
+const Quantity = ({ onChange, min, max, className, value }) => {
+  const [quantity, setQuantity] = useState(value || 0);
 
   const subtractHandle = useCallback(() => {
     const substract = quantity - 1;
@@ -30,7 +30,10 @@ const Quantity = ({ onChange, min, max, className }) => {
     const toNumber = Number(clean || 0);
 
     setQuantity(toNumber);
-    onChange(toNumber);
+  };
+
+  const onChangeHandle = () => {
+    onChange(quantity);
   };
 
   return (
@@ -48,6 +51,7 @@ const Quantity = ({ onChange, min, max, className }) => {
         className={styles.input}
         style={{ width: `${4 + quantity.toString().length}ch` }}
         onChange={setQuantityHandle}
+        onBlur={onChangeHandle}
       />
       <button
         type="button"
@@ -64,6 +68,7 @@ Quantity.defaultProps = {
   min: undefined,
   max: undefined,
   className: '',
+  value: 0,
 };
 
 Quantity.propTypes = {
@@ -71,6 +76,7 @@ Quantity.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   className: PropTypes.string,
+  value: PropTypes.number,
 };
 
 export default Quantity;

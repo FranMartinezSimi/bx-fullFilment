@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import clientFetch from 'lib/client-fetch';
 import { useHistory } from 'react-router-dom';
+
+import clientFetch from 'lib/client-fetch';
 
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
@@ -30,6 +31,7 @@ const Inventory = () => {
 
     setModal(true);
   };
+
   const columns = useMemo(
     () => [
       {

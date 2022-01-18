@@ -17,6 +17,7 @@ const Modal = ({
 }) => {
   const onCloseHandle = useCallback((event) => {
     event.preventDefault();
+
     if (!onClick) return;
 
     onClick();
