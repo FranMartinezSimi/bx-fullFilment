@@ -26,12 +26,14 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
         <div
           style={{
             width: '1034px',
-            height: '624px',
+            height: '560px',
             background: 'white',
             borderRadius: '15px',
             left: '168px',
             padding: '25px',
             justifyContent: 'flex-start',
+            marginBottom: '40px',
+            margin: 'auto',
           }}
         >
           {component}
@@ -44,7 +46,7 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
           </div>
           <div className="d-flex justify-content-center">
             <div className="p-2 bd-highlight">
-              <img src={`/${img}.jpg`} alt="Proceso completado" width="160" height="158px" />
+              <img src={`/${img}.jpg`} alt="Proceso completado" width="160" height="158px" className={styles.img} />
             </div>
           </div>
 
@@ -78,7 +80,7 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
               <div className={styles.textIndicator}>
                 Procesados
               </div>
-              <div>{procesado}</div>
+              <div>{procesado + fallidos}</div>
             </div>
             <div
               className={styles.gridItem2}
@@ -111,7 +113,7 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
             <div id={styles.outer}>
               <div id={styles.inner}>
                 <div className="p-2 bd-highlight d-flex justify-content-end">
-                  <a href="#!" className="btn btn-secondary " onClick={handleClickGoInventory} style={{ fontSize: 17 }}>
+                  <a href="#!" className={`btn btn-secondary ${styles.btn}`} onClick={handleClickGoInventory} style={{ fontSize: 17 }}>
                     Aceptar
                   </a>
                 </div>

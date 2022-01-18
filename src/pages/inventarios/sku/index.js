@@ -302,7 +302,7 @@ const Sku = () => {
                       <form onSubmit={handleSubmit} className="App">
                         <div className="row g-2">
                           <div className="col-12">
-                            <div className="p-3 pt-0 pb-0">
+                            <div className="p-3 pt-0 pb-0 px-0">
                               <div className="col-12">
                                 <div className="">
                                   <p
@@ -325,7 +325,7 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className="col-12">
-                            <div className="p-3 pt-0 pb-0">
+                            <div className="p-3 pt-0 pb-0 px-0">
                               <div className="col-12">
                                 <div className="">
                                   <p
@@ -348,7 +348,7 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className="col-6">
-                            <div className="p-3 pt-0 pb-0">
+                            <div className="p-3 pt-0 pb-0 px-0 me-3">
                               <div className="col-12">
                                 <div className="">
                                   <p
@@ -371,7 +371,7 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className="col-6">
-                            <div className="p-3 pt-0 pb-0">
+                            <div className="p-3 pt-0 pb-0 px-0 ms-3">
                               <div className="col-12">
                                 <div className="">
                                   <p
@@ -395,7 +395,7 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className="col-6">
-                            <div className="p-3 pt-0 pb-0">
+                            <div className="p-3 pt-0 pb-0 px-0 me-3">
                               <div className="col-12">
                                 <div className="">
                                   <p
@@ -420,7 +420,7 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className="col-6">
-                            <div className="p-3 pt-0 pb-0">
+                            <div className="p-3 pt-0 pb-0 px-0 ms-3">
                               <div className="col-12">
                                 <div className="">
                                   <p
@@ -443,17 +443,17 @@ const Sku = () => {
                               </div>
                             </div>
                           </div>
-                          <div className={`row justify-content-end ${styles.divBtn} mb-2 pb-3 pe-2`}>
-                            <div className="col-4">
+                          <div className={`row justify-content-end ${styles.divBtn} p-0 m-0 `}>
+                            <div className="col-4 p-0 m-1">
                               <Button
-                                className="btn btn-complementary fs-5 px-5"
+                                className={`${styles.btnOrange} px-0`}
                                 text="Borrar"
                                 onClick={handleClear}
                               />
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 p-0 m-1">
                               <Button
-                                className={`btn ${styles.btnSecondary} ${disabled ? 'disabled' : ''} fs-5 px-5`}
+                                className={`${styles.btnWhite} px-0`}
                                 text="Agregar"
                                 onClick={handleSubmit}
                               />
@@ -472,7 +472,7 @@ const Sku = () => {
                   {!errorFull && (
                     <PageTitle
                       title="Importar SKU"
-                      className={`${styles.h1} mb-3`}
+                      className={`${styles.titleAdd} mb-3`}
                       icon={infoImport}
                     />
                   )}
@@ -501,7 +501,7 @@ const Sku = () => {
                             <div className="p-3 pt-0 pb-0">
                               <div className="col-12">
                                 <div className="pt-4 pb-4">
-                                  <h2 style={{ fontSize: '18px', fontFamily: '21px', textAlign: 'center', color: 'black', lineHeight: '21px' }}>Carga masiva SKU</h2>
+                                  <h2 className={styles.SubTitleMasivo}>Carga masiva SKU</h2>
                                 </div>
                               </div>
                             </div>
@@ -524,7 +524,7 @@ const Sku = () => {
                           <div className="col-6">
                             <div className="p-3 pt-0 pb-0">
                               <div className="col-12">
-                                <a href={plantilla} className="btn btn-complementary w-26 me-3" download>
+                                <a href={plantilla} className={`btn btn-complementary ${styles.btndownload}`} download>
                                   <img src={loadArrowOrange} alt="Download" width="16" />
                                   <span className="ps-2"> Descarga plantilla</span>
                                 </a>
@@ -558,7 +558,7 @@ const Sku = () => {
                             </div>
                             <div className="col-4">
                               <Button
-                                className="btn btn-secondary fs-5 px-5 me-0"
+                                className={`${styles.btnWhite} px-0`}
                                 text="Agregar"
                                 disabled={btnDisabled}
                                 onClick={handleAllSubmit}
