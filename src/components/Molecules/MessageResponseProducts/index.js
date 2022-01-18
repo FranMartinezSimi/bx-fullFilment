@@ -3,18 +3,18 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comentario, img }) => {
+const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, img }) => {
   let component;
-  const [show, setShow] = useState(false);
+  const [show] = useState(false);
   const history = useHistory();
 
-  const handleshow = () => {
-    if (!show) {
-      setShow(true);
-    } else {
-      setShow(false);
-    }
-  };
+  // const handleshow = () => {
+  //   if (!show) {
+  //     setShow(true);
+  //   } else {
+  //     setShow(false);
+  //   }
+  // };
   const handleClickGoInventory = (e) => {
     e.preventDefault();
     history.push('/inventario');
@@ -57,7 +57,7 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-center">
+          {/* <div className="d-flex justify-content-center">
             <div className="p-2 bd-highlight">
               <div>
                 <p className={styles.subtitle}>
@@ -73,7 +73,7 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comen
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className={styles.gridContainer}>
             <div className={styles.gridItem}>
