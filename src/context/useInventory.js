@@ -8,6 +8,8 @@ import React, {
 } from 'react';
 import Omit from 'lodash/omit';
 
+import clientFetch from 'lib/client-fetch';
+
 const InventoryContext = createContext({
   productsToReposition: [],
   setProductsToReposition: () => {},
@@ -16,9 +18,15 @@ const InventoryContext = createContext({
   quantitiesBySku: {},
   removeSku: () => {},
   addSku: () => {},
+  inventory: [],
+  isGetInventory: false,
+  errorGetInventory: false,
 });
 
 const InventoryProvider = ({ children }) => {
+  const [inventory, setInventory] = useState([]);
+  const [isGetInventory, setIsGetInventory] = useState(true);
+  const [errorGetInventory, setErrorGetInventory] = useState(false);
   const [productsToReposition, setProductsReposition] = useState([]);
   const [quantitiesBySku, setQuantitiesBySku] = useState({});
 
@@ -62,6 +70,25 @@ const InventoryProvider = ({ children }) => {
     }
   }, [productsToReposition]);
 
+  useEffect(() => {
+    clientFetch('bff/v1/inventory/getProductsList', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        page: 1,
+        warehouse: 'bx1',
+        status: 'all',
+      },
+    }).then((products) => {
+      setInventory(products.products);
+      setIsGetInventory(false);
+    }).catch(() => {
+      setIsGetInventory(false);
+      setErrorGetInventory(true);
+    });
+  }, []);
+
   return (
     <InventoryContext.Provider
       value={{
@@ -72,6 +99,9 @@ const InventoryProvider = ({ children }) => {
         removeSku,
         productsToRepositionKeyedBySku,
         addSku,
+        inventory,
+        isGetInventory,
+        errorGetInventory,
       }}
     >
       {children}
