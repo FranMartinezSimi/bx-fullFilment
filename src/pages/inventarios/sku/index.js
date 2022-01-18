@@ -109,6 +109,7 @@ const Sku = () => {
     estado: 'estado',
     procesado: '0',
     fallidos: '0',
+    agregados: '0',
   });
   let component;
   useEffect(() => {
@@ -224,7 +225,7 @@ const Sku = () => {
           });
         } else if (created.length === errors.length) {
           setResponse({
-            img: 'bgError ',
+            img: 'bgError',
             estado: 'Proceso Fallido',
             comentario: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
             procesado: created.length,
@@ -237,10 +238,20 @@ const Sku = () => {
         handleClear();
       })
       .catch((e) => {
+        console.log(products.length);
+        setShow(false);
+        setResponse({
+          img: 'bgError',
+          estado: 'Proceso Fallido',
+          comentario: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
+          procesado: products.length,
+          fallidos: products.length,
+          agregados: '0',
+        });
         console.log(e);
-        setTimeout(() => {
-          setErrorFull(true);
-        }, 3000);
+        // setTimeout(() => {
+        //   setErrorFull(true);
+        // }, 3000);
       });
   };
 
@@ -277,7 +288,7 @@ const Sku = () => {
       <MessageResponseProducts
         procesado={response.procesado}
         fallidos={response.fallidos}
-        agregados={response.procesado}
+        agregados={response.agregados}
         estado={response.estado}
         comentario={response.comentario}
         img={response.img}
