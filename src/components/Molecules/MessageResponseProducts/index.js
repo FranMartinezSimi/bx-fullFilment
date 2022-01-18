@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
-const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, img }) => {
+const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, comentario, img }) => {
   let component;
   const [show] = useState(false);
   const history = useHistory();
@@ -57,13 +57,23 @@ const MessageResponseProducts = ({ procesado, fallidos, agregados, estado, img }
               </div>
             </div>
           </div>
+          <div className="d-flex justify-content-center">
+            <div className="p-2 bd-highlight">
+              <div>
+                <p className={styles.subtitle}>
+                  {comentario}
+
+                </p>
+              </div>
+            </div>
+          </div>
 
           <div className={styles.gridContainer}>
             <div className={styles.gridItem}>
               <div className={styles.textIndicator}>
                 Procesados
               </div>
-              <div>{procesado}</div>
+              <div>{procesado + fallidos}</div>
             </div>
             <div
               className={styles.gridItem2}
