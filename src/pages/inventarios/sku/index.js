@@ -224,6 +224,7 @@ const Sku = () => {
           });
         } else if (created.length === errors.length) {
           setResponse({
+            img: 'bgError ',
             estado: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
             procesado: created.length,
             fallidos: errors.length,
@@ -444,9 +445,9 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className={`row justify-content-end ${styles.divBtn} p-0 m-0 `}>
-                            <div className="col-4 p-0 m-1">
+                            <div className="col-4 p-0">
                               <Button
-                                className={`${styles.btnOrange} px-0`}
+                                className={` ${styles.btnOrange}  my-1 btn-complementary`}
                                 text="Borrar"
                                 onClick={handleClear}
                               />
