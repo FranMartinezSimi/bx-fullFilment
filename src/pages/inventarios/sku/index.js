@@ -209,7 +209,7 @@ const Sku = () => {
         if (created.length > 0 && errors.length === 0) {
           setResponse({
             img: 'bgsuccess',
-            estado: 'Completado',
+            estado: 'Proceso Completado',
             comentario: 'Tus productos han sido cargados exitosamente',
             procesado: created.length,
             fallidos: errors.length,
@@ -217,7 +217,7 @@ const Sku = () => {
         } else if (created.length > 0 && errors.length > 0) {
           setResponse({
             img: 'bgincomplete',
-            estado: 'incompleto',
+            estado: 'Proceso Incompleto',
             comentario: 'Se ha realizado una carga parcial de tus productos. Puedes revisar los SKU cargados exitosamente y volver a cargar los fallidos.',
             procesado: created.length,
             fallidos: errors.length,
@@ -225,7 +225,8 @@ const Sku = () => {
         } else if (created.length === errors.length) {
           setResponse({
             img: 'bgError ',
-            estado: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
+            estado: 'Proceso Fallido',
+            comentario: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
             procesado: created.length,
             fallidos: errors.length,
           });
@@ -445,7 +446,7 @@ const Sku = () => {
                             </div>
                           </div>
                           <div className={`row justify-content-end ${styles.divBtn} p-0 m-0 `}>
-                            <div className="col-4 p-0">
+                            <div className="col-4 p-0A">
                               <Button
                                 className={` ${styles.btnOrange}  my-1 btn-complementary`}
                                 text="Borrar"
