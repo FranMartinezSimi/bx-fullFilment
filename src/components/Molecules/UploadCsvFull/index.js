@@ -17,10 +17,8 @@ const UploadCsvFull = ({
       }]);
       return;
     }
-
     const formatData = data.map((item) => item.data);
     setDataToValidate(formatData);
-    console.log(formatData);
     onChange(formatData);
   };
 

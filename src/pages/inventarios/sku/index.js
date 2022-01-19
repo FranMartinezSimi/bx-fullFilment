@@ -25,7 +25,7 @@ const Sku = () => {
   const userData = JSON.parse(user);
   const { accountId, key } = userData.credential;
   const [form, setForm] = useState({});
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
   const [error, setError] = useState({
     sku: false,
     descripcion: false,
@@ -152,7 +152,7 @@ const Sku = () => {
     if (form.sku?.trim().length < 1 || form.descripcion?.trim().length < 1) {
       return;
     }
-    const objeto = {
+    const newProduct = {
       sku: form.sku,
       description: form.descripcion,
       length: Number(form.largo),
@@ -162,8 +162,6 @@ const Sku = () => {
       cost: 0,
       retail: 0,
     };
-    const objeto1 = [''];
-    objeto1.push(objeto);
     clientFetch('inventory/v1/services/addProducts', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -172,7 +170,7 @@ const Sku = () => {
         warehouse: 'bx1',
         account_id: accountId,
         key,
-        products: [objeto],
+        products: [newProduct],
       },
     })
       .then(() => {
@@ -185,9 +183,9 @@ const Sku = () => {
         console.log(e);
         setError({ sku: true });
       }); setDataWhitErrors([]);
-    // }
   };
   const handleAllSubmit = () => {
+    setBtnDisabled(true);
     clientFetch('inventory/v1/services/addProducts', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -237,10 +235,18 @@ const Sku = () => {
         console.log(e);
         setTimeout(() => {
           setErrorFull(true);
-        }, 3000);
+        }, 100);
       });
   };
-
+  const OnChangeCsvFile = (productsCsv) => {
+    if (productsCsv.length > 0) {
+      setBtnDisabled(false);
+      setProducts(productsCsv);
+    } else {
+      setBtnDisabled(true);
+      setProducts([]);
+    }
+  };
   const handleSearch = () => {
     const objeto = {
       sku: form.sku,
@@ -494,7 +500,7 @@ const Sku = () => {
                   )}
                   <div className="row g-0">
                     <div className="container">
-                      <form onSubmit={handleAllSubmit} className="App">
+                      <form className="App">
                         <div className={`${styles.h} row g-2`}>
                           <div className="col-12">
                             <div className="p-3 pt-0 pb-0">
@@ -512,7 +518,7 @@ const Sku = () => {
                                   size="medium"
                                   setDataToValidate={setDataToValidate}
                                   setDataWhitErrors={setDataWhitErrors}
-                                  onChange={setProducts}
+                                  onChange={OnChangeCsvFile}
                                 />
                                 {dataWhitErrors.length > 0 && (
                                   <p className="text-danger">Archivo contiene campos vacíos, verifica los datos y carga nuevamente </p>
@@ -555,12 +561,14 @@ const Sku = () => {
                             <div className="col-4">
                               { }
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 mb-3">
                               <Button
-                                className={`${styles.btnWhite} px-0`}
+                                className={`btn ${styles.btnWhite} 
+                                ${btnDisabled ? 'disabled' : ''
+                                  } `}
                                 text="Agregar"
-                                disabled={btnDisabled}
                                 onClick={handleAllSubmit}
+                                disabled={btnDisabled}
                               />
                             </div>
                           </div>
