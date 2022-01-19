@@ -565,8 +565,7 @@ const FormReplenishment = ({ setModalTicket }) => {
                   <li className="ms-5">
                     <div className="p-0 bd-highlight d-flex justify-content-end">
                       <Button
-                        className={`btn btn-secondary ${
-                          btnDisabled ? 'disabled' : ''
+                        className={`btn btn-secondary ${btnDisabled ? 'disabled' : ''
                         } fs-5 px-5`}
                         text="Programar"
                         submit
