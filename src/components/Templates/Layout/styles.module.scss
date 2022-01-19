@@ -28,7 +28,6 @@
 }
 .gridMain {
   @include MQ(L) {
-    height: 1100px;
     grid-area: main;
   }
 }

@@ -306,7 +306,7 @@ const ResolutorDetail = ({
               )}
             </div>
           </form>
-          <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); }}>
+          <Modal showModal={modalTicket} size="lg" onClick={() => setModalTicket(false)}>
             {responseError ? (
               <div className="px-4 text-center">
                 <img src="/errorgloboalert.png" alt="aleta" />

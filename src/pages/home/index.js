@@ -319,7 +319,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="row mx-5 m-0">
+        <div className="row mx-5 m-0 mb-5">
           <div className="col-6 ">
             <Card className={styles.hei}>
               <div className="d-flex align-items-center">
@@ -374,7 +374,7 @@ const Home = () => {
           </div>
 
         </div>
-        <Modal showModal={modalInventory} size="xl" onClick={(e) => { e.preventDefault(); setModalInventory(false); }}>
+        <Modal showModal={modalInventory} size="xl" onClick={() => setModalInventory(false)}>
           <FormReplenishment
             setModalTicket={setModalInventory}
           />

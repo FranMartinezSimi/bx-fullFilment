@@ -9,11 +9,22 @@ const ErrorPage = () => {
     history.push('/');
   };
   return (
-    <PageLayout title="Blue360" description="Contenido no encontrado" noBreadcrumb>
-      <div style={{ minHeight: '80vh' }} className="d-flex align-items-center justify-content-center">
+    <PageLayout
+      title="Blue360"
+      description="Contenido no encontrado"
+      noBreadcrumb
+    >
+      <div
+        style={{ minHeight: '80vh' }}
+        className="d-flex align-items-center justify-content-center"
+      >
         <ul className="w-100 text-center">
           <li>
-            <img src="/errorpage.png" alt="Contenido no encontrado" data-testid="image" />
+            <img
+              src="/errorpage.png"
+              alt="Contenido no encontrado"
+              data-testid="image"
+            />
           </li>
           <li>
             <h2 className="display-font" data-testid="title">
@@ -22,8 +33,8 @@ const ErrorPage = () => {
               buscas no existe
             </h2>
             <p data-testid="subTitle">
-              Quizás hay un error en la dirección
-              , no tienes permisos o lo que buscas ya no está aquí.
+              Quizás hay un error en la dirección , no tienes permisos o lo que
+              buscas ya no está aquí.
             </p>
           </li>
           <li className="mt-5">

@@ -15,7 +15,6 @@ const SkuDetail = ({ onClick }) => {
         <li className="py-4" style={{ fontSize: 16 }}>
           {'Producto agregado con éxito  '}
           <br />
-          ¿Deseas agregar un nuevo SKU?.
           {' '}
 
         </li>

@@ -259,7 +259,7 @@ const Orders = () => {
           </div>
         )
         : component}
-      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={(e) => { e.preventDefault(); setModal(false); }}>
+      <Modal title={`Detalle de orden ${orderNumber}`} showModal={modal} onClick={() => setModal(false)}>
         <OrderDetail
           orderNumber={orderNumber}
           id={orderId}
@@ -269,10 +269,10 @@ const Orders = () => {
           handleClickTicket={handleClickTicket}
         />
       </Modal>
-      <Modal showModal={modalDate} size="lg" onClick={(e) => { e.preventDefault(); setModalDate(false); }}>
+      <Modal showModal={modalDate} size="lg" onClick={() => setModalDate(false)}>
         <FromToDownloader />
       </Modal>
-      <Modal showModal={modalTicket} size="lg" onClick={(e) => { e.preventDefault(); setModalTicket(false); getData(); }}>
+      <Modal showModal={modalTicket} size="lg" onClick={() => { setModalTicket(false); getData(); }}>
         <FromTicket
           orderId={orderId}
           setModalTicket={setModalTicket}

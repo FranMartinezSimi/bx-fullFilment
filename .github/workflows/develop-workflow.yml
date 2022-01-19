@@ -30,7 +30,8 @@ jobs:
     #     sonarqube_url: ${{ secrets.SONARQUBE_DEV_URL }}
     #     sonarqube_token: ${{ secrets.SONARQUBE_DEV_TOKEN }}
     #     projectKey: bx-fulfillment-web
-    - uses: shallwefootball/s3-upload-action@master
+    #- uses: shallwefootball/s3-upload-action@master
+    - uses: Blue-Express/upload-s3-action@main
       name: Upload S3
       id: S3
       with:
