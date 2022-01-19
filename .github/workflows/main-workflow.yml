@@ -26,7 +26,8 @@ jobs:
         yarn build:main
       env:
         CI: true
-    - uses: shallwefootball/s3-upload-action@master
+    #- uses: shallwefootball/s3-upload-action@master
+    - uses: Blue-Express/upload-s3-action@main
       name: Upload S3
       id: S3
       with:
