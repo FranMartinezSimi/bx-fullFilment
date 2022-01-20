@@ -109,6 +109,7 @@ const Sku = () => {
     estado: 'estado',
     procesado: '0',
     fallidos: '0',
+    objeto: [],
   });
   let component;
   useEffect(() => {
@@ -201,13 +202,16 @@ const Sku = () => {
         const resp = Object.entries(['']);
         resp.push(res);
         const { created, errors } = resp[1].result;
+        const dataTable = [...created];
+        console.log('DATA TABLE', dataTable);
         if (created.length > 0 && errors.length === 0) {
           setResponse({
             img: 'bgsuccess',
             estado: 'Proceso Completado',
-            comentario: 'Tus productos han sido cargados exitosamente',
+            comentario: 'Tus productos han sido cargados exitosamente ',
             procesado: created.length,
             fallidos: errors.length,
+            objeto: dataTable,
           });
         } else if (created.length > 0 && errors.length > 0) {
           setResponse({
@@ -216,6 +220,8 @@ const Sku = () => {
             comentario: 'Se ha realizado una carga parcial de tus productos. Puedes revisar los SKU cargados exitosamente y volver a cargar los fallidos.',
             procesado: created.length,
             fallidos: errors.length,
+            objeto: dataTable,
+
           });
         } else if (created.length === errors.length) {
           setResponse({
@@ -224,6 +230,7 @@ const Sku = () => {
             comentario: 'No se ha realizado la carga de tus productos. Puedes revisar los SKU y volver a cargar el archivo. ',
             procesado: created.length,
             fallidos: errors.length,
+            objeto: dataTable,
           });
         }
         setShow(false);
@@ -284,6 +291,7 @@ const Sku = () => {
         estado={response.estado}
         comentario={response.comentario}
         img={response.img}
+        dataTable={response.objeto}
       />
     );
   }
