@@ -1,0 +1,31 @@
+@import "styles/utils/variables";
+
+.contentTwo {
+  height: 100%;
+  border-left: 0.6px solid #1E81B2;
+  position: relative;
+}
+
+.contentBottomBtn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  & > button {
+    background: $secondary-color;
+    color: $white;
+    transition: all 0.1s ease-in-out;
+    width: 190px;
+    height: 40px;
+    font-size: 18px;
+    line-height: 22px;
+    &:disabled {
+      background: $secondary-color !important;
+      color: $white;
+      opacity: 0.6;
+    }
+  }
+}

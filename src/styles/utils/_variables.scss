@@ -37,7 +37,7 @@ $info-color: map-get($palette,info-color);
 $warning-color: map-get($palette,warning-color);
 $disabled-color: map-get($palette,disabled-color);
 $white:white;
-$black: black;
+$black: #212121;
 //Gradientes
 $primary-gradient: linear-gradient(#FBC567, #F89173);
 $secondary-gradient: linear-gradient(#B6BFC1, #747575);
