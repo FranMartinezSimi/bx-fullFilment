@@ -12,25 +12,7 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: run yarn install and build
-      run: |
-        yarn install
-        yarn build:dev
-      env:
-        CI: true
-    # - name: SonarQube Scan
-    #   uses: Blue-Express/sonar-scan-action@master
-    #   id: check
-    #   with:
-    #     sonarqube_url: ${{ secrets.SONARQUBE_DEV_URL }}
-    #     sonarqube_token: ${{ secrets.SONARQUBE_DEV_TOKEN }}
-    #     projectKey: bx-fulfillment-web
-    #- uses: shallwefootball/s3-upload-action@master
+    - uses: actions/checkout@v2
     - uses: Blue-Express/upload-s3-action@main
       name: Upload S3
       id: S3
