@@ -38,7 +38,6 @@ const RadioButton = ({
         preventDefault: event.preventDefault,
         nativeEvent: event,
       };
-      setSelfChecked(!selfChecked);
 
       if (onChange) onChange(selfEvent);
     },

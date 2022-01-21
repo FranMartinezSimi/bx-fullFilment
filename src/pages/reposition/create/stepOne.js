@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import { setHours, setMinutes } from 'date-fns';
 import cs from 'classnames';
 
@@ -10,31 +10,75 @@ import InputDateWithLabel from 'components/Molecules/Form/InputDateWithLabel';
 import DropZone from 'components/Molecules/DropZone';
 import { InputRadio } from 'components/Atoms/Form/Input';
 import Card from 'components/Molecules/Card';
+import DialogModal from 'components/Templates/DialogModal';
 
 import styles from './stepOne.module.scss';
 
 const StepOne = () => {
   const { seller } = useAuth();
   const {
+    setStep,
     formToReposition,
     setDateToReposition,
     setFilesToReposition,
     setSelectedModeToReposition,
+    resetReposition,
+    productsToReposition,
   } = useReposition();
+  const [showModalChangeMode, setShowModalChangeMode] = useState({
+    show: false,
+    prevMode: null,
+    mode: null,
+  });
 
   const minDate = useMemo(() => new Date(), []);
+  const isDisabledNextButton = useMemo(() => {
+    const { date, selectedMode } = formToReposition;
+
+    return !date || !selectedMode;
+  }, [formToReposition]);
 
   const handleRadioChange = useCallback(
     (event) => {
       event.preventDefault();
-      setSelectedModeToReposition(event.target.value);
+      const mode = event.target.value;
+
+      if (formToReposition.selectedMode !== null && productsToReposition.length) {
+        setShowModalChangeMode({
+          show: true,
+          prevMode: formToReposition.selectedMode,
+          mode,
+        });
+
+        return;
+      }
+
+      setSelectedModeToReposition(mode);
     },
-    [setSelectedModeToReposition],
+    [setSelectedModeToReposition, formToReposition.selectedMode, productsToReposition],
   );
+
+  const onAcceptChangeMode = useCallback(() => {
+    resetReposition();
+    setSelectedModeToReposition(showModalChangeMode.mode);
+    setShowModalChangeMode({
+      show: false,
+      mode: null,
+      prevMode: null,
+    });
+  }, [showModalChangeMode]);
+
+  const onCancelChangeMode = useCallback(() => {
+    setShowModalChangeMode({
+      show: false,
+      mode: null,
+      prevMode: null,
+    });
+  }, []);
 
   return (
     <div className="row">
-      <div className="col-6 px-5">
+      <div className="col-sm-6 col-12 px-5">
         <div className="row">
           <div className="col-12 py-2">
             <p className="subtitle">Datos de Contacto</p>
@@ -78,9 +122,9 @@ const StepOne = () => {
           </div>
           <div className="col-6 mb-2">
             <InputDateWithLabel
-              label="Fecha"
+              label="Fecha y Hora"
               id="date"
-              format="dd/MM/yyyy h:mm aa"
+              format="dd/MM/yyyy - h:mm aa"
               showTimeSelect
               selected={formToReposition.date}
               onChange={setDateToReposition}
@@ -103,7 +147,7 @@ const StepOne = () => {
           </div>
         </div>
       </div>
-      <div className="col-6">
+      <div className="col-sm-6 col-12">
         <div className={cs(styles.contentTwo, 'px-5 py-2')}>
           <div className="row">
             <div className="col-12 mb-2">
@@ -151,15 +195,26 @@ const StepOne = () => {
             <button
               type="button"
               className={cs('btn btn-secondary', {
-                [styles.disabled]: formToReposition.selectedMode === null,
+                [styles.disabled]: isDisabledNextButton,
               })}
-              disabled={formToReposition.selectedMode === null}
+              disabled={isDisabledNextButton}
+              onClick={() => setStep(1)}
             >
               Siguiente
             </button>
           </div>
         </div>
       </div>
+      <DialogModal
+        showModal={showModalChangeMode.show}
+        onAccept={onAcceptChangeMode}
+        onCancel={onCancelChangeMode}
+      >
+        <span className="text-center">
+          Si cambias de modo, tendrás que seleccionar nuevamente
+          los productos a reponer
+        </span>
+      </DialogModal>
     </div>
   );
 };

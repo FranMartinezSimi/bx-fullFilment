@@ -30,6 +30,8 @@ const RepositionContext = createContext({
 
   addProductToReposition: () => {},
   removeProductToReposition: () => {},
+
+  resetReposition: () => {},
 });
 
 const RepositionProvider = ({ children }) => {
@@ -89,6 +91,17 @@ const RepositionProvider = ({ children }) => {
     setQuantitiesToRepositionBySku((prev) => Omit(prev, sku));
   }, []);
 
+  const resetReposition = useCallback(() => {
+    setStep(0);
+    setFormToReposition({
+      date: null,
+      files: [],
+      selectedMode: null,
+    });
+    setProductsToReposition([]);
+    setQuantitiesToRepositionBySku({});
+  }, []);
+
   useEffect(() => {
     if (!productsToReposition.length) {
       setQuantitiesToRepositionBySku({});
@@ -107,9 +120,11 @@ const RepositionProvider = ({ children }) => {
         setDateToReposition,
         setFilesToReposition,
         setSelectedModeToReposition,
+        quantitiesToRepositionBySku,
         updateQuantitiesToRepositionBySku,
         addProductToReposition,
         removeProductToReposition,
+        resetReposition,
       }}
     >
       {children}

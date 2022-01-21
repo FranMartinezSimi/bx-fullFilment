@@ -4,13 +4,25 @@ import PropTypes from 'prop-types';
 import arrowBack from 'assets/brand/breadcrumbGoBack.svg';
 
 const PageLayout = ({
-  title, description, children, noBreadcrumb,
+  title,
+  description,
+  children,
+  noBreadcrumb,
+  onGoBack,
 }) => {
   const history = useHistory();
+
   const handleClickBack = (e) => {
     e.preventDefault();
+
+    if (onGoBack) {
+      onGoBack();
+      return;
+    }
+
     history.goBack();
   };
+
   return (
     <>
       <Helmet>
@@ -45,6 +57,7 @@ PageLayout.defaultProps = {
   title: '',
   description: '',
   noBreadcrumb: false,
+  onGoBack: undefined,
 };
 
 PageLayout.propTypes = {
@@ -52,6 +65,7 @@ PageLayout.propTypes = {
   description: PropTypes.string,
   children: PropTypes.node.isRequired,
   noBreadcrumb: PropTypes.bool,
+  onGoBack: PropTypes.func,
 };
 
 export default PageLayout;
