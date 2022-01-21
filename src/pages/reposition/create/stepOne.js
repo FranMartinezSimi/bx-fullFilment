@@ -137,7 +137,7 @@ const StepOne = () => {
             <p className="subtitle">Carga de archivo</p>
             <p className="paragraph1">Facturas y/o Guía de despacho</p>
           </div>
-          <div className="col-6 mb-2">
+          <div className="col-7 mb-2">
             <DropZone
               setSelectedFiles={setFilesToReposition}
               size="small"
@@ -211,8 +211,9 @@ const StepOne = () => {
         onCancel={onCancelChangeMode}
       >
         <span className="text-center">
-          Si cambias de modo, tendrás que seleccionar nuevamente
-          los productos a reponer
+          Al cambiar de opción, se perderán los datos ingresados.
+          <br />
+          ¿Deseas continuar?
         </span>
       </DialogModal>
     </div>
