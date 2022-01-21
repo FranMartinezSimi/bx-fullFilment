@@ -3,8 +3,10 @@ import cs from 'classnames';
 
 import MainTable from 'components/Templates/MainTable';
 import { InputQuantity } from 'components/Atoms/Form/Input';
+import DialogModal from 'components/Templates/DialogModal';
 import plus from 'assets/brand/newPlus.svg';
 import trash from 'assets/brand/trash.svg';
+import InventoryRepositionModal from 'components/Templates/InventoryRepositionModal';
 
 import { useReposition } from 'context/useReposition';
 
@@ -15,11 +17,13 @@ const StepTwo = () => {
     productsToReposition,
     quantitiesToRepositionBySku,
     updateQuantitiesToRepositionBySku,
+    removeProductToReposition,
   } = useReposition();
-  const [, setDeleteModal] = useState({
+  const [deleteModal, setDeleteModal] = useState({
     sku: null,
     isShow: false,
   });
+  const [showSkuModal, setShowSkuModal] = useState(false);
 
   const showDeleteModal = useCallback(
     (sku) => () => {
@@ -30,6 +34,20 @@ const StepTwo = () => {
     },
     [],
   );
+
+  const hideDeleteModal = useCallback(
+    () => setDeleteModal({ sku: null, isShow: false }),
+    [],
+  );
+
+  const onDeleteSkuHandle = useCallback(() => {
+    removeProductToReposition(deleteModal.sku);
+    hideDeleteModal();
+  }, [deleteModal]);
+
+  const toggleSkuModal = useCallback(() => {
+    setShowSkuModal((prevState) => !prevState);
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -91,6 +109,7 @@ const StepTwo = () => {
               <button
                 type="button"
                 className={cs(styles.roundedButtom, styles.add)}
+                onClick={toggleSkuModal}
               >
                 <img src={plus} alt="Ordenes" width={17} height={17} />
               </button>
@@ -98,6 +117,25 @@ const StepTwo = () => {
           )}
         />
       </div>
+      <DialogModal
+        showModal={deleteModal.isShow}
+        onAccept={onDeleteSkuHandle}
+        onCancel={hideDeleteModal}
+      >
+        <p>
+          ¿Estás seguro que deseas eliminar el
+          {' '}
+          <b>
+            SKU
+            {deleteModal.sku}
+          </b>
+          ?
+        </p>
+      </DialogModal>
+      <InventoryRepositionModal
+        showModal={showSkuModal}
+        onCloseModal={toggleSkuModal}
+      />
     </div>
   );
 };
