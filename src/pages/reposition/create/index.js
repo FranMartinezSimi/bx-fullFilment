@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useReposition } from 'context/useReposition';
@@ -30,6 +30,10 @@ export default function CreateReposition() {
 
     setStep(0);
   }, [step]);
+
+  useEffect(() => () => {
+    resetReposition();
+  }, []);
 
   return (
     <PageLayout title="Reposición de Inventario" onGoBack={onGoBack}>
