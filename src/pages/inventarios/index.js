@@ -10,6 +10,7 @@ import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import FormReplenishment from 'components/Molecules/FormReplenishment';
 import { useInventory } from 'context/useInventory';
+import { useReposition } from 'context/useReposition';
 
 const Inventory = () => {
   const [modal, setModal] = useState(false);
@@ -17,12 +18,15 @@ const Inventory = () => {
   const [inventoryId, setInventoryId] = useState('');
   const [skuId, setSkuId] = useState('');
   const {
-    setProductsToReposition,
-    productsToReposition,
     inventory,
     isGetInventory,
     errorGetInventory,
   } = useInventory();
+  const {
+    setProductsToReposition,
+    productsToReposition,
+    setSelectedModeToReposition,
+  } = useReposition();
   const { push } = useHistory();
 
   const handleClickInventoryDetail = (e, tableData) => {
@@ -98,6 +102,7 @@ const Inventory = () => {
       e.preventDefault();
 
       if (productsToReposition.length) {
+        setSelectedModeToReposition('sku');
         push('/reposition/create');
         return;
       }
