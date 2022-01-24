@@ -31,7 +31,6 @@ const MessageResponseProducts = ({
     marginBottom: '40px',
     margin: 'auto',
   };
-
   const columns = [
     {
       Header: 'SKU',
