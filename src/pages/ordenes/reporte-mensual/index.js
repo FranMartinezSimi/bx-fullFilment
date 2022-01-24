@@ -23,7 +23,7 @@ const SellerReport = () => {
   }
 
   const chart = () => {
-    clientFetch('order/v1/dashboards/getAnalysistOrders', {
+    clientFetch('order/v1/dashboards/getAnalysisOrders', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },

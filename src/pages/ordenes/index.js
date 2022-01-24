@@ -124,6 +124,10 @@ const Orders = () => {
     setModalTicket(true);
   };
 
+  const handleTrakingNumber = (url) => {
+    window.open(url, '_blank');
+  };
+
   const columns = useMemo(() => [
     {
       Header: 'Nº orden',
@@ -164,7 +168,8 @@ const Orders = () => {
             href="#!"
             onClick={(e) => {
               e.preventDefault();
-              window.location = `https://www.blue.cl/seguimiento/?n_seguimiento=${row.original.trackingNumber}`;
+              handleTrakingNumber(`https://www.blue.cl/seguimiento/?n_seguimiento=${row.original.trackingNumber}`);
+              // window.location = `https://www.blue.cl/seguimiento/?n_seguimiento=${row.original.trackingNumber}`;
             }}
             role="button"
             className="d-block font-weight-bold font-weight-bold"
