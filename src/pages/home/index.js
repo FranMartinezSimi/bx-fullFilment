@@ -70,7 +70,7 @@ const Home = () => {
     (async () => {
       try {
         const monthsOfInventoryResponse = await clientFetch(
-          'bff/v1/inventory/getMostRequestedProducts?lastDaysInNumber=90&productQuantityLimit=12',
+          'bff/v1/inventory/getMostRequestedProducts?lastDaysInNumber=7&productQuantityLimit=12',
           {
             headers: {
               apikey: process.env.REACT_APP_API_KEY_KONG,

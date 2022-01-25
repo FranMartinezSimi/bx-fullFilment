@@ -52,7 +52,7 @@ const MonthsOfInventory = () => {
     (async () => {
       try {
         const monthsOfInventoryResponse = await clientFetch(
-          'bff/v1/inventory/getMonthsOfInventory',
+          'bff/v1/inventory/getMonthsOfInventory?lastDaysInNumber=30',
           {
             headers: {
               apikey: process.env.REACT_APP_API_KEY_KONG,
