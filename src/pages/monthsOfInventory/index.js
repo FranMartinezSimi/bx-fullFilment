@@ -37,8 +37,31 @@ const MonthsOfInventory = () => {
         accessor: (row) => (row.turnover === -1
           ? '∞'
           : row.turnover === 0
-            ? row.turnover
-            : Number(row.turnover).toFixed(2)),
+            ? (
+              <p style={{
+                color: '#FD2626',
+                fontFamily: 'lato',
+                fontWeight: 'bold',
+                fontSize: '14px',
+                fontStyle: 'normal',
+              }}
+              >
+                {Number(row.turnover).toFixed(1)}
+              </p>
+            )
+            : row.turnover < 1
+              ? (
+                <p style={{
+                  color: '#333333',
+                  fontFamily: 'lato',
+                  fontSize: '14px',
+                  fontStyle: 'normal',
+                }}
+                >
+                  {Number(row.turnover).toFixed(1)}
+                </p>
+              )
+              : Number(row.turnover).toFixed(2)),
       },
     ],
     [],
