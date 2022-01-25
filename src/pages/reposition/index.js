@@ -25,10 +25,10 @@ const Reposition = () => {
     e.preventDefault();
   };
 
-  const handleClickOrderDeatil = (e, tableData) => {
+  const handleClickOrderDeatil = (e, manifestData) => {
     e.preventDefault();
     setModal(true);
-    setManifest(tableData.row.original.manifest);
+    setManifest(manifestData);
   };
 
   const columns = useMemo(
@@ -98,16 +98,18 @@ const Reposition = () => {
         Header: 'Manifiesto',
         accessor: 'ver',
         isVisible: true,
-        Cell: (table) => (
+        Cell: ({ row: { original } }) => (!original.manifest ? (
+          ''
+        ) : (
           <a
             href="#!"
-            onClick={(e) => handleClickOrderDeatil(e, table)}
+            onClick={(e) => handleClickOrderDeatil(e, original.manifest)}
             role="button"
             className="d-block font-weight-bold font-weight-bold"
           >
             <img src={info} alt="Actualizar Ordenes" width="32" />
           </a>
-        ),
+        )),
       },
     ],
     [],
@@ -187,11 +189,7 @@ const Reposition = () => {
       ) : (
         component
       )}
-      <Modal
-        showModal={modal}
-        size="xl"
-        onClick={() => setModal(false)}
-      >
+      <Modal showModal={modal} size="xl" onClick={() => setModal(false)}>
         <ReplenishmentDetail
           columns={columns}
           data={list}
