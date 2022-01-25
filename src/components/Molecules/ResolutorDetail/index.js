@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import clientFetch from 'lib/client-fetch';
 import { base64StringToBlob } from 'blob-util';
 import useNotify from 'hooks/useNotify';
-
+import PageTitle from 'components/Atoms/PageTitle';
 import avatar from 'assets/brand/avatar.svg';
 import avatarResolutor from 'assets/brand/avatar-resolutor.svg';
 import DropZone from 'components/Molecules/DropZone';
@@ -141,6 +141,7 @@ const ResolutorDetail = ({
   }, [detailData]);
   return (
     <>
+      <PageTitle title="Numero de Traking" size={5} />
       {form !== null ? (
         <>
           <ul>

@@ -15,6 +15,7 @@ import FromTicket from 'components/Molecules/FormTicket';
 import avatar from 'assets/brand/avatar.svg';
 import chatRobotina from 'assets/brand/chatRobotina.svg';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
+import PageTitle from 'components/Atoms/PageTitle';
 import styles from './styles.module.scss';
 
 const IssueDetail = () => {
@@ -97,6 +98,7 @@ const IssueDetail = () => {
   }, []);
   return (
     <PageLayout title={`Ticket ${title}`}>
+      <PageTitle title={`Numero de Ticket ${title}`} />
       <Card className="px-5 mt-3 shadow mb-5">
         {ticket != null && !loading ? (
           <>
