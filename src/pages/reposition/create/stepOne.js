@@ -12,6 +12,7 @@ import { InputRadio } from 'components/Atoms/Form/Input';
 import Card from 'components/Molecules/Card';
 import DialogModal from 'components/Templates/DialogModal';
 
+import UploadCsvFull from 'components/Molecules/UploadCsvFull';
 import styles from './stepOne.module.scss';
 
 const StepOne = () => {
@@ -184,7 +185,13 @@ const StepOne = () => {
                       <p className="paragraph2">formato excel, csv</p>
                     </div>
                     <div className="mt-3 col-12 d-flex justify-content-center align-items-center">
-                      AQUI VA EL DROPZONE
+                      <UploadCsvFull
+                        size="medium"
+                        setDataToValidate={console.log}
+                        setDataWhitErrors={console.log}
+                        onChange={console.log}
+                        description="Arrastra tu archivo o selecciona desde tu computadora"
+                      />
                     </div>
                   </div>
                 </Card>

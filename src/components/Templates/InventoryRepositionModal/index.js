@@ -59,6 +59,11 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
 
   return (
     <Modal showModal={showModal} size="xl" onClick={onCloseModal}>
+      <div className="row">
+        <div className="col-12 mb-4">
+          <p className="h6 text-center">Seleccionar SKU a reponer</p>
+        </div>
+      </div>
       <div className="px-2">
         <MainTable
           selectableRow
