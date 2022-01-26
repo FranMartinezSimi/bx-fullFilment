@@ -4,6 +4,7 @@ import cs from 'classnames';
 
 import { useAuth } from 'context/userContex';
 import { useReposition } from 'context/useReposition';
+import { useInventory } from 'context/useInventory';
 
 import InputWithLabel from 'components/Molecules/Form/InputWithLabel';
 import InputDateWithLabel from 'components/Molecules/Form/InputDateWithLabel';
@@ -11,8 +12,12 @@ import DropZone from 'components/Molecules/DropZone';
 import { InputRadio } from 'components/Atoms/Form/Input';
 import Card from 'components/Molecules/Card';
 import DialogModal from 'components/Templates/DialogModal';
-
 import UploadCsvFull from 'components/Molecules/UploadCsvFull';
+import plantillaCsv from 'assets/plantilla.csv';
+import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
+import ValidationMessageModal from 'components/Templates/ValidationMessageModal';
+
+import AlertModal from 'components/Templates/AlertModal';
 import styles from './stepOne.module.scss';
 
 const StepOne = () => {
@@ -25,26 +30,40 @@ const StepOne = () => {
     setSelectedModeToReposition,
     resetReposition,
     productsToReposition,
+    updateQuantitiesToRepositionBySku,
+    setProductsToReposition,
+    productsWithErrorToReposition,
+    setProductsWithErrorToReposition,
   } = useReposition();
+  const { invetoryKeyedBySku } = useInventory();
   const [showModalChangeMode, setShowModalChangeMode] = useState({
     show: false,
     prevMode: null,
     mode: null,
   });
+  const [showValidationModal, setShowValidationModal] = useState(false);
+  const [nextReposition, setNextReposition] = useState({ isError: false, message: null });
 
   const minDate = useMemo(() => new Date(), []);
   const isDisabledNextButton = useMemo(() => {
-    const { date, selectedMode } = formToReposition;
+    const { selectedMode } = formToReposition;
 
-    return !date || !selectedMode;
-  }, [formToReposition]);
+    if (selectedMode === 'files' && !productsToReposition.length) {
+      return true;
+    }
+
+    return !selectedMode;
+  }, [formToReposition, productsToReposition]);
 
   const handleRadioChange = useCallback(
     (event) => {
       event.preventDefault();
       const mode = event.target.value;
 
-      if (formToReposition.selectedMode !== null && productsToReposition.length) {
+      if (
+        formToReposition.selectedMode !== null
+        && productsToReposition.length
+      ) {
         setShowModalChangeMode({
           show: true,
           prevMode: formToReposition.selectedMode,
@@ -56,7 +75,11 @@ const StepOne = () => {
 
       setSelectedModeToReposition(mode);
     },
-    [setSelectedModeToReposition, formToReposition.selectedMode, productsToReposition],
+    [
+      setSelectedModeToReposition,
+      formToReposition.selectedMode,
+      productsToReposition,
+    ],
   );
 
   const onAcceptChangeMode = useCallback(() => {
@@ -76,6 +99,103 @@ const StepOne = () => {
       prevMode: null,
     });
   }, []);
+
+  const isSkuSelected = useMemo(
+    () => formToReposition.selectedMode === 'sku',
+    [formToReposition.selectedMode],
+  );
+
+  const isFilesSelected = useMemo(
+    () => formToReposition.selectedMode === 'files',
+    [formToReposition.selectedMode],
+  );
+
+  const onErrorUploadFile = useCallback((errorUpload) => {
+    if (!errorUpload.length) return;
+
+    const { key, errors } = errorUpload[0] || {};
+    setNextReposition({ isError: true, message: `${key} ${errors[0] || ''}` });
+  }, []);
+
+  const onChangeUploadFile = useCallback(
+    (csvData) => {
+      if (!csvData || !csvData.length) return;
+
+      const inventoryAdapter = csvData.reduce(
+        (acum, csvValue) => {
+          const { SKU, CANTIDAD, DESCRIPCION } = csvValue;
+          const foundInventory = invetoryKeyedBySku[SKU];
+
+          if (foundInventory) {
+            updateQuantitiesToRepositionBySku(SKU, Number(CANTIDAD));
+            return {
+              ...acum,
+              productsToReposition: acum.productsToReposition.concat({
+                ...foundInventory,
+                statusProcess: 'Agregado',
+              }),
+            };
+          }
+
+          return {
+            ...acum,
+            productsWithErros: acum.productsWithErros.concat({
+              sku: SKU,
+              description: DESCRIPCION,
+              statusProcess: 'No existe',
+            }),
+          };
+        },
+        { productsToReposition: [], productsWithErros: [] },
+      );
+
+      setProductsToReposition(inventoryAdapter.productsToReposition);
+      setProductsWithErrorToReposition(inventoryAdapter.productsWithErros);
+      setShowValidationModal(true);
+    },
+    [invetoryKeyedBySku],
+  );
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'SKU',
+        accessor: 'sku',
+      },
+      {
+        Header: 'Descripción',
+        accessor: 'description',
+      },
+      {
+        Header: 'Estado',
+        accessor: 'statusProcess',
+      },
+    ],
+    [],
+  );
+
+  const dataTable = useMemo(
+    () => [...productsToReposition, ...productsWithErrorToReposition],
+    [productsToReposition, productsWithErrorToReposition],
+  );
+
+  const toggleValidationModal = useCallback(
+    () => setShowValidationModal((prevState) => !prevState),
+    [],
+  );
+
+  const resetNextReposition = useCallback(() => {
+    setNextReposition({ isError: false, message: null });
+  }, []);
+
+  const nextStep = useCallback(() => {
+    if (!formToReposition.date) {
+      setNextReposition({ isError: true, message: 'Selecciona fecha y hora en que deseas programar tu reposición.' });
+      return;
+    }
+
+    setStep(1);
+  }, [formToReposition.date]);
 
   return (
     <div className="row">
@@ -160,7 +280,7 @@ const StepOne = () => {
                 label="SKU"
                 onChange={handleRadioChange}
                 value="sku"
-                checked={formToReposition.selectedMode === 'sku'}
+                checked={isSkuSelected}
               />
             </div>
             <div className="col-12">
@@ -169,13 +289,13 @@ const StepOne = () => {
                 label="Archivo"
                 onChange={handleRadioChange}
                 value="files"
-                checked={formToReposition.selectedMode === 'files'}
+                checked={isFilesSelected}
               />
             </div>
           </div>
-          {formToReposition.selectedMode === 'files' && (
-            <div className="row d-flex justify-content-center mt-4">
-              <div className="col-10">
+          {isFilesSelected && (
+            <div className="row d-flex justify-content-center my-4">
+              <div className="col-12">
                 <Card className="my-4 py-4 px-5 shadow">
                   <div className="row">
                     <div className="col-12 d-flex justify-content-center align-items-center">
@@ -187,29 +307,58 @@ const StepOne = () => {
                     <div className="mt-3 col-12 d-flex justify-content-center align-items-center">
                       <UploadCsvFull
                         size="medium"
-                        setDataToValidate={console.log}
-                        setDataWhitErrors={console.log}
-                        onChange={console.log}
+                        onChange={onChangeUploadFile}
                         description="Arrastra tu archivo o selecciona desde tu computadora"
+                        setDataWhitErrors={onErrorUploadFile}
                       />
+                    </div>
+                    <div className="mt-3 col-12 d-flex justify-content-center align-items-center">
+                      <a
+                        href={plantillaCsv}
+                        className="btn btn-complementary"
+                        download
+                      >
+                        <img src={loadArrowOrange} alt="Download" width="16" />
+                        <span className="ps-2">
+                          {' '}
+                          Descarga plantilla de Resposición
+                        </span>
+                      </a>
                     </div>
                   </div>
                 </Card>
               </div>
             </div>
           )}
-          <div className={styles.contentBottomBtn}>
-            <button
-              type="button"
-              className={cs('btn btn-secondary', {
-                [styles.disabled]: isDisabledNextButton,
-              })}
-              disabled={isDisabledNextButton}
-              onClick={() => setStep(1)}
-            >
-              Siguiente
-            </button>
-          </div>
+          {!isFilesSelected ? (
+            <div className={styles.contentBottomBtn}>
+              <button
+                type="button"
+                className={cs(styles.nextButton, 'btn btn-secondary', {
+                  [styles.disabled]: isDisabledNextButton,
+                })}
+                disabled={isDisabledNextButton}
+                onClick={() => setStep(1)}
+              >
+                Siguiente
+              </button>
+            </div>
+          ) : (
+            <div className="row">
+              <div className="col-12 d-flex justify-content-end">
+                <button
+                  type="button"
+                  className={cs(styles.nextButton, 'btn btn-secondary', {
+                    [styles.disabled]: isDisabledNextButton,
+                  })}
+                  disabled={isDisabledNextButton}
+                  onClick={nextStep}
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <DialogModal
@@ -223,6 +372,25 @@ const StepOne = () => {
           ¿Deseas continuar?
         </span>
       </DialogModal>
+      <ValidationMessageModal
+        showModal={showValidationModal}
+        onAccept={toggleValidationModal}
+        onClose={toggleValidationModal}
+        type="warning"
+        leftIndicatorText="Ingresados"
+        leftIndicatorValue={dataTable.length}
+        centerIndicatorText="Errores"
+        centerIndicatorValue={productsWithErrorToReposition.length}
+        rightIndicatorText="Validos"
+        rightIndicatorValue={productsToReposition.length}
+        columns={columns}
+        dataTable={dataTable}
+      />
+      <AlertModal
+        showModal={nextReposition.isError}
+        message={nextReposition.message}
+        onClose={resetNextReposition}
+      />
     </div>
   );
 };

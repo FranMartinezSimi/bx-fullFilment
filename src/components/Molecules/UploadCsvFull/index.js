@@ -23,6 +23,7 @@ const UploadCsvFull = ({
           format: true,
         },
       ]);
+      onChange([]);
       return;
     }
     const formatData = data.map((item) => item.data);
@@ -78,6 +79,7 @@ const UploadCsvFull = ({
       borderColor: '#3363FF',
       borderRadius: 10,
       background: '#FBFBFB',
+      width: '100%',
     },
     dropAreaActive: {
       borderColor: '#0d6efd',
