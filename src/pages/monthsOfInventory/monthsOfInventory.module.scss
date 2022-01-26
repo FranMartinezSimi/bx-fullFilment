@@ -1,0 +1,10 @@
+.indicator {
+  color: #333333;
+  font-family: lato;
+  font-weight: bold;
+  font-size: 14px;
+  font-style: normal;
+  &.red {
+    color: #FD2626;
+  }
+}

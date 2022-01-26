@@ -42,7 +42,10 @@ const StepOne = () => {
     mode: null,
   });
   const [showValidationModal, setShowValidationModal] = useState(false);
-  const [nextReposition, setNextReposition] = useState({ isError: false, message: null });
+  const [nextReposition, setNextReposition] = useState({
+    isError: false,
+    message: null,
+  });
 
   const minDate = useMemo(() => new Date(), []);
   const isDisabledNextButton = useMemo(() => {
@@ -190,12 +193,30 @@ const StepOne = () => {
 
   const nextStep = useCallback(() => {
     if (!formToReposition.date) {
-      setNextReposition({ isError: true, message: 'Selecciona fecha y hora en que deseas programar tu reposición.' });
+      setNextReposition({
+        isError: true,
+        message:
+          'Selecciona fecha y hora en que deseas programar tu reposición.',
+      });
       return;
     }
 
     setStep(1);
   }, [formToReposition.date]);
+
+  const typeValidationMessage = useMemo(() => {
+    if (productsToReposition.length && productsWithErrorToReposition.length) {
+      return 'warning';
+    }
+    if (!productsToReposition.length && productsWithErrorToReposition.length) {
+      return 'error';
+    }
+
+    return 'success';
+  }, [
+    productsToReposition,
+    productsWithErrorToReposition,
+  ]);
 
   return (
     <div className="row">
@@ -376,7 +397,7 @@ const StepOne = () => {
         showModal={showValidationModal}
         onAccept={toggleValidationModal}
         onClose={toggleValidationModal}
-        type="warning"
+        type={typeValidationMessage}
         leftIndicatorText="Ingresados"
         leftIndicatorValue={dataTable.length}
         centerIndicatorText="Errores"
