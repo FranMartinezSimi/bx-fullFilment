@@ -159,7 +159,7 @@ const GlobalFilter = ({
                 </a>
                 <div
                   className={`${dropDown ? '' : 'd-none'} bg-white shadow position-absolute p-4`}
-                  style={{ width: 190, borderRadius: 15 }}
+                  style={{ width: 190, borderRadius: 15, zIndex: 1 }}
                   onBlur={() => setDropDown(false)}
                 >
                   <a href="#!" className="d-block" onClick={handleClickDowload}>

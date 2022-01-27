@@ -333,16 +333,16 @@ const StepOne = () => {
                         setDataWhitErrors={onErrorUploadFile}
                       />
                     </div>
-                    <div className="mt-3 col-12 d-flex justify-content-center align-items-center">
+                    <div className="mt-5 mb-2 col-12 d-flex justify-content-start align-items-center">
                       <a
                         href={plantillaCsv}
                         className="btn btn-complementary"
-                        download
+                        download="planilla_resposicion"
                       >
                         <img src={loadArrowOrange} alt="Download" width="16" />
                         <span className="ps-2">
                           {' '}
-                          Descarga plantilla de Resposición
+                          Planilla de Resposición
                         </span>
                       </a>
                     </div>
