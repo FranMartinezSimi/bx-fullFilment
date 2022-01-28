@@ -108,7 +108,7 @@ const GlobalFilter = ({
               </a>
               <ul
                 className={`${dropDownDate ? 'd-flex' : 'd-none'} bg-white shadow position-absolute flex-wrap py-4 px-5`}
-                style={{ borderRadius: 15 }}
+                style={{ borderRadius: 15, zIndex: 1 }}
                 onMouseLeave={() => setDropDownDate(false)}
               >
                 <li className={`${styles.item} me-5`}>

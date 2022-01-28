@@ -359,7 +359,7 @@ const StepOne = () => {
                   [styles.disabled]: isDisabledNextButton,
                 })}
                 disabled={isDisabledNextButton}
-                onClick={() => setStep(1)}
+                onClick={nextStep}
               >
                 Siguiente
               </button>

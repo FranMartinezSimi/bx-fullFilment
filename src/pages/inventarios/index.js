@@ -8,20 +8,14 @@ import MainTable from 'components/Templates/MainTable';
 import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-import FormReplenishment from 'components/Molecules/FormReplenishment';
 import { useInventory } from 'context/useInventory';
 import { useReposition } from 'context/useReposition';
 
 const Inventory = () => {
   const [modal, setModal] = useState(false);
-  const [modalInventory, setModalInventory] = useState(false);
   const [inventoryId, setInventoryId] = useState('');
   const [skuId, setSkuId] = useState('');
-  const {
-    inventory,
-    isGetInventory,
-    errorGetInventory,
-  } = useInventory();
+  const { inventory, isGetInventory, errorGetInventory } = useInventory();
   const {
     setProductsToReposition,
     productsToReposition,
@@ -103,11 +97,9 @@ const Inventory = () => {
 
       if (productsToReposition.length) {
         setSelectedModeToReposition('sku');
-        push('/reposition/create');
-        return;
       }
 
-      setModalInventory(true);
+      push('/reposition/create');
     },
     [productsToReposition],
   );
@@ -139,13 +131,6 @@ const Inventory = () => {
         onClick={() => setModal(false)}
       >
         <InventoryDetail id={inventoryId} />
-      </Modal>
-      <Modal
-        showModal={modalInventory}
-        size="xl"
-        onClick={() => setModalInventory(false)}
-      >
-        <FormReplenishment setModalTicket={setModalInventory} />
       </Modal>
     </PageLayout>
   );
