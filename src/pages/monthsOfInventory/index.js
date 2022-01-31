@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import clientFetch from 'lib/client-fetch';
+import cs from 'classnames';
 
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
@@ -8,6 +9,8 @@ import Alert from 'components/Atoms/AlertMessage';
 import MainTable from 'components/Templates/MainTable';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
 import getExportFileBlob from 'helpers';
+
+import styles from './monthsOfInventory.module.scss';
 
 const MonthsOfInventory = () => {
   const [listMonthsOfInventory, setList] = useState([]);
@@ -34,34 +37,18 @@ const MonthsOfInventory = () => {
       },
       {
         Header: 'Meses de Inventario',
-        accessor: (row) => (row.turnover === -1
-          ? '∞'
-          : row.turnover === 0
-            ? (
-              <p style={{
-                color: '#FD2626',
-                fontFamily: 'lato',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                fontStyle: 'normal',
-              }}
-              >
-                {Number(row.turnover).toFixed(1)}
-              </p>
-            )
-            : row.turnover < 1
-              ? (
-                <p style={{
-                  color: '#333333',
-                  fontFamily: 'lato',
-                  fontSize: '14px',
-                  fontStyle: 'normal',
-                }}
-                >
-                  {Number(row.turnover).toFixed(1)}
-                </p>
-              )
-              : Number(row.turnover).toFixed(2)),
+        accessor: ({ turnover }) => (turnover === -1 ? (
+          '∞'
+        ) : (
+          <p
+            className={cs(styles.indicator, {
+              [styles.red]: turnover < 1,
+            })}
+          >
+            {turnover === 0 ? 0
+              : Number(turnover) % 1 === 0 ? turnover : Number(turnover).toFixed(2)}
+          </p>
+        )),
       },
     ],
     [],
@@ -75,7 +62,7 @@ const MonthsOfInventory = () => {
     (async () => {
       try {
         const monthsOfInventoryResponse = await clientFetch(
-          'bff/v1/inventory/getMonthsOfInventory',
+          'bff/v1/inventory/getMonthsOfInventory?lastDaysInNumber=30',
           {
             headers: {
               apikey: process.env.REACT_APP_API_KEY_KONG,

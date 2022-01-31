@@ -1,14 +1,18 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import cs from 'classnames';
+import { useHistory } from 'react-router-dom';
 
+import clientFetch from 'lib/client-fetch';
 import MainTable from 'components/Templates/MainTable';
 import { InputQuantity } from 'components/Atoms/Form/Input';
 import DialogModal from 'components/Templates/DialogModal';
 import plus from 'assets/brand/newPlus.svg';
 import trash from 'assets/brand/trash.svg';
 import InventoryRepositionModal from 'components/Templates/InventoryRepositionModal';
+import AlertModal from 'components/Templates/AlertModal';
 
 import { useReposition } from 'context/useReposition';
+import { useAuth } from 'context/userContex';
 
 import styles from './stepTwo.module.scss';
 
@@ -18,12 +22,21 @@ const StepTwo = () => {
     quantitiesToRepositionBySku,
     updateQuantitiesToRepositionBySku,
     removeProductToReposition,
+    formToReposition,
   } = useReposition();
   const [deleteModal, setDeleteModal] = useState({
     sku: null,
     isShow: false,
   });
   const [showSkuModal, setShowSkuModal] = useState(false);
+  const [submitInventory, setSubmitInventory] = useState({
+    loading: false,
+    error: false,
+    message: '',
+    success: false,
+  });
+  const { seller, userParsed } = useAuth();
+  const { replace } = useHistory();
 
   const showDeleteModal = useCallback(
     (sku) => () => {
@@ -92,12 +105,83 @@ const StepTwo = () => {
     [quantitiesToRepositionBySku],
   );
 
+  const submitInventoryHandle = async () => {
+    try {
+      setSubmitInventory((prev) => ({ ...prev, loading: true }));
+
+      const { accountId, warehouse, key } = userParsed.credential;
+
+      let errorQty = false;
+
+      const itemsToReposition = productsToReposition.map((product) => {
+        const qty = quantitiesToRepositionBySku[product.sku] || 0;
+
+        if (!qty) {
+          errorQty = true;
+        }
+
+        return {
+          sku: product.sku,
+          qty,
+          desciption: product.description,
+        };
+      });
+
+      if (errorQty) {
+        setSubmitInventory({
+          error: true,
+          message: 'Valida que los SKU no se encuentren con cantidad 0.',
+        });
+
+        return;
+      }
+
+      const formdata = new FormData();
+      formdata.append('archivo', formToReposition.files[0]);
+      formdata.append('schedule', formToReposition.date);
+      formdata.append('receptionDate', null);
+      formdata.append('accountId', accountId);
+      formdata.append(
+        'data',
+        JSON.stringify({
+          expected_delivery_date: formToReposition.date,
+          warehouse,
+          key,
+          supplier_name: seller.nameSeller,
+          items: itemsToReposition,
+        }),
+      );
+
+      await clientFetch(
+        'bff/v1/replenishment/addReplenishment',
+        {
+          headers: {
+            apikey: process.env.REACT_APP_API_KEY_KONG,
+          },
+          body: formdata,
+        },
+        { withFile: true },
+      );
+
+      setSubmitInventory({
+        success: true,
+        message:
+          'Se ha agendado exitosamente la reposición de inventario, visualiza su estado en la lista de reposiciones.',
+      });
+    } catch (e) {
+      setSubmitInventory({
+        error: true,
+        message: 'Ha ocurrido un error inesperado, Inténtelo más tarde',
+      });
+    } finally {
+      setSubmitInventory((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
   return (
     <div className="row">
       <div className="col-12 mb-4">
-        <p className={styles.title}>
-          Detalle de reposición
-        </p>
+        <p className={styles.title}>Detalle de reposición</p>
       </div>
       <div className="col-12">
         <MainTable
@@ -117,6 +201,17 @@ const StepTwo = () => {
           )}
         />
       </div>
+      <div className="col-12 d-flex justify-content-end">
+        <button
+          type="button"
+          onClick={!submitInventory.loading ? submitInventoryHandle : null}
+          className={cs(styles.nextButton, 'btn btn-secondary')}
+          style={{ width: 190 }}
+          disabled={submitInventory.loading}
+        >
+          {!submitInventory.loading ? 'Programar' : 'Cargando...'}
+        </button>
+      </div>
       <DialogModal
         showModal={deleteModal.isShow}
         onAccept={onDeleteSkuHandle}
@@ -135,6 +230,17 @@ const StepTwo = () => {
       <InventoryRepositionModal
         showModal={showSkuModal}
         onCloseModal={toggleSkuModal}
+      />
+      <AlertModal
+        showModal={submitInventory.error}
+        message={submitInventory.message}
+        onClose={() => setSubmitInventory((prev) => ({ ...prev, error: false }))}
+      />
+      <AlertModal
+        image={<img alt="alert" src="/bgsuccess.png" width={102} height={98} />}
+        showModal={submitInventory.success}
+        message={submitInventory.message}
+        onClose={() => replace('/reposition')}
       />
     </div>
   );

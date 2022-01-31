@@ -1,9 +1,24 @@
-@import "styles/utils/variables";
+@import 'styles/utils/variables';
 
 .contentTwo {
   height: 100%;
-  border-left: 0.6px solid #1E81B2;
+  border-left: 0.6px solid #1e81b2;
   position: relative;
+}
+
+.nextButton {
+  background: $secondary-color;
+  color: $white;
+  transition: all 0.1s ease-in-out;
+  width: 190px;
+  height: 40px;
+  font-size: 18px;
+  line-height: 22px;
+  &:disabled {
+    background: $secondary-color !important;
+    color: $white;
+    opacity: 0.6;
+  }
 }
 
 .contentBottomBtn {
@@ -14,18 +29,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  & > button {
-    background: $secondary-color;
-    color: $white;
-    transition: all 0.1s ease-in-out;
-    width: 190px;
-    height: 40px;
-    font-size: 18px;
-    line-height: 22px;
-    &:disabled {
-      background: $secondary-color !important;
-      color: $white;
-      opacity: 0.6;
-    }
+  & > .nextButton {
+    margin-right: 3rem;
   }
 }

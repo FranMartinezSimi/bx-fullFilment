@@ -4,17 +4,26 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const UploadCsvFull = ({
-  setDataToValidate, setDataToUpload, setDataWhitErrors, size, title, onChange,
+  setDataToValidate,
+  setDataToUpload,
+  setDataWhitErrors,
+  size,
+  title,
+  description,
+  onChange,
 }) => {
   const handleOnDrop = (data) => {
     const dataWhitErrors = data.some((item) => item.errors.length > 0);
 
     if (dataWhitErrors) {
-      setDataWhitErrors([{
-        key: 'error en archivo:',
-        errors: ['El formato de archivo debe ser ,csv delimitado por cómas'],
-        format: true,
-      }]);
+      setDataWhitErrors([
+        {
+          key: 'error en archivo:',
+          errors: ['El formato de archivo debe ser ,csv delimitado por cómas'],
+          format: true,
+        },
+      ]);
+      onChange([]);
       return;
     }
     const formatData = data.map((item) => item.data);
@@ -70,6 +79,7 @@ const UploadCsvFull = ({
       borderColor: '#3363FF',
       borderRadius: 10,
       background: '#FBFBFB',
+      width: '100%',
     },
     dropAreaActive: {
       borderColor: '#0d6efd',
@@ -110,19 +120,23 @@ const UploadCsvFull = ({
       }}
       style={size === 'small' ? styleSmall : styleXl}
     >
-      <span className={`${size === 'small' ? 'd-flex align-items-center' : ''}`}>
+      <span
+        className={`${size === 'small' ? 'd-flex align-items-center' : ''}`}
+      >
         <div className={`${size === 'small' ? 'me-3' : 'my-3'}`}>
           <div className="d-flex justify-content-center">
-            <img src={plus} alt="Ordenes" width={`${size === 'small' ? '30' : '50'}`} />
+            <img
+              src={plus}
+              alt="Ordenes"
+              width={`${size === 'small' ? '30' : '50'}`}
+            />
           </div>
         </div>
         <ul className="mb-0">
           {title && (
             <li>
               <p className="mb-0 mt-2">
-                <b>
-                  {title}
-                </b>
+                <b>{title}</b>
               </p>
             </li>
           )}
@@ -130,20 +144,13 @@ const UploadCsvFull = ({
             {size === 'small' ? (
               <div className="d-flex justify-content-center">
                 <small style={{ fontSize: 10 }}>
-                  <p style={{ background: 'red' }}>
-                    Arrastra tu archivo o selecciona desde tu computadora
-                    en formato Csv y Excel.
-                  </p>
+                  <p style={{ background: 'red' }}>{description}</p>
                 </small>
               </div>
             ) : (
-              <p className={styles.pFile}>
-                Arrastra tu archivo o selecciona desde tu computadora
-                en formato Csv y Excel.
-              </p>
+              <p className={styles.pFile}>{description}</p>
             )}
           </li>
-
         </ul>
       </span>
     </CSVReader>
@@ -151,11 +158,13 @@ const UploadCsvFull = ({
 };
 
 UploadCsvFull.defaultProps = {
-  setDataToValidate: () => { },
-  setDataToUpload: () => { },
-  setDataWhitErrors: () => { },
+  setDataToValidate: () => {},
+  setDataToUpload: () => {},
+  setDataWhitErrors: () => {},
   title: '',
   size: '',
+  description:
+    'Arrastra tu archivo o selecciona desde tu computadora en formato Csv y Excel.',
 };
 
 UploadCsvFull.propTypes = {
@@ -164,5 +173,6 @@ UploadCsvFull.propTypes = {
   setDataWhitErrors: PropTypes.func,
   title: PropTypes.string,
   size: PropTypes.string,
+  description: PropTypes.string,
 };
 export default UploadCsvFull;

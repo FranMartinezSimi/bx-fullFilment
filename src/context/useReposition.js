@@ -25,6 +25,9 @@ const RepositionContext = createContext({
   setProductsToReposition: () => {},
   productsToRepositionKeyedBySku: {},
 
+  productsWithErrorToReposition: [],
+  setProductsWithErrorToReposition: () => {},
+
   updateQuantitiesToRepositionBySku: () => {},
   quantitiesToRepositionBySku: {},
 
@@ -42,6 +45,7 @@ const RepositionProvider = ({ children }) => {
     selectedMode: null,
   });
   const [productsToReposition, setProductsToReposition] = useState([]);
+  const [productsWithErrorToReposition, setProductsWithErrorToReposition] = useState([]);
   const [quantitiesToRepositionBySku, setQuantitiesToRepositionBySku] = useState({});
 
   const productsToRepositionKeyedBySku = useMemo(
@@ -125,6 +129,8 @@ const RepositionProvider = ({ children }) => {
         addProductToReposition,
         removeProductToReposition,
         resetReposition,
+        productsWithErrorToReposition,
+        setProductsWithErrorToReposition,
       }}
     >
       {children}
