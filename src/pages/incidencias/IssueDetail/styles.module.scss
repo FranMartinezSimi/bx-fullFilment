@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); 
 .fileItem {
   padding: 5px 12px;
   background-color: #f6f6f6;
@@ -28,28 +29,26 @@ left: 790px;
 top: 359px;
 border: 0.6px solid #D6E0FF;
 box-sizing: border-box;
+height: 110px;
+min-height: 110px;
 border-radius: 16px;
+font-family: lato;
+font-size: 12px;
+font-style: normal;
+line-height: 18,96px;
+color: #212121;
+margin: 0px;
 }
 
 .respResolutorP{
-height: 20px;
-left: 248px;
-top: 212px;
-
-/* Paragraph 1 app */
-
-font-family: Lato;
+font-family: lato;
 font-style: normal;
-font-weight: normal;
-font-size: 14px;
-line-height: 145%;
-/* or 20px */
-
-letter-spacing: 0.03em;
-
-/* Gris mistery */
-
+line-height: 18,96px;
+letter-spacing: 3%;
 color: #212121;
+font-size: 12px;
+margin-top: 0px;
+width: 110px;
 }
 
 
@@ -72,5 +71,68 @@ font-size: 18px;
 line-height: 22px;
 align-items: center;
 text-align: center;
-color: #FFFFFF;
+color: hsl(0, 0%, 100%);
+}
+
+.cardumen{
+	width: 100%;
+	padding: 35px 25px 0px 25px;
+	height: 517px;
+	background: #FFFFFF;
+	border-radius: 15px;
+}
+
+.cardcita{
+	height: 350px;
+}
+
+.nTicket{
+	width: 200px;
+	height: 28px;
+	color: #212121;
+	font-family: mont;
+	font-size: 22px;
+	font-weight: bold;
+	padding-left: 23px;
+}
+
+.oAsociada{
+	color: #212121;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 21px;
+	font-weight: bold;
+	font-family: poppins;;
+	width: 100%;
+	padding-left: 23px;
+}
+
+.motivo{
+	width: 350px;
+	height: 20px;
+	font-family: mont;
+	font-size: 16px;
+	line-height: 19px;
+	padding-top: 16px;
+}
+
+.content{
+	padding-top: 12px;
+	color: #212121;
+	width: 350px;
+	left: 790px;
+	height: 46px;
+	font-family: lato;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.trakN{
+	font-family: poppins;
+	color: #212121;
+	font-size: 14px;
+	line-height: 21px;
+	font-weight: bold;
+	font-style: normal;
+	padding: 0px 0px 0px 10px;
 }
