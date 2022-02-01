@@ -25,19 +25,12 @@ border-radius: 16px;
 
 .respResolutor{
 width: 100%;
-left: 790px;
-top: 359px;
-border: 0.6px solid #D6E0FF;
-box-sizing: border-box;
 height: 110px;
-min-height: 110px;
+max-height: 240px;
+box-sizing: border-box;
 border-radius: 16px;
-font-family: lato;
-font-size: 12px;
-font-style: normal;
-line-height: 18,96px;
-color: #212121;
-margin: 0px;
+border: 0.6px solid #D6E0FF;
+overflow: scroll;
 }
 
 .respResolutorP{

@@ -119,7 +119,7 @@ const IssueDetail = () => {
                         </small>
                       </li>
                     </ul>
-                    <div className={styles.trakN}>Nº Traking:</div>
+                    <div className={styles.trakN}>{`Nº Traking: ${ticket.numTracking}`}</div>
                   </li>
                 </ul>
                 <div className="row">
@@ -131,7 +131,12 @@ const IssueDetail = () => {
                           <li className="ps-1 me-2">
                             <img src={avatar} alt="Cuenta" width="33" />
                           </li>
-                          <li className={`me-2 ${styles.respResolutorP}`}>{userActive}</li>
+                          <li
+                            style={{ overflow: 'scroll' }}
+                            className={`me-2 ${styles.respResolutorP}`}
+                          >
+                            {userActive}
+                          </li>
                         </ul>
                         <div className="row mb-2 ps-3">
                           <div className="col-3 mx-0 px-0">

@@ -135,6 +135,8 @@ const ResolutorDetail = ({
       hora: detailData.hora,
       comentario: detailData.comentario,
       numTicket: detailData.numTicket,
+      numTracking: detailData.numTracking,
+
     });
   }, [detailData]);
   return (
@@ -153,7 +155,7 @@ const ResolutorDetail = ({
                   <div className="">
                     <div className="row justify-content-end px-5">
                       <div className="col-6 pe-5">
-                        <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-2 fs-5 text-white border`}>
+                        <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-3 py-2 fs-5 text-white border`}>
                           {form.status}
                         </small>
                         {' '}
@@ -176,8 +178,10 @@ const ResolutorDetail = ({
                 <div className="col-4">
                   <p>{`Orden: ${form.orderId}`}</p>
                 </div>
-                <div className={`col-4 ${styles.subtitulo}`}>
-                  Traking:
+                <div className={`col-5 ${styles.subtitulo}`}>
+                  <p>
+                    {`Tracking: ${form.numTracking}`}
+                  </p>
                 </div>
               </div>
             </div>
@@ -186,7 +190,7 @@ const ResolutorDetail = ({
                 <li className="me-2">
                   <img src={avatar} alt="Cuenta" width="32" height="33" />
                 </li>
-                <h2 className={`${styles.titulos}`}>
+                <h2 className={`${styles.titulos} pt-3`}>
                   {`Cliente: ${form.clienteID}`}
                 </h2>
               </ul>
@@ -195,18 +199,16 @@ const ResolutorDetail = ({
             <li>
               <ul className="d-flex align-items-center mt-2">
 
-                <div className="container p-0 ps-3">
+                <div className="container p-0 pb-3 pt-2">
                   <div className="row justify-content-start">
-                    <div className="container p-0">
-                      <div className="row justify-content-start">
-                        <div className={`col-4 ${styles.subtitulo} pe-0`}>
-                          {`Fecha ${form.fechaCreacion}`}
-                        </div>
-                        <div className={`col-4 ${styles.subtitulo} p-0`}>
-                          <div>
-                            {` Hora: ${form.hora}`}
-                          </div>
-                        </div>
+                    <div className={`col-4 ${styles.subtitulo} pe-0`}>
+                      <div>
+                        <p>{`Fecha ${form.fechaCreacion}`}</p>
+                      </div>
+                    </div>
+                    <div className={`col-4 ${styles.subtitulo} p-0`}>
+                      <div>
+                        <p>{` Hora: ${form.hora}`}</p>
                       </div>
                     </div>
                   </div>
@@ -256,23 +258,19 @@ const ResolutorDetail = ({
                     <div className="row justify-content-start">
                       <div className={`col-4 ${styles.subtitulo} pe-0`}>
                         <div>
-                          {`Fecha ${form.fechaCreacion}`}
+                          <p>{`Fecha ${form.fechaCreacion}`}</p>
                         </div>
-                        {' '}
-
                       </div>
                       <div className={`col-4 ${styles.subtitulo} p-0`}>
                         <div>
-                          {` Hora: ${form.hora}`}
+                          <p>{` Hora: ${form.hora}`}</p>
                         </div>
-                        {' '}
-
                       </div>
                     </div>
                   </div>
                   <textarea
                     className={`form-control ${styles.contentBox}`}
-                    style={{ overflow: 'scroll', height: '140px' }}
+                    style={{ overflow: 'scroll', height: '140px', fontFamily: 'Poppins' }}
                     rows="4"
                     id="textArea"
                     placeholder="Agrega un comentario"
@@ -285,13 +283,17 @@ const ResolutorDetail = ({
               ) : (
                 <>
                   <h1 className={`fs-5 mb-4 ${styles.titulos} mt-5 p-0`}>Respuesta</h1>
-                  <div className="row justify-content-start pb-4">
+                  <div className="row justify-content-start pb-4 pe-0">
                     <div className={`col-4 ${styles.subtitulo}`}>
-                      {`Fecha ${form.fechaCreacion} `}
+                      <p>
+                        {`Fecha ${form.fechaCreacion} `}
+                      </p>
                     </div>
                     <div className={`col-4 ${styles.subtitulo}`}>
                       <div>
-                        {` Hora: ${form.hora}`}
+                        <p>
+                          {` Hora: ${form.hora}`}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -328,7 +330,7 @@ const ResolutorDetail = ({
                 )}
                 {!comment && (
                   <Button
-                    className="btn btn-secondary fs-5 px-5 py-3 "
+                    className={`btn btn-secondary fs-5 px-5 py-3 ${styles.btni} `}
                     text="Enviar"
                     submit
                     onClick={handleClickConfirm}
