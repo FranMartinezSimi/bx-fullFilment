@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import cs from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -178,6 +178,12 @@ const StepTwo = () => {
     }
   };
 
+  useEffect(() => {
+    if (!productsToReposition.length) {
+      toggleSkuModal();
+    }
+  }, []);
+
   return (
     <div className="row">
       <div className="col-12 mb-4">
@@ -207,7 +213,7 @@ const StepTwo = () => {
           onClick={!submitInventory.loading ? submitInventoryHandle : null}
           className={cs(styles.nextButton, 'btn btn-secondary')}
           style={{ width: 190 }}
-          disabled={submitInventory.loading}
+          disabled={submitInventory.loading || !productsToReposition.length}
         >
           {!submitInventory.loading ? 'Programar' : 'Cargando...'}
         </button>
