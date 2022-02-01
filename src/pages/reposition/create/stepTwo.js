@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import cs from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -177,6 +177,12 @@ const StepTwo = () => {
       setSubmitInventory((prev) => ({ ...prev, loading: false }));
     }
   };
+
+  useEffect(() => {
+    if (!productsToReposition.length) {
+      toggleSkuModal();
+    }
+  }, []);
 
   return (
     <div className="row">
