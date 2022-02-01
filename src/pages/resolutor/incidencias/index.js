@@ -65,7 +65,6 @@ const Incidencias = () => {
       },
     })
       .then((issues) => {
-        console.log(issues);
         setLoading(false);
         setList(issues);
       })
@@ -74,8 +73,6 @@ const Incidencias = () => {
         setLoading(false);
       });
   };
-  console.log('LISTA', list);
-  console.log('DATA', data);
 
   const getDataByDate = (startDate, endDate) => {
     setLoading(true);
