@@ -97,191 +97,166 @@ const IssueDetail = () => {
   }, []);
   return (
     <PageLayout title={`Ticket ${title}`}>
-      <Card className="px-5 mt-3 shadow mb-5">
-        {ticket != null && !loading ? (
-          <>
-            <ul className="d-flex justify-content-between align-items-center px-5 ps-0 pe-2" style={{ fontSize: 14 }}>
-              <li>
-                <ul className="d-flex flex-column">
-                  {/* <li>
-                    <h1 className="display-font mt-1 mb-0"
-                     style={{ fontSize: 22 }}>Número de ticket:</h1>
-                  </li> */}
-                  <li className={`p-4 ps-0 ${styles.respResolutorP} me-2 mb-4 px-2`}>
-                    <h1
-                      className="display-font mt-1 mb-0"
-                      style={{ fontSize: 22 }}
-                    >
-                      Nº de orden asociada:
-                      {' '}
-                      <b
-                        style={{
-                          fontSize: 22,
-                          fontFamily: 'mont',
-                          color: '#212121',
-                          lineHeigh: 30,
-                        }}
-                      >
-                        {ticket.orderId}
-                      </b>
-                    </h1>
+      <div className="container">
+        <Card>
+          {ticket != null && !loading ? (
+            <>
+              <div className={`${styles.cardumen} col-12`}>
 
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <ul className="d-flex">
-                  <li className="me-2">Estado: </li>
+                <ul className="d-flex justify-content-between align-items-center px-5 ps-0 pe-2" style={{ fontSize: 14 }}>
                   <li>
-                    <small className={`badge--${ticket.status.replace(' ', '').toLowerCase()} px-4 py-2`}>
-                      {ticket.status}
-                    </small>
+                    <ul className="d-flex flex-column">
+                      <h6 className={styles.nTicket}>{`N° de Ticket ${title}`}</h6>
+                      <p className={styles.oAsociada}>{` Orden asociada: ${title}`}</p>
+                    </ul>
+                  </li>
+                  <li>
+                    <ul className="d-flex">
+                      <li className="me-2 pb-2">Estado: </li>
+                      <li>
+                        <small className={`badge--${ticket.status.replace(' ', '').toLowerCase()} px-3 py-2`}>
+                          {ticket.status}
+                        </small>
+                      </li>
+                    </ul>
+                    <div className={styles.trakN}>{`Nº Traking: ${ticket.numTracking}`}</div>
                   </li>
                 </ul>
-              </li>
-            </ul>
-            <div className="row">
-              <div className="container">
-                <div className="row border-top pt-2 ms-2">
-                  <div className=" col">
-                    <div className="col-lg-12 pe-5">
-                      <h2 className="display-font mt-2" style={{ fontSize: 18, fontWeight: 600 }}>{ticket.motivo}</h2>
-                      <ul className="d-flex align-items-center pt-4">
-                        <li className="me-2">
-                          <img src={avatar} alt="Cuenta" width="33" />
-                        </li>
-                        <li className={`me-2 ${styles.respResolutorP}`}>{userActive}</li>
-                      </ul>
-                      <div className="row mb-4">
-                        <div className="col-3">
-                          <p className="m-0">
-                            <small style={{ color: '#666666' }}>
-                              Fecha:
-                              {' '}
-                              {ticket.fechaCreacion}
-                            </small>
-                          </p>
-                        </div>
-                        <div className="col-6">
-                          <p className="m-0">
-                            <small style={{ color: '#666666' }}>
-                              Hora:
-                              {' '}
-                              {ticket.hora}
-                            </small>
-                          </p>
-                        </div>
-                      </div>
-
-                      <p className={`p-4 ${styles.respResolutor}`}>
-                        {ticket.descTicket}
-                      </p>
-                      {ticket.archivo.length > 0 && (
-                        <ul>
-                          <li>
-                            <p className="fs-5 mb-4">Archivo Adjunto</p>
-                            <ul>
-                              {ticket.archivo.map((file) => (
-                                <li key={file._id} className={styles.fileItem}>
-                                  <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
-                                    <ul className="d-flex justify-content-between align-items-center">
-                                      <li>
-                                        {`${file.name} `}
-                                        <span className={styles.fileSize}>{`${file.size} KB`}</span>
-                                      </li>
-                                      <li>
-                                        {downloading ? <Spinner width="15px" height="15px" /> : (
-                                          <button className={styles.closeButton} type="button">
-                                            <img src={dropZoneDownload} alt="Descargar" />
-                                          </button>
-                                        )}
-                                      </li>
-                                    </ul>
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
+                <div className="row">
+                  <div className="container">
+                    <div className={`row border-top pt-0 ms-0 ${styles.cardcita}`}>
+                      <div className="col-lg-6 ps-4 pt-0 pb-0 pe-5 border-end">
+                        <h5 className={styles.motivo}>{ticket.motivo}</h5>
+                        <ul className="d-flex align-items-center pt-4">
+                          <li className="ps-1 me-2">
+                            <img src={avatar} alt="Cuenta" width="33" />
+                          </li>
+                          <li
+                            style={{ overflow: 'scroll' }}
+                            className={`me-2 ${styles.respResolutorP}`}
+                          >
+                            {userActive}
                           </li>
                         </ul>
-                      )}
-                    </div>
-                  </div>
-                  <div className="border-start col pt-2 px-0 ps-5">
-                    <div className={`col-lg-12 ${!ticket.comentario ? 'd-flex align-items-center' : 'd-flex flex-column justify-content-center'}`}>
-                      {ticket.comentario ? (
-                        <div className="resolutorBox">
-                          <h2 className="display-font" style={{ fontSize: 18, fontWeight: 600 }}>
-                            Respuesta
-                          </h2>
-                          <ul className="d-flex align-items-center pt-4">
-                            <li className="me-2">
-                              <img src={chatRobotina} alt="Cuenta" width="33" />
-                            </li>
-
-                            <li className={`me-2 ${styles.respResolutorP}`}>{ticket.empresa}</li>
-                          </ul>
-                          <div className="row mb-4">
-                            <div className="col-3">
-                              <p className="m-0">
-                                <small style={{ color: '#666666' }}>
-                                  Fecha:
-                                  {' '}
-                                  {ticket.fechaCierre}
-                                </small>
-                              </p>
-                            </div>
-
-                          </div>
-                          <div>
-                            <p className={`p-4 ${styles.respResolutor}`}>
-                              {ticket.comentario}
+                        <div className="row mb-2 ps-3">
+                          <div className="col-3 mx-0 px-0">
+                            <p className={styles.respResolutorP}>
+                              {`Fecha: ${ticket.fechaCreacion}`}
                             </p>
                           </div>
-
-                        </div>
-                      ) : (
-                        <p className="text-center w-100 display-font" style={{ color: '#cdcdcd', fontSize: 15 }}>
-                          ¡El resolutor ya tiene tu ticket en estudio!
-                          <br />
-                          por favor espera por su comentario
-                        </p>
-                      )}
-                      {ticket.status === 'Cerrado' && (
-                        <div className="px-lg-">
-                          <p className="text-start">
-                            <b>
-                              Si no estas de acuerdo con la respuesta,
-                              puedes volver a ingresar un nuevo ticket
-                            </b>
-                          </p>
-                          <div className="p-0 bd-highlight d-flex justify-content-end ms-5">
-                            <a
-                              href="#!"
-                              className="btn btn-secondary "
-                              style={{ fontSize: 17 }}
-                              onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
-                              loading={loading}
-                            >
-                              Crear Ticket
-                            </a>
+                          <div className="col-5 mx-0 ps-0">
+                            <p className={styles.respResolutorP}>
+                              {`Hora: ${ticket.hora}`}
+                            </p>
                           </div>
-
                         </div>
-                      )}
+
+                        <p className={`p-4 ${styles.respResolutor}`}>
+                          {ticket.descTicket}
+                        </p>
+                        {ticket.archivo.length > 0 && (
+                          <ul>
+                            <li>
+                              <p className="fs-5 mb-4">Archivo Adjunto</p>
+                              <ul>
+                                {ticket.archivo.map((file) => (
+                                  <li key={file._id} className={styles.fileItem}>
+                                    <a href="#!" target="_blank" rel="noreferrer" download onClick={(e) => handleClick(e, file)}>
+                                      <ul className="d-flex justify-content-between align-items-center">
+                                        <li>
+                                          {`${file.name} `}
+                                          <span className={styles.fileSize}>{`${file.size} KB`}</span>
+                                        </li>
+                                        <li>
+                                          {downloading ? <Spinner width="15px" height="15px" /> : (
+                                            <button className={styles.closeButton} type="button">
+                                              <img src={dropZoneDownload} alt="Descargar" />
+                                            </button>
+                                          )}
+                                        </li>
+                                      </ul>
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                      <div className="col-lg-6 ps-5 pt-0 pb-0 pe-5">
+                        <div className={`col-lg-12 ${!ticket.comentario ? 'd-flex align-items-center' : 'd-flex flex-column justify-content-center'}`}>
+                          {ticket.comentario ? (
+                            <div className="resolutorBox">
+                              <h5 className={styles.motivo}>Respuesta</h5>
+                              <ul className="d-flex align-items-center pt-4">
+                                <li className="me-2">
+                                  <img src={chatRobotina} alt="Cuenta" width="33" />
+                                </li>
+                                <li className={`me-2 ${styles.respResolutorP}`}>{ticket.empresa}</li>
+                              </ul>
+                              <div className="row mb-2 ps-3">
+                                <div className="col-3 mx-0 px-0">
+                                  <p className={styles.respResolutorP}>
+                                    {`Fecha: ${ticket.fechaCierre}`}
+                                  </p>
+                                </div>
+                                <div className="col-5 mx-0 ps-0">
+                                  <p className={styles.respResolutorP}>
+                                    {`Hora: ${ticket.hora}`}
+                                  </p>
+                                </div>
+                              </div>
+                              <div>
+                                <p className={`p-4 ${styles.respResolutor}`}>
+                                  {ticket.comentario}
+                                </p>
+                              </div>
+
+                            </div>
+                          ) : (
+                            <p className="text-center w-100 display-font" style={{ color: '#cdcdcd', fontSize: 15 }}>
+                              ¡El resolutor ya tiene tu ticket en estudio!
+                              <br />
+                              por favor espera por su comentario
+                            </p>
+                          )}
+                          {ticket.status === 'Cerrado' && (
+                            <div className="text-start ps-1">
+                              <p className={styles.content}>
+                                Si no estas de acuerdo con la respuesta,
+                                puedes volver a ingresar un nuevo ticket
+                              </p>
+                              <div className="p-0 bd-highlight d-flex justify-content-end ms-5 pt-3">
+                                <a
+                                  href="#!"
+                                  className="btn btn-secondary "
+                                  style={{ fontSize: 18, fontFamily: 'lato', lineHeight: '22px' }}
+                                  onClick={(e) => { e.preventDefault(); setModalTicket(true); }}
+                                  loading={loading}
+                                >
+                                  Crear Ticket
+                                </a>
+                              </div>
+
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <Modal showModal={modalTicket} size="lg" onClick={() => setModalTicket(false)}>
-              <FromTicket
-                orderId={ticket.orderId}
-                setModalTicket={setModalTicket}
-              />
-            </Modal>
-          </>
-        ) : component}
-      </Card>
+              <Modal showModal={modalTicket} size="lg" onClick={() => setModalTicket(false)}>
+                <FromTicket
+                  orderId={ticket.orderId}
+                  setModalTicket={setModalTicket}
+                />
+              </Modal>
+            </>
+          ) : component}
+        </Card>
+      </div>
+
     </PageLayout>
   );
 };

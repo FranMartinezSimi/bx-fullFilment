@@ -48,6 +48,7 @@ const Incidencias = () => {
       Header: 'F. Cierre',
       accessor: 'fechaCierre',
     },
+
   ], []);
 
   let component;
@@ -72,6 +73,7 @@ const Incidencias = () => {
         setLoading(false);
       });
   };
+
   const getDataByDate = (startDate, endDate) => {
     setLoading(true);
     clientFetch('ticket/v1/ticketera/getTicketsDates', {

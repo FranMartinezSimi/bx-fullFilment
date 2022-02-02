@@ -13,8 +13,6 @@ import deliveredHands from 'assets/brand/delivered-hands-green.svg';
 import truckRoute from 'assets/brand/truck-route-orange.svg';
 import reverseLogistics from 'assets/brand/reverse-logistics-cyan.svg';
 import callendar from 'assets/brand/homeCard2.svg';
-import Modal from 'components/Templates/Modal';
-import FormReplenishment from 'components/Molecules/FormReplenishment';
 import HomeMessage from 'components/Atoms/messageHome';
 import ProductTopTable from 'components/Templates/ProductTopTable';
 import styles from './styles.module.scss';
@@ -24,7 +22,6 @@ const Home = () => {
   const [notify, setNotify] = useState(null);
   const [statisticsData, setTotalStatisticsData] = useState([]);
   const history = useHistory();
-  const [modalInventory, setModalInventory] = useState(false);
   const userData = JSON.parse(user);
   const [errorTotales, setErrorTotales] = useState(false);
   const [list, setList] = useState([]);
@@ -141,7 +138,7 @@ const Home = () => {
 
   const handleClickInventory = (e) => {
     e.preventDefault();
-    setModalInventory(true);
+    history.push('/reposition/create');
   };
 
   useEffect(() => {
@@ -372,13 +369,7 @@ const Home = () => {
               </div>
             </Card>
           </div>
-
         </div>
-        <Modal showModal={modalInventory} size="xl" onClick={() => setModalInventory(false)}>
-          <FormReplenishment
-            setModalTicket={setModalInventory}
-          />
-        </Modal>
       </div>
     </PageLayout>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import clientFetch from 'lib/client-fetch';
+import cs from 'classnames';
 
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
@@ -8,6 +9,8 @@ import Alert from 'components/Atoms/AlertMessage';
 import MainTable from 'components/Templates/MainTable';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
 import getExportFileBlob from 'helpers';
+
+import styles from './monthsOfInventory.module.scss';
 
 const MonthsOfInventory = () => {
   const [listMonthsOfInventory, setList] = useState([]);
@@ -34,11 +37,18 @@ const MonthsOfInventory = () => {
       },
       {
         Header: 'Meses de Inventario',
-        accessor: (row) => (row.turnover === -1
-          ? '∞'
-          : row.turnover === 0
-            ? row.turnover
-            : Number(row.turnover).toFixed(2)),
+        accessor: ({ turnover }) => (turnover === -1 ? (
+          '∞'
+        ) : (
+          <p
+            className={cs(styles.indicator, {
+              [styles.red]: turnover < 1,
+            })}
+          >
+            {turnover === 0 ? 0
+              : Number(turnover) % 1 === 0 ? turnover : Number(turnover).toFixed(2)}
+          </p>
+        )),
       },
     ],
     [],

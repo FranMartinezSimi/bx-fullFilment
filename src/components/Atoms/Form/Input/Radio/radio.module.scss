@@ -1,0 +1,46 @@
+@import "styles/utils/variables";
+
+.radioContainer {
+  --radio-size: 1.25rem;
+  --radio-color: $secondary-color;
+  --radio-label: $black;
+  display: inline-flex;
+  width: auto;
+  align-items: center;
+  opacity: 1;
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+}
+
+.radioContainerDisabled {
+  --radio-color: #c2d0ff;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.radioCheck {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  align-self: start;
+}
+
+.formRadio {
+  opacity: 0;
+  outline: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  z-index: -1;
+  background-color: transparent;
+}
+
+.formRadioLabel {
+  margin-left: 8px;
+  color: var(--radio-label);
+  user-select: none;
+  line-height: var(--radio-size);
+}

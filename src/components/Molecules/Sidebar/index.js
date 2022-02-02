@@ -66,6 +66,10 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           route: '/inventario/sku',
         },
         {
+          name: 'Reposición de Inventario',
+          route: '/reposition/create',
+        },
+        {
           name: 'Listado de Inventario',
           route: '/inventario',
         },

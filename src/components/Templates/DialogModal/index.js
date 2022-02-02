@@ -19,7 +19,7 @@ const DialogModal = ({
       <div className="col-12 mb-5 d-flex justify-content-center align-item-center">
         {image || <img alt="alert" src={AlerRed} width={102} height={98} />}
       </div>
-      <div className="col-12 mb-5 d-flex justify-content-center align-item-center">
+      <div className="col-12 mb-5 px-5 d-flex justify-content-center align-item-center">
         {message || children}
       </div>
       <div className="col-12 mb-5 d-flex justify-content-between align-item-center px-5">

@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react';
 import clientFetch from 'lib/client-fetch';
 import { base64StringToBlob } from 'blob-util';
 import useNotify from 'hooks/useNotify';
-
 import avatar from 'assets/brand/avatar.svg';
-import avatarResolutor from 'assets/brand/avatar-resolutor.svg';
 import DropZone from 'components/Molecules/DropZone';
 import dropZoneDownload from 'assets/brand/dropZoneDownload.svg';
 import Button from 'components/Atoms/Button';
@@ -137,75 +135,96 @@ const ResolutorDetail = ({
       hora: detailData.hora,
       comentario: detailData.comentario,
       numTicket: detailData.numTicket,
+      numTracking: detailData.numTracking,
+
     });
   }, [detailData]);
   return (
     <>
       {form !== null ? (
         <>
-          <ul>
-            <li className="py-2">
-              <h2>{form.motivo}</h2>
-              <h4 style={{ fontSize: 15 }}>
-                <span>
-                  Nº Ticket:
-                  {' '}
-                </span>
-                <span>{form.numTicket}</span>
-              </h4>
-            </li>
-            {form.status !== undefined && (
-              <li className="position-relative">
-                <div className="mt-3">
-                  <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-4 py-2 fs-5 text-white border`}>
-                    {form.status}
-                  </small>
-                </div>
-              </li>
-            )}
-            <li>
-              <ul className="d-flex align-items-center mt-5">
-                <li className="me-2">
-                  <img src={avatar} alt="Cuenta" width="30" />
-                </li>
-                <li className="me-4">
-                  <span className={`${styles.spanDetail}`}>
-                    Cliente:
-                    {' '}
-                    {form.clienteID}
-                  </span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <ul className="d-flex align-items-center mt-5">
+          <div className="container p-0">
+            <div className="row">
+              <div className="col-md-4">
+                <h1 className={styles.titulos}>
+                  {`Ticket: ${form.numTicket}`}
+                </h1>
+              </div>
+              <div className="col-md-4 ms-auto">
+                {form.status !== undefined && (
+                  <div className="">
+                    <div className="row justify-content-end px-5">
+                      <div className="col-6 pe-5">
+                        <small className={`badge--${form.status.replace(' ', '').toLowerCase()} px-3 py-2 fs-5 text-white border`}>
+                          {form.status}
+                        </small>
+                        {' '}
 
-                <div className="container">
-                  <div className="row justify-content-start">
-                    <div className="col-4 p-0">
-                      <small className={`${styles.sma} text-start`}>
-                        <b>Fecha </b>
-                        {form.fechaCreacion}
-                      </small>
+                      </div>
+
                     </div>
-                    <div className="col-4">
-                      <small className={styles.sma}>
-                        <b>Hora </b>
-                        {form.hora}
-                      </small>
+
+                  </div>
+                )}
+              </div>
+            </div>
+
+          </div>
+
+          <ul>
+            <h2 className={styles.titulos}>{form.motivo}</h2>
+            <div className="container m-0 p-0">
+              <div className={`row justify-content-start ${styles.subtitulo}`}>
+                <div className="col-4">
+                  <p>{`Orden: ${form.orderId}`}</p>
+                </div>
+                <div className={`col-5 ${styles.subtitulo}`}>
+                  <p>
+                    {`Tracking: ${form.numTracking}`}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <li>
+              <ul className="d-flex align-items-center mt-5 mb-0">
+                <li className="me-2">
+                  <img src={avatar} alt="Cuenta" width="32" height="33" />
+                </li>
+                <h2 className={`${styles.titulos} pt-3`}>
+                  {`Cliente: ${form.clienteID}`}
+                </h2>
+              </ul>
+
+            </li>
+            <li>
+              <ul className="d-flex align-items-center mt-2">
+
+                <div className="container p-0 pb-3 pt-2">
+                  <div className="row justify-content-start">
+                    <div className={`col-4 ${styles.subtitulo} pe-0`}>
+                      <div>
+                        <p>{`Fecha ${form.fechaCreacion}`}</p>
+                      </div>
+                    </div>
+                    <div className={`col-4 ${styles.subtitulo} p-0`}>
+                      <div>
+                        <p>{` Hora: ${form.hora}`}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </ul>
             </li>
           </ul>
-          <p className={`${styles.formDetails}`}>
-            {form.descTicket}
-          </p>
+          <div className={`${styles.contentBox} p-1`}>
+            <p className={`${styles.formDetails} p-3`} style={{ overflow: 'scroll' }}>
+              {form.descTicket}
+            </p>
+          </div>
           {form.archivo !== undefined && form.archivo.length > 0 && (
             <ul>
               <li>
-                <p className="fs-5 mb-4 d-none">Archivos Adjuntos</p>
+                <p className="fs-5 mb-4 d-none p-2">Archivos Adjuntos</p>
                 <ul>
                   {form.archivo.map((file) => (
                     <li key={file._id} className={styles.fileItem}>
@@ -230,14 +249,28 @@ const ResolutorDetail = ({
               </li>
             </ul>
           )}
-          <form className="py-2">
+          <form>
             <div className="form-group mb-2">
               {!comment ? (
-                <label htmlFor="textArea" className="w-100">
-                  Respuesta del resolutor
-                  <span className="text-danger"> *</span>
+                <label htmlFor="textArea" className="w-100 mt-5">
+                  <h4 className={styles.titulos}>Respuesta</h4>
+                  <div className="container p-0 pb-4 pt-2">
+                    <div className="row justify-content-start">
+                      <div className={`col-4 ${styles.subtitulo} pe-0`}>
+                        <div>
+                          <p>{`Fecha ${form.fechaCreacion}`}</p>
+                        </div>
+                      </div>
+                      <div className={`col-4 ${styles.subtitulo} p-0`}>
+                        <div>
+                          <p>{` Hora: ${form.hora}`}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <textarea
-                    className="form-control"
+                    className={`form-control ${styles.contentBox}`}
+                    style={{ overflow: 'scroll', height: '140px', fontFamily: 'Poppins' }}
                     rows="4"
                     id="textArea"
                     placeholder="Agrega un comentario"
@@ -249,34 +282,32 @@ const ResolutorDetail = ({
                 </label>
               ) : (
                 <>
-                  <p className="fs-5 mb-4">Comentario Resolutor</p>
-                  <ul className="card p-4" style={{ background: '#fbfbfb', borderRadius: 8 }}>
-                    <li>
-                      <ul className="d-flex align-items-center mb-4">
-                        <li className="me-2">
-                          <img src={avatarResolutor} alt="Respuesta" width="30" />
-                        </li>
-                        <li className="me-4">
-                          <span>
-                            Cliente Id:
-                            {' '}
-                            {form.clienteID}
-                          </span>
-                        </li>
+                  <h1 className={`fs-5 mb-4 ${styles.titulos} mt-5 p-0`}>Respuesta</h1>
+                  <div className="row justify-content-start pb-4 pe-0">
+                    <div className={`col-4 ${styles.subtitulo}`}>
+                      <p>
+                        {`Fecha ${form.fechaCreacion} `}
+                      </p>
+                    </div>
+                    <div className={`col-4 ${styles.subtitulo}`}>
+                      <div>
+                        <p>
+                          {` Hora: ${form.hora}`}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {' '}
+                  <div>
+                    <div className={`${styles.contentBox} p-0`} style={{ overflow: 'scroll' }}>
+                      <ul>
                         <li>
-                          <span>
-                            <small>
-                              <b>Fecha de cierre: </b>
-                              {form.fechaCierre}
-                            </small>
-                          </span>
+                          <p className="p-3">{form.comentario}</p>
                         </li>
                       </ul>
-                    </li>
-                    <li>
-                      <p>{form.comentario}</p>
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
+
                 </>
               )}
             </div>
@@ -287,24 +318,27 @@ const ResolutorDetail = ({
                 subTitle="Adjunta la evidencia, puede ser en formato jpg o png (opcional)"
               />
             </div>
-            <div className="text-end">
-              {comment && (
-                <Button
-                  className="btn btn-complementary fs-5 px-5 d-none"
-                  text="Editar comentario"
-                  submit
-                  onClick={() => setComment(false)}
-                />
-              )}
-              {!comment && (
-                <Button
-                  className="btn btn-secondary fs-5 px-5 py-3 "
-                  text="Enviar"
-                  submit
-                  onClick={handleClickConfirm}
-                />
-              )}
+            <div className={`row align-items-end ${styles.boxResponse}`}>
+              <div className="d-flex justify-content-end">
+                {comment && (
+                  <Button
+                    className="btn btn-complementary fs-5 px-5 d-none"
+                    text="Editar comentario"
+                    submit
+                    onClick={() => setComment(false)}
+                  />
+                )}
+                {!comment && (
+                  <Button
+                    className={`btn btn-secondary fs-5 px-5 py-3 ${styles.btni} `}
+                    text="Enviar"
+                    submit
+                    onClick={handleClickConfirm}
+                  />
+                )}
+              </div>
             </div>
+
           </form>
           <Modal showModal={modalTicket} size="lg" onClick={() => setModalTicket(false)}>
             {responseError ? (

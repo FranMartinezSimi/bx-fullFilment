@@ -7,6 +7,7 @@ import { useKeyclockAuth } from 'context/userKeyclockContext';
 import { SocketContext, socket } from './context/useContextSocketSeller';
 import { useAuth } from './context/userContex';
 import { InventoryProvider } from './context/useInventory';
+import { RepositionProvider } from './context/useReposition';
 
 import UnLoggedUserApp from './UnLoggedUserApp';
 import ResolutorApp from './ResolutorApp';
@@ -50,7 +51,9 @@ const App = () => {
       {userKeyclock && !resolutor && user && (
         <SocketContext.Provider value={socket}>
           <InventoryProvider>
-            <AuthenticatedApp />
+            <RepositionProvider>
+              <AuthenticatedApp />
+            </RepositionProvider>
           </InventoryProvider>
         </SocketContext.Provider>
       )}

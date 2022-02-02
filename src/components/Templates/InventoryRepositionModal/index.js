@@ -4,17 +4,18 @@ import MainTable from 'components/Templates/MainTable';
 import { InputQuantity } from 'components/Atoms/Form/Input';
 import Modal from 'components/Templates/Modal';
 import { useInventory } from 'context/useInventory';
+import { useReposition } from 'context/useReposition';
 
 const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
   const [selected, setSelected] = useState([]);
   const {
-    updateQuantities,
-    quantitiesBySku,
+    updateQuantitiesToRepositionBySku,
+    quantitiesToRepositionBySku,
     productsToReposition,
     productsToRepositionKeyedBySku,
-    addSku,
-    inventory,
-  } = useInventory();
+    addProductToReposition,
+  } = useReposition();
+  const { inventory } = useInventory();
 
   const columns = [
     {
@@ -30,10 +31,10 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
       id: 'quantity',
       Cell: ({ row }) => (
         <InputQuantity
-          onChange={(value) => updateQuantities(row.values.sku, value)}
+          onChange={(value) => updateQuantitiesToRepositionBySku(row.values.sku, value)}
           min={0}
           className="mt-1"
-          value={quantitiesBySku[row.values.sku] || 0}
+          value={quantitiesToRepositionBySku[row.values.sku] || 0}
         />
       ),
     },
@@ -52,12 +53,17 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
   }, [inventory, productsToReposition, productsToRepositionKeyedBySku]);
 
   const addToReposition = useCallback(() => {
-    addSku(selected);
+    addProductToReposition(selected);
     onCloseModal();
   }, [selected]);
 
   return (
     <Modal showModal={showModal} size="xl" onClick={onCloseModal}>
+      <div className="row">
+        <div className="col-12 mb-4">
+          <p className="h6 text-center">Seleccionar SKU a reponer</p>
+        </div>
+      </div>
       <div className="px-2">
         <MainTable
           selectableRow

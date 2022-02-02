@@ -124,6 +124,10 @@ const Orders = () => {
     setModalTicket(true);
   };
 
+  const handleTrakingNumber = (url) => {
+    window.open(url, '_blank');
+  };
+
   const columns = useMemo(() => [
     {
       Header: 'Nº orden',
@@ -135,7 +139,7 @@ const Orders = () => {
     },
     {
       Header: 'Destinatario',
-      accessor: (d) => `${d.firstName} ${d.lastName}`,
+      accessor: (d) => `${d.firstName}`,
     },
     {
       Header: 'Estado',
@@ -144,6 +148,44 @@ const Orders = () => {
     {
       Header: 'Nº Tracking',
       accessor: 'trackingNumber',
+      isVisible: true,
+      Cell: ({ row }) => {
+        const component = row.original.trackingNumber && row.original.statusInc.length > 0 ? (
+          <a
+            href="#!"
+            onClick={(e) => { e.preventDefault(); handleClickTicket(e, row); }}
+            role="button"
+            className="d-block font-weight-bold font-weight-bold"
+          >
+            <small className="text-secondary-color text-underline">
+              <u>
+                N / N
+              </u>
+            </small>
+          </a>
+        ) : (
+          <a
+            href="#!"
+            onClick={(e) => {
+              e.preventDefault();
+              handleTrakingNumber(`https://www.blue.cl/seguimiento/?n_seguimiento=${row.original.trackingNumber}`);
+              // window.location = `https://www.blue.cl/seguimiento/?n_seguimiento=${row.original.trackingNumber}`;
+            }}
+            role="button"
+            className="d-block font-weight-bold font-weight-bold"
+          >
+            <small className="text-secondary-color text-underline">
+              <u>
+                {row.original.trackingNumber}
+              </u>
+            </small>
+          </a>
+        );
+        return (
+          component
+        );
+      },
+
     },
     {
       Header: 'Nº Referencia',
