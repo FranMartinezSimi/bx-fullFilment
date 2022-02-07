@@ -1,0 +1,33 @@
+.content {
+  position: relative;
+  display: flex;
+}
+
+.inputButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid rgb(21, 92, 128);
+  height: 40px;
+  border-radius: 16px;
+  background-color: #FFF;
+  min-width: 200px;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: #FFF;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  border-radius: 15px;
+  z-index: 10;
+  &.show {
+    display: flex;
+  }
+}
+

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
 
@@ -6,10 +6,12 @@ import Modal from 'components/Templates/Modal';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
 import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
-import ReplenishmentTable from 'components/Templates/ReplenishmentTable';
+import MainTable from 'components/Templates/MainTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import info from 'assets/brand/info.svg';
+import { InputDateRange } from 'components/Atoms/Form/Input';
+
 import styles from './styles.module.scss';
 
 const Reposition = () => {
@@ -20,10 +22,7 @@ const Reposition = () => {
   const [modal, setModal] = useState(false);
   const [manifest, setManifest] = useState('');
   const data = useMemo(() => list, [list]);
-
-  const handleClickInventory = (e) => {
-    e.preventDefault();
-  };
+  const maxDate = useMemo(() => Date.now(), []);
 
   const handleClickOrderDeatil = (e, manifestData) => {
     e.preventDefault();
@@ -69,6 +68,7 @@ const Reposition = () => {
               colorSelected = '#3363FF';
               texto = 'En Transito';
           }
+
           return (
             <small
               className={`badge--${texto
@@ -132,46 +132,66 @@ const Reposition = () => {
   const userData = JSON.parse(user);
   const { accountId } = userData.credential;
 
-  const getDataByDate = (startDate, endDate) => {
-    setLoading(true);
-    clientFetch('bff/v1/replenishment/findReplenishmentsDate', {
-      headers: {
-        apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        startDate,
-        endDate,
-        accountId,
-      },
-    })
-      .then((issues) => {
-        setLoading(false);
-        setList(issues);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
+  const getAllReplenishment = async () => {
+    try {
+      const response = await clientFetch(
+        'bff/v1/replenishment/findReplenishments',
+        {
+          headers: {
+            apikey: process.env.REACT_APP_API_KEY_KONG,
+          },
+          body: {
+            accountId,
+          },
+        },
+      );
+
+      setLoading(false);
+      setList(response);
+    } catch (e) {
+      setError(true);
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    clientFetch('bff/v1/replenishment/findReplenishments', {
-      headers: {
-        apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        accountId,
-      },
-    })
-      .then((issues) => {
+  const getDataByDate = useCallback(
+    async (startDate, endDate) => {
+      try {
+        if (!startDate && !endDate) {
+          await getAllReplenishment();
+
+          return;
+        }
+
+        setLoading(true);
+
+        const response = await clientFetch(
+          'bff/v1/replenishment/findReplenishmentsDate',
+          {
+            headers: {
+              apikey: process.env.REACT_APP_API_KEY_KONG,
+            },
+            body: {
+              startDate,
+              endDate,
+              accountId,
+            },
+          },
+        );
         setLoading(false);
-        setList(issues);
-      })
-      .catch(() => {
+        setList(response);
+      } catch (e) {
         setError(true);
         setLoading(false);
-      });
+      }
+    },
+    [getAllReplenishment],
+  );
+
+  useEffect(() => {
+    getAllReplenishment();
   }, []);
+
   return (
     <PageLayout title="Reposiciones">
       <PageTitle
@@ -179,16 +199,24 @@ const Reposition = () => {
         subtitle="Te mostramos el estado de las cargas de tu reposición"
       />
 
-      {list && !loading ? (
-        <ReplenishmentTable
-          columns={columns}
-          data={data}
-          getDataByDate={getDataByDate}
-          handleClickInventory={handleClickInventory}
-        />
-      ) : (
-        component
-      )}
+      {list && !loading
+        ? (
+          <MainTable
+            columns={columns}
+            data={data}
+            noButtons
+            buttonChildren={(
+              <div className="d-flex justify-content-end">
+                <InputDateRange
+                  placeholder="Selecciona una fecha"
+                  onFilter={getDataByDate}
+                  maxDate={maxDate}
+                />
+              </div>
+              )}
+          />
+        )
+        : component}
       <Modal showModal={modal} size="xl" onClick={() => setModal(false)}>
         <ReplenishmentDetail
           columns={columns}

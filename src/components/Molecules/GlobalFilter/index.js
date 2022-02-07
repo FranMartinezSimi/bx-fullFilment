@@ -74,6 +74,7 @@ const GlobalFilter = ({
                   borderRadius: '50rem',
                   border: '1px solid #1A6F99',
                   minWidth: '200px',
+                  height: 40,
                 }}
                 onChange={(e) => {
                   setValue(e.target.value);
@@ -98,9 +99,8 @@ const GlobalFilter = ({
             <li className="d-none d-md-block">{update && update}</li>
           </ul>
         </div>
-        {buttonChildren}
-        {!buttonChildren && !noButtons && (
-          <div className="col-md-6">
+        <div className="col-md-6">
+          {!buttonChildren && !noButtons ? (
             <ul className="d-flex justify-content-md-end align-items-center">
               {!checkUrl ? (
                 <li className="me-5">
@@ -180,8 +180,9 @@ const GlobalFilter = ({
                 </div>
               </li>
             </ul>
-          </div>
-        )}
+          )
+            : buttonChildren}
+        </div>
       </div>
     </div>
   );
