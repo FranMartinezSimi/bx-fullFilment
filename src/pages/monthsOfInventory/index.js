@@ -96,33 +96,31 @@ const MonthsOfInventory = () => {
           columns={columns}
           data={listMonthsOfInventory}
           buttonChildren={(
-            <div className="col-md-6">
-              <ul className="d-flex justify-content-md-end align-items-center">
-                <li>
-                  <a
-                    href="#!"
-                    onClick={handleDownloadCsv}
-                    className="position-relative"
+            <ul className="d-flex justify-content-md-end align-items-center">
+              <li>
+                <a
+                  href="#!"
+                  onClick={handleDownloadCsv}
+                  className="position-relative"
+                >
+                  <ul
+                    className="d-flex align-items-center bg-white px-4"
+                    style={{
+                      border: '1px solid #155C80',
+                      height: '40px',
+                      borderRadius: 16,
+                    }}
                   >
-                    <ul
-                      className="d-flex align-items-center bg-white px-4"
-                      style={{
-                        border: '1px solid #155C80',
-                        height: '40px',
-                        borderRadius: 16,
-                      }}
-                    >
-                      <li>
-                        <img src={downloadArrow} alt="download" width="14" />
-                      </li>
-                      <li className="mx-2">
-                        <span>Descargar</span>
-                      </li>
-                    </ul>
-                  </a>
-                </li>
-              </ul>
-            </div>
+                    <li>
+                      <img src={downloadArrow} alt="download" width="14" />
+                    </li>
+                    <li className="mx-2">
+                      <span>Descargar</span>
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            </ul>
           )}
         />
       )}
