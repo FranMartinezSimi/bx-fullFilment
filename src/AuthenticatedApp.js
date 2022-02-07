@@ -3,6 +3,7 @@ import { useAuth } from 'context/userContex';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ErrorPage from 'pages/404';
 import CreateReposition from 'pages/reposition/create';
+import ReplenishmentDetail from 'pages/reposition/detail';
 import Layout from './components/Templates/Layout';
 import Home from './pages/home';
 import Orders from './pages/ordenes';
@@ -59,6 +60,9 @@ const App = () => {
           </Route>
           <Route exact path="/reposition">
             <Reposition />
+          </Route>
+          <Route exact path="/reposition/detail/:replenishment_id">
+            <ReplenishmentDetail />
           </Route>
           <Route exact path="/reposition/create">
             <CreateReposition />
