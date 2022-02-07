@@ -36,6 +36,7 @@ const UpdateResult = ({ updatedData, setErrorList, setErrorScreen }) => {
         console.log('error', error);
       });
   }, [updatedData]);
+
   return (
     <div className="container py-5">
       <div className="row justify-content-center">

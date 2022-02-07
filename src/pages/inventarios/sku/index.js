@@ -203,7 +203,7 @@ const Sku = () => {
         resp.push(res);
         const { created, errors } = resp[1].result;
         const dataTable = [...created];
-        console.log('DATA TABLE', dataTable);
+
         if (created.length > 0 && errors.length === 0) {
           setResponse({
             img: 'bgsuccess',

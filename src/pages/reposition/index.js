@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useAuth } from 'context/userContex';
+import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 
+import { useAuth } from 'context/userContex';
 import Modal from 'components/Templates/Modal';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
@@ -11,6 +12,7 @@ import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import info from 'assets/brand/info.svg';
 import { InputDateRange } from 'components/Atoms/Form/Input';
+import { useReposition } from 'context/useReposition';
 
 import styles from './styles.module.scss';
 
@@ -23,6 +25,8 @@ const Reposition = () => {
   const [manifest, setManifest] = useState('');
   const data = useMemo(() => list, [list]);
   const maxDate = useMemo(() => Date.now(), []);
+  const history = useHistory();
+  const { setRepositionSelected } = useReposition();
 
   const handleClickOrderDeatil = (e, tableData) => {
     e.preventDefault();
@@ -30,11 +34,21 @@ const Reposition = () => {
     setManifest(tableData.row.original.manifest);
   };
 
+  const goToDetail = useCallback((repositionSelected) => (event) => {
+    event?.preventDefault();
+    setRepositionSelected(repositionSelected);
+
+    history.push(`/reposition/detail/${repositionSelected.replenishmentId}`);
+  }, []);
+
   const columns = useMemo(
     () => [
       {
         Header: 'ID de carga ',
         accessor: 'replenishmentId',
+        Cell: ({ row: { original } }) => (
+          <a href="/#" onClick={goToDetail(original)}>{original.replenishmentId}</a>
+        ),
       },
       {
         Header: 'N° productos',
@@ -188,6 +202,7 @@ const Reposition = () => {
 
   useEffect(() => {
     getAllReplenishment();
+    setRepositionSelected(null);
   }, []);
 
   return (

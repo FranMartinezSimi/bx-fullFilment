@@ -64,7 +64,7 @@ const GlobalFilter = ({
   return (
     <div className="container-fluid px-2">
       <div className="row d-md-flex justify-content-between align-items-start">
-        <div className="col-md-6 px-0">
+        <div className="col-md-6">
           <ul className="d-md-flex align-items-center">
             <li className="me-4 position-relative">
               <input
