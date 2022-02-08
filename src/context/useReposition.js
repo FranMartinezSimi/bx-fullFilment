@@ -9,6 +9,9 @@ import React, {
 import Omit from 'lodash/omit';
 
 const RepositionContext = createContext({
+  repositionSelected: null,
+  setRepositionSelected: () => {},
+
   step: 0,
   setStep: () => {},
 
@@ -38,6 +41,7 @@ const RepositionContext = createContext({
 });
 
 const RepositionProvider = ({ children }) => {
+  const [repositionSelected, setRepositionSelected] = useState(null);
   const [step, setStep] = useState(0);
   const [formToReposition, setFormToReposition] = useState({
     date: null,
@@ -59,21 +63,28 @@ const RepositionProvider = ({ children }) => {
     [productsToReposition],
   );
 
-  const setDateToReposition = useCallback((date) => setFormToReposition((prevState) => ({
-    ...prevState,
-    date,
-  })), [formToReposition]);
+  const setDateToReposition = useCallback(
+    (date) => setFormToReposition((prevState) => ({
+      ...prevState,
+      date,
+    })),
+    [formToReposition],
+  );
 
-  const setFilesToReposition = useCallback((files) => setFormToReposition((prevState) => ({
-    ...prevState,
-    files,
-  })), [formToReposition]);
+  const setFilesToReposition = useCallback(
+    (files) => setFormToReposition((prevState) => ({
+      ...prevState,
+      files,
+    })),
+    [formToReposition],
+  );
 
   const setSelectedModeToReposition = useCallback(
     (selectedMode) => setFormToReposition((prevState) => ({
       ...prevState,
       selectedMode,
-    })), [formToReposition],
+    })),
+    [formToReposition],
   );
 
   const updateQuantitiesToRepositionBySku = useCallback(
@@ -131,6 +142,8 @@ const RepositionProvider = ({ children }) => {
         resetReposition,
         productsWithErrorToReposition,
         setProductsWithErrorToReposition,
+        repositionSelected,
+        setRepositionSelected,
       }}
     >
       {children}

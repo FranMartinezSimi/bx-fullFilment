@@ -195,7 +195,7 @@ const StepTwo = () => {
           data={productsToReposition}
           noButtons
           buttonChildren={(
-            <div className="col-6 d-flex justify-content-end align-items-center">
+            <div className="w-100 d-flex justify-content-end align-items-center">
               <button
                 type="button"
                 className={cs(styles.roundedButtom, styles.add)}
