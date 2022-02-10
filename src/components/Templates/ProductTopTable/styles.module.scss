@@ -39,13 +39,14 @@ width: 55px;
 		min-height: 120px;
 	max-height: 120px;
 	overflow-y: auto;
+		overflow-x: hidden;
 	width: 100%;
 	flex-direction: column;
 
 }
 .tbody > .tr{
 	display:flex ;
-	width: 100%;
+	width: 650px;
 	flex-direction: row;
 	flex: 1;
 left: 69.14%;
@@ -59,9 +60,6 @@ font-size: 10px;
 line-height: 12px;
 display: flex;
 align-items: center;
-
-/* Gris one */
-
 color: #333333;
 }
 
