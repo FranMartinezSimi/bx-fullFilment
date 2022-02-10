@@ -40,7 +40,7 @@ export default function CreateReposition() {
       <PageTitle title="Reposición de Inventario" />
 
       <div className="row d-flex justify-content-center align-items-center">
-        <div className="col-11">
+        <div className="col-12">
           <Card className="my-4 py-4 px-2 shadow">
             <Step />
           </Card>
