@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import jwt from 'jwt-decode';
 
-import { setDataLayer } from 'utils/gtm';
+import * as GTM from 'utils/gtm';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import { SocketContext, socket } from './context/useContextSocketSeller';
 import { useAuth } from './context/userContex';
@@ -27,15 +27,18 @@ const App = () => {
       const userKeyclockData = JSON.parse(userKeyclock);
       const TOKEN = userKeyclockData.access_token;
       const USER_DATA = jwt(TOKEN);
+
       setResolutor(
         USER_DATA.realm_access.roles.some(
           (item) => item === 'fulfillment-resolutor',
         ),
       );
 
-      setDataLayer({
+      GTM.setDataLayer({
         userId: USER_DATA?.preferred_username || '',
       });
+
+      GTM.addUserIdEvent({ email: USER_DATA.email });
     }
   }, [userKeyclock]);
 
