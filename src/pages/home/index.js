@@ -5,11 +5,12 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from 'context/userContex';
 import clientFetch from 'lib/client-fetch';
 import PageLayout from 'components/Templates/PageLayout';
+import Chart from 'react-apexcharts';
 import PageTitle from 'components/Atoms/PageTitle';
-import Card from 'components/Molecules/Card';
 import { SocketContext } from 'context/useContextSocketSeller';
-import inscribe from 'assets/brand/homeCard1.svg';
 import deliveredHands from 'assets/brand/delivered-hands-green.svg';
+import rightArrow from 'assets/brand/rightArrow.svg';
+import inscribe from 'assets/brand/homeCard1.svg';
 import truckRoute from 'assets/brand/truck-route-orange.svg';
 import reverseLogistics from 'assets/brand/reverse-logistics-cyan.svg';
 import callendar from 'assets/brand/homeCard2.svg';
@@ -27,40 +28,41 @@ const Home = () => {
   const [list, setList] = useState([]);
   const userActive = userData.credential.user.name;
   const { accountId } = userData.credential.accountId;
+  const [dataOrders, setDataOrders] = useState({
+    series: [''],
+    chart: {
+      height: 500,
+      type: 'radialBar',
+    },
+    options: {
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            size: '70%',
+          },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            total: {
+              show: true,
+              label: '',
+              formatter: (w) => (w.globals.initialSeries[0]),
+            },
+          },
+        },
+      },
+      stroke: { lineCap: 'round' },
+      labels: [''],
+    },
+  });
   let componentTotales;
-
-  const cardMostRequest = {
-    width: '500px',
-    height: '26px',
-    fontSize: '22px',
-    lineHeight: '26px',
-    fontWeight: 'bold',
-    fontStyle: 'normal',
-    fontFamily: 'lato',
-    color: '#212121',
-    marginTop: '18px',
-  };
-  const seventDays = {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '10px',
-    marginTop: '8px',
-    lineHeight: '45px',
-    color: '#666666',
-  };
-  const detalleCardTop = {
-    color: '#2BB9FF',
-    fontSize: 12,
-    fontFamily: 'lato',
-    fontWeight: 'bold',
-    fontStyle: 'normal',
-    lineHeight: '158%',
-  };
+  let noData;
   if (setErrorTotales) {
     componentTotales = <HomeMessage />;
+    noData = <></>;
   } else {
-    componentTotales = null;
+    componentTotales = {};
   }
 
   useEffect(() => {
@@ -121,7 +123,57 @@ const Home = () => {
         setErrorTotales(true);
       });
   };
-  const handleClick = (e) => {
+  const charter = () => {
+    clientFetch('bff/v1/inventory/getInventoryTurnoverIndicator', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+        accountId,
+      },
+      method: 'GET',
+    })
+      .then((dashData) => {
+        setDataOrders({
+          series: [Math.floor(dashData.indicator)],
+
+          options: {
+            plotOptions: {
+              radialBar: {
+                hollow: {
+                  size: '65%',
+                },
+                chart: {
+                  height: 500,
+                  type: 'radialBar',
+                },
+                dataLabels: {
+                  name: {
+                    show: false,
+                  },
+                  value: {
+                    formatter(val) {
+                      return Number(val);
+                    },
+                    fontSize: '30px',
+                    show: true,
+                  },
+                  total: {
+                    show: true,
+                    label: '',
+                    formatter: (w) => (w.globals.initialSeries[0]),
+                  },
+                },
+              },
+            },
+            stroke: { lineCap: 'round' },
+            labels: [''],
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleClickOrders = (e) => {
     e.preventDefault();
     history.push('/ordenes');
   };
@@ -131,7 +183,7 @@ const Home = () => {
     history.push('/meses-de-inventario');
   };
 
-  const handleClickA = (e) => {
+  const handleClickUpOrders = (e) => {
     e.preventDefault();
     history.push('/ordenes/subir-ordenes');
   };
@@ -143,6 +195,7 @@ const Home = () => {
 
   useEffect(() => {
     chart();
+    charter();
   }, []);
   const socket = useContext(SocketContext);
 
@@ -153,221 +206,183 @@ const Home = () => {
   }, [socket, notify]);
   return (
     <PageLayout title="Bienvenido a Blue360" description="Bienvenido a Blue360" noBreadcrumb>
-      <div style={{ width: '100%' }}>
-        <div className="row m-5">
-          <div className="col-8">
-            <div className="row m-0">
-              <PageTitle
-                className="row"
-                subtitle={`${userActive}`}
-                subtitleClassName="display-font fw-bold fs-3"
-                title="Bienvenido a Blue360"
-                titleSize="50px"
-              />
-            </div>
-            <div>
-              <Card className={styles.hei}>
-                {statisticsData.length > 0 && !errorTotales ? (
-                  <>
-                    <div className="d-flex bd-highlight">
-                      <div className="p-2 flex-grow-1 bd-highlight">
-                        <h4 className="display-font m-1" style={{ fontFamily: 'Lato', fontSize: '22px' }}>Estado de tus órdenes</h4>
+      <div className={styles.parent}>
+        <div className="row justify-content-start">
+          <div className="row mt-5">
+            <PageTitle
+              className="row"
+              subtitle={`${userActive}`}
+              subtitleClassName="display-font fw-bold fs-3"
+              title="Bienvenido a Blue360"
+              titleSize="50px"
+            />
+          </div>
+          {statisticsData.length > 0 && !errorTotales ? (
+            <div className="col-12 col-sm-12">
+              <div className={styles.gridFirst}>
+                <div>
+                  <div className={styles.orderStatus}>
+                    <div className="d-flex justify-content-between mb-1">
+                      <div className="col-6 col-sm-6 ms-4">
+                        <h1 className={styles.titulo}>
+                          Estado de tus órdenes
+                        </h1>
                       </div>
-                      <ul className="d-flex justify-content-end align-items-center pt-3 mb-3">
-                        <li>
+                      <div className="col-5 col-sm-5">
+                        <div className="d-flex justify-content-end pt-2">
                           <a
                             href="#!"
-                            style={{ color: '#2BB9FF' }}
-                            onClick={handleClick}
+                            onClick={handleClickOrders}
                           >
-                            <p className="text-end me-2 mb-0">
-                              <p style={{ color: '#666666' }}>Últimos 7 días</p>
-                            </p>
+                            <h6 className={`text-right ${styles.link}`}>
+                              Ver todas las órdenes
+                              <img className="px-2" src={rightArrow} alt={rightArrow} />
+                            </h6>
                           </a>
-                        </li>
-                      </ul>
+                        </div>
+
+                      </div>
                     </div>
-
-                    <ul className="d-flex justify-content-around mb-2 p-0">
+                    <div className="row px-5">
                       {statisticsData.length > 0 && statisticsData.map((item) => (
-
-                        <div className={`${styles.indicadores} mb-3`}>
-                          <div className="card-body">
-                            <div className="row mx-5 mt-3">
-                              <div className="col mt-3 ms-1">
-                                <img src={item.img} alt={item.state} />
-                              </div>
-                              <div className="col">
-                                <div className="pt-3">
-                                  <h5 style={{ fontSize: '26px', fontFamily: 'mont', lineHeight: '30px', textAlign: 'right', top: '24px', width: '41px', right: '47px', color: item.bg }}>{item.number}</h5>
+                        <div className="col-4 col-sm-4 mt-5">
+                          <div className={`${styles.indicators}`}>
+                            <div className="row">
+                              <div className="col-12 col-sm-12 pt-3">
+                                <div className="row">
+                                  <div
+                                    className={`col-6 col-sm-6 ${styles.centerImg}`}
+                                  >
+                                    <img src={item.img} alt={item.state} />
+                                  </div>
+                                  <div className="col-6 col-sm-6 px-0">
+                                    <h5
+                                      style={{ color: item.bg }}
+                                      className={`text-right ${styles.colorNum}`}
+                                    >
+                                      {item.number}
+                                    </h5>
+                                  </div>
+                                </div>
+                                <div className={`col-12 col-sm-12 ${styles.colorState}`}>
+                                  <p
+                                    style={{ color: item.bg }}
+                                    className="text-center"
+                                  >
+                                    {item.state}
+                                  </p>
                                 </div>
                               </div>
                             </div>
-                            <div className="row">
-                              <small>
-                                <p
-                                  style={{
-                                    fontFamily: 'mont',
-                                    fontSize: '15px',
-                                    lineHeight: '109.9%',
-                                    textAlign: 'center',
-                                    fontWeight: 'bold',
-                                    color: item.bg,
-                                  }}
-                                >
-                                  {item.state}
-                                </p>
-                              </small>
-                            </div>
                           </div>
                         </div>
+
                       ))}
-                    </ul>
-                    <ul className="d-flex justify-content-end m-0 p-0">
-
-                      <a
-                        href="#!"
-                        style={{ color: '#2BB9FF' }}
-                        onClick={handleClick}
-                      >
-                        <p className="text-end me-2 mb-0 pt-2">
-                          <small style={{
-                            top: 50,
-                            color: '#2BB9FF',
-                            fontSize: 12,
-                            fontFamily: 'lato',
-                            fontWeight: 'bold',
-                            fontStyle: 'normal',
-                            lineHeight: '158%',
-                          }}
-                          >
-                            Ver todas las órdenes &gt;
-                          </small>
-                        </p>
-                      </a>
-
-                    </ul>
-                  </>
-                ) : componentTotales}
-              </Card>
-            </div>
-          </div>
-          <div className="col-4 row align-items-end ps-0">
-            <div
-              className={`${styles.shadow}`}
-              style={{
-                borderRadius: '15px',
-                background: '#FFFFFF',
-                width: '91%',
-                height: '260px',
-                padding: '10px',
-              }}
-            >
-              <div className="row">
-                <div className="col-8">
-                  <h1
-                    className=" ps-2 mb-3"
-                    style={
-                      cardMostRequest
-                    }
-                  >
-                    Productos más solicitados
-                  </h1>
-                </div>
-                <div
-                  className="col-4 text-end pe-4"
-                  style={seventDays}
-                >
-                  Últimos 7 días
-                </div>
-              </div>
-              <div style={{ width: '90%', marginLeft: '25px' }}>
-                <ProductTopTable data={list} />
-
-              </div>
-              <div
-                className="container"
-              >
-                <div className="row" style={{ height: '40px' }}>
-                  <div className="col align-self-end">
-                    <div
-                      className="d-flex justify-content-end m-0 pe-3"
-                    >
-                      <a
-                        href="#!"
-                        style={{ color: '#2BB9FF' }}
-                        onClick={handleClickMeses}
-                      >
-                        <p className="text-end me-2 mb-0 pt-2">
-                          <small
-                            className="mb-2"
-                            style={detalleCardTop}
-                          >
-                            Ver detalle &gt;
-                          </small>
-                        </p>
-                      </a>
-
+                    </div>
+                    <div className={styles.margin}>
+                      <h6 className={`${styles.sevenDays}d-flex justify-content-start`}>Últimos 7 días</h6>
                     </div>
                   </div>
                 </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div className="row mx-5 m-0 mb-5">
-          <div className="col-6 ">
-            <Card className={styles.hei}>
-              <div className="d-flex align-items-center">
-                <div className="flex-shrink-0">
-                  <img src={inscribe} alt="download" width="180" style={{ position: 'relative', bottom: 18 }} />
-                </div>
-                <div className="flex-grow-1 ms-3 pt-2">
-                  <div className="d-flex flex-column bd-highlight mb-3 mt-1">
-                    <div className="p-2 bd-highlight">
-                      <h5 style={{ color: '#212121' }}>Órdenes de servicios</h5>
+                <div>
+                  <div className={styles.orders}>
+                    <div className="row justify-content-center mb-4">
+                      <img style={{ width: '75px', height: '63,85px' }} className="px-2" src={callendar} alt={callendar} />
                     </div>
-                    <div className="p-2 bd-highlight">
-                      <p className={`${styles.pFileUp}`}>
-                        Sube tus archivos masivos de órdenes de servicio
-                      </p>
+                    <div className="row justify-content-center mb-1">
+                      <h1 className={`${styles.titulo}`}>Reposición de inventario</h1>
                     </div>
-                    <div className="p-2 bd-highlight d-flex justify-content-end">
-                      <a href="#!" className="btn btn-secondary " onClick={handleClickA} style={{ fontSize: 17 }}>
-                        Subir órdenes
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
-          <div className="col-6">
-            <Card className={styles.hei}>
-              <div className="d-flex align-items-center">
-                <div className="flex-shrink-0">
-                  <img src={callendar} alt="download" width="160" style={{ position: 'relative', bottom: 20 }} />
-                </div>
-                <div className="flex-grow-1 ms-3 pt-2">
-                  <div className="d-flex flex-column bd-highlight mb-3 mt-1">
-                    <div className="p-2 bd-highlight">
-                      <h5 style={{ color: '#212121' }}>Reposición de inventario</h5>
-                    </div>
-                    <div className="p-2 bd-highlight">
-                      <p className={`${styles.pFileUp}`}>
+                    <div className="row justify-content-center mb-1">
+                      <p className={styles.parrafo}>
                         Realiza la programación de la reposición de tu inventario
                       </p>
                     </div>
-                    <div className="p-2 bd-highlight d-flex justify-content-end">
-                      <a href="#!" className="btn btn-secondary " onClick={handleClickInventory} style={{ fontSize: 17 }}>
-                        Programar
-                      </a>
+                    <div className="row justify-content-center mb-1">
+                      <div className="p-2 bd-highlight d-flex justify-content-center">
+                        <a href="#!" className="btn btn-secondary " onClick={handleClickInventory} style={{ fontSize: 17, width: '204px' }}>
+                          Programar
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </Card>
+            </div>
+          ) : componentTotales}
+        </div>
+        <div className="row mt-2">
+          <div className={styles.grid}>
+            <div>
+              <div className={styles.topRated}>
+                <div className="d-flex justify-content-between p-3 px-0">
+                  <div className="col-7 col-sm-7 px-0">
+                    <h1 className={styles.titulo}>Productos más solicitados</h1>
+                  </div>
+                  <div className="col-3 col-sm-3 p-0">
+                    <p className="text-end pe-4">
+                      Últimos 7 días
+                    </p>
+                  </div>
+                </div>
+                <div className="">
+                  <ProductTopTable data={list} />
+                  <div className="d-flex justify-content-end">
+                    <a
+                      href="#!"
+                      onClick={handleClickMeses}
+                    >
+                      <h6 className={`text-right ${styles.link} ms-0`}>
+                        Ver detalle
+                        <img className="px-2" src={rightArrow} alt={rightArrow} />
+                      </h6>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <div className={styles.rotationInventori}>
+                <div className="row justify-content-center mb-2">
+                  <h1 className={`${styles.titulo}`}>Rotación de servicios</h1>
+                </div>
+                <div className={`row justify-content-center ${styles.larg}`}>
+                  {!dataOrders.length > 0 ? (
+                    <Chart
+                      options={dataOrders.options}
+                      series={dataOrders.series}
+                      type="radialBar"
+                      height={190}
+                    />
+                  ) : noData}
+                </div>
+                <div className={`row justify-content-end $${styles.sevenDays}`}>
+                  Últimos 30 días
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className={styles.orders}>
+                <div className="row justify-content-center mb-4">
+                  <img style={{ width: '75px', height: '63,85px' }} className="px-2" src={inscribe} alt={inscribe} />
+                </div>
+                <div className="row justify-content-center mb-1">
+                  <h1 className={`${styles.titulo}`}>Órdenes de servicios</h1>
+                </div>
+                <div className="row justify-content-center mb-1">
+                  <p className={`${styles.parrafo} text-center`}>
+                    Sube tus archivos masivos de órdenes de servicio
+                  </p>
+                </div>
+                <div className="row justify-content-center">
+                  <div className="p-2 bd-highlight d-flex justify-content-center">
+                    <a href="#!" className="btn btn-secondary " onClick={handleClickUpOrders} style={{ fontSize: 17, width: '204px' }}>
+                      Subir Ordenes
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

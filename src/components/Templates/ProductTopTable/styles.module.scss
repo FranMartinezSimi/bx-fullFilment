@@ -1,11 +1,11 @@
 .table{
-	width: 95%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 }
 .thead{
 	display: flex;
-width: 95%;
+width: 100%;
 height: 32px;
 background: #F6F6F6;
 }
@@ -35,7 +35,8 @@ width: 55px;
 }
 .tbody{
 	display: flex;
-	max-width: 95%;
+	max-width: 100%;
+		min-height: 120px;
 	max-height: 120px;
 	overflow-y: auto;
 	width: 95%;
