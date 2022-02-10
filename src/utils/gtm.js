@@ -6,12 +6,7 @@ export const initialize = () => {
   });
 };
 
-export const setDataLayer = ({
-  userId,
-  userProject,
-  page,
-  dataLayerName,
-}) => {
+export const setDataLayer = ({ userId, userProject, page, dataLayerName }) => {
   TagManager.dataLayer({
     dataLayer: {
       userId,
@@ -20,4 +15,19 @@ export const setDataLayer = ({
     },
     dataLayerName,
   });
+};
+
+export const addUserIdEvent = ({ email }) => {
+  TagManager.dataLayer({
+    dataLayer: {
+      userId: email,
+      event: 'userIdSet',
+    },
+  });
+};
+
+export default {
+  initialize,
+  setDataLayer,
+  addUserIdEvent,
 };
