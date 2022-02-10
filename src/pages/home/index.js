@@ -147,7 +147,9 @@ const Home = () => {
       method: 'GET',
     }).then((dashData) => {
       setDataOrders({
-        series: [Math.floor(dashData.indicator)],
+        series: [
+          dashData.indicator === 0 ? 0 : Number(dashData.indicator).toFixed(1),
+        ],
 
         options: {
           plotOptions: {
@@ -320,7 +322,7 @@ const Home = () => {
           <Card className={styles.fullHeight}>
             <div className="row">
               <div className="col-12 mb-2">
-                <h1 className={`${styles.titulo}`}>Rotación de servicios</h1>
+                <h1 className={`${styles.titulo}`}>Rotación de inventario</h1>
               </div>
               <div className="col-12 mb-2">
                 <Chart
