@@ -10,9 +10,11 @@ import ReplenishmentDetail from 'components/Molecules/ReplenishmentDetail';
 import MainTable from 'components/Templates/MainTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-import info from 'assets/brand/info.svg';
+import pdfIcon from 'assets/brand/pdf.svg';
+import trashIcon from 'assets/brand/trash.svg';
 import { InputDateRange } from 'components/Atoms/Form/Input';
 import { useReposition } from 'context/useReposition';
+import CardButton from 'components/Atoms/CardButton';
 
 import styles from './styles.module.scss';
 
@@ -23,23 +25,30 @@ const Reposition = () => {
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
   const [manifest, setManifest] = useState('');
+  const [, setShowDeleteModal] = useState(false);
   const data = useMemo(() => list, [list]);
   const maxDate = useMemo(() => Date.now(), []);
   const history = useHistory();
   const { setRepositionSelected } = useReposition();
 
-  const handleClickOrderDeatil = (e, tableData) => {
-    e.preventDefault();
+  const handleClickOrderDeatil = (manifestOfRow) => () => {
     setModal(true);
-    setManifest(tableData.row.original.manifest);
+    setManifest(manifestOfRow);
   };
 
-  const goToDetail = useCallback((repositionSelected) => (event) => {
-    event?.preventDefault();
-    setRepositionSelected(repositionSelected);
+  const onToggleDeleteModal = () => {
+    setShowDeleteModal((prev) => !prev);
+  };
 
-    history.push(`/reposition/detail/${repositionSelected.replenishmentId}`);
-  }, []);
+  const goToDetail = useCallback(
+    (repositionSelected) => (event) => {
+      event?.preventDefault();
+      setRepositionSelected(repositionSelected);
+
+      history.push(`/reposition/detail/${repositionSelected.replenishmentId}`);
+    },
+    [],
+  );
 
   const columns = useMemo(
     () => [
@@ -47,7 +56,9 @@ const Reposition = () => {
         Header: 'ID de carga ',
         accessor: 'replenishmentId',
         Cell: ({ row: { original } }) => (
-          <a href="/#" onClick={goToDetail(original)}>{original.replenishmentId}</a>
+          <a href="/#" onClick={goToDetail(original)}>
+            {original.replenishmentId}
+          </a>
         ),
       },
       {
@@ -109,18 +120,27 @@ const Reposition = () => {
         accessor: 'fechaEntrega',
       },
       {
-        Header: 'Manifiesto',
+        Header: 'Acciones',
         accessor: 'ver',
         isVisible: true,
-        Cell: (table) => (
-          <a
-            href="#!"
-            onClick={(e) => handleClickOrderDeatil(e, table)}
-            role="button"
-            className="d-block font-weight-bold font-weight-bold"
-          >
-            <img src={info} alt="Actualizar Ordenes" width="32" />
-          </a>
+        Cell: ({ row: { original } }) => (
+          <div className="d-flex justify-content-center align-items-center">
+            <CardButton
+              onClick={handleClickOrderDeatil(original.manifest)}
+              className="mx-2"
+            >
+              <img src={pdfIcon} alt="Actualizar Ordenes" width="10" />
+            </CardButton>
+            <CardButton
+              onClick={onToggleDeleteModal}
+              className="mx-2"
+              disabled={
+                !['', 'En Transito', 'Recibido', null].includes(original.estado)
+              }
+            >
+              <img src={trashIcon} alt="Actualizar Ordenes" width="10" />
+            </CardButton>
+          </div>
         ),
       },
     ],
@@ -212,24 +232,24 @@ const Reposition = () => {
         subtitle="Te mostramos el estado de las cargas de tu reposición"
       />
 
-      {list && !loading
-        ? (
-          <MainTable
-            columns={columns}
-            data={data}
-            noButtons
-            buttonChildren={(
-              <div className="d-flex justify-content-end">
-                <InputDateRange
-                  placeholder="Selecciona una fecha"
-                  onFilter={getDataByDate}
-                  maxDate={maxDate}
-                />
-              </div>
-              )}
-          />
-        )
-        : component}
+      {list && !loading ? (
+        <MainTable
+          columns={columns}
+          data={data}
+          noButtons
+          buttonChildren={(
+            <div className="d-flex justify-content-end">
+              <InputDateRange
+                placeholder="Selecciona una fecha"
+                onFilter={getDataByDate}
+                maxDate={maxDate}
+              />
+            </div>
+          )}
+        />
+      ) : (
+        component
+      )}
       <Modal showModal={modal} size="xl" onClick={() => setModal(false)}>
         <ReplenishmentDetail
           columns={columns}
