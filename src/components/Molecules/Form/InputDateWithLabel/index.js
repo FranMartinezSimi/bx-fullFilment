@@ -21,7 +21,7 @@ const InputDateWithLabel = ({
   placeholder,
 }) => (
   <div className="form-group">
-    <Label className={`w-100 mb-4 ${lableClassName}`} id={id} label={label}>
+    <Label className={`w-100 ${lableClassName}`} id={id} label={label}>
       <InputDate
         format={format}
         showTimeSelect={showTimeSelect}

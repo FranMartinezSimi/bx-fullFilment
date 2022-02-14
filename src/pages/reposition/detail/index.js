@@ -96,7 +96,7 @@ const ReplenishmentDetail = () => {
                   {repositionSelected.estado === 'Ingresado' ? (
                     <Tag background="#408D5C">{repositionSelected.estado}</Tag>
                   ) : (
-                    <Tag variant="info">{repositionSelected.estado}</Tag>
+                    <Tag variant="info">{repositionSelected.estado || 'En Transito'}</Tag>
                   )}
                 </div>
                 <div className="col-12 col-sm-4 d-flex justify-content-start my-2 align-items-center">
@@ -107,10 +107,10 @@ const ReplenishmentDetail = () => {
                   </span>
                 </div>
                 <div className="col-12 col-sm-4 d-flex justify-content-start my-2 align-items-center">
-                  <span className={cs('paragraph3', styles.orange)}>
+                  <span className="paragraph3">
                     <b className="pe-2">Productos:</b>
                     {'  '}
-                    {repositionSelected.numProducts}
+                    <span>{repositionSelected.numProducts}</span>
                   </span>
                 </div>
                 <div className="col-12 col-sm-4 d-flex justify-content-start my-2 align-items-center">

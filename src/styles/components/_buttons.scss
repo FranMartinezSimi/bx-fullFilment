@@ -10,7 +10,6 @@
         background: $medium-grey;
         color: $white;
         transition: all .5s ease-in-out;
-        padding: 10px 28px;
 
         &:hover {
             background: $black;
@@ -35,7 +34,7 @@
 
         &:hover {
             background: #e5713d;
-            transform: translateY(-2px);
+            // transform: translateY(-2px);
         }
 
         &:focus {
@@ -45,14 +44,13 @@
         }
 
         &:disabled {
-            background: #FAFAFC !important;
-            color: $primary-color;
+            background: #FFCA99;
+            color: $white;
         }
     }
 
     &-complementary{
         background: transparent;
-        border-radius: 8px;
         border: 1px solid $secondary-color;
         color: $secondary-color;
         transition: all .3s ease-in-out;

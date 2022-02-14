@@ -49,7 +49,9 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
       return inventory;
     }
 
-    return inventory.filter((product) => !productsToRepositionKeyedBySku[product.sku]);
+    return inventory.filter(
+      (product) => !productsToRepositionKeyedBySku[product.sku],
+    );
   }, [inventory, productsToReposition, productsToRepositionKeyedBySku]);
 
   const addToReposition = useCallback(() => {
@@ -64,7 +66,7 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
           <p className="h6 text-center">Seleccionar SKU a reponer</p>
         </div>
       </div>
-      <div className="px-2">
+      <div className="px-5">
         <MainTable
           selectableRow
           onChangeSelection={setSelected}
@@ -74,7 +76,12 @@ const InventoryRepositionModal = ({ showModal, onCloseModal }) => {
         />
         <div className="row d-flex justify-content-end align-intems-center mb-4">
           <div className="col-3">
-            <button type="button" className="btn btn-secondary w-100" onClick={addToReposition}>
+            <button
+              type="button"
+              className="btn btn-secondary w-100"
+              onClick={addToReposition}
+              style={{ height: 40, fontSize: 18, padding: 0 }}
+            >
               Agregar
             </button>
           </div>
