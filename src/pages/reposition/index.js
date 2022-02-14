@@ -15,7 +15,9 @@ import trashIcon from 'assets/brand/trash.svg';
 import { InputDateRange } from 'components/Atoms/Form/Input';
 import { useReposition } from 'context/useReposition';
 import CardButton from 'components/Atoms/CardButton';
+import DeleteRepositionModal from 'components/Templates/DeleteRepositionModal';
 
+import AlertModal from 'components/Templates/AlertModal';
 import styles from './styles.module.scss';
 
 const Reposition = () => {
@@ -25,11 +27,19 @@ const Reposition = () => {
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
   const [manifest, setManifest] = useState('');
-  const [, setShowDeleteModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState({
+    isShow: false,
+    replenishmentId: null,
+  });
+  const [deleteResponseStatus, setDeleteResponseStatus] = useState({
+    isShow: false,
+    isError: false,
+  });
   const data = useMemo(() => list, [list]);
   const maxDate = useMemo(() => Date.now(), []);
   const history = useHistory();
   const { setRepositionSelected } = useReposition();
+  const [comentario, setComentario] = useState('');
 
   const handleClickOrderDeatil = (manifestOfRow) => () => {
     setModal(true);
@@ -37,7 +47,17 @@ const Reposition = () => {
   };
 
   const onToggleDeleteModal = () => {
-    setShowDeleteModal((prev) => !prev);
+    setShowDeleteModal((prev) => ({
+      ...prev,
+      isShow: !prev.isShow,
+    }));
+  };
+
+  const onClickDeleteReplenishment = (id) => {
+    setShowDeleteModal({
+      isShow: true,
+      replenishmentId: id,
+    });
   };
 
   const goToDetail = useCallback(
@@ -132,7 +152,7 @@ const Reposition = () => {
               <img src={pdfIcon} alt="Actualizar Ordenes" width="10" />
             </CardButton>
             <CardButton
-              onClick={onToggleDeleteModal}
+              onClick={() => onClickDeleteReplenishment(original.replenishmentId)}
               className="mx-2"
               disabled={
                 !['', 'En Transito', 'Recibido', null].includes(original.estado)
@@ -225,6 +245,31 @@ const Reposition = () => {
     setRepositionSelected(null);
   }, []);
 
+  const onDeleteReplenishment = async () => {
+    try {
+      await clientFetch('bff/v1/replenishment/deleteReplenishment', {
+        headers: {
+          apikey: process.env.REACT_APP_API_KEY_KONG,
+        },
+        body: {
+          replenishmentId: showDeleteModal.replenishmentId,
+          comentario,
+        },
+      });
+
+      setDeleteResponseStatus({ isShow: true, isError: false });
+      getAllReplenishment();
+    } catch (e) {
+      setDeleteResponseStatus({ isShow: true, isError: true });
+    } finally {
+      onToggleDeleteModal();
+    }
+  };
+
+  const ResetDeleteResponseStatus = () => {
+    setDeleteResponseStatus({ isShow: false, isError: false });
+  };
+
   return (
     <PageLayout title="Reposiciones">
       <PageTitle
@@ -257,6 +302,29 @@ const Reposition = () => {
           activeData={manifest}
         />
       </Modal>
+      <DeleteRepositionModal
+        showModal={showDeleteModal.isShow}
+        onAccept={onDeleteReplenishment}
+        onCancel={onToggleDeleteModal}
+        replenishmentId={showDeleteModal.replenishmentId}
+        onChangeText={setComentario}
+      />
+      <AlertModal
+        showModal={deleteResponseStatus.isShow}
+        image={
+          deleteResponseStatus.isError ? (
+            <img alt="alert" src="/bgerrors.png" width={102} height={98} />
+          ) : (
+            <img alt="alert" src="/bgsuccess.png" width={102} height={98} />
+          )
+        }
+        message={
+          deleteResponseStatus.isError
+            ? 'Ha ocurrido un error al momento de eliminar, inténtelo más tarde.'
+            : 'Reposicion eliminada'
+        }
+        onClose={ResetDeleteResponseStatus}
+      />
     </PageLayout>
   );
 };

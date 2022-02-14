@@ -10,7 +10,6 @@
         background: $medium-grey;
         color: $white;
         transition: all .5s ease-in-out;
-        padding: 10px 28px;
 
         &:hover {
             background: $black;
@@ -52,7 +51,6 @@
 
     &-complementary{
         background: transparent;
-        border-radius: 8px;
         border: 1px solid $secondary-color;
         color: $secondary-color;
         transition: all .3s ease-in-out;
