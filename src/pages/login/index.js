@@ -1,26 +1,20 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { useKeyclockAuth } from 'context/userKeyclockContext';
-import { useAuth } from 'context/userContex';
-import jwt from 'jwt-decode';
-import useNotify from 'hooks/useNotify';
 import LogoBlue from 'assets/brand/logoBlue.svg';
 import eyeOpen from 'assets/brand/eyeOpen.svg';
 import eyeClose from 'assets/brand/eyeClose.svg';
 import Button from 'components/Atoms/Button';
+import { useLogin } from 'hooks/useLogin';
+
 import styles from './styles.module.scss';
 
-const urlLogin = process.env.REACT_APP_AUTH_URL;
-
-const LogIn = () => {
-  const { setUserKeyclock } = useKeyclockAuth();
-  const { setActiveSession } = useAuth();
+const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [loading, setLoading] = useState(false);
   const {
     register, handleSubmit, formState: { errors },
   } = useForm();
+  const { loading, login } = useLogin();
 
   let component;
 
@@ -36,74 +30,11 @@ const LogIn = () => {
   };
 
   const handleSingIn = (data) => {
-    setLoading(true);
     const { username, password } = data;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append('grant_type', 'password');
-    urlencoded.append('client_id', 'public-cli');
-    urlencoded.append('username', username.trim());
-    urlencoded.append('password', password.trim());
-
-    const requestOptions = {
-      method: 'POST',
-      headers,
-      body: urlencoded,
-      redirect: 'follow',
-    };
-
-    fetch(urlLogin, requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(response);
-      })
-      .then((result) => {
-        if (result && result?.access_token) {
-          const USER_ACTIVE = window.localStorage.getItem('bxBusinessActiveFulfillment');
-          const accessToken = result.access_token;
-          const refreshToken = result.refresh_token;
-
-          if (USER_ACTIVE) {
-            const userActiveData = JSON.parse(USER_ACTIVE);
-            const USER_DATA = jwt(accessToken);
-            const { sub } = USER_DATA;
-            const compare = sub === userActiveData.credential.user.sub;
-
-            if (!compare) {
-              useNotify('error', 'Usuario no coincide con el recordado');
-              return Promise.reject(new Error('Usuario no coincide con el almacenado en local storage'));
-            }
-          }
-
-          const bxBusinessActiveSession = localStorage.setItem('bxBusinessActiveSession', JSON.stringify(result));
-          localStorage.setItem('__access-token__', JSON.stringify(accessToken));
-          localStorage.setItem('__refresh-token__', JSON.stringify(refreshToken));
-
-          setUserKeyclock(bxBusinessActiveSession);
-          setActiveSession(result);
-          setLoading(false);
-
-          return result;
-        }
-
-        return Promise.reject(new Error(result.error_description));
-      })
-      .catch((error) => {
-        if (error.status === 401) {
-          useNotify('error', 'Los datos ingresados son incorrectos');
-        }
-
-        if (error.status >= 500) {
-          useNotify('error', 'Los servicios no responden...');
-        }
-        setLoading(false);
-      });
+    login(username, password);
   };
+
   return (
     <>
       <Helmet>
@@ -190,4 +121,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Login;
