@@ -100,7 +100,7 @@ const SetUpArchive = ({
               block
             />
           )}
-          <Card className="shadow text-center my-5">
+          <Card className="shadow text-center my-5 pb-5">
             {component}
             <div className="mx-5">
               <UploadCsv
