@@ -265,15 +265,10 @@ const Reposition = () => {
       });
       getAllReplenishment();
     } catch (e) {
-      // setDeleteResponseStatus({
-      //   isShow: true,
-      //   image: <img alt="alert" src="/bgerrors.png" width={102} height={98} />,
-      //   message: 'Ha ocurrido un error al momento de eliminar, inténtelo más tarde.',
-      // });
       setDeleteResponseStatus({
         isShow: true,
-        image: <img alt="alert" src="/bgsuccess.png" width={102} height={98} />,
-        message: 'Reposición eliminada.',
+        image: <img alt="alert" src="/bgerrors.png" width={102} height={98} />,
+        message: 'Ha ocurrido un error al momento de eliminar, inténtelo más tarde.',
       });
     } finally {
       onToggleDeleteModal();
