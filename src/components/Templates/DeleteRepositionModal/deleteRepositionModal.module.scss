@@ -1,6 +1,4 @@
 .textarea {
-  width: 100%;
-  max-width: 100%;
   border: 0.6px solid #378ab8;
   box-sizing: border-box;
   border-radius: 16px;
@@ -14,6 +12,16 @@
   min-height: 75px;
   max-height: 150px;
   padding: 12px 24px;
+  width: 358px;
+  max-width: 358px;
+  min-width: 358px;
+}
+
+.contentBtn {
+  width: 358px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .button {
