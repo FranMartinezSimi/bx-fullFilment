@@ -13,6 +13,7 @@ const InputText = forwardRef(({
   placeholder,
   readOnly,
   onClick,
+  autoComplete,
 }, ref) => {
   const onChangeHandle = useCallback((event) => {
     if (onChangeText) {
@@ -24,7 +25,7 @@ const InputText = forwardRef(({
     <input
       ref={ref}
       type="text"
-      className={cs('form-control', {
+      className={cs('form-control', styles.input, {
         [styles.disabled]: readOnly || disabled,
         [className]: Boolean(className),
       })}
@@ -36,6 +37,7 @@ const InputText = forwardRef(({
       placeholder={placeholder}
       readOnly={readOnly}
       onClick={onClick}
+      autoComplete={autoComplete}
     />
   );
 });

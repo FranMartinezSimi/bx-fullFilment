@@ -1,0 +1,202 @@
+.cardForm {
+  background: white;
+  display: column;
+}
+
+#container {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.col1 {
+  box-shadow: 0px 6px 12px -6px rgba(24, 39, 75, 0.12),
+    0px 8px 24px -4px rgba(24, 39, 75, 0.08);
+  padding: 22px 30px 22px 30px;
+  width: 534px;
+  float: left;
+  background-color: white;
+  margin: 10px;
+  width: 526px;
+  height: 534px;
+  left: 145px;
+  top: 216px;
+  background: #ffffff;
+  max-width: 450px;
+  border-radius: 15px;
+}
+
+.h1 {
+  width: 230px;
+  height: 26px;
+  left: 188px;
+  top: 256px;
+
+  /* Button large app */
+
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 26px;
+
+  /* Black total */
+
+  color: #212121;
+}
+::placeholder {
+  color: #a4a4a4;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+
+  position: static;
+  width: 100%;
+  height: 40px;
+  left: 0px;
+  top: 25px;
+
+  /* Light sea */
+
+  border: 0.6px solid #114a66;
+  box-sizing: border-box;
+  border-radius: 16px;
+
+  /* Inside Auto Layout */
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 8px 0px;
+}
+
+.col2 {
+  padding: 25px 30px 25px 30px;
+  width: 450px;
+  max-width: 450px;
+  float: left;
+  background-color: white;
+  margin: 10px;
+  color: blue;
+  width: 526px;
+  height: 534px;
+  left: 145px;
+  top: 216px;
+  box-shadow: 0px 6px 12px -6px rgba(24, 39, 75, 0.12),
+    0px 8px 24px -4px rgba(24, 39, 75, 0.08);
+
+  /* Blanco Press */
+
+  background: #ffffff;
+  border-radius: 15px;
+}
+
+.h {
+  height: 440px;
+}
+
+.divBtn {
+  height: 100px;
+  padding: 0px 0px 0px 0px;
+  align-items: flex-end;
+}
+
+.titleAdd {
+  width: 100%;
+  height: 26px;
+  left: 737px;
+  top: 253px;
+
+  /* Button large app */
+
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 26px;
+
+  /* Grayscale/Black 100 */
+
+  color: #101010;
+}
+
+.SubTitleMasivo {
+  width: 100%;
+  height: 23px;
+  left: 865px;
+  top: 322px;
+
+  text-align: center;
+  /* Subtitle app */
+
+  font-family: Mont;
+  font-size: 18px;
+  line-height: 21px;
+  /* Black total */
+
+  color: #212121;
+}
+
+.btnOrange {
+  width: 140px;
+
+  /* Blanco Press */
+
+  background: white;
+  border-radius: 15px;
+  color: #e5713d;
+  border-color: #e5713d;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.btnWhite {
+  width: 140px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.btndownload {
+  width: 160px;
+  height: 39px;
+  left: 698px;
+  top: 216px;
+  border-color: #e5713d;
+  /* Blanco Press */
+  border-radius: 15px;
+  font-family: Lato;
+  font-weight: bold;
+  color: #e5713d;
+  background: #ffffff;
+  border-radius: 15px;
+}
+
+.relative {
+  position: relative;
+}
+
+.contentButton {
+  position: absolute;
+  bottom: 0;
+  padding: 4rem;
+}
+
+.fullHeight {
+  height: 100%;
+}
+
+.loadSku {
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+}

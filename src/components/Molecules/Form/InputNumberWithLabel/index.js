@@ -1,37 +1,28 @@
 import PropTypes from 'prop-types';
 
 import Label from 'components/Atoms/Form/Label';
-import { InputText } from 'components/Atoms/Form/Input';
+import { InputNumber } from 'components/Atoms/Form/Input';
 
-const InputWithLabel = ({
+const InputNumberWithLabel = ({
   lableClassName,
   label,
   inputClassName,
   id,
-  disabled,
-  value,
-  onChangeText,
-  placeholder,
-  readOnly,
-  autoComplete,
+  ...props
 }) => (
   <div className="form-group">
     <Label className={`w-100 ${lableClassName}`} id={id} label={label}>
-      <InputText
+      <InputNumber
         className={`w-100 ${inputClassName}`}
         id={id}
-        disabled={disabled}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        readOnly={readOnly}
-        autoComplete={autoComplete}
+        name={id}
+        {...props}
       />
     </Label>
   </div>
 );
 
-InputWithLabel.defaultProps = {
+InputNumberWithLabel.defaultProps = {
   lableClassName: undefined,
   label: undefined,
   inputClassName: undefined,
@@ -43,7 +34,7 @@ InputWithLabel.defaultProps = {
   readOnly: false,
 };
 
-InputWithLabel.propTypes = {
+InputNumberWithLabel.propTypes = {
   lableClassName: PropTypes.string,
   label: PropTypes.string,
   inputClassName: PropTypes.string,
@@ -55,4 +46,4 @@ InputWithLabel.propTypes = {
   readOnly: PropTypes.bool,
 };
 
-export default InputWithLabel;
+export default InputNumberWithLabel;

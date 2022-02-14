@@ -9,6 +9,7 @@ const PageTitle = ({
   icon,
 }) => {
   const finalSize = titleSize || '2rem';
+
   return (
     <div className={className}>
       <div className="d-flex align-items-center">

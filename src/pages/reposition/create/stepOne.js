@@ -231,6 +231,7 @@ const StepOne = () => {
               value={seller.nameSeller}
               id="seller_name"
               readOnly
+              lableClassName="mb-4"
             />
           </div>
           <div className="col-6 mb-2">
@@ -239,6 +240,7 @@ const StepOne = () => {
               value={seller.nameContact}
               id="contact_name"
               readOnly
+              lableClassName="mb-4"
             />
           </div>
           <div className="col-6 mb-2">
@@ -248,6 +250,7 @@ const StepOne = () => {
               id="phone_number"
               onChangeText={console.log}
               readOnly
+              lableClassName="mb-4"
             />
           </div>
           <div className="col-6 mb-2">
@@ -257,6 +260,7 @@ const StepOne = () => {
               id="email_address"
               onChangeText={console.log}
               readOnly
+              lableClassName="mb-4"
             />
           </div>
           <div className="col-12 my-2">
@@ -264,6 +268,7 @@ const StepOne = () => {
           </div>
           <div className="col-6 mb-2">
             <InputDateWithLabel
+              lableClassName="mb-4"
               label="Fecha y Hora"
               id="date"
               format="dd/MM/yyyy - h:mm aa"
@@ -369,9 +374,7 @@ const StepOne = () => {
               <div className="col-12 d-flex justify-content-end">
                 <button
                   type="button"
-                  className={cs(styles.nextButton, 'btn btn-secondary', {
-                    [styles.disabled]: isDisabledNextButton,
-                  })}
+                  className={cs(styles.nextButton, 'btn btn-secondary')}
                   disabled={isDisabledNextButton}
                   onClick={nextStep}
                 >
