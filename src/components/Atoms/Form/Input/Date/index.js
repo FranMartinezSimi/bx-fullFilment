@@ -12,6 +12,7 @@ const CustomInput = forwardRef(({ value, onClick, placeholder }, ref) => (
     onClick={onClick}
     ref={ref}
     value={value || placeholder}
+    style={{ height: 40 }}
   />
 ));
 

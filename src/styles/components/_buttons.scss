@@ -35,7 +35,7 @@
 
         &:hover {
             background: #e5713d;
-            transform: translateY(-2px);
+            // transform: translateY(-2px);
         }
 
         &:focus {
@@ -45,8 +45,8 @@
         }
 
         &:disabled {
-            background: #FAFAFC !important;
-            color: $primary-color;
+            background: #FFCA99;
+            color: $white;
         }
     }
 
