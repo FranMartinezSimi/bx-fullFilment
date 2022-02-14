@@ -33,7 +33,8 @@ const Reposition = () => {
   });
   const [deleteResponseStatus, setDeleteResponseStatus] = useState({
     isShow: false,
-    isError: false,
+    image: null,
+    message: null,
   });
   const data = useMemo(() => list, [list]);
   const maxDate = useMemo(() => Date.now(), []);
@@ -257,17 +258,30 @@ const Reposition = () => {
         },
       });
 
-      setDeleteResponseStatus({ isShow: true, isError: false });
+      setDeleteResponseStatus({
+        isShow: true,
+        image: <img alt="alert" src="/bgsuccess.png" width={102} height={98} />,
+        message: 'Reposición eliminada.',
+      });
       getAllReplenishment();
     } catch (e) {
-      setDeleteResponseStatus({ isShow: true, isError: true });
+      // setDeleteResponseStatus({
+      //   isShow: true,
+      //   image: <img alt="alert" src="/bgerrors.png" width={102} height={98} />,
+      //   message: 'Ha ocurrido un error al momento de eliminar, inténtelo más tarde.',
+      // });
+      setDeleteResponseStatus({
+        isShow: true,
+        image: <img alt="alert" src="/bgsuccess.png" width={102} height={98} />,
+        message: 'Reposición eliminada.',
+      });
     } finally {
       onToggleDeleteModal();
     }
   };
 
   const ResetDeleteResponseStatus = () => {
-    setDeleteResponseStatus({ isShow: false, isError: false });
+    setDeleteResponseStatus({ isShow: false, image: null, message: null });
   };
 
   return (
@@ -311,18 +325,8 @@ const Reposition = () => {
       />
       <AlertModal
         showModal={deleteResponseStatus.isShow}
-        image={
-          deleteResponseStatus.isError ? (
-            <img alt="alert" src="/bgerrors.png" width={102} height={98} />
-          ) : (
-            <img alt="alert" src="/bgsuccess.png" width={102} height={98} />
-          )
-        }
-        message={
-          deleteResponseStatus.isError
-            ? 'Ha ocurrido un error al momento de eliminar, inténtelo más tarde.'
-            : 'Reposicion eliminada'
-        }
+        image={deleteResponseStatus.image || ' '}
+        message={deleteResponseStatus.message}
         onClose={ResetDeleteResponseStatus}
       />
     </PageLayout>
