@@ -14,8 +14,8 @@ ReactDOM.render(
   <AuthKeyclockProvider>
     <AuthProvider>
       <App />
-      <ToastContainer />
     </AuthProvider>
+    <ToastContainer />
   </AuthKeyclockProvider>,
   document.getElementById('root'),
 );
