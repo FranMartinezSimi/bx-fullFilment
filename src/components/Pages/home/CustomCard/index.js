@@ -10,7 +10,7 @@ const CustomCard = ({
   contentClassName,
 }) => (
   <Card className={contentClassName}>
-    <div className="row">
+    <div className={`row d-flex justify-content-center align-items-center ${styles.row}`}>
       <div className="col-12 d-flex justify-content-center mb-4">
         <img
           style={{ width: '75px', height: '63,85px' }}
