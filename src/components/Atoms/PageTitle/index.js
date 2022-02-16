@@ -32,7 +32,7 @@ PageTitle.defaultProps = {
 };
 
 PageTitle.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.node,
   titleSize: PropTypes.string,
   subtitle: PropTypes.string,
   subtitleClassName: PropTypes.string,

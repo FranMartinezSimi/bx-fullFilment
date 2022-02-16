@@ -11,7 +11,12 @@ import Flag from '../../../assets/brand/flag.svg';
 import Checkmap from '../../../assets/brand/checkmap.svg';
 
 const OrderDetail = ({
-  orderNumber, id, tracking, unifyState, issue, handleClickTicket,
+  orderNumber,
+  id,
+  tracking,
+  unifyState,
+  issue,
+  handleClickTicket,
 }) => {
   const [loading, setLoading] = useState(true);
   const [orderData, setOrderData] = useState({});
@@ -29,18 +34,28 @@ const OrderDetail = ({
   const component = issue.length > 1 ? (
     <p className="my-4">
       Tienes un ticket en estado
-      <span className={`badge--${issue.replace(' ', '').toLowerCase()} px-2 py-1 mx-2`}>
+      <span
+        className={`badge--${issue
+          .replace(' ', '')
+          .toLowerCase()} px-2 py-1 mx-2`}
+      >
         {issue}
       </span>
     </p>
   ) : (
     <div className="my-4 px-lg-4">
-      <p className="mx-4 fs-6">¿Tienes algún inconveniente con la orden?, crea un ticket con la incidencia para que un resolutor lo solucione.</p>
+      <p className="mx-4 fs-6">
+        ¿Tienes algún inconveniente con la orden?, crea un ticket con la
+        incidencia para que un resolutor lo solucione.
+      </p>
       <div className="text-center pt-3">
         <a
           href="!#"
           className="btn btn-secondary"
-          onClick={(e) => { e.preventDefault(); handleClickTicket(e, tableData); }}
+          onClick={(e) => {
+            e.preventDefault();
+            handleClickTicket(tableData.original);
+          }}
         >
           Crear Ticket
         </a>
@@ -72,89 +87,123 @@ const OrderDetail = ({
   }, [id]);
   return (
     <>
-      {loading
-        ? <Spinner />
-        : (
-          <>
-            <ul className="px-4">
-              <li className="d-flex my-3">
-                <div className="me-4">
-                  <img src={Todo} alt="Lista" width="15" />
-                </div>
-                <p className="me-4 display-font" style={{ width: '140px', fontSize: 14, fontWeight: 800 }}>Nº de Shipping</p>
-                <p>{id}</p>
-              </li>
-              <li className="d-flex my-3">
-                <div className="me-4">
-                  <img src={Calendar} alt="Lista" width="15" />
-                </div>
-                <p className="me-4 display-font" style={{ width: '140px', fontSize: 14, fontWeight: 800 }}>Fecha Orden</p>
-                <p>{orderData.date}</p>
-              </li>
-              <li className="d-flex my-3">
-                <div className="me-4">
-                  <img src={Flag} alt="Lista" width="15" />
-                </div>
-                <p className="me-4 display-font" style={{ width: '140px', fontSize: 14, fontWeight: 800 }}>Estado Unificado</p>
-                <p>{unifyState}</p>
-              </li>
-              <li className="d-flex my-3">
-                <div className="me-4">
-                  <img src={Checkmap} alt="Lista" width="15" />
-                </div>
-                <p className="me-4 display-font" style={{ width: '140px', fontSize: 14, fontWeight: 800 }}>Nº de Tracking</p>
-                <p>{tracking}</p>
-              </li>
-            </ul>
-            <div className="px-4 mb-3">
-              <DropDown>
-                <table className="table">
-                  {orderData.detail_order
-                    ? (
-                      <thead>
-                        <tr>
-                          <th scope="col" className="border-0" style={{ fontWeight: 400 }}>SKU</th>
-                          <th scope="col" className="border-0" style={{ fontWeight: 400 }}>Descripción</th>
-                          <th scope="col" className="border-0" style={{ fontWeight: 400 }}>Cantidad</th>
-                        </tr>
-                      </thead>
-                    )
-                    : null}
-                  <tbody>
-                    {orderData.detail_order
-                      ? orderData.detail_order.map((item) => (
-                        <tr key={item.sku}>
-                          <td>
-                            <small>
-                              {item.sku}
-                            </small>
-                          </td>
-                          <td>
-                            <small>
-                              {item.description}
-                            </small>
-                          </td>
-                          <td>
-                            <small>
-                              {item.quantity}
-                            </small>
-                          </td>
-                        </tr>
-                      ))
-                      : (
-                        <tr>
-                          <td>
-                            <Alert className="" type="warning" message="Ooopss! Ocurrió un error, intentalo más tarde..." />
-                          </td>
-                        </tr>
-                      )}
-                  </tbody>
-                </table>
-              </DropDown>
-              {component}
-            </div>
-          </>
-        )}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <ul className="px-4">
+            <li className="d-flex my-3">
+              <div className="me-4">
+                <img src={Todo} alt="Lista" width="15" />
+              </div>
+              <p
+                className="me-4 display-font"
+                style={{ width: '140px', fontSize: 14, fontWeight: 800 }}
+              >
+                Nº de Shipping
+              </p>
+              <p>{id}</p>
+            </li>
+            <li className="d-flex my-3">
+              <div className="me-4">
+                <img src={Calendar} alt="Lista" width="15" />
+              </div>
+              <p
+                className="me-4 display-font"
+                style={{ width: '140px', fontSize: 14, fontWeight: 800 }}
+              >
+                Fecha Orden
+              </p>
+              <p>{orderData.date}</p>
+            </li>
+            <li className="d-flex my-3">
+              <div className="me-4">
+                <img src={Flag} alt="Lista" width="15" />
+              </div>
+              <p
+                className="me-4 display-font"
+                style={{ width: '140px', fontSize: 14, fontWeight: 800 }}
+              >
+                Estado Unificado
+              </p>
+              <p>{unifyState}</p>
+            </li>
+            <li className="d-flex my-3">
+              <div className="me-4">
+                <img src={Checkmap} alt="Lista" width="15" />
+              </div>
+              <p
+                className="me-4 display-font"
+                style={{ width: '140px', fontSize: 14, fontWeight: 800 }}
+              >
+                Nº de Tracking
+              </p>
+              <p>{tracking}</p>
+            </li>
+          </ul>
+          <div className="px-4 mb-3">
+            <DropDown>
+              <table className="table">
+                {orderData.detail_order ? (
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="border-0"
+                        style={{ fontWeight: 400 }}
+                      >
+                        SKU
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-0"
+                        style={{ fontWeight: 400 }}
+                      >
+                        Descripción
+                      </th>
+                      <th
+                        scope="col"
+                        className="border-0"
+                        style={{ fontWeight: 400 }}
+                      >
+                        Cantidad
+                      </th>
+                    </tr>
+                  </thead>
+                ) : null}
+                <tbody>
+                  {orderData.detail_order ? (
+                    orderData.detail_order.map((item) => (
+                      <tr key={item.sku}>
+                        <td>
+                          <small>{item.sku}</small>
+                        </td>
+                        <td>
+                          <small>{item.description}</small>
+                        </td>
+                        <td>
+                          <small>{item.quantity}</small>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td>
+                        <Alert
+                          className=""
+                          type="warning"
+                          message="Ooopss! Ocurrió un error, intentalo más tarde..."
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </DropDown>
+            {component}
+          </div>
+        </>
+      )}
     </>
   );
 };

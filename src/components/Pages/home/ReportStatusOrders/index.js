@@ -71,7 +71,7 @@ const ReportStatusOrders = ({ contentClassName }) => {
 
   const goToBackOrder = (e) => {
     e.preventDefault();
-    history.push('/ordenes', { filter: { status: 'Sin Stock' } });
+    history.push('/ordenes?status=Sin Stock');
   };
 
   return (
