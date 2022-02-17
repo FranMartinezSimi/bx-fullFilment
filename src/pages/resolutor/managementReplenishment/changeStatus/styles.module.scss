@@ -1,0 +1,13 @@
+.parent {
+display: grid;
+grid-template-columns: 2fr 1fr;
+grid-template-rows: 0.1fr;
+grid-column-gap: 50px;
+grid-row-gap: 0px;
+height: 270px;
+}
+
+.div1 { grid-area: 1 / 4 / 2 / 6;
+	 height: 380px; }
+.div2 { grid-area: 1 / 1 / 2 / 2;
+	 height: 380px; }
