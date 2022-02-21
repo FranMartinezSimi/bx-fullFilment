@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import cs from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -6,10 +6,18 @@ import Card from 'components/Molecules/Card';
 import SimpleScrollTable from 'components/Templates/SimpleScrollTable';
 import rightArrow from 'assets/brand/rightArrow.svg';
 import GetNonStockOrderProducts from 'services/inventory/getNonStockOrderProducts';
+import { useReposition } from 'context/useReposition';
+import { useInventory } from 'context/useInventory';
 
 import styles from './styles.module.scss';
 
 const NonStockOrderProducts = ({ contentClassName }) => {
+  const { invetoryKeyedBySku } = useInventory();
+  const {
+    setProductsToReposition,
+    setSelectedModeToReposition,
+    updateQuantitiesToRepositionBySku,
+  } = useReposition();
   const [list, setList] = useState([]);
   const history = useHistory();
   const columns = useMemo(() => ([
@@ -43,10 +51,24 @@ const NonStockOrderProducts = ({ contentClassName }) => {
     },
   ]), []);
 
-  const goToReplenishment = (event) => {
+  const goToReplenishment = useCallback((event) => {
     event.preventDefault();
+    const toReposition = list.reduce((acum, value) => {
+      const productFound = invetoryKeyedBySku[value.sku];
+
+      if (!productFound) return acum;
+
+      updateQuantitiesToRepositionBySku(
+        value.sku,
+        value.missing_units >= 0 ? value.missing_units : 0,
+      );
+
+      return acum.concat(productFound);
+    }, []);
+    setSelectedModeToReposition('sku');
+    setProductsToReposition(toReposition);
     history.push('/reposition/create');
-  };
+  }, [list, invetoryKeyedBySku]);
 
   useEffect(() => {
     GetNonStockOrderProducts().then(setList);

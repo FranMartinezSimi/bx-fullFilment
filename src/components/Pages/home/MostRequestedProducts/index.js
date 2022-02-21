@@ -56,7 +56,7 @@ export default ({ contentClassName }) => {
   useEffect(() => {
     GetMostRequestedProducts().then((response) => {
       setList(response.map((product, index) => ({
-        index,
+        index: index + 1,
         ...product,
       })));
     });
