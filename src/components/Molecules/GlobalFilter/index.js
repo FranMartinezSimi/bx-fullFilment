@@ -8,11 +8,10 @@ import arrowDown from 'assets/brand/arrow-down.svg';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
 import uploadArrow from 'assets/brand/uploadarrow.svg';
 import PropTypes from 'prop-types';
-import getExportFileBlob from 'helpers';
+import { exportFileBlob } from 'helpers';
 import useNotify from 'hooks/useNotify';
 
 const GlobalFilter = ({
-  // preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
   handleClick,
@@ -23,7 +22,6 @@ const GlobalFilter = ({
   noButtons,
   buttonChildren,
 }) => {
-  // const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
   const [dropDown, setDropDown] = useState(false);
 
@@ -37,6 +35,7 @@ const GlobalFilter = ({
   };
 
   const checkUrl = window.location.pathname === '/inventario';
+
   const handleClickDowload = (e) => {
     e.preventDefault();
     if (!checkUrl) {
@@ -49,10 +48,7 @@ const GlobalFilter = ({
           dateFin: '',
         },
       })
-        .then((data) => {
-          console.log(data);
-          getExportFileBlob(data);
-        })
+        .then(exportFileBlob)
         .catch(() => {
           useNotify('error', 'Hubo un problema al procesar la descarga');
         });

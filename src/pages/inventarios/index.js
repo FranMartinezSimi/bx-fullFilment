@@ -10,6 +10,7 @@ import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
 import { useInventory } from 'context/useInventory';
 import { useReposition } from 'context/useReposition';
+import DownloadButton from 'components/Pages/inventory/DownloadButton';
 
 const Inventory = () => {
   const [modal, setModal] = useState(false);
@@ -119,7 +120,18 @@ const Inventory = () => {
           onChangeSelection={setProductsToReposition}
           columns={columns}
           data={inventory}
-          handleClickInventory={handleClickInventory}
+          buttonChildren={(
+            <div className="d-flex justify-content-end align-items-center">
+              <button
+                className="btn btn-secondary d-flex justify-content-center align-items-center me-3"
+                type="button"
+                onClick={handleClickInventory}
+              >
+                Programar Reposición
+              </button>
+              <DownloadButton />
+            </div>
+          )}
         />
       ) : (
         component

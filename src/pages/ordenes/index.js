@@ -12,17 +12,17 @@ import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reloadWhite.svg';
 import info from 'assets/brand/info-ico.svg';
 import Button from 'components/Atoms/Button';
-import FromToDownloader from 'components/Molecules/FromToDownloader';
 import FromTicket from 'components/Molecules/FormTicket';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
 import useSearchParams from 'hooks/useSearchParams';
 import GetOrdersList from 'services/orders/getOrdersList';
 import { monthNames } from 'utils/date';
+import DownloadButton from 'components/Pages/ordenes/DownloadButton';
+import uploadArrow from 'assets/brand/uploadarrow.svg';
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
-  const [modalDate, setModalDate] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
   const [error, setError] = useState(false);
   const [date, setDate] = useState(null);
@@ -83,11 +83,6 @@ const Orders = () => {
     event.preventDefault();
     setOrderSelected(order);
     setModal(true);
-  };
-
-  const hadleClickDropDown = (e) => {
-    e.preventDefault();
-    setModalDate(true);
   };
 
   const handleClickTicketCurrying = (order) => (event) => {
@@ -280,9 +275,19 @@ const Orders = () => {
           <MainTable
             columns={columns}
             data={data}
-            handleClick={handleClickUpdateOrder}
-            handleClickUpdate={handleClickUpdateList}
-            hadleClickDropDown={hadleClickDropDown}
+            buttonChildren={(
+              <div className="d-flex justify-content-end align-items-center">
+                <button
+                  className="btn btn-secondary me-3 d-flex justify-content-center align-items-center"
+                  type="button"
+                  onClick={handleClickUpdateOrder}
+                >
+                  <img src={uploadArrow} alt="Actualizar Ordenes" width="13" className="me-3" />
+                  Subir Órdenes
+                </button>
+                <DownloadButton />
+              </div>
+            )}
           />
         </div>
       ) : (
@@ -301,13 +306,6 @@ const Orders = () => {
           issue={orderSelected?.statusInc}
           handleClickTicket={handleClickTicket}
         />
-      </Modal>
-      <Modal
-        showModal={modalDate}
-        size="lg"
-        onClick={() => setModalDate(false)}
-      >
-        <FromToDownloader />
       </Modal>
       <Modal
         showModal={modalTicket}

@@ -8,7 +8,7 @@ import Spinner from 'components/Atoms/Spinner';
 import Alert from 'components/Atoms/AlertMessage';
 import MainTable from 'components/Templates/MainTable';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
-import getExportFileBlob from 'helpers';
+import { exportFileBlob } from 'helpers';
 
 import styles from './monthsOfInventory.module.scss';
 
@@ -55,7 +55,7 @@ const MonthsOfInventory = () => {
   );
 
   const handleDownloadCsv = () => {
-    getExportFileBlob(listMonthsOfInventory, 'Meses de inventario.csv');
+    exportFileBlob(listMonthsOfInventory, 'Meses de inventario.csv');
   };
 
   useEffect(() => {
