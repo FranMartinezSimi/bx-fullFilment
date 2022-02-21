@@ -57,7 +57,12 @@ const SimpleScrollTable = ({ columns, data }) => {
                   className={cs(styles.td, {
                     [styles.centered]: cell.column.centered,
                   })}
-                  style={cell.column.flex ? { flex: cell.column.flex } : {}}
+                  style={{
+                    ...(cell.column.flex ? { flex: cell.column.flex } : {}),
+                    ...(cell.column.width ? { width: cell.column.width } : {}),
+                    ...(cell.column.minWidth ? { minWidth: cell.column.minWidth } : {}),
+                    ...(cell.column.maxWidth ? { maxWidth: cell.column.maxWidth } : {}),
+                  }}
                 >
                   {cell.render('Cell')}
                 </div>

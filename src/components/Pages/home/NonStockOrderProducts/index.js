@@ -22,22 +22,21 @@ const NonStockOrderProducts = ({ contentClassName }) => {
           <div className="paragraph2">{`SKU: ${original.sku}`}</div>
         </div>
       ),
-      flex: 3,
-      minWidth: 113,
     },
     {
-      Header: 'Cantidad órdenes afectada',
+      Header: 'Cantidad órdenes afectadas',
       accessor: 'total_orders',
-      flex: 1.5,
       centered: true,
       maxWidth: 125,
+      width: 125,
       minWidth: 125,
     },
     {
       Header: 'Unidades faltantes',
       accessor: 'missing_units',
-      flex: 1,
       centered: true,
+      maxWidth: 75,
+      width: 75,
       Cell: ({ row: { original } }) => (
         <span className={styles.redIndicator}>{original.missing_units}</span>
       ),
