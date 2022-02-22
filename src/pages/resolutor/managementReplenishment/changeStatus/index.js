@@ -13,7 +13,6 @@ import { useReposition } from 'context/useReposition';
 import styles from './styles.module.scss';
 
 const ChangeStatus = () => {
-  // const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);

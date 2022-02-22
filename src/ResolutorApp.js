@@ -6,7 +6,6 @@ import {
 import ErrorPage from 'pages/404';
 import Home from './pages/resolutor/home';
 import Issues from './pages/resolutor/incidencias';
-// import ManagementReplenishment from './pages/resolutor/managementReplenishment';
 import ChangeStatus from './pages/resolutor/managementReplenishment/changeStatus';
 import DeleteReplenishment from './pages/resolutor/managementReplenishment/deleteReplenishment';
 import Layout from './components/Templates/Layout';
