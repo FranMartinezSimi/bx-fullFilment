@@ -88,7 +88,7 @@ const InventoryTurnoverIndicator = ({ contentClassName }) => {
   return (
     <Card className={contentClassName}>
       <div className="row">
-        <div className="col-12 mb-2">
+        <div className="col-12 mb-4">
           <h1 className={`${styles.titulo}`}>Rotación de inventario</h1>
         </div>
         <div className="col-12 mb-2">
@@ -99,7 +99,7 @@ const InventoryTurnoverIndicator = ({ contentClassName }) => {
             height={190}
           />
         </div>
-        <div className="col-12 mb-2">
+        <div className="col-12">
           <p className={`${styles.sevenDays} text-end m-0`}>Últimos 30 días</p>
         </div>
       </div>

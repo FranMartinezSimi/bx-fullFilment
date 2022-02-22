@@ -7,11 +7,14 @@ import truckRoute from 'assets/brand/truck-route-orange.svg';
 import reverseLogistics from 'assets/brand/reverse-logistics-cyan.svg';
 import rightArrow from 'assets/brand/rightArrow.svg';
 import Card from 'components/Molecules/Card';
+import { ReactComponent as AlertIcon } from 'assets/brand/orange-alert.svg';
+import GetCountBackorder from 'services/orders/getCountBackorder';
 
 import styles from './styles.module.scss';
 
 const ReportStatusOrders = ({ contentClassName }) => {
   const [statisticsData, setTotalStatisticsData] = useState([]);
+  const [backOrderTotal, setBackOrderTotal] = useState(0);
   const history = useHistory();
 
   const getReport = async () => {
@@ -44,11 +47,31 @@ const ReportStatusOrders = ({ contentClassName }) => {
     }
   };
 
-  useEffect(() => getReport(), []);
+  const getBackOrder = async () => {
+    try {
+      const { total } = await GetCountBackorder();
+
+      if (!total) return;
+
+      setBackOrderTotal(Number(total));
+    } catch (error) {
+      setBackOrderTotal(0);
+    }
+  };
+
+  useEffect(() => {
+    getReport();
+    getBackOrder();
+  }, []);
 
   const handleClickOrders = (e) => {
     e.preventDefault();
     history.push('/ordenes');
+  };
+
+  const goToBackOrder = (e) => {
+    e.preventDefault();
+    history.push('/ordenes?status=Sin Stock');
   };
 
   return (
@@ -64,10 +87,8 @@ const ReportStatusOrders = ({ contentClassName }) => {
           </a>
         </div>
       </div>
-      <div className="row row mt-5 mb-4">
-        {!statisticsData.length && (
-          <div className={styles.simulateReport} />
-        )}
+      <div className="row row mt-5">
+        {!statisticsData.length && <div className={styles.simulateReport} />}
         {statisticsData.map((item) => (
           <div className="col-12 col-md-4 px-5">
             <Card className="py-4 mb-4">
@@ -93,9 +114,29 @@ const ReportStatusOrders = ({ contentClassName }) => {
           </div>
         ))}
       </div>
-      <div className="row">
-        <div className="col-12 d-flex justify-content-start px-5">
+      <div className="row mb-3">
+        <div className="col-12 d-flex justify-content-between align-items-center px-5">
           <span className={`${styles.sevenDays}`}>Últimos 7 días</span>
+          {backOrderTotal > 0 && (
+            <div className={styles.alertBackOrder}>
+              <span className={styles.icon}>
+                <AlertIcon width={32} height={28} fill="blue" />
+              </span>
+              <div className={styles.message}>
+                Tienes
+                {' '}
+                {backOrderTotal}
+                {' '}
+                órdenes Sin Stock, haz clic
+                {' '}
+                <a href="/#" onClick={goToBackOrder}>
+                  “Aquí”
+                </a>
+                {' '}
+                para ver más.
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Card>
