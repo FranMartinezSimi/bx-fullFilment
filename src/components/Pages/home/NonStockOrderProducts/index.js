@@ -19,6 +19,7 @@ const NonStockOrderProducts = ({ contentClassName }) => {
     updateQuantitiesToRepositionBySku,
   } = useReposition();
   const [list, setList] = useState([]);
+  const [fetching, setFetching] = useState(true);
   const history = useHistory();
   const columns = useMemo(() => ([
     {
@@ -67,7 +68,10 @@ const NonStockOrderProducts = ({ contentClassName }) => {
   }, [list, invetoryKeyedBySku]);
 
   useEffect(() => {
-    GetNonStockOrderProducts().then(setList);
+    GetNonStockOrderProducts().then((data) => {
+      setFetching(false);
+      setList(data);
+    });
   }, []);
 
   return (
@@ -80,6 +84,7 @@ const NonStockOrderProducts = ({ contentClassName }) => {
           <SimpleScrollTable
             columns={columns}
             data={list}
+            isFetching={fetching}
           />
         </div>
         <div className="col-12 d-flex justify-content-between align-items-center">

@@ -1,0 +1,16 @@
+.searchInput {
+  border: 1px solid #1a6f99;
+  min-width: 200px;
+  height: 40px;
+  padding-right: 35px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

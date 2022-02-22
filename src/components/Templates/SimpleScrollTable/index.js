@@ -3,7 +3,7 @@ import cs from 'classnames';
 
 import styles from './styles.module.scss';
 
-const SimpleScrollTable = ({ columns, data }) => {
+const SimpleScrollTable = ({ columns, data, isFetching }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -44,7 +44,7 @@ const SimpleScrollTable = ({ columns, data }) => {
       <div className={styles.tBody} {...getTableBodyProps()}>
         {rows.length === 0 && (
           <div className={styles.withoutData}>
-            No hay datos para mostrar
+            {isFetching ? 'Cargando...' : 'No hay datos para mostrar'}
           </div>
         )}
         {rows.map((row, index) => {

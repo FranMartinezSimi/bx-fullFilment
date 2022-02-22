@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 
 export default ({ contentClassName }) => {
   const [list, setList] = useState([]);
+  const [fetching, setFetching] = useState(true);
   const history = useHistory();
 
   const columns = useMemo(() => [
@@ -55,6 +56,7 @@ export default ({ contentClassName }) => {
 
   useEffect(() => {
     GetMostRequestedProducts().then((response) => {
+      setFetching(false);
       setList(response.map((product, index) => ({
         index: index + 1,
         ...product,
@@ -74,7 +76,7 @@ export default ({ contentClassName }) => {
       </div>
       <div className="row mb-4">
         <div className="col-12">
-          <SimpleScrollTable columns={columns} data={list} />
+          <SimpleScrollTable columns={columns} data={list} isFetching={fetching} />
         </div>
       </div>
       <div className="row">
