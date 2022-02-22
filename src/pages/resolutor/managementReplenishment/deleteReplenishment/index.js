@@ -107,7 +107,6 @@ const DeleteReplenishment = () => {
     ],
     [],
   );
-
   let component;
   const handlePrint = () => {
     const lista = [];
@@ -116,7 +115,6 @@ const DeleteReplenishment = () => {
         const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
         lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
       });
-    console.log(lista);
     getExportFileBlob(lista);
   };
   if (error) {
@@ -130,9 +128,6 @@ const DeleteReplenishment = () => {
   } else {
     component = <Spinner />;
   }
-
-  // const userData = JSON.parse(user);
-  // const { accountId } = userData.credential;
 
   const getAllReplenishment = async () => {
     try {

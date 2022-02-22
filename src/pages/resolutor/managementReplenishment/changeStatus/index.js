@@ -19,7 +19,6 @@ const ChangeStatus = () => {
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
   const data = useMemo(() => list, [list]);
-  const [resp, setResp] = useState([]);
   const { setRepositionSelected } = useReposition();
 
   const columns = useMemo(
@@ -96,8 +95,13 @@ const ChangeStatus = () => {
 
   let component;
   const handlePrint = () => {
-    console.log(resp);
-    getExportFileBlob(resp);
+    const lista = [];
+    Object.entries(list)
+      .forEach(([key]) => {
+        const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
+        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
+      });
+    getExportFileBlob(lista);
   };
   if (error) {
     component = (
@@ -114,7 +118,7 @@ const ChangeStatus = () => {
   const listDeleteReplenishment = async () => {
     try {
       const response = await clientFetch(
-        '/bff/v1/replenishment/findDeleteReplenishments',
+        '/bff/v1/replenishment/findChangeStatusReplenishment',
         {
           headers: {
             apikey: process.env.REACT_APP_API_KEY_KONG,
@@ -123,15 +127,6 @@ const ChangeStatus = () => {
             accountId: 29,
           },
         },
-      );
-      response.map(
-        (i) => [setResp({
-          seller: i.seller,
-          IdCarga: i.replenishmentId,
-          estado: i.estado,
-          Creacion: i.fecha,
-          eliminacion: i.fechaEntrega,
-        })],
       );
       setLoading(false);
       setList(response);
