@@ -1,0 +1,43 @@
+.index {
+  font-family: Mont;
+  font-size: 22px;
+  line-height: 26px;
+  color: #1e81b2;
+}
+
+.name {
+  max-width: 30ch;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.sevenDays {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 158%;
+  letter-spacing: 0.03em;
+  color: #666666;
+}
+
+.titulo {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 26px;
+  display: contents;
+  align-items: center;
+  color: #212121;
+}
+
+.link {
+  font-family: Lato;
+  font-size: 12px;
+  line-height: 158%;
+  align-items: center;
+  letter-spacing: 0.03em;
+  color: #2bb9ff;
+}

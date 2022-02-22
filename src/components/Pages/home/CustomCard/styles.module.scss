@@ -1,25 +1,25 @@
-.titulo {
+.row {
+  height: 100%;
+}
+
+.title {
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
   font-size: 22px;
   line-height: 26px;
-  display: contents;
-  align-items: center;
   color: #212121;
 }
 
-.parrafo {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
+.img {
+  width: 68px;
+  height: 62px;
+  margin-right: 25px;
+  object-fit: contain;
+}
+
+.btn {
+  margin-top: 15px;
+  width: 173px;
   font-size: 16px;
-  line-height: 145%;
-  letter-spacing: 0.03em;
-  color: #212121;
-  text-align: center;
-}
-
-.row {
-  height: 100%;
 }
