@@ -25,7 +25,7 @@ const ChangeStatus = () => {
     () => [
       {
         Header: 'Seller ',
-        accessor: 'numProducts',
+        accessor: 'seller',
       },
       {
         Header: 'ID Carga',
@@ -43,7 +43,6 @@ const ChangeStatus = () => {
               texto = 'Ingresado';
               break;
             case 'En Transito':
-            case '':
               colorSelected = '#3363FF';
               texto = 'En Transito';
               break;
@@ -56,7 +55,7 @@ const ChangeStatus = () => {
               texto = 'Eliminado';
               break;
             default:
-              colorSelected = '#3363FF';
+              colorSelected = '#D6E0FF';
               texto = 'En Transito';
           }
 
@@ -86,7 +85,7 @@ const ChangeStatus = () => {
         accessor: 'fecha',
       },
       {
-        Header: 'Fecha Solicitud Cambio Estado',
+        Header: 'Cambio de Estado',
         accessor: 'fechaEntrega',
       },
     ],
@@ -143,7 +142,7 @@ const ChangeStatus = () => {
   return (
     <PageLayout title="Reposiciones">
       <PageTitle
-        title="Reposiciones de Inventario a Eliminar"
+        title="Cambio de Estado de Reposiciones de Inventario"
         subtitle=""
         className="pb-3"
       />

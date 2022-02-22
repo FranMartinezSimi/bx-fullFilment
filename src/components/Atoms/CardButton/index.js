@@ -3,14 +3,13 @@ import cs from 'classnames';
 
 import styles from './cardButton.module.scss';
 
-const CardButton = ({ children, onClick, className, disabled, placeHolder }) => (
+const CardButton = ({ children, onClick, className, disabled }) => (
   <button
     type="button"
     className={cs(styles.button, className)}
     onClick={onClick}
     disabled={disabled}
   >
-    {placeHolder}
     {children}
   </button>
 );
@@ -18,7 +17,6 @@ const CardButton = ({ children, onClick, className, disabled, placeHolder }) => 
 CardButton.propsType = {
   onClick: PropTypes.func,
   className: PropTypes.string,
-  placeHolder: PropTypes.string,
 };
 
 export default CardButton;
