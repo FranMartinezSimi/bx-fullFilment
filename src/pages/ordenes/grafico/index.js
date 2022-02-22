@@ -142,6 +142,8 @@ const Grafico = () => {
               months[1],
               months[2],
               months[3],
+              months[4],
+              months[5],
             ],
             legend: {
               position: 'bottom',

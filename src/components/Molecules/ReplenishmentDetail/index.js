@@ -1,7 +1,8 @@
 import React from 'react';
 
 const ReplenishmentDetail = ({ activeData }) => {
-  const manifiesto = activeData.replace(' ', '');
+  console.log('Mani', activeData);
+  const manifiesto = activeData;
 
   return (
     <embed

@@ -2,11 +2,13 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 import Alert from 'components/Atoms/AlertMessage';
+import getExportFileBlob from 'helpers';
 import Spinner from 'components/Atoms/Spinner';
+import arrowDown from 'assets/brand/arrow-down.svg';
 import MainTable from 'components/Templates/MainTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-import { InputDateRange } from 'components/Atoms/Form/Input';
+import CardButton from 'components/Atoms/CardButton';
 import { useReposition } from 'context/useReposition';
 import styles from './styles.module.scss';
 
@@ -15,9 +17,7 @@ const DeleteReplenishment = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
-
   const data = useMemo(() => list, [list]);
-  const maxDate = useMemo(() => Date.now(), []);
   const history = useHistory();
   const { setRepositionSelected } = useReposition();
 
@@ -35,7 +35,7 @@ const DeleteReplenishment = () => {
     () => [
       {
         Header: 'Seller ',
-        accessor: 'numProducts',
+        accessor: 'seller',
       },
       {
         Header: 'ID Carga',
@@ -109,7 +109,16 @@ const DeleteReplenishment = () => {
   );
 
   let component;
-
+  const handlePrint = () => {
+    const lista = [];
+    Object.entries(list)
+      .forEach(([key]) => {
+        const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
+        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
+      });
+    console.log(lista);
+    getExportFileBlob(lista);
+  };
   if (error) {
     component = (
       <Alert
@@ -138,7 +147,6 @@ const DeleteReplenishment = () => {
           },
         },
       );
-      console.log('RESPONSE', response);
       setLoading(false);
       setList(response);
     } catch (e) {
@@ -146,40 +154,6 @@ const DeleteReplenishment = () => {
       setLoading(false);
     }
   };
-
-  const getDataByDate = useCallback(
-    async (startDate, endDate) => {
-      try {
-        if (!startDate && !endDate) {
-          await getAllReplenishment();
-
-          return;
-        }
-
-        setLoading(true);
-
-        const response = await clientFetch(
-          '/bff/v1/replenishment/findDeleteReplenishments',
-          {
-            headers: {
-              apikey: process.env.REACT_APP_API_KEY_KONG,
-            },
-            body: {
-              startDate,
-              endDate,
-              accountId: 29,
-            },
-          },
-        );
-        setLoading(false);
-        setList(response);
-      } catch (e) {
-        setError(true);
-        setLoading(false);
-      }
-    },
-    [getAllReplenishment],
-  );
 
   useEffect(() => {
     getAllReplenishment();
@@ -200,11 +174,13 @@ const DeleteReplenishment = () => {
           noButtons
           buttonChildren={(
             <div className="d-flex justify-content-end">
-              <InputDateRange
-                placeholder="Selecciona una fecha"
-                onFilter={getDataByDate}
-                maxDate={maxDate}
-              />
+              <CardButton
+                className={`mx-1 ${styles.btnPdf}`}
+                onClick={() => handlePrint(list)}
+              >
+                Descargar Detalle
+                <img src={arrowDown} alt="Actualizar Ordenes" width="10" className="ms-4" />
+              </CardButton>
             </div>
           )}
         />
@@ -212,6 +188,7 @@ const DeleteReplenishment = () => {
         component
       )}
     </PageLayout>
+
   );
 };
 
