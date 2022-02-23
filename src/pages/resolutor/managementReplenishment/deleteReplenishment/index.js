@@ -100,8 +100,13 @@ const DeleteReplenishment = () => {
         accessor: 'fecha',
       },
       {
-        Header: 'Eliminación',
+        Header: 'Cambio de Estado',
         accessor: 'fechaEntrega',
+      },
+      {
+        Header: 'Motivo',
+        accessor: 'comentario',
+
       },
     ],
     [],
@@ -111,8 +116,8 @@ const DeleteReplenishment = () => {
     const lista = [];
     Object.entries(list)
       .forEach(([key]) => {
-        const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
-        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
+        const { seller, replenishmentId, estado, fecha, fechaEntrega, comentario } = list[key];
+        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega, comentario });
       });
     getExportFileBlob(lista);
   };
