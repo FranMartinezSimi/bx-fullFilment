@@ -5,3 +5,18 @@ box-sizing: border-box;
 height: 40px;
 border-radius: 16px;
 }
+.badge {
+  padding: 20px 150px 20px 20px;
+  border: #808080;
+  background: #CCCCCC;
+  border-radius: 10px;
+  border: 1px solid #4D4D4D;
+}
+
+.small{
+  width: 10px;	  
+  height: 10px;
+  display: inline-block;
+  border-radius: 5rem;
+  margin-right: 5px;
+}
