@@ -103,6 +103,23 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
       active: true,
       route: '/incidencias',
     },
+    {
+      name: 'Gestion de Reposiciones',
+      img: Todo,
+      active: true,
+      route: '/managementReplenishment',
+      childrenActive: false,
+      children: [
+        {
+          name: 'Eliminar Reposición de Inventario',
+          route: '/managementReplenishment/deleteReplenishment',
+        },
+        {
+          name: 'Cambio de Estado',
+          route: '/managementReplenishment/changeStatus',
+        },
+      ],
+    },
   ];
   let links;
   if (!resolutor) {
