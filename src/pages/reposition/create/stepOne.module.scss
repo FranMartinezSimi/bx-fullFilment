@@ -1,5 +1,9 @@
 @import 'styles/utils/variables';
 
+.container {
+  min-height: 500px;
+}
+
 .contentTwo {
   height: 100%;
   border-left: 0.6px solid #1e81b2;

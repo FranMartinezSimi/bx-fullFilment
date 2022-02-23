@@ -30,7 +30,7 @@ const CustomCard = ({ contentClassName }) => {
             height="62"
           />
           <div>
-            <span className={styles.title}>Reposición de inventario</span>
+            <div className={styles.title}>Reposición de inventario</div>
             <button
               type="button"
               className={cs(styles.btn, 'btn btn-secondary')}
@@ -49,7 +49,7 @@ const CustomCard = ({ contentClassName }) => {
             height="63"
           />
           <div>
-            <span className={styles.title}>Órdenes de servicios</span>
+            <div className={styles.title}>Órdenes de servicios</div>
             <button
               type="button"
               className={cs(styles.btn, 'btn btn-secondary')}
