@@ -138,12 +138,7 @@ const Grafico = () => {
               },
             },
             labels: [
-              months[0],
-              months[1],
-              months[2],
-              months[3],
-              months[4],
-              months[5],
+              months,
             ],
             legend: {
               position: 'bottom',

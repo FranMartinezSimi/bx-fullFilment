@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ReplenishmentDetail = ({ activeData }) => {
-  console.log('Mani', activeData);
   const manifiesto = activeData;
 
   return (

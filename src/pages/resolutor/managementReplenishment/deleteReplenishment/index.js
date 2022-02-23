@@ -113,12 +113,15 @@ const DeleteReplenishment = () => {
   );
   let component;
   const handlePrint = () => {
-    const lista = [];
-    Object.entries(list)
-      .forEach(([key]) => {
-        const { seller, replenishmentId, estado, fecha, fechaEntrega, comentario } = list[key];
-        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega, comentario });
-      });
+    const lista = list
+      .map(({ seller, replenishmentId, estado, fecha, fechaEntrega, comentario }) => ({
+        seller,
+        replenishmentId,
+        estado,
+        fecha,
+        fechaEntrega,
+        comentario,
+      }));
     getExportFileBlob(lista);
   };
   if (error) {
@@ -133,25 +136,20 @@ const DeleteReplenishment = () => {
     component = <Spinner />;
   }
 
-  const getAllReplenishment = async () => {
-    try {
-      const response = await clientFetch(
-        '/bff/v1/replenishment/findDeleteReplenishments',
-        {
-          headers: {
-            apikey: process.env.REACT_APP_API_KEY_KONG,
-          },
-          body: {
-            accountId: 29,
-          },
-        },
-      );
-      setLoading(false);
-      setList(response);
-    } catch (e) {
-      setError(true);
-      setLoading(false);
-    }
+  const getAllReplenishment = () => {
+    clientFetch('bff/v1/replenishment/findDeleteReplenishments', {
+      headers: {
+        apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+    })
+      .then((issues) => {
+        setLoading(false);
+        setList(issues);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
