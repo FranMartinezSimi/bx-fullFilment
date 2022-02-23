@@ -113,7 +113,7 @@ const ChangeStatus = () => {
     component = <Spinner />;
   }
 
-  const listDeleteReplenishment = async () => {
+  const listPutReplenishment = async () => {
     try {
       const response = await clientFetch(
         '/bff/v1/replenishment/findChangeStatusReplenishment',
@@ -135,7 +135,7 @@ const ChangeStatus = () => {
   };
 
   useEffect(() => {
-    listDeleteReplenishment();
+    listPutReplenishment();
     setRepositionSelected(null);
   }, []);
   return (
