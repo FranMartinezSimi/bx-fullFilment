@@ -30,21 +30,17 @@ const NonStockOrderProducts = ({ contentClassName }) => {
           <div className="paragraph2">{`SKU: ${original.sku}`}</div>
         </div>
       ),
+      flex: 3,
     },
     {
-      Header: 'Cantidad órdenes afectadas',
+      Header: 'Órdenes afectadas',
       accessor: 'total_orders',
       centered: true,
-      maxWidth: 125,
-      width: 125,
-      minWidth: 125,
     },
     {
       Header: 'Unidades faltantes',
       accessor: 'missing_units',
       centered: true,
-      maxWidth: 75,
-      width: 75,
       Cell: ({ row: { original } }) => (
         <span className={styles.redIndicator}>{original.missing_units}</span>
       ),
@@ -90,7 +86,7 @@ const NonStockOrderProducts = ({ contentClassName }) => {
           <span className={`${styles.sevenDays}`}>Últimos 30 días</span>
           <a href="#!" onClick={goToReplenishment}>
             <span className={`${styles.link}`}>
-              Reponer órdenes
+              Reponer inventario
               <img className="px-2" src={rightArrow} alt={rightArrow} />
             </span>
           </a>

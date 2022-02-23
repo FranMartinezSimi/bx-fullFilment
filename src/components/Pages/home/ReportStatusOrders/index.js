@@ -7,8 +7,8 @@ import truckRoute from 'assets/brand/truck-route-orange.svg';
 import reverseLogistics from 'assets/brand/reverse-logistics-cyan.svg';
 import rightArrow from 'assets/brand/rightArrow.svg';
 import Card from 'components/Molecules/Card';
-import { ReactComponent as AlertIcon } from 'assets/brand/orange-alert.svg';
 import GetCountBackorder from 'services/orders/getCountBackorder';
+import AlertInfo from 'components/Molecules/AlertInfo';
 
 import styles from './styles.module.scss';
 
@@ -118,24 +118,19 @@ const ReportStatusOrders = ({ contentClassName }) => {
         <div className="col-12 d-flex justify-content-between align-items-center px-5">
           <span className={`${styles.sevenDays}`}>Últimos 7 días</span>
           {backOrderTotal > 0 && (
-            <div className={styles.alertBackOrder}>
-              <span className={styles.icon}>
-                <AlertIcon width={32} height={28} fill="blue" />
-              </span>
-              <div className={styles.message}>
-                Tienes
-                {' '}
-                {backOrderTotal}
-                {' '}
-                órdenes Sin Stock, haz clic
-                {' '}
-                <a href="/#" onClick={goToBackOrder}>
-                  “Aquí”
-                </a>
-                {' '}
-                para ver más.
-              </div>
-            </div>
+            <AlertInfo>
+              Tienes
+              {' '}
+              {backOrderTotal}
+              {' '}
+              órdenes Sin Stock, haz clic
+              {' '}
+              <a href="/#" onClick={goToBackOrder}>
+                “Aquí”
+              </a>
+              {' '}
+              para ver más.
+            </AlertInfo>
           )}
         </div>
       </div>

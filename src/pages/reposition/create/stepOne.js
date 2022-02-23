@@ -18,6 +18,7 @@ import loadArrowOrange from 'assets/brand/loadarrowOrange.svg';
 import ValidationMessageModal from 'components/Templates/ValidationMessageModal';
 
 import AlertModal from 'components/Templates/AlertModal';
+import AlertInfo from 'components/Molecules/AlertInfo';
 import styles from './stepOne.module.scss';
 
 const StepOne = () => {
@@ -213,13 +214,10 @@ const StepOne = () => {
     }
 
     return 'success';
-  }, [
-    productsToReposition,
-    productsWithErrorToReposition,
-  ]);
+  }, [productsToReposition, productsWithErrorToReposition]);
 
   return (
-    <div className="row">
+    <div className={cs(styles.container, 'row')}>
       <div className="col-sm-6 col-12 px-5">
         <div className="row">
           <div className="col-12 py-2">
@@ -263,24 +261,7 @@ const StepOne = () => {
               lableClassName="mb-4"
             />
           </div>
-          <div className="col-12 my-2">
-            <p className="subtitle">Agenda tu reposición</p>
-          </div>
-          <div className="col-6 mb-2">
-            <InputDateWithLabel
-              lableClassName="mb-4"
-              label="Fecha y Hora"
-              id="date"
-              format="dd/MM/yyyy - h:mm aa"
-              showTimeSelect
-              selected={formToReposition.date}
-              onChange={setDateToReposition}
-              minDate={minDate}
-              minTime={setHours(setMinutes(minDate, 30), 8)}
-              maxTime={setHours(setMinutes(minDate, 30), 16)}
-            />
-          </div>
-          <div className="col-12 my-2">
+          <div className="col-12 mt-4">
             <p className="subtitle">Carga de archivo</p>
             <p className="paragraph1">Facturas y/o Guía de despacho</p>
           </div>
@@ -296,31 +277,58 @@ const StepOne = () => {
       </div>
       <div className="col-sm-6 col-12">
         <div className={cs(styles.contentTwo, 'px-5 py-2')}>
+          {productsToReposition.length > 0 && isSkuSelected && (
+            <div className="row mb-4">
+              <AlertInfo>
+                Has seleccionado
+                {' '}
+                {productsToReposition.length}
+                {' '}
+                SKU para reponer. Ingresa fecha, hora y
+                luego presiona el boton “Siguiente”
+              </AlertInfo>
+            </div>
+          )}
           <div className="row">
-            <div className="col-12 mb-2">
-              <p className="subtitle">Carga de archivo</p>
-            </div>
-            <div className="col-12 mb-2">
-              <InputRadio
-                id="sku"
-                label="SKU"
-                onChange={handleRadioChange}
-                value="sku"
-                checked={isSkuSelected}
+            <div className="col-6 mb-2">
+              <p className="subtitle mb-2">Agenda tu reposición</p>
+              <InputDateWithLabel
+                lableClassName="mb-4"
+                label="Fecha y Hora"
+                id="date"
+                format="dd/MM/yyyy - h:mm aa"
+                showTimeSelect
+                selected={formToReposition.date}
+                onChange={setDateToReposition}
+                minDate={minDate}
+                minTime={setHours(setMinutes(minDate, 30), 8)}
+                maxTime={setHours(setMinutes(minDate, 30), 16)}
               />
             </div>
-            <div className="col-12">
-              <InputRadio
-                id="files"
-                label="Archivo"
-                onChange={handleRadioChange}
-                value="files"
-                checked={isFilesSelected}
-              />
+            <div className="col-6 mb-2">
+              <p className="subtitle mb-2">Carga de SKU</p>
+              <div className="mb-3">
+                <InputRadio
+                  id="sku"
+                  label="SKU"
+                  onChange={handleRadioChange}
+                  value="sku"
+                  checked={isSkuSelected}
+                />
+              </div>
+              <div>
+                <InputRadio
+                  id="files"
+                  label="Archivo"
+                  onChange={handleRadioChange}
+                  value="files"
+                  checked={isFilesSelected}
+                />
+              </div>
             </div>
           </div>
           {isFilesSelected && (
-            <div className="row d-flex justify-content-center my-4">
+            <div className="row d-flex justify-content-center mb-4 mt-2">
               <div className="col-12">
                 <Card className="my-4 py-4 px-5 shadow">
                   <div className="row">
@@ -345,10 +353,7 @@ const StepOne = () => {
                         download="planilla_resposicion"
                       >
                         <img src={loadArrowOrange} alt="Download" width="16" />
-                        <span className="ps-2">
-                          {' '}
-                          Planilla de Resposición
-                        </span>
+                        <span className="ps-2"> Planilla de Resposición</span>
                       </a>
                     </div>
                   </div>

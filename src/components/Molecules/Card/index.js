@@ -14,10 +14,16 @@ const Card = ({
   footer,
   cardBackground,
   onMouseLeave,
+  style,
 }) => (
   <div
     className={`card px-3 ${className} ${styles.mainCard}`}
-    style={{ borderRadius: '15px', border: 'none', backgroundImage: cardBackground ? `url(${cardBackground})` : null }}
+    style={{
+      borderRadius: '15px',
+      border: 'none',
+      backgroundImage: cardBackground ? `url(${cardBackground})` : null,
+      ...(style || {}),
+    }}
     onMouseLeave={onMouseLeave}
   >
     {title
