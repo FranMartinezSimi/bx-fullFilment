@@ -113,15 +113,12 @@ const DeleteReplenishment = () => {
   );
   let component;
   const handlePrint = () => {
-    const lista = list
-      .map(({ seller, replenishmentId, estado, fecha, fechaEntrega, comentario }) => ({
-        seller,
-        replenishmentId,
-        estado,
-        fecha,
-        fechaEntrega,
-        comentario,
-      }));
+    const lista = [];
+    Object.entries(list)
+      .forEach(([key]) => {
+        const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
+        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
+      });
     getExportFileBlob(lista);
   };
   if (error) {

@@ -93,9 +93,12 @@ const ChangeStatus = () => {
 
   let component;
   const handlePrint = () => {
-    const lista = list.map(({ seller, replenishmentId, estado, fecha, fechaEntrega }) => ({
-      seller, replenishmentId, estado, fecha, fechaEntrega,
-    }));
+    const lista = [];
+    Object.entries(list)
+      .forEach(([key]) => {
+        const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
+        lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
+      });
     getExportFileBlob(lista);
   };
   if (error) {
