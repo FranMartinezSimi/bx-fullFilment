@@ -4,7 +4,7 @@ import Alert from 'components/Atoms/AlertMessage';
 import Modal from 'components/Templates/Modal';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import Spinner from 'components/Atoms/Spinner';
-import getExportFileBlob from 'helpers';
+import getExportFileBlobResolutor from 'helpers/fileBlobResolutor';
 import MainTable from 'components/Templates/MainTable';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
@@ -99,7 +99,7 @@ const ChangeStatus = () => {
         const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
         lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
       });
-    getExportFileBlob(lista);
+    getExportFileBlobResolutor(lista);
   };
   if (error) {
     component = (
