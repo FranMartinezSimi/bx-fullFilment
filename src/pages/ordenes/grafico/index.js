@@ -105,7 +105,6 @@ const Grafico = () => {
           if (a.index < b.index) return -1;
           return 0;
         });
-        console.log(data);
         const total = data.totalOrders;
         const months = items.map((item) => (item.month));
         const quantity = items.map((item) => (item.quantity));
@@ -137,8 +136,7 @@ const Grafico = () => {
                 borderRadius: 0,
               },
             },
-            labels: [
-              months,
+            labels: [...months,
             ],
             legend: {
               position: 'bottom',
