@@ -56,10 +56,6 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 function MainTable({
   columns,
   data,
-  handleClick,
-  handleClickInventory,
-  handleClickUpdate,
-  hadleClickDropDown,
   update,
   noFilters,
   noButtons,
@@ -149,10 +145,6 @@ function MainTable({
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
-          handleClick={handleClick}
-          handleClickInventory={handleClickInventory}
-          handleClickUpdate={handleClickUpdate}
-          hadleClickDropDown={hadleClickDropDown}
           update={update}
           getExportFileBlob={getExportFileBlob}
           exportData={exportData}
@@ -292,12 +284,10 @@ function MainTable({
 
 MainTable.defaultProps = {
   handleClick: () => {},
-  handleClickUpdate: () => {},
 };
 
 MainTable.propTypes = {
   handleClick: PropTypes.func,
-  handleClickUpdate: PropTypes.func,
 };
 
 export default MainTable;

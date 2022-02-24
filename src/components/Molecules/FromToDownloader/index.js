@@ -1,11 +1,23 @@
 import { useState, forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
-import clientFetch from 'lib/client-fetch';
-import Papa from 'papaparse';
 import Button from 'components/Atoms/Button';
 import AlertMessage from 'components/Atoms/AlertMessage';
+import GetDownloadOrders from 'services/orders/getDownloadOrders';
+import { exportFileBlob } from 'helpers';
 
+import { toFormat } from 'utils/date';
 import styles from './styles.module.scss';
+
+const CustomInput = forwardRef(({ value, onClick }, ref) => (
+  <button
+    type="button"
+    className={`form-control text-start ${styles.input}`}
+    onClick={onClick}
+    ref={ref}
+  >
+    {value}
+  </button>
+));
 
 const FromToDatePicker = () => {
   const DATE = new Date();
@@ -13,48 +25,20 @@ const FromToDatePicker = () => {
   const [startDate, setStartDate] = useState(DATE);
   const [endDate, setEndDate] = useState(DATE);
   const [error, setError] = useState(false);
-  const CustomInput = forwardRef(({ value, onClick }, ref) => (
-    <button
-      type="button"
-      className={`form-control text-start ${styles.input}`}
-      onClick={onClick}
-      ref={ref}
-    >
-      {value}
-    </button>
-  ));
-  function getExportFileBlob(data) {
-    const transform = JSON.stringify(data);
-    const csvString = Papa.unparse(transform);
 
-    const blob = new Blob([csvString]);
-    const file = document.createElement('a');
-    file.href = URL.createObjectURL(blob, { type: 'text/csv;charset=utf-8;' });
-    file.download = `order_export_from_${startDate.getDate()}-${startDate.getMonth() + 1}-${startDate.getFullYear()}_to_${endDate.getDate()}-${endDate.getMonth() + 1}-${endDate.getFullYear()}.csv`;
-    document.body.appendChild(file);
-    file.click();
-    document.body.removeChild(file);
-  }
   const handleClickReset = () => {
     setStartDate(DATE);
     setEndDate(DATE);
   };
+
   const handleSubmit = () => {
     setLoadinng(true);
-    const starting = `${startDate.getDate()}-${startDate.getMonth() + 1}-${startDate.getFullYear()}`;
-    const ending = `${endDate.getDate()}-${endDate.getMonth() + 1}-${endDate.getFullYear()}`;
+    const starting = toFormat(startDate);
+    const ending = toFormat(endDate);
 
-    clientFetch('order/v1/orders/getOrdersDownload', {
-      headers: {
-        apikey: process.env.REACT_APP_API_KEY_KONG,
-      },
-      body: {
-        dateInitial: starting,
-        dateFin: ending,
-      },
-    })
+    GetDownloadOrders({ dateInitial: starting, dateFin: ending })
       .then((data) => {
-        getExportFileBlob(data);
+        exportFileBlob(data, `order_export_from_${starting}_to_${ending}.csv`);
         setLoadinng(false);
       })
       .catch(() => {
@@ -65,6 +49,7 @@ const FromToDatePicker = () => {
         }, 2000);
       });
   };
+
   return (
     <div className="row">
       <div className="col-6">

@@ -8,7 +8,7 @@ import Card from 'components/Molecules/Card';
 import PageLayout from 'components/Templates/PageLayout';
 import MainTable from 'components/Templates/MainTable';
 import { useReposition } from 'context/useReposition';
-import getExportFileBlob from 'helpers';
+import { exportFileBlob } from 'helpers';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
 
 import styles from './detail.module.scss';
@@ -80,7 +80,7 @@ const ReplenishmentDetail = () => {
   }, [repositionSelected]);
 
   const handleDownloadCsv = useCallback(() => {
-    getExportFileBlob(productItems, `Detalle-reposicion-${repositionSelected.replenishmentId}.csv`);
+    exportFileBlob(productItems, `Detalle-reposicion-${repositionSelected.replenishmentId}.csv`);
   }, [productItems]);
 
   return (

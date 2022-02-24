@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 
-export default function getExportFileBlob(data, name = 'file.csv') {
+export const exportFileBlob = (data, name = 'file.csv') => {
   const transform = JSON.stringify(data);
   const csvString = Papa.unparse(transform);
   const blob = new Blob([csvString]);
@@ -10,4 +10,8 @@ export default function getExportFileBlob(data, name = 'file.csv') {
   document.body.appendChild(file);
   file.click();
   document.body.removeChild(file);
-}
+};
+
+export default {
+  getExportFileBlob: exportFileBlob,
+};
