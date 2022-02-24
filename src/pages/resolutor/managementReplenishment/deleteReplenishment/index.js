@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import clientFetch from 'lib/client-fetch';
 import Alert from 'components/Atoms/AlertMessage';
-import getExportFileBlob from 'helpers';
+import getExportFileBlobResolutor from 'helpers/fileBlobResolutor';
 import Spinner from 'components/Atoms/Spinner';
 import arrowDown from 'assets/brand/arrow-down.svg';
 import MainTable from 'components/Templates/MainTable';
@@ -119,7 +119,7 @@ const DeleteReplenishment = () => {
         const { seller, replenishmentId, estado, fecha, fechaEntrega } = list[key];
         lista.push({ seller, replenishmentId, estado, fecha, fechaEntrega });
       });
-    getExportFileBlob(lista);
+    getExportFileBlobResolutor(lista);
   };
   if (error) {
     component = (
