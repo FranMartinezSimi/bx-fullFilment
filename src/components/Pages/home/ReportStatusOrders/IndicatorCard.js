@@ -14,7 +14,7 @@ const IndicatorCard = ({ image, background, indicator, text, isFetching }) => (
         </div>
       ) : (
         <div className="row">
-          <div className={`col-6 col-sm-6 ${styles.centerImg}`}>
+          <div className={`col-6 pe-3 m-0 col-sm-6 ${styles.centerImg}`}>
             <img src={image} alt={image} />
           </div>
           <div className="col-6 col-sm-6 px-0">

@@ -83,7 +83,7 @@ const ReportStatusOrders = ({ contentClassName }) => {
           background="#408D5C"
           image={deliveredHands}
           text="Entregado"
-          indicator={statistics.entregado}
+          indicator={statistics.entregado || 500}
           isFetching={isFetching}
         />
         <IndicatorCard
