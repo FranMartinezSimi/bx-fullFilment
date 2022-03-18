@@ -114,9 +114,6 @@ const Onborading = () => {
           const bxBusinessActiveFulfillment = localStorage.setItem('bxBusinessActiveFulfillment', JSON.stringify(response));
           setUser(bxBusinessActiveFulfillment);
         }
-      })
-      .catch((error) => {
-        console.log(error);
       });
   };
 

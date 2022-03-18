@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { QueryCache } from 'react-query';
 
 import { useHistory } from 'react-router-dom';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
@@ -30,6 +31,8 @@ const Header = ({ className, activeNavbar, setActiveNavbar }) => {
   const [logOutCard, setLogOutCart] = useState(false);
   const [notifyCard, setNotifyCart] = useState(false);
   const [responseSocket, setResponseSocket] = useState([]);
+
+  const queryCache = new QueryCache({});
 
   let resolutor;
   if (userKeyclock) {
@@ -72,6 +75,7 @@ const Header = ({ className, activeNavbar, setActiveNavbar }) => {
       setUser(null);
     }
     setUserKeyclock(null);
+    queryCache.clear();
   };
   const signOut = (e) => {
     e.preventDefault();

@@ -6,7 +6,6 @@ import * as GTM from 'utils/gtm';
 import { useKeyclockAuth } from 'context/userKeyclockContext';
 import { SocketContext, socket } from './context/useContextSocketSeller';
 import { useAuth } from './context/userContex';
-import { InventoryProvider } from './context/useInventory';
 import { RepositionProvider } from './context/useReposition';
 
 import UnLoggedUserApp from './UnLoggedUserApp';
@@ -53,11 +52,9 @@ const App = () => {
       {userKeyclock && !resolutor && !user && <UnauthenticatedApp />}
       {userKeyclock && !resolutor && user && (
         <SocketContext.Provider value={socket}>
-          <InventoryProvider>
-            <RepositionProvider>
-              <AuthenticatedApp />
-            </RepositionProvider>
-          </InventoryProvider>
+          <RepositionProvider>
+            <AuthenticatedApp />
+          </RepositionProvider>
         </SocketContext.Provider>
       )}
     </HelmetProvider>

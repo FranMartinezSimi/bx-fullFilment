@@ -70,8 +70,7 @@ const IssueDetail = () => {
         el.remove();
         setDownloading(false);
       })
-      .catch((err) => {
-        console.log('err', err);
+      .catch(() => {
         useNotify('error', '¡Se ha producido un error, intentalo de nuevo!');
       });
   };

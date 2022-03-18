@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import DropdownButton from 'components/Molecules/DropdownButton';
 import downloadArrow from 'assets/brand/downloadarrow.svg';
-import { useInventory } from 'context/useInventory';
+import { useInventory } from 'hooks/useInventory';
 import { exportFileBlob } from 'helpers';
 import { getDatetime } from 'utils/date';
 

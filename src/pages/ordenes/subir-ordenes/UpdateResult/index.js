@@ -28,13 +28,7 @@ const UpdateResult = ({ updatedData, setErrorList, setErrorScreen }) => {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
-    })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+    }).then();
   }, [updatedData]);
 
   return (

@@ -77,8 +77,7 @@ const ResolutorDetail = ({
         setShowSlideNav(false);
         getData();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setLoading(false);
         setResponseError(true);
       });
@@ -116,8 +115,7 @@ const ResolutorDetail = ({
         el.remove();
         setDownloading(false);
       })
-      .catch((err) => {
-        console.log('err', err);
+      .catch(() => {
         useNotify('error', '¡Se ha producido un error, intentalo de nuevo!');
       });
   };

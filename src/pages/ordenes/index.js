@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import useNotify from 'hooks/useNotify';
 
+import useNotify from 'hooks/useNotify';
 import PageLayout from 'components/Templates/PageLayout';
 import Alert from 'components/Atoms/AlertMessage';
 import Spinner from 'components/Atoms/Spinner';
@@ -15,68 +15,44 @@ import Button from 'components/Atoms/Button';
 import FromTicket from 'components/Molecules/FormTicket';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
 import useSearchParams from 'hooks/useSearchParams';
-import GetOrdersList from 'services/orders/getOrdersList';
-import { monthNames } from 'utils/date';
 import DownloadButton from 'components/Pages/ordenes/DownloadButton';
 import uploadArrow from 'assets/brand/uploadarrow.svg';
+import { useOrders } from 'hooks/useOrders';
 
 const Orders = () => {
-  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
-  const [error, setError] = useState(false);
-  const [date, setDate] = useState(null);
-  const [list, setList] = useState([]);
   const [orderSelected, setOrderSelected] = useState({});
   const history = useHistory();
-  const [params, setParams] = useState({});
   const objectParams = useSearchParams(history.location.search);
-
-  const getData = async ({ status } = {}) => {
-    try {
-      setLoading(true);
-      setError(false);
-      const DATE = new Date();
-      const response = await GetOrdersList({ status });
-
-      setList(response);
-      setDate({
-        day: DATE.getDate(),
-        month: monthNames[DATE.getMonth()],
-        time: `${DATE.getHours()} : ${
-          DATE.getMinutes() < 10 ? '0' : ''
-        }${DATE.getMinutes()}`,
-      });
-    } catch (e) {
-      setError(true);
-      setDate(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const data = useMemo(() => list, [list]);
+  const {
+    isError,
+    isLoading,
+    orders,
+    refresh: refreshOrders,
+    refetch,
+    updatedAt,
+  } = useOrders({ status: objectParams.status });
 
   const handleClickUpdateOrder = (e) => {
     e.preventDefault();
     history.push('/ordenes/subir-ordenes');
   };
 
-  const handleClickUpdateList = async (event) => {
+  const handleClickUpdateList = (event) => {
     try {
       event.preventDefault();
-      await getData();
+      refreshOrders();
       useNotify('success', '¡Tus órdenes han sido actualizadas con éxito!');
     } catch (e) {
       useNotify('error', 'Ooopss! ¡No se logro actualizar!');
     }
   };
 
-  const handleClickReloadList = async (event) => {
+  const handleClickReloadList = (event) => {
     event.preventDefault();
     history.replace('/ordenes');
-    setParams({});
-    await getData();
+    refetch();
   };
 
   const handleClickOrderDeatil = (order) => (event) => {
@@ -207,7 +183,7 @@ const Orders = () => {
   );
 
   let component;
-  if (error) {
+  if (isError) {
     component = (
       <Alert
         className="mt-5"
@@ -227,31 +203,26 @@ const Orders = () => {
     />
   );
 
-  useEffect(() => {
-    setParams(objectParams);
-    getData({ status: objectParams.status });
-  }, [objectParams.status]);
-
   return (
     <PageLayout
       title="Tus órdenes"
       description="Te mostramos tus órdenes de los últimos días"
     >
       <PageTitle
-        title={`Tus órdenes ${params.status ? `(${params.status})` : ''}`}
+        title={`Tus órdenes ${objectParams.status ? `(${objectParams.status})` : ''}`}
         icon={infoComponent}
       />
       <a
         href="#!"
         className="d-flex align-items-center mb-5"
-        onClick={params.status ? handleClickReloadList : handleClickUpdateList}
+        onClick={objectParams.status ? handleClickReloadList : handleClickUpdateList}
       >
         <Button
-          text={params.status ? 'Ver todo' : 'Actualizar'}
+          text={objectParams.status ? 'Ver todo' : 'Actualizar'}
           className="btn btn-secondary me-3 py-2"
           imgPrev={<img src={reload} alt="Actualizar Ordenes" width="13" />}
         />
-        {date && (
+        {updatedAt && (
           <div className="d-xl-flex align-items-center">
             <span
               className="me-2"
@@ -262,7 +233,7 @@ const Orders = () => {
             </span>
             <span className="me-2">
               <small>
-                {`${date?.day}, ${date?.month} ${date?.time}`}
+                {`${updatedAt?.day}, ${updatedAt?.month} ${updatedAt?.time}`}
                 {' '}
                 hr.
               </small>
@@ -270,11 +241,11 @@ const Orders = () => {
           </div>
         )}
       </a>
-      {!loading && !error ? (
+      {!isLoading && !isError ? (
         <div className="mb-5">
           <MainTable
             columns={columns}
-            data={data}
+            data={orders}
             buttonChildren={(
               <div className="d-flex justify-content-end align-items-center">
                 <button
@@ -282,7 +253,12 @@ const Orders = () => {
                   type="button"
                   onClick={handleClickUpdateOrder}
                 >
-                  <img src={uploadArrow} alt="Actualizar Ordenes" width="13" className="me-3" />
+                  <img
+                    src={uploadArrow}
+                    alt="Actualizar Ordenes"
+                    width="13"
+                    className="me-3"
+                  />
                   Subir Órdenes
                 </button>
                 <DownloadButton />
@@ -312,13 +288,13 @@ const Orders = () => {
         size="lg"
         onClick={() => {
           setModalTicket(false);
-          getData();
+          refreshOrders();
         }}
       >
         <FromTicket
           orderId={orderSelected?.orderId}
           setModalTicket={setModalTicket}
-          getData={getData}
+          getData={refreshOrders}
         />
       </Modal>
     </PageLayout>
