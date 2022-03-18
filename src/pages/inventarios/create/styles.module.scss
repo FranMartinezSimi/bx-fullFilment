@@ -141,29 +141,9 @@
   color: #212121;
 }
 
-.btnOrange {
-  width: 140px;
-
-  /* Blanco Press */
-
-  background: white;
-  border-radius: 15px;
-  color: #e5713d;
-  border-color: #e5713d;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
+.btnForm {
+  width: 190px;
   font-size: 18px;
-  line-height: 26px;
-}
-
-.btnWhite {
-  width: 140px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 26px;
 }
 
 .btndownload {
@@ -197,6 +177,6 @@
 
 .loadSku {
   position: absolute;
-  top: 50%;
+  top: calc(1rem + 20px);
   right: 1.5rem;
 }

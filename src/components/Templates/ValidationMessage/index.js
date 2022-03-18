@@ -90,7 +90,7 @@ ValidationMessage.defaultProps = {
 };
 
 ValidationMessage.propTypes = {
-  type: PropTypes.oneOfType(['success', 'warning', 'error']).isRequired,
+  type: PropTypes.oneOf(['success', 'warning', 'error']).isRequired,
   customMessage: PropTypes.node,
   leftIndicatorText: PropTypes.node.isRequired,
   leftIndicatorValue: PropTypes.node.isRequired,

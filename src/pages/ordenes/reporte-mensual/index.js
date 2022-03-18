@@ -178,8 +178,7 @@ const SellerReport = () => {
           },
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setErrorChart(true);
       });
   };

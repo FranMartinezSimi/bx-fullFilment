@@ -4,7 +4,7 @@ import cs from 'classnames';
 
 import { useAuth } from 'context/userContex';
 import { useReposition } from 'context/useReposition';
-import { useInventory } from 'context/useInventory';
+import { useInventory } from 'hooks/useInventory';
 
 import InputWithLabel from 'components/Molecules/Form/InputWithLabel';
 import InputDateWithLabel from 'components/Molecules/Form/InputDateWithLabel';
@@ -246,7 +246,6 @@ const StepOne = () => {
               label="Teléfono de contacto"
               value={seller.phoneContact}
               id="phone_number"
-              onChangeText={console.log}
               readOnly
               lableClassName="mb-4"
             />
@@ -256,7 +255,6 @@ const StepOne = () => {
               label="Correo de contacto"
               value={seller.emailContact}
               id="email_address"
-              onChangeText={console.log}
               readOnly
               lableClassName="mb-4"
             />

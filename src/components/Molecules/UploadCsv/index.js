@@ -19,7 +19,6 @@ const UploadCsv = ({
 
     const formatData = data.map((item) => item.data);
     setDataToValidate(formatData);
-    console.log(formatData);
     localStorage.setItem('dates', JSON.stringify(formatData));
   };
 

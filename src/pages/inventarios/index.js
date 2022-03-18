@@ -8,7 +8,7 @@ import MainTable from 'components/Templates/MainTable';
 import InventoryDetail from 'components/Molecules/InventoryDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import PageLayout from 'components/Templates/PageLayout';
-import { useInventory } from 'context/useInventory';
+import { useInventory } from 'hooks/useInventory';
 import { useReposition } from 'context/useReposition';
 import DownloadButton from 'components/Pages/inventory/DownloadButton';
 
@@ -104,12 +104,6 @@ const Inventory = () => {
     },
     [productsToReposition],
   );
-
-  if (errorGetInventory) {
-    component = <h1>Cargando</h1>;
-  } else {
-    component = <h1>Cargando</h1>;
-  }
 
   return (
     <PageLayout title="Tu inventario">

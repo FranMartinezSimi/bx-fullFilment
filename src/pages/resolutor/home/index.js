@@ -60,7 +60,6 @@ const homeResolutor = () => {
       },
     })
       .then((dashData) => {
-        console.log(dashData.chart.series);
         const statistics = dashData.totales;
         const originalLegend = dashData.chart;
         const { tickets } = dashData;
@@ -70,11 +69,12 @@ const homeResolutor = () => {
           statistics.resueltos,
           statistics.total,
         ]);
+
         if (dashData.chart.series.length === 0) {
           setErrorChart(true);
           return;
         }
-        console.log(dashData.chart);
+
         setData({
           series: dashData.chart.series,
           options: {
@@ -166,8 +166,7 @@ const homeResolutor = () => {
         }));
         setLegendData(legendFormated);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setErrorChart(true);
       });
   };

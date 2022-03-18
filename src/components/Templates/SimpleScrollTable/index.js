@@ -10,20 +10,19 @@ const SimpleScrollTable = ({ columns, data, isFetching }) => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable(
-    { columns, data },
-    useSortBy,
-  );
+  } = useTable({ columns, data }, useSortBy);
 
   return (
     <div className={styles.table} {...getTableProps()}>
       <div className={styles.tHead}>
         {headerGroups.map((headerGroup) => (
-          <div className={styles.tr}>
+          <div className={styles.tr} key={JSON.stringify(headerGroup)}>
             {headerGroup.headers.map((column) => (
               <div
+                key={column.id || column.accesor}
                 className={cs(styles.th, {
-                  [styles.centered]: headerGroup.headers.length === 1 || column.centered,
+                  [styles.centered]:
+                    headerGroup.headers.length === 1 || column.centered,
                   [styles.sortedDesc]: column.isSorted && column.isSortedDesc,
                   [styles.sortedAsc]: column.isSorted && !column.isSortedDesc,
                 })}
@@ -54,14 +53,19 @@ const SimpleScrollTable = ({ columns, data, isFetching }) => {
             <div className={styles.tr} key={String(index)}>
               {row.cells.map((cell) => (
                 <div
+                  key={cell.column.id || cell.column.accesor}
                   className={cs(styles.td, {
                     [styles.centered]: cell.column.centered,
                   })}
                   style={{
                     ...(cell.column.flex ? { flex: cell.column.flex } : {}),
                     ...(cell.column.width ? { width: cell.column.width } : {}),
-                    ...(cell.column.minWidth ? { minWidth: cell.column.minWidth } : {}),
-                    ...(cell.column.maxWidth ? { maxWidth: cell.column.maxWidth } : {}),
+                    ...(cell.column.minWidth
+                      ? { minWidth: cell.column.minWidth }
+                      : {}),
+                    ...(cell.column.maxWidth
+                      ? { maxWidth: cell.column.maxWidth }
+                      : {}),
                   }}
                 >
                   {cell.render('Cell')}

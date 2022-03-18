@@ -7,7 +7,7 @@ import SimpleScrollTable from 'components/Templates/SimpleScrollTable';
 import rightArrow from 'assets/brand/rightArrow.svg';
 import GetNonStockOrderProducts from 'services/inventory/getNonStockOrderProducts';
 import { useReposition } from 'context/useReposition';
-import { useInventory } from 'context/useInventory';
+import { useInventory } from 'hooks/useInventory';
 
 import styles from './styles.module.scss';
 

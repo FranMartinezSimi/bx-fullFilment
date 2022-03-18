@@ -6,6 +6,7 @@ import PageTitle from 'components/Atoms/PageTitle';
 import Card from 'components/Molecules/Card';
 import Button from 'components/Atoms/Button';
 import OrderCorrection from 'components/Molecules/OrderCorrection';
+import { useOrders } from 'hooks/useOrders';
 import SetUpArchive from './SetUpArchive';
 import UpdatingOrders from './UpdatingOrders';
 import UpdateResult from './UpdateResult';
@@ -20,6 +21,7 @@ const UploadOrders = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isProccesing, setIsProccesing] = useState(false);
   const [errorScreen, setErrorScreen] = useState(false);
+  const { refresh: refreshOrders } = useOrders();
 
   const handleClick = () => {
     setDataToValidate([]);
@@ -44,6 +46,7 @@ const UploadOrders = () => {
         setUpdatedData([data]);
         setDataWhitErrors([]);
         setIsLoadingData(false);
+        refreshOrders({ withLoading: false });
       })
       .catch((error) => {
         setUpdatedData([error]);

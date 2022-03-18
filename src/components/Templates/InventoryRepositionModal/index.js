@@ -3,7 +3,7 @@ import { useState, useMemo, useCallback } from 'react';
 import MainTable from 'components/Templates/MainTable';
 import { InputQuantity } from 'components/Atoms/Form/Input';
 import Modal from 'components/Templates/Modal';
-import { useInventory } from 'context/useInventory';
+import { useInventory } from 'hooks/useInventory';
 import { useReposition } from 'context/useReposition';
 
 const InventoryRepositionModal = ({ showModal, onCloseModal }) => {

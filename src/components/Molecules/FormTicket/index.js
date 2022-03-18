@@ -124,7 +124,6 @@ const FormTicket = ({
         setBtnDisabled(false);
       })
       .catch((err) => {
-        console.log('err', err);
         if (err.status === 500) {
           setOrderExist(true);
         }

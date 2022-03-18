@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom';
-import ddInit from 'utils/dd';
 import { ToastContainer } from 'react-toastify';
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+import ddInit from 'utils/dd';
 import * as GTM from 'utils/gtm';
 import reportWebVitals from './reportWebVitals';
 import { AuthKeyclockProvider } from './context/userKeyclockContext';
@@ -9,14 +11,17 @@ import App from './App';
 
 ddInit();
 GTM.initialize();
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <AuthKeyclockProvider>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-    <ToastContainer />
-  </AuthKeyclockProvider>,
+  <QueryClientProvider client={queryClient}>
+    <AuthKeyclockProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+      <ToastContainer />
+    </AuthKeyclockProvider>
+  </QueryClientProvider>,
   document.getElementById('root'),
 );
 
