@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import clientFetch from 'lib/client-fetch';
 
 import PageLayout from 'components/Templates/PageLayout';
 import PageTitle from 'components/Atoms/PageTitle';
+import DropDownCalendar from 'components/Molecules/DropDownCalendar';
 import Chart from 'react-apexcharts';
 import BodyMessage from 'components/Atoms/BodyMessageReport';
 import Spinner from 'components/Atoms/Spinner';
+
 import styles from './styles.module.scss';
 
 const SellerReport = () => {
@@ -21,7 +23,6 @@ const SellerReport = () => {
   } else {
     componentChart = <Spinner />;
   }
-
   const chart = () => {
     clientFetch('order/v1/dashboards/getAnalysisOrders', {
       headers: {
@@ -29,6 +30,7 @@ const SellerReport = () => {
       },
     })
       .then((dashData) => {
+        console.log(dashData);
         const items = dashData.pendingOrders.sort((a, b) => {
           if (a.index > b.index) return 1;
           if (a.index < b.index) return -1;
@@ -182,15 +184,50 @@ const SellerReport = () => {
         setErrorChart(true);
       });
   };
+  const fecha = new Date()
+    .toLocaleDateString('en-us', { year: 'numeric', month: 'numeric', day: 'numeric' })
+    .split('/');
+  const format = { month: Number(fecha[0]), year: fecha[2], day: fecha[1] };
+  const format2 = { month: fecha[0] - 1, year: fecha[2] };
+  const format3 = { month: fecha[0] - 2, year: fecha[2] };
+  const dameMes = (m) => {
+    switch (m) {
+      case 1:
+        format.month = 'Enero';
+        break;
+      case 2:
+        format.month = 'Febrero';
+        break;
+      case 3:
+        format.month = 'Marzo';
+        break;
+      default:
+        m = 'm';
+    }
+    return format.month;
+  };
+  const resp1 = dameMes(format.month);
+  const resp2 = dameMes(format2.month);
+  const resp3 = dameMes(format3.month);
+  const items = useMemo(
+    () => [
+      { label: resp1, onClick: () => console.log({ month: Number(fecha[0]), year: fecha[2] }) },
+      { label: resp2, onClick: () => console.log(format2) },
+      { label: resp3, onClick: () => console.log(format3) },
+    ],
+    [],
+  );
   useEffect(() => {
     chart();
   }, []);
   return (
-    <PageLayout title="Reporte / Analisís de órdenes" description="Reporte / Analisís de órdenes">
-      <PageTitle title="Reporte / Analisís de órdenes" />
+    <PageLayout title="Analisís de órdenes" description="Reporte / Analisís de órdenes">
+      <PageTitle title="Analisís de órdenes" />
+      <DropDownCalendar items={items} />
       {statesChart && !errorChart ? (
         <>
-          <div className="row align-items-stretch mt-5">
+
+          <div className="row align-items-stretch mt-3">
             <div className={`col-md-9 ${styles.orderStatus} `}>
               <div className="row align-items-center">
                 <div className="col-md-12">
