@@ -1,5 +1,5 @@
 import React from 'react';
-import DropdownButton from 'components/Molecules/DropdownButton';
+import DropdownButtonCalendar from 'components/Molecules/DropdownButtonCalendar';
 import calendar from 'assets/brand/calendar.svg';
 
 import styles from './styles.module.scss';
@@ -25,13 +25,13 @@ const DropDownCalendar = ({ items }) => (
               </h6>
             </div>
             <div className="col-md-8">
-              <DropdownButton
+              <DropdownButtonCalendar
                 items={items}
               >
-                <img src={calendar} alt="download" width="14" />
+                <img src={calendar} alt="download" width="10" />
                 {' '}
                 Selecciona Mes
-              </DropdownButton>
+              </DropdownButtonCalendar>
             </div>
           </div>
         </div>

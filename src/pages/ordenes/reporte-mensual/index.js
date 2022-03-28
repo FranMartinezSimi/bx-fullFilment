@@ -30,7 +30,6 @@ const SellerReport = () => {
       },
     })
       .then((dashData) => {
-        console.log(dashData);
         const items = dashData.pendingOrders.sort((a, b) => {
           if (a.index > b.index) return 1;
           if (a.index < b.index) return -1;
@@ -121,12 +120,29 @@ const SellerReport = () => {
             fill: {
               colors: ['#FE6767', '#7DD59D'],
             },
+            title: {
+              text: 'Entregados vs Pendientes',
+              align: 'center',
+              margin: 50,
+              offsetX: 0,
+              offsetY: 5,
+              floating: false,
+              style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                fontFamily: 'mont',
+                color: '#263238',
+              },
+            },
             legend: {
               show: false,
               position: 'bottom',
-              fontSize: '10px',
+              horizontalAlign: 'center',
+              fontSize: '18px',
+              fontFamily: 'mont',
+              fontWeight: 'bold',
               labels: {
-                colors: '#7DD59D',
+                colors: 'black',
                 useSeriesColors: false,
               },
 
@@ -184,36 +200,68 @@ const SellerReport = () => {
         setErrorChart(true);
       });
   };
+  const giveMeMonthGraph = (n) => {
+    console.log(n);
+  };
   const fecha = new Date()
     .toLocaleDateString('en-us', { year: 'numeric', month: 'numeric', day: 'numeric' })
     .split('/');
-  const format = { month: Number(fecha[0]), year: fecha[2], day: fecha[1] };
-  const format2 = { month: fecha[0] - 1, year: fecha[2] };
-  const format3 = { month: fecha[0] - 2, year: fecha[2] };
-  const dameMes = (m) => {
+  const month = fecha[0];
+  const year = fecha[2];
+  const last = { month: Number(month) };
+  const penultimate = { month: month - 1, year };
+  const antepenultimate = { month: month - 2, year };
+  const giveMeMonth = (m) => {
     switch (m) {
       case 1:
-        format.month = 'Enero';
+        last.month = 'Enero';
         break;
       case 2:
-        format.month = 'Febrero';
+        last.month = 'Febrero';
         break;
       case 3:
-        format.month = 'Marzo';
+        last.month = 'Marzo';
+        break;
+      case 4:
+        last.month = 'Abril';
+        break;
+      case 5:
+        last.month = 'Mayo';
+        break;
+      case 6:
+        last.month = 'Junio';
+        break;
+      case 7:
+        last.month = 'Julio';
+        break;
+      case 8:
+        last.month = 'Agosto';
+        break;
+      case 9:
+        last.month = 'Septiembre';
+        break;
+      case 10:
+        last.month = 'Octubre';
+        break;
+      case 11:
+        last.month = 'Noviembre';
+        break;
+      case 12:
+        last.month = 'Diciembre';
         break;
       default:
         m = 'm';
     }
-    return format.month;
+    return last.month;
   };
-  const resp1 = dameMes(format.month);
-  const resp2 = dameMes(format2.month);
-  const resp3 = dameMes(format3.month);
+  const resp1 = giveMeMonth(last.month);
+  const resp2 = giveMeMonth(penultimate.month);
+  const resp3 = giveMeMonth(antepenultimate.month);
   const items = useMemo(
     () => [
-      { label: resp1, onClick: () => console.log({ month: Number(fecha[0]), year: fecha[2] }) },
-      { label: resp2, onClick: () => console.log(format2) },
-      { label: resp3, onClick: () => console.log(format3) },
+      { label: resp1, onClick: () => giveMeMonthGraph({ month: Number(month), year: fecha[2] }) },
+      { label: resp2, onClick: () => giveMeMonthGraph(penultimate) },
+      { label: resp3, onClick: () => giveMeMonthGraph(antepenultimate) },
     ],
     [],
   );
@@ -223,98 +271,85 @@ const SellerReport = () => {
   return (
     <PageLayout title="Analisís de órdenes" description="Reporte / Analisís de órdenes">
       <PageTitle title="Analisís de órdenes" />
-      <DropDownCalendar items={items} />
       {statesChart && !errorChart ? (
-        <>
+        <div className="my-4">
+          <DropDownCalendar items={items} />
 
-          <div className="row align-items-stretch mt-3">
-            <div className={`col-md-9 ${styles.orderStatus} `}>
-              <div className="row align-items-center">
-                <div className="col-md-12">
-                  {statesChart && (
-                    <Chart
-                      options={statesChart.options}
-                      series={statesChart.series}
-                      type="bar"
-                      height={350}
-                    />
-                  )}
-                </div>
-              </div>
+          <div className={styles.parent}>
+            <div className={`${styles.div1} p-1`}>
+              {statesChart && (
+                <Chart
+                  options={statesChart.options}
+                  series={statesChart.series}
+                  type="bar"
+                  height={435}
+                />
+              )}
             </div>
-            {deliveredChart && (deliveredChart.series[0] > 0 || deliveredChart.series[1] > 0) && (
-              <div className="col-md-3">
-                <>
-                  <div className={`${styles.orderStatus}`}>
-                    <p className="display-font pt-4 text-center">
-                      <b>
-                        Entregadas Vs Pendientes
-                      </b>
-                    </p>
+            <div className={styles.div2}>
+              {deliveredChart && (deliveredChart.series[0] > 0 || deliveredChart.series[1] > 0) && (
+                <div className={styles.flex}>
+                  <div>
                     <Chart
                       options={deliveredChart.options}
                       series={deliveredChart.series}
                       type="pie"
+                      height={380}
                     />
+                  </div>
+                  <div>
                     <ul className="border-top">
-                      <div className="container-fluid">
-                        <div className="row pt-0">
-                          <div className="col-sm-6 pt-2 ">
+                      <div className="row pt-0">
+                        <div className={`col-sm-6 pt-2 border-end h-70 ${styles.pendEntr}`}>
+                          <p className="mb-0 text-center">
+                            <span
+                              style={{
+                                width: 15,
+                                height: 15,
+                                background: '#7DD59D',
+                                display: 'inline-block',
+                                borderRadius: '5rem',
+                              }}
+                            />
+                            <b className="ps-2" style={{ fontSize: 14 }}>Entregadas</b>
+                          </p>
+                          <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
+                        </div>
+                        <div className="col-sm-6 pt-2 ">
+                          <li className="">
                             <p className="mb-0 text-center">
                               <span
                                 style={{
                                   width: 15,
                                   height: 15,
-                                  background: '#7DD59D',
+                                  background: '#FE6767',
                                   display: 'inline-block',
                                   borderRadius: '5rem',
                                 }}
                               />
-                              <b className="ps-2" style={{ fontSize: 14 }}>Entregadas</b>
+                              <b className="ps-2" style={{ fontSize: 14 }}>Pendientes</b>
                             </p>
-                            <p className="mb-0 text-center">{deliveredChart.series[1]}</p>
-                          </div>
-                          <div className="col-sm-6 pt-2 ">
-                            <li className="">
-                              <p className="mb-0 text-center">
-                                <span
-                                  style={{
-                                    width: 15,
-                                    height: 15,
-                                    background: '#FE6767',
-                                    display: 'inline-block',
-                                    borderRadius: '5rem',
-                                  }}
-                                />
-                                <b className="ps-2" style={{ fontSize: 14 }}>Pendientes</b>
-                              </p>
-                              <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
-                            </li>
-                          </div>
+                            <p className="mb-0 text-center">{deliveredChart.series[0]}</p>
+                          </li>
                         </div>
                       </div>
                     </ul>
-
                   </div>
-                </>
-              </div>
-            )}
-          </div>
-
-          {pendingChart && pendingChart.series[0].data.length > 0 && (
-            <div className={`row my-5 ${styles.cardPendingDate}`}>
-              <div className="col-12 p-4">
-
+                </div>
+              )}
+            </div>
+            <div className={styles.div3}>
+              {pendingChart && pendingChart.series[0].data.length > 0 && (
                 <Chart
                   options={pendingChart.options}
                   series={pendingChart.series}
                   type="bar"
-                  height={350}
+                  height={435}
                 />
-              </div>
+              )}
             </div>
-          )}
-        </>
+          </div>
+        </div>
       ) : componentChart}
     </PageLayout>
   );
