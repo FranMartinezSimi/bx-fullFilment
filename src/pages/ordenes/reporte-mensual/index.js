@@ -276,7 +276,7 @@ const SellerReport = () => {
           <DropDownCalendar items={items} />
 
           <div className={styles.parent}>
-            <div className={`${styles.div1} p-1`}>
+            <div className={`${styles.div1} pt-2`}>
               {statesChart && (
                 <Chart
                   options={statesChart.options}
@@ -340,12 +340,14 @@ const SellerReport = () => {
             </div>
             <div className={styles.div3}>
               {pendingChart && pendingChart.series[0].data.length > 0 && (
-                <Chart
-                  options={pendingChart.options}
-                  series={pendingChart.series}
-                  type="bar"
-                  height={435}
-                />
+                <div className="px-5 pt-5">
+                  <Chart
+                    options={pendingChart.options}
+                    series={pendingChart.series}
+                    type="bar"
+                    height={435}
+                  />
+                </div>
               )}
             </div>
           </div>
