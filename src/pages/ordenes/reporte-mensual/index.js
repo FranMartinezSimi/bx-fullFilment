@@ -271,18 +271,19 @@ const SellerReport = () => {
   return (
     <PageLayout title="Analisís de órdenes" description="Reporte / Analisís de órdenes">
       <PageTitle title="Analisís de órdenes" />
+      <DropDownCalendar items={items} />
+
       {statesChart && !errorChart ? (
-        <div className="my-4">
-          <DropDownCalendar items={items} />
+        <div className="mt-1 mb-3">
 
           <div className={styles.parent}>
-            <div className={`${styles.div1} pt-2`}>
+            <div className={`${styles.div1} pt-1 pe-5`}>
               {statesChart && (
                 <Chart
                   options={statesChart.options}
                   series={statesChart.series}
                   type="bar"
-                  height={435}
+                  height={350}
                 />
               )}
             </div>
@@ -294,7 +295,7 @@ const SellerReport = () => {
                       options={deliveredChart.options}
                       series={deliveredChart.series}
                       type="pie"
-                      height={380}
+                      height={300}
                     />
                   </div>
                   <div>
@@ -340,12 +341,12 @@ const SellerReport = () => {
             </div>
             <div className={styles.div3}>
               {pendingChart && pendingChart.series[0].data.length > 0 && (
-                <div className="px-5 pt-5">
+                <div className="px-2 pt-1">
                   <Chart
                     options={pendingChart.options}
                     series={pendingChart.series}
                     type="bar"
-                    height={435}
+                    height={355}
                   />
                 </div>
               )}
