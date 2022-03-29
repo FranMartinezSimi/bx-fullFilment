@@ -9,8 +9,8 @@ const DropDownCalendar = ({ items }) => (
     <div className="d-flex justify-content-start p-0">
       <div className="col-md-4 p-0">
         <div className={styles.months}>
-          <div className="row p-0">
-            <div className="col-md-3 p-0 ">
+          <div className="d-flex flex-row bd-highlight mb-3">
+            <div className="p-2 ps-0 bd-highlight p-0 ">
               <h6
                 style={{
                   fontSize: '22px',
@@ -24,7 +24,7 @@ const DropDownCalendar = ({ items }) => (
                 Reporte
               </h6>
             </div>
-            <div className="col-md-8">
+            <div className="p-2 bd-highlight">
               <DropdownButtonCalendar
                 items={items}
               >
