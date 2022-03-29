@@ -208,7 +208,7 @@ const SellerReport = () => {
     .split('/');
   const month = fecha[0];
   const year = fecha[2];
-  const last = { month: Number(month) };
+  const last = { month: Number(month), year };
   const penultimate = { month: month - 1, year };
   const antepenultimate = { month: month - 2, year };
   const giveMeMonth = (m) => {
@@ -257,12 +257,14 @@ const SellerReport = () => {
   const resp1 = giveMeMonth(last.month);
   const resp2 = giveMeMonth(penultimate.month);
   const resp3 = giveMeMonth(antepenultimate.month);
+  const Months = [
+    { label: resp1, onClick: () => giveMeMonthGraph({ month: Number(month), year: fecha[2] }) },
+    { label: resp2, onClick: () => giveMeMonthGraph(penultimate) },
+    { label: resp3, onClick: () => giveMeMonthGraph(antepenultimate) },
+  ];
+  const MonthsArr = Months.map((x) => x);
   const items = useMemo(
-    () => [
-      { label: resp1, onClick: () => giveMeMonthGraph({ month: Number(month), year: fecha[2] }) },
-      { label: resp2, onClick: () => giveMeMonthGraph(penultimate) },
-      { label: resp3, onClick: () => giveMeMonthGraph(antepenultimate) },
-    ],
+    () => MonthsArr,
     [],
   );
   useEffect(() => {
