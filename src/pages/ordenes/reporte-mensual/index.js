@@ -23,10 +23,13 @@ const SellerReport = () => {
   } else {
     componentChart = <Spinner />;
   }
-  const chart = () => {
-    clientFetch('order/v1/dashboards/getAnalysisOrders', {
+  const chart = (m) => {
+    clientFetch('order/v1/dashboards/getAnalysisOrdersMonths', {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
+      },
+      body: {
+        month: m,
       },
     })
       .then((dashData) => {
@@ -200,17 +203,14 @@ const SellerReport = () => {
         setErrorChart(true);
       });
   };
-  const giveMeMonthGraph = (n) => {
-    console.log(n);
-  };
   const fecha = new Date()
     .toLocaleDateString('en-us', { year: 'numeric', month: 'numeric', day: 'numeric' })
     .split('/');
   const month = fecha[0];
-  const year = fecha[2];
+  const year = Number(fecha[2]);
   const last = { month: Number(month), year };
-  const penultimate = { month: month - 1, year };
-  const antepenultimate = { month: month - 2, year };
+  const penultimate = { month: month - 1 };
+  const antepenultimate = { month: month - 2 };
   const giveMeMonth = (m) => {
     switch (m) {
       case 1:
@@ -258,9 +258,12 @@ const SellerReport = () => {
   const resp2 = giveMeMonth(penultimate.month);
   const resp3 = giveMeMonth(antepenultimate.month);
   const Months = [
-    { label: resp1, onClick: () => giveMeMonthGraph({ month: Number(month), year: fecha[2] }) },
-    { label: resp2, onClick: () => giveMeMonthGraph(penultimate) },
-    { label: resp3, onClick: () => giveMeMonthGraph(antepenultimate) },
+    {
+      label: resp1,
+      onClick: () => chart(Number(month)),
+    },
+    { label: resp2, onClick: () => chart(penultimate.month) },
+    { label: resp3, onClick: () => chart(antepenultimate.month) },
   ];
   const MonthsArr = Months.map((x) => x);
   const items = useMemo(
