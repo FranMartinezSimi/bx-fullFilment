@@ -1,0 +1,37 @@
+.contentButton {
+  position: relative;
+}
+
+.button {
+  background-color: #FFFFFF;
+  border: 1px solid rgb(21, 92, 128);
+  height: 40px;
+  border-radius: 16px;
+  min-width: 190px;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown {
+  position: absolute;
+  top: 41px;
+  z-index: 10;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  width: 75%;
+  padding: 0 1rem;
+}
+
+.item {
+  width: 100%;
+  padding: 1rem 0;
+  border-bottom: 1px solid #cccccc;
+  &:last-child {
+    border: none;
+  }
+  &:hover {
+    color: #555555;
+  }
+}
