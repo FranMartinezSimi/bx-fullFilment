@@ -32,11 +32,24 @@ const Inventory = () => {
     setModal(true);
   };
 
+  const goToHistoryProduct = (sku) => (event) => {
+    event.preventDefault();
+
+    push(`inventario/${sku}/history`);
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: 'SKU/UPC',
         accessor: 'sku',
+        Cell: ({ row: { original } }) => (
+          <a href="#!" onClick={goToHistoryProduct(original.sku)} role="button">
+            <span className="d-block text-complementary-color">
+              {original.sku}
+            </span>
+          </a>
+        ),
       },
       {
         Header: 'Descripción',

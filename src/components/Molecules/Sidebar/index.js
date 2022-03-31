@@ -63,7 +63,7 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
       children: [
         {
           name: 'Crear Sku',
-          route: '/inventario/sku',
+          route: '/inventario/create',
         },
         {
           name: 'Reposición de Inventario',

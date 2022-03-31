@@ -18,6 +18,7 @@ import Grafico from './pages/ordenes/grafico';
 import SellerReport from './pages/ordenes/reporte-mensual';
 import CreateInventory from './pages/inventarios/create';
 import MonthsOfInventory from './pages/monthsOfInventory';
+import ProductHistory from './pages/inventarios/productHistory';
 
 import './styles/main.scss';
 
@@ -49,8 +50,11 @@ const App = () => {
           <Route exact path="/inventario">
             <Inventory />
           </Route>
-          <Route exact path="/inventario/sku">
+          <Route exact path="/inventario/create">
             <CreateInventory />
+          </Route>
+          <Route exact path="/inventario/:sku/history">
+            <ProductHistory />
           </Route>
           <Route exact path="/incidencias">
             <Issues />

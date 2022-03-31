@@ -1,0 +1,15 @@
+.bold {
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+
+.spinnerContent {
+  position: absolute;
+  top: calc(50% - 25PX);
+  left: calc(50% - 25PX);
+}
