@@ -1,5 +1,5 @@
 import React from 'react';
-import DropdownButtonCalendar from 'components/Molecules/DropdownButtonCalendar';
+import DropdownButton from 'components/Molecules/DropdownButton';
 import calendar from 'assets/brand/calendar.svg';
 
 import styles from './styles.module.scss';
@@ -9,8 +9,8 @@ const DropDownCalendar = ({ items }) => (
     <div className="d-flex justify-content-start p-0">
       <div className="col-md-4 p-0">
         <div className={styles.months}>
-          <div className="d-flex flex-row bd-highlight mb-3">
-            <div className="p-2 ps-0 bd-highlight p-0 ">
+          <div className="row p-0">
+            <div className="col-md-3 p-0 ">
               <h6
                 style={{
                   fontSize: '22px',
@@ -24,14 +24,14 @@ const DropDownCalendar = ({ items }) => (
                 Reporte
               </h6>
             </div>
-            <div className="p-2 bd-highlight">
-              <DropdownButtonCalendar
+            <div className="col-md-8">
+              <DropdownButton
                 items={items}
               >
-                <img src={calendar} alt="download" width="10" />
+                <img src={calendar} alt="download" width="14" />
                 {' '}
                 Selecciona Mes
-              </DropdownButtonCalendar>
+              </DropdownButton>
             </div>
           </div>
         </div>

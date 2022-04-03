@@ -38,17 +38,22 @@ const SellerReport = () => {
           if (a.index < b.index) return -1;
           return 0;
         });
+        if (dashData.statusOrders.length === 0) {
+          dashData.statusOrders = [{ status: 'sin Datos', quantity: 0 }];
+        }
         const orderStatus = dashData.statusOrders.map((item) => item.status);
         const orderQuantity = dashData.statusOrders.map((item) => item.quantity);
         if (orderQuantity.length === 0) {
           setErrorChart(true);
           return;
         }
-
         const dataDonut = Object.values(dashData.pendingDelivered);
         const status = ['Entregado', 'Pendiente'];
         const pieData = { label: status, series: dataDonut };
         const pendingDate = items.map((item) => (item.day));
+        if (dashData.pendingOrders.length === 0) {
+          dashData.pendingOrders = [{ index: 23, day: 'nd', quantity: 0 }];
+        }
         const pendingQty = dashData.pendingOrders.map((item) => item.quantity);
         setStatesChart({
           series: [{
@@ -271,7 +276,7 @@ const SellerReport = () => {
     [],
   );
   useEffect(() => {
-    chart();
+    chart(month);
   }, []);
   return (
     <PageLayout title="Analisís de órdenes" description="Reporte / Analisís de órdenes">
