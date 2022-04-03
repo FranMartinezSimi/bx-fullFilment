@@ -77,8 +77,10 @@ const Reposition = () => {
         Header: 'ID de carga ',
         accessor: 'replenishmentId',
         Cell: ({ row: { original } }) => (
-          <a href="/#" onClick={goToDetail(original)}>
-            {original.replenishmentId}
+          <a href="#!" onClick={goToDetail(original)} role="button">
+            <span className="d-block text-complementary-color">
+              {original.replenishmentId}
+            </span>
           </a>
         ),
       },
