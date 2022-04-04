@@ -270,7 +270,7 @@ const WithForm = () => {
         </div>
       </Card>
       <Modal showModal={modalDetail}>
-        <SkuDetail onClick={toggleModal} />
+        <SkuDetail msj="Producto agregado con éxito" onClick={toggleModal} textBtn="aceptar" />
       </Modal>
       <AlertModal
         showModal={newSkuErrorModal}

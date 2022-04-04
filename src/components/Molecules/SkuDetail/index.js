@@ -1,19 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AlerRed from 'assets/brand/alertRed.png';
+
 import Button from 'components/Atoms/Button';
 
-const SkuDetail = ({ onClick }) => {
-  const component = '';
-
+const SkuDetail = ({ onClick, msj, textBtn, display, img }) => {
+  let imga = (
+    <img
+      src="/bgsuccess.jpg"
+      alt="Proceso completado"
+      width="150"
+      style={{ display: '' || display }}
+    />
+  );
+  const imgModal = (n) => {
+    if (n === 'success') {
+      imga = <img src="/bgsuccess.jpg" alt="Proceso completado" width="150" style={{ display: '' || display }} />;
+    } else if (n === 'alert') {
+      imga = <img src={AlerRed} alt="Proceso completado" width="150" style={{ display: '' || display }} />;
+    }
+  };
+  imgModal(img);
   return (
-    <div>
-      {component}
+    <>
       <ul className="text-center mb-5">
         <li>
-          <img src="/bgsuccess.jpg" alt="Proceso completado" width="150" />
+          {imga}
         </li>
         <li className="py-4" style={{ fontSize: 16 }}>
-          {'Producto agregado con éxito  '}
+
+          {msj}
           <br />
           {' '}
 
@@ -21,22 +37,28 @@ const SkuDetail = ({ onClick }) => {
         <li>
           <Button
             className="btn btn-secondary fs-5 px-5"
-            text="Aceptar"
+            text={textBtn}
             onClick={onClick}
           />
         </li>
       </ul>
-    </div>
+    </>
   );
 };
 
 SkuDetail.defaultProps = {
-
+  msj: '',
+  textBtn: '',
+  display: '',
+  img: '',
   onClick: undefined,
 };
 
 SkuDetail.propTypes = {
-
+  msj: PropTypes.string,
+  textBtn: PropTypes.string,
+  img: PropTypes.string,
+  display: PropTypes.string,
   onClick: PropTypes.func,
 
 };

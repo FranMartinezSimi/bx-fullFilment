@@ -11,6 +11,9 @@ import OrderDetail from 'components/Molecules/OrderDetail';
 import PageTitle from 'components/Atoms/PageTitle';
 import reload from 'assets/brand/reloadWhite.svg';
 import info from 'assets/brand/info-ico.svg';
+import CardButton from 'components/Atoms/CardButton';
+import pdfIcon from 'assets/brand/show.svg';
+import trashIcon from 'assets/brand/trash.svg';
 import Button from 'components/Atoms/Button';
 import FromTicket from 'components/Molecules/FormTicket';
 import TooltipIcon from 'components/Atoms/TooltipIcon';
@@ -18,10 +21,12 @@ import useSearchParams from 'hooks/useSearchParams';
 import DownloadButton from 'components/Pages/ordenes/DownloadButton';
 import uploadArrow from 'assets/brand/uploadarrow.svg';
 import { useOrders } from 'hooks/useOrders';
+import SkuDetail from 'components/Molecules/SkuDetail';
 
 const Orders = () => {
   const [modal, setModal] = useState(false);
   const [modalTicket, setModalTicket] = useState(false);
+  const [modalCancel, setModalCancel] = useState(false);
   const [orderSelected, setOrderSelected] = useState({});
   const history = useHistory();
   const objectParams = useSearchParams(history.location.search);
@@ -33,11 +38,11 @@ const Orders = () => {
     refetch,
     updatedAt,
   } = useOrders({ status: objectParams.status });
-
   const handleClickUpdateOrder = (e) => {
     e.preventDefault();
     history.push('/ordenes/subir-ordenes');
   };
+  const [msj, setMsj] = useState({});
 
   const handleClickUpdateList = (event) => {
     try {
@@ -57,8 +62,40 @@ const Orders = () => {
 
   const handleClickOrderDeatil = (order) => (event) => {
     event.preventDefault();
+    console.log(order.status);
     setOrderSelected(order);
     setModal(true);
+  };
+
+  const clickOk = () => {
+    console.log('acá');
+  };
+
+  const clickCancel = () => {
+    console.log('acá cancela');
+  };
+
+  const cancelOrder = ({ status, orderNumber }) => (event) => {
+    event.preventDefault();
+    if (status === 'Pendiente' || status === 'Dropshipped') {
+      setMsj(
+        {
+          text: `Orden N°${orderNumber} se encuentra en estado ${status} por lo cual no puede ser cancelada`,
+          textBtn: 'ok',
+          img: 'alert',
+          click: clickOk(),
+        },
+      );
+      setModalCancel(true);
+    } else {
+      setMsj({
+        text: `¿Deseas cancelar la orden N° ${orderNumber}?`,
+        textBtn: 'Cancelar',
+        img: 'succes',
+        click: clickCancel(),
+      });
+      setModalCancel(true);
+    }
   };
 
   const handleClickTicketCurrying = (order) => (event) => {
@@ -165,18 +202,35 @@ const Orders = () => {
         },
       },
       {
+        Header: 'Acciones',
         accessor: 'ver',
         isVisible: true,
         Cell: ({ row: { original } }) => (
-          <a
-            href="#!"
-            onClick={handleClickOrderDeatil(original)}
-            role="button"
-            className="d-block font-weight-bold font-weight-bold"
-          >
-            <small className="text-complementary-color">Ver Más &gt;</small>
-          </a>
+          <div className="d-flex justify-content-center align-items-center">
+            <CardButton
+              onClick={handleClickOrderDeatil(original)}
+              className="mx-2"
+            >
+              <img src={pdfIcon} alt="Actualizar Ordenes" width="10" />
+            </CardButton>
+            <CardButton
+              onClick={cancelOrder(original)}
+              className="mx-2"
+            >
+              <img src={trashIcon} alt="Actualizar Ordenes" width="10" />
+            </CardButton>
+          </div>
         ),
+        // Cell: ({ row: { original } }) => (
+        //   <a
+        //     href="#!"
+        //     onClick={handleClickOrderDeatil(original)}
+        //     role="button"
+        //     className="d-block font-weight-bold font-weight-bold"
+        //   >
+        //     <small className="text-complementary-color">Ver Más &gt;</small>
+        //   </a>
+        // ),
       },
     ],
     [],
@@ -295,6 +349,21 @@ const Orders = () => {
           orderId={orderSelected?.orderId}
           setModalTicket={setModalTicket}
           getData={refreshOrders}
+        />
+      </Modal>
+      <Modal
+        showModal={modalCancel}
+        size="sm"
+        onClick={() => {
+          setModalCancel(false);
+          refreshOrders();
+        }}
+      >
+        <SkuDetail
+          msj={msj.text}
+          onClick={msj.click}
+          textBtn={msj.textBtn}
+          img={msj.img}
         />
       </Modal>
     </PageLayout>
