@@ -62,39 +62,34 @@ const Orders = () => {
 
   const handleClickOrderDeatil = (order) => (event) => {
     event.preventDefault();
-    console.log(order.status);
     setOrderSelected(order);
     setModal(true);
   };
 
-  const clickOk = () => {
-    console.log('acá');
-  };
-
-  const clickCancel = () => {
-    console.log('acá cancela');
+  const clickCancel = (e) => {
+    console.log('Datos a consultar', e);
   };
 
   const cancelOrder = ({ status, orderNumber }) => (event) => {
     event.preventDefault();
     if (status === 'Pendiente' || status === 'Dropshipped') {
+      setModalCancel(true);
       setMsj(
         {
           text: `Orden N°${orderNumber} se encuentra en estado ${status} por lo cual no puede ser cancelada`,
           textBtn: 'ok',
           img: 'alert',
-          click: clickOk(),
+          click: (() => setModalCancel(false)),
         },
       );
-      setModalCancel(true);
     } else {
+      setModalCancel(true);
       setMsj({
         text: `¿Deseas cancelar la orden N° ${orderNumber}?`,
         textBtn: 'Cancelar',
         img: 'succes',
-        click: clickCancel(),
+        click: clickCancel(orderNumber),
       });
-      setModalCancel(true);
     }
   };
 
