@@ -66,17 +66,53 @@ const Orders = () => {
     setModal(true);
   };
 
-  const clickCancel = (e) => {
-    console.log('Datos a consultar', e);
+  const clickCancel = () => {
+    setModalCancel(false);
+    setModalCancel(true);
+    setMsj(
+      {
+        text: 'Orden cancelada con éxito',
+        textBtn: 'ok',
+        img: 'success',
+        click: (() => setModalCancel(false)),
+      },
+    );
   };
 
   const cancelOrder = ({ status, orderNumber }) => (event) => {
     event.preventDefault();
+    const oNS = (
+      <>
+        <p>
+          Orden
+          <b className="mx-1">
+            N°
+            {orderNumber}
+          </b>
+          se encuentra en estado
+          <b className="mx-1">{status}</b>
+          por lo cual no puede ser cancelada
+        </p>
+      </>
+    );
+    const oN = (
+      <>
+        <p>
+          ¿Deseas cancelar la orden
+          <br />
+          <b className="mx-1">
+            N°
+            {orderNumber}
+          </b>
+          ?
+        </p>
+      </>
+    );
     if (status === 'Pendiente' || status === 'Dropshipped') {
       setModalCancel(true);
       setMsj(
         {
-          text: `Orden N°${orderNumber} se encuentra en estado ${status} por lo cual no puede ser cancelada`,
+          text: oNS,
           textBtn: 'ok',
           img: 'alert',
           click: (() => setModalCancel(false)),
@@ -85,10 +121,10 @@ const Orders = () => {
     } else {
       setModalCancel(true);
       setMsj({
-        text: `¿Deseas cancelar la orden N° ${orderNumber}?`,
+        text: oN,
         textBtn: 'Cancelar',
-        img: 'succes',
-        click: clickCancel(orderNumber),
+        img: 'crossalert',
+        click: (() => clickCancel(orderNumber)),
       });
     }
   };

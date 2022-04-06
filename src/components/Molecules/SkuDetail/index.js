@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AlerRed from 'assets/brand/alertRed.png';
-
+import CrossAlert from 'assets/brand/crossAlert.png';
 import Button from 'components/Atoms/Button';
 
 const SkuDetail = ({ onClick, msj, textBtn, display, img }) => {
@@ -18,6 +18,8 @@ const SkuDetail = ({ onClick, msj, textBtn, display, img }) => {
       imga = <img src="/bgsuccess.jpg" alt="Proceso completado" width="150" style={{ display: '' || display }} />;
     } else if (n === 'alert') {
       imga = <img src={AlerRed} alt="Proceso completado" width="150" style={{ display: '' || display }} />;
+    } else if (n === 'crossalert') {
+      imga = <img src={CrossAlert} alt="Proceso completado" width="150" style={{ display: '' || display }} />;
     }
   };
   imgModal(img);
