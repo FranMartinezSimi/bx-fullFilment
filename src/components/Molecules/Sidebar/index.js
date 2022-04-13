@@ -118,6 +118,29 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           name: 'Cambio de Estado',
           route: '/managementReplenishment/changeStatus',
         },
+        {
+
+        },
+      ],
+    },
+    {
+      name: 'Gestion de Inventario',
+      img: Box,
+      active: true,
+      route: '/managementInventory',
+      childrenActive: false,
+      children: [
+        {
+          subtitle: 'Estado SKU',
+        },
+        {
+          name: 'Descontinuar Sku',
+          route: '/managementInventory/skuStatus/activateSku',
+        },
+        {
+          name: 'Reactivar Sku',
+          route: '/managementInventory/skuStatus/deactivateSku',
+        },
       ],
     },
   ];
@@ -234,17 +257,31 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
                           </div>
                         )}
                       </div>
+
                     </a>
                     {item.children?.length > 0 && item.childrenActive && (
-                      <ul className={`mb-2 ${activeNavbar ? styles.subListOpen : styles.subListClose}`}>
-                        {item.children.map((subItem) => (
-                          <li className="py-2" key={subItem.route}>
-                            <Link to={`${subItem.route}`}>
-                              {subItem.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                      <div>
+                        <p style={{
+                          marginLeft: '22px',
+                          marginTop: '15px',
+                        }}
+                        >
+                          <span>
+                            {' '}
+                            {item?.children.find((child) => child?.subtitle)?.subtitle}
+                            {' '}
+                          </span>
+                        </p>
+                        <ul className={`mb-2 ${activeNavbar ? styles.subListOpen : styles.subListClose}`}>
+                          {item.children.map((subItem) => (
+                            <li className="py-2" key={subItem.route}>
+                              <Link to={`${subItem.route}`}>
+                                {subItem.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
                   </li>
                 ))}

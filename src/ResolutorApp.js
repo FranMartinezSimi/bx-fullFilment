@@ -3,6 +3,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import ActivateSku from 'pages/resolutor/managementInventory/skuStatus/activateSku';
+import DeactivateSku from 'pages/resolutor/managementInventory/skuStatus/deactivateSku';
 import ErrorPage from 'pages/404';
 import Home from './pages/resolutor/home';
 import Issues from './pages/resolutor/incidencias';
@@ -29,6 +31,12 @@ const UnauthenticatedApp = () => (
         </Route>
         <Route exact path="/managementReplenishment/changeStatus">
           <ChangeStatus />
+        </Route>
+        <Route path="/managementInventory/skuStatus/activateSku">
+          <ActivateSku />
+        </Route>
+        <Route path="/managementInventory/skuStatus/deactivateSku">
+          <DeactivateSku />
         </Route>
         <Route exact path="*">
           <ErrorPage />
