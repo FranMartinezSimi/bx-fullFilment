@@ -134,11 +134,11 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
           subtitle: 'Estado SKU',
         },
         {
-          name: 'Descontinuar Sku',
+          name: 'Reactivar Sku',
           route: '/managementInventory/skuStatus/activateSku',
         },
         {
-          name: 'Reactivar Sku',
+          name: 'Descontinuar Sku',
           route: '/managementInventory/skuStatus/deactivateSku',
         },
       ],
@@ -262,7 +262,7 @@ const Sidebar = ({ className, activeNavbar, setActiveNavbar }) => {
                     {item.children?.length > 0 && item.childrenActive && (
                       <div>
                         <p style={{
-                          marginLeft: '22px',
+                          marginLeft: '25px',
                           marginTop: '15px',
                         }}
                         >

@@ -113,8 +113,9 @@ const ChangeStatus = () => {
     component = <Spinner />;
   }
 
+  const clientUrl = '';
   const listPutReplenishment = () => {
-    clientFetch('bff/v1/replenishment/findChangeStatusReplenishment', {
+    clientFetch(clientUrl, {
       headers: {
         apikey: process.env.REACT_APP_API_KEY_KONG,
       },
